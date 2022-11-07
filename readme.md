@@ -116,7 +116,7 @@ The **db-create** script is responsible for the database structure (tables, prim
 
 The **db-populate** script is responsible for populating the database with useful data.
 
-## Adding/updating an openapi endpoint.
+## Adding/updating an openapi endpoint. 
    1. Update the openapi specification in the documentation repo.
       2. Commit and push the results.
    2. Update the function **buildRouter** in the class **MarsOpenApiBridge**
