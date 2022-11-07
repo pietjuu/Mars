@@ -1,6 +1,6 @@
 # Analysis & Development Project - Mars 2052 - server project
 
-This is the **server side start-project** for Project II. 
+This is the **server side start-project** for Project II.
 
 This start project provides the basic scaffolding for an openapi webserver and an example bridge class for websockets.
 
