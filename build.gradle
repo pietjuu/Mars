@@ -46,6 +46,8 @@ dependencies {
 
     // https://groups.google.com/forum/#!topic/vertx/MNb8-tvdp7s
     implementation "io.vertx:vertx-codegen:$vertxVersion"
+
+    implementation 'io.vertx:vertx-auth-jwt:3.9.14'
 }
 
 test {
