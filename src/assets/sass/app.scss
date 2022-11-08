@@ -1,0 +1,68 @@
+@use "../css/reset.css";
+
+@use "main.scss";
+@use "defaults/colors.scss";
+@use "defaults/constants.scss";
+@use "defaults/fonts.scss";
+
+header, footer {
+  height: 4rem;
+  padding: 1rem 1rem 0 1rem;
+}
+
+header {
+  margin-bottom: 2rem;
+  border-bottom: var(--border);
+
+  h1 {
+    display: inline-block;
+  }
+
+}
+
+main {
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 8rem; /* prevent footer from overlapping */
+
+  div {
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: var(--border);
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    i {
+      font-size: 2rem;
+      color: white;
+    }
+
+  }
+
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+
+  border-top: var(--border);
+  width: calc(100% - 2rem);
+
+  p {
+    padding-top: 1rem;
+  }
+
+}
+
+@media (max-height: 512px) {
+  footer {
+    display: none;
+  }
+}
+

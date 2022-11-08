@@ -1,0 +1,49 @@
+@use "defaults/colors.scss";
+@use "defaults/constants.scss";
+@use "defaults/fonts.scss";
+
+body {
+  position: relative;
+  min-height: 100vh;
+
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: var(--default-line-height);
+  font-family:var(--default-font-style);
+  font-size: var(--default-text-size);
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-heading);
+}
+
+h1 {
+  font-size: 2.2rem;
+  line-height: 140%;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+strong {
+  font-weight: bold;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+  transition: 0.4s;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (hover: hover) {
+  a:hover {
+    font-weight: bold;
+  }
+}

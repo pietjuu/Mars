@@ -1,0 +1,12 @@
+@use "colors.scss";
+
+/* other variables and constants */
+
+:root {
+  --default-text-size: 1rem;
+  --default-line-height: 1.6rem;
+
+  --threshold-mobile-width: 1024px;
+
+  --border: var(--color-border) solid 0.1rem
+}
