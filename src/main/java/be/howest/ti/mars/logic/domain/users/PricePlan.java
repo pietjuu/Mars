@@ -10,6 +10,12 @@ public enum PricePlan {
     private final int maxItems;
     private final double costPerMol;
 
+    /**
+     * PricePlan
+     * @param name name of plan
+     * @param maxItems max items that can be sent / day, -1 = unlimited
+     * @param costPerMol cost per molecule. -1 = unlimited.
+     */
     PricePlan(String name, int maxItems, double costPerMol){
         this.name = name;
         this.maxItems = maxItems;
