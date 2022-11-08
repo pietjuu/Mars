@@ -27,12 +27,13 @@ public class User {
      * Constructor
      * @param firstname firstname
      * @param lastname lastname
+     * @param pricePlan enum Price Plan
      */
-    public User(String firstname, String lastname) {
+    public User(String firstname, String lastname, PricePlan pricePlan) {
         this.id = UUID.randomUUID().toString();
         this.firstname = firstname;
         this.lastname = lastname;
-        this.priceplan = PricePlan.STANDARD;
+        this.priceplan = pricePlan;
     }
 
     public String getId() {
