@@ -40,19 +40,4 @@ public class Request {
     private Request(RoutingContext ctx) {
         this.params = ctx.get(ValidationHandler.REQUEST_CONTEXT_KEY);
     }
-
-    public int getQuoteId() {
-        return params.pathParameter(SPEC_QUOTE_ID).getInteger();
-    }
-
-    public String getQuote() {
-        try {
-            if (params.body().isJsonObject())
-                return params.body().getJsonObject().getString(SPEC_QUOTE);
-            return params.body().get().toString();
-        } catch (IllegalArgumentException ex) {
-            LOGGER.log(Level.INFO, "Unable to decipher the data in the body", ex);
-            throw new MalformedRequestException("Unable to decipher the data in the request body. See logs for details.");
-        }
-    }
 }

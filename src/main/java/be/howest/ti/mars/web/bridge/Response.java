@@ -1,6 +1,5 @@
 package be.howest.ti.mars.web.bridge;
 
-import be.howest.ti.mars.logic.domain.Quote;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -13,22 +12,6 @@ import io.vertx.ext.web.RoutingContext;
 public class Response {
 
     private Response() { }
-
-    public static void sendQuote(RoutingContext ctx, Quote quote) {
-        sendOkJsonResponse(ctx, JsonObject.mapFrom(quote));
-    }
-
-    public static void sendQuoteCreated(RoutingContext ctx, Quote quote) {
-        sendJsonResponse(ctx, 201, JsonObject.mapFrom(quote));
-    }
-
-    public static void sendQuoteDeleted(RoutingContext ctx) {
-        sendEmptyResponse(ctx, 204);
-    }
-
-    public static void sendQuoteUpdated(RoutingContext ctx, Quote quote) {
-        sendOkJsonResponse(ctx, JsonObject.mapFrom(quote));
-    }
 
     private static void sendOkJsonResponse(RoutingContext ctx, JsonObject response) {
         sendJsonResponse(ctx, 200, response);
