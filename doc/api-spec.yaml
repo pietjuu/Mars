@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: 'Transporter'
+  description: 'Transporter OpenAPI Project II Howest'
+  version: 0.0.1
+servers:
+  - url: http://localhost:5000
+    description: 'Local API'
+paths:
+  /api/status:
+    get:
+      description: Get status of Transporter
+      operationId: get_status
+      tags: [ General ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ready:
+                    type: boolean
+                  message:
+                    type: string
+                example:
+                  ready: true
+                  message: READY TO SCAN AND SEND
+  /api/scan:
+    get:
+      description: Get data of scanned item
+      operationId: scan
+      tags: [ General ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanData'
+        405:
+          description: Method not allowed - Transporter isn't ready to scan.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  description:
+                    type: string
+                  name:
+                    type: string
+                example:
+                  code: 405
+                  description: Transporter isn't ready to scan.
+                  name: Method Not Allowed
+  /api/send:
+    post:
+      description: Send and scan item
+      operationId: send
+      tags: [ General ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanData'
+        405:
+          description: Method not allowed - Transporter isn't ready to scan.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  description:
+                    type: string
+                  name:
+                    type: string
+                example:
+                  code: 405
+                  description: Transporter isn't ready to scan.
+                  name: Method Not Allowed
+components:
+  schemas:
+    ScanData:
+      description: Data returned by molecule scanner.
+      type: object
+      properties:
+        molecules:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              molecule:
+                type: string
+              position:
+                type: object
+                properties:
+                  x:
+                    type: integer
+                  y:
+                    type: integer
+
+        summary:
+          type: array
+          items:
+            type: object
+            properties:
+              count:
+                type: integer
+              molecule:
+                type: string
+      example: {
+        "molecules": [
+            {
+                "id": 0,
+                "molecule": "H20",
+                "position": {
+                    "x": 121,
+                    "y": 232
+                }
+            },
+            {
+                "id": 1,
+                "molecule": "H20",
+                "position": {
+                    "x": 122,
+                    "y": 233
+                }
+            }
+        ],
+        "summary": [
+            {
+                "count": 3,
+                "molecule": "H20"
+            },
+            {
+                "count": 9,
+                "molecule": "C02"
+            }
+        ]
+      }
