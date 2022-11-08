@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 public class DefaultMarsController implements MarsController {
 
     @Override
-    public void createUser(String firstname, String lastname, String subscription) {
+    public User createUser(String firstname, String lastname, String subscription) {
 
         if (StringUtils.isBlank(firstname) || StringUtils.isBlank(lastname) || StringUtils.isBlank(subscription)){
             throw new IllegalArgumentException("An empty argument is not allowed!");
@@ -30,6 +30,8 @@ public class DefaultMarsController implements MarsController {
             PricePlan pricePlan = PricePlan.valueOf(subscription);
             User user = new User(firstname, lastname, pricePlan);
             Repositories.getInMemoryRepository().addUser(user);
+
+            return user;
 
         } catch (IllegalArgumentException e){
             throw new NoSuchElementException(String.format("No such element %s", subscription));
