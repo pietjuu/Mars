@@ -5,8 +5,16 @@ import io.vertx.core.json.JsonObject;
 
 public class Repositories {
     private static MarsH2Repository h2Repo = null;
+    private static InMemoryRepository memoryRepository = null;
 
     private Repositories() {
+    }
+
+    public static InMemoryRepository getInMemoryRepository(){
+        if (memoryRepository == null){
+            memoryRepository = new InMemoryRepository();
+        }
+        return memoryRepository;
     }
 
     public static MarsH2Repository getH2Repo() {
