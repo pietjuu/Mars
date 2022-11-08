@@ -1,5 +1,8 @@
 package be.howest.ti.mars.web.bridge;
 
+import be.howest.ti.mars.logic.domain.users.User;
+import be.howest.ti.mars.web.util.PlainTextTokens;
+import be.howest.ti.mars.web.util.TokenManager;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -23,7 +26,7 @@ public class Response {
                 .end();
     }
 
-    private static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
+    public static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
         ctx.response()
                 .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .setStatusCode(statusCode)

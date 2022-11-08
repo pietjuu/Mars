@@ -3,7 +3,11 @@ package be.howest.ti.mars.web.bridge;
 import be.howest.ti.mars.logic.controller.DefaultMarsController;
 import be.howest.ti.mars.logic.controller.MarsController;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
+import be.howest.ti.mars.web.util.BearerAuthHandler;
+import be.howest.ti.mars.web.util.PlainTextTokens;
+import be.howest.ti.mars.web.util.TokenManager;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.CorsHandler;
@@ -27,6 +31,7 @@ import java.util.logging.Logger;
 public class MarsOpenApiBridge {
     private static final Logger LOGGER = Logger.getLogger(MarsOpenApiBridge.class.getName());
     private final MarsController controller;
+    private final TokenManager tokenManager;
 
     public Router buildRouter(RouterBuilder routerBuilder) {
         LOGGER.log(Level.INFO, "Installing cors handlers");
@@ -35,11 +40,14 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing failure handlers for all operations");
         routerBuilder.operations().forEach(op -> op.failureHandler(this::onFailedRequest));
 
+        LOGGER.log(Level.INFO, "Installing security handlers");
+        routerBuilder.securityHandler("userAuth", BearerAuthHandler.create(tokenManager));
+
         LOGGER.log(Level.INFO, "Installing handler for getUsers");
         routerBuilder.operation("getUsers").handler(this::getUsers);
 
         LOGGER.log(Level.INFO, "Installing handler for createUsers");
-        routerBuilder.operation("createUsers").handler(this::createUsers);
+        routerBuilder.operation("createUser").handler(this::createUsers);
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -47,10 +55,12 @@ public class MarsOpenApiBridge {
 
     public MarsOpenApiBridge() {
         this.controller = new DefaultMarsController();
+        this.tokenManager = new PlainTextTokens();
     }
 
     public MarsOpenApiBridge(MarsController controller) {
         this.controller = controller;
+        this.tokenManager = new PlainTextTokens();
     }
 
     private void getUsers(RoutingContext routingContext) {
@@ -62,7 +72,9 @@ public class MarsOpenApiBridge {
         String lastname = Request.from(routingContext).getUserLastname();
         String subscription = Request.from(routingContext).getUserPricePlan();
 
-        controller.createUser(firstname, lastname, subscription);
+        Response.sendJsonResponse(routingContext, 201, new JsonObject()
+                .put("token", tokenManager.createToken(controller.createUser(firstname, lastname, subscription)))
+        );
     }
 
     private void onFailedRequest(RoutingContext ctx) {
