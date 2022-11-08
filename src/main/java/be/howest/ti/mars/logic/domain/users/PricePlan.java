@@ -1,6 +1,6 @@
 package be.howest.ti.mars.logic.domain.users;
 
-public enum Priceplan {
+public enum PricePlan {
 
     STANDARD("Standard", 10, 5),
     PREMIUM("Premium", 100, -1),
@@ -10,7 +10,7 @@ public enum Priceplan {
     private final int maxItems;
     private final double costPerMol;
 
-    Priceplan(String name, int maxItems, double costPerMol){
+    PricePlan(String name, int maxItems, double costPerMol){
         this.name = name;
         this.maxItems = maxItems;
         this.costPerMol = costPerMol;
