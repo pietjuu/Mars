@@ -38,6 +38,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for getUsers");
         routerBuilder.operation("getUsers").handler(this::getUsers);
 
+        LOGGER.log(Level.INFO, "Installing handler for createUsers");
+        routerBuilder.operation("createUsers").handler(this::createUsers);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -51,6 +54,10 @@ public class MarsOpenApiBridge {
     }
 
     private void getUsers(RoutingContext routingContext) {
+
+    }
+
+    private void createUsers(RoutingContext routingContext){
         String firstname = Request.from(routingContext).getUserFirstname();
         String lastname = Request.from(routingContext).getUserLastname();
         String subscription = Request.from(routingContext).getUserPricePlan();
