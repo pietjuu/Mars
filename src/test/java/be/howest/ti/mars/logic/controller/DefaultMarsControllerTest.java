@@ -1,9 +1,11 @@
 package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.data.Repositories;
+import be.howest.ti.mars.logic.domain.users.User;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.Map;
@@ -13,19 +15,12 @@ class DefaultMarsControllerTest {
 
     private static final String URL = "jdbc:h2:./db-05";
 
-    @BeforeAll
-    void setupTestSuite() {
-        Repositories.shutdown();
-        JsonObject dbProperties = new JsonObject(Map.of("url", "jdbc:h2:./db-05",
-                "username", "",
-                "password", "",
-                "webconsole.port", 9000));
-        Repositories.configure(dbProperties);
-    }
+    @Test
+    void testCreateUser(String firstname, String lastname, String subscription){
+        MockMarsController controller = new MockMarsController();
 
-    @BeforeEach
-    void setupTest() {
-        Repositories.getH2Repo().generateData();
+        controller.createUser("Glenn", "Callens", "FREE");
+
     }
 
 }
