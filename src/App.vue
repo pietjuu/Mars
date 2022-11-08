@@ -1,25 +1,27 @@
-<script src="@/assets/js/app.js"></script>
-
 <template>
-  <header>
-    <h1>Fitness 💪</h1>
-  </header>
+  <div id="layout">
+    <div id="sidebar-nav">
 
-  <main>
-    <section>
-      <div>
-        <h2>Exercises Weight</h2>
-        <i>⚖️</i>
+    </div>
+    <div id="header-and-content">
+      <header></header>
+      <div id="content">
+        <!-- notification component -->
+        <!-- main component -->
+        <p>Hallo</p>
       </div>
-      <RecordTable />
-    </section>
-  </main>
-
-  <footer>
-    <p>by <strong>Thibo Verbeerst</strong> 👋</p>
-  </footer>
+    </div>
+  </div>
 </template>
 
-<style scoped lang="css">
-@import "@/assets/css/app.css";
+<script>
+export default {
+  name: "App",
+  components: { }
+};
+</script>
+
+<style lang="scss">
+
+
 </style>
