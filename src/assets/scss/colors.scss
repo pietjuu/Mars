@@ -1,40 +1,55 @@
 /* color variables and constants */
 
+/* soft: lighter */
+/* mute: darker  */
+
 :root {
   --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  --vt-c-white-mute-1: #F9FBFD;
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+  --vt-c-black: #000000;
+  --vt-c-black-soft-1: rgba(0,0,0,.87);
+  --vt-c-black-soft-2: #76787a;
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-blue: #170040;
+  --vt-c-blue-soft-1: #335eea;
 
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+  --vt-c-green: #00E941;
+  --vt-c-orange: #DA7212;
+  --vt-c-purple: #A612DA;
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  /* white theme: wt */
+  --vt-c-border-wt: rgba(227,235,246,0.8);
+  --vt-c-divider-wt: #e3ebf6;
+
 }
 
 /* semantic color variables for this project */
 :root {
+  --color-primary: var(--vt-c-black-soft-1);
+  --color-primary-soft: var(--vt-c-black-soft-2);
+
+  --color-secondary: var(--vt-c-blue);
+  --color-secondary-soft: var(--vt-c-blue-soft-1);
+
   --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  --color-background-mute: var(--vt-c-white-mute-1);
 
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
+  --color-green: var(--vt-c-green);
+  --color-orange: var(--vt-c-orange);
+  --color-purple: var(--vt-c-purple);
 
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-border: var(--vt-c-border-wt);
+  --color-divider: var(--vt-c-divider-wt);
+
+  --color-text: var(--color-primary-soft);
+  --color-link: var(--color-secondary-soft);
+  --color-heading1: var(--color-primary);
+  --color-heading2: var(--color-secondary);
+  --color-heading3: var(--color-primary);
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);
@@ -48,3 +63,4 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 }
+*/
