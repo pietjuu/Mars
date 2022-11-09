@@ -10,10 +10,11 @@ GPIO.setmode(GPIO.BCM)
 Button = 23
 
 #Setup button
-GPIO.setup(Button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+GPIO.setup(Button, GPIO.IN)
 
 #Logic program
 while True:
 	button_state = GPIO.input(Button)
 	print(button_state)
-	sleep(1)
+
