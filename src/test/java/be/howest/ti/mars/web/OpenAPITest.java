@@ -94,6 +94,18 @@ class OpenAPITest {
                 }));
     }
 
+    @Test
+    void getUser(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/0155").bearerTokenAuthentication("0155").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() ->  {
+                    assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
+                    assertEquals("0155", response.bodyAsJsonObject().getString("id"));
+                    assertEquals("Glenn", response.bodyAsJsonObject().getString("firstname"));
+                    testContext.completeNow();
+                }));
+    }
+
     private JsonObject createUser(){
         JsonObject jsonObject = new JsonObject();
         jsonObject.put("firstname", "Bob");
