@@ -11,7 +11,11 @@ import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(VertxExtension.class)
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert","PMD.AvoidDuplicateLiterals"})
@@ -25,8 +29,8 @@ class OpenAPITest {
     private static final int PORT = 8080;
     private static final String HOST = "localhost";
     public static final String MSG_200_EXPECTED = "If all goes right, we expect a 200 status";
-    public static final String MSG_201_EXPECTED = "If a resource is successfully created.";
-    public static final String MSG_204_EXPECTED = "If a resource is successfully deleted";
+    //public static final String MSG_201_EXPECTED = "If a resource is successfully created.";
+    //public static final String MSG_204_EXPECTED = "If a resource is successfully deleted";
     private Vertx vertx;
     private WebClient webClient;
 
@@ -57,6 +61,23 @@ class OpenAPITest {
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
                     assertEquals(1, response.bodyAsJsonObject().getInteger("version"), "Version doesn't match");
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void getUsers(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
+                    assertEquals(2, response.bodyAsJsonArray().size());
+                    List<String> stringList = new ArrayList<>();
+                    stringList.add(response.bodyAsJsonArray().getJsonObject(0).getString("firstname"));
+                    stringList.add(response.bodyAsJsonArray().getJsonObject(1).getString("firstname"));
+
+                    assertTrue(stringList.contains("Thibo"));
+                    assertTrue(stringList.contains("Glenn"));
                     testContext.completeNow();
                 }));
     }
