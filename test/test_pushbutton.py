@@ -21,7 +21,9 @@ GPIO.setup(Led_door_open,GPIO.OUT)
 #Logic program
 while True:
 	button_state = GPIO.input(Button)
-	print(button_state)
 	if button_state == 0:
 		GPIO.output(Led_door_closed, GPIO.LOW)
 		GPIO.output(Led_door_open, GPIO.HIGH)
+	else:
+		GPIO.output(Led_door_closed, GPIO.HIGH)
+		GPIO.output(Led_door_open, GPIO.LOW)
