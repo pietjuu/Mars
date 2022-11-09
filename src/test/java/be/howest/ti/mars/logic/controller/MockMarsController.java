@@ -14,7 +14,7 @@ public class MockMarsController implements MarsController {
     @Override
     public User createUser(String firstname, String lastname, String pricePlan) {
         try{
-            return new User(firstname, lastname, PricePlan.valueOf(pricePlan));
+            return new User("testID01", firstname, lastname, PricePlan.valueOf(pricePlan));
         } catch (IllegalArgumentException ex){
             throw new NoSuchElementException(String.format("No such element %s", pricePlan));
         }
