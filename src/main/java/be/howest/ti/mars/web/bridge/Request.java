@@ -1,6 +1,7 @@
 package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.web.auth.UserToken;
+import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
@@ -62,6 +63,19 @@ public class Request {
             return params.body().get().toString();
         } catch (IllegalArgumentException ex) {
             LOGGER.log(Level.INFO, "Unable to decipher 'lastname' in the body of POST user", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getUserID() {
+        try {
+            if (!params.pathParameter("userId").getString().equals(getToken())){
+                LOGGER.log(Level.INFO, "Unable to get user, userID not in connection with authentication ID.");
+                throw new ForbiddenAccessException("User ID is not in connection with authentication ID.");
+            }
+            return params.pathParameter("userId").getString();
+        } catch (IllegalArgumentException ex){
+            LOGGER.log(Level.INFO, "Unable to decipher 'userId' in the path of GET user", ex);
             throw new MalformedRequestException(ERROR_BODY);
         }
     }
