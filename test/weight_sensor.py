@@ -2,6 +2,10 @@
 import RPi.GPIO as gpio
 import time
 
+#Set warnings off
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
 #Set pins to amplifier weight sensor
 RS = 18 #RS = on LCD screen connected to RPI
 EN = 23 #EN = on LCD screen connected to RPI
@@ -11,6 +15,16 @@ D6 = 8  #D6 = on LCD screen connected to RPI
 D7 = 7  #D7 = on LCD screen connected to RPI
 DT = 27 #DT = on amplifier connected to RPI
 SCK = 17 #SCK = on amplifier connected to RPI
+
+#Setup state from components
+gpio.setmode(gpio.BCM)
+gpio.setup(RS, gpio.OUT)
+gpio.setup(EN, gpio.OUT)
+gpio.setup(D4, gpio.OUT)
+gpio.setup(D5, gpio.OUT)
+gpio.setup(D6, gpio.OUT)
+gpio.setup(D7, gpio.OUT)
+gpio.setup(SCK, gpio.OUT)
 
 #Function for reading data from HX711 (amplifier) and return output
 def readCount():
