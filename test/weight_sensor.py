@@ -26,26 +26,36 @@ gpio.setup(D6, gpio.OUT)
 gpio.setup(D7, gpio.OUT)
 gpio.setup(SCK, gpio.OUT)
 
+#Fucntion to initilize LCD screen
+def begin():
+	lcdcmd(0x33)
+	lcdcmd(0x32)
+	lcdcmd(0x06)
+	lcdcmd(0x0C)
+	lcdcmd(0x28)
+	lcdcmd(0x01)
+	time.sleep(0.0005)
+
 #Function for reading data from HX711 (amplifier) and return output
 def readCount():
-  i=0
-  Count=0
-  gpio.setup(DT, gpio.OUT)
-  gpio.output(DT,1)
-  gpio.output(SCK,0)
-  gpio.setup(DT, gpio.IN)
-
-  while gpio.input(DT) == 1:
-	 i=0
-  for i in range(24):
-	gpio.output(SCK,1)
-	Count=Count<<1
+	i=0
+	Count=0
+	gpio.setup(DT, gpio.OUT)
+	gpio.output(DT,1)
 	gpio.output(SCK,0)
-	if gpio.input(DT) == 0: 
-		Count=Count+1
+	gpio.setup(DT, gpio.IN)
 
-  gpio.output(SCK,1)
-  Count=Count^0x800000
-  gpio.output(SCK,0)
-  return Count
+	while gpio.input(DT) == 1:
+		i = 0
+	for i in range(24):
+		gpio.output(SCK,1)
+		Count = Count<<1
+		gpio.output(SCK,0)
+		if gpio.input(DT) == 0: 
+			Count = Count+1
+
+	gpio.output(SCK,1)
+	Count = Count^0x800000 # uitzoeken waarom
+	gpio.output(SCK,0)
+	return Count
 
