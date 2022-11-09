@@ -45,4 +45,23 @@ class DefaultMarsControllerTest {
         assertTrue(list.size() >= 2);
     }
 
+    @Test
+    void testDeleteUser(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.createUser( "Bob", "Friet", "PREMIUM");
+        int oldSize = controller.getUsers().size();
+        String id = null;
+        for (BaseUser user : controller.getUsers()){
+            if (user.getFirstname().equals("Bob")){
+                id = user.getId();
+            }
+        }
+
+        BaseUser oldUser = controller.getUser(id);
+        controller.deleteUser(id);
+        assertEquals(oldSize - 1, controller.getUsers().size());
+        assertFalse(controller.getUsers().contains(oldUser));
+    }
+
 }
