@@ -34,4 +34,8 @@ public class MockMarsController implements MarsController {
     public User getUser(String userID) {
         return new User(userID, "Glenn", "Callens", PricePlan.BUSINESS);
     }
+
+    @Override
+    public void deleteUser(String userID) {
+    }
 }
