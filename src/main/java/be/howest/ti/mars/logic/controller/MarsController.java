@@ -9,4 +9,6 @@ public interface MarsController {
     User createUser(String firstname, String lastname, String pricePlan);
 
     Set<BaseUser> getUsers();
+
+    User getUser(String userID);
 }

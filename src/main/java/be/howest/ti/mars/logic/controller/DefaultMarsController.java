@@ -44,6 +44,20 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Set<BaseUser> getUsers() {
-        return new HashSet<>(Repositories.getInMemoryRepository().getUsers());
+        return new HashSet<>(repository.getUsers());
+    }
+
+    @Override
+    public User getUser(String userID) {
+        if (StringUtils.isBlank(userID)){
+            throw new IllegalArgumentException("User ID is empty!");
+        } else {
+            User user = repository.getUser(userID);
+            if (user == null){
+                throw new NoSuchElementException(String.format("There is no user with id %s", userID));
+            }
+
+            return user;
+        }
     }
 }

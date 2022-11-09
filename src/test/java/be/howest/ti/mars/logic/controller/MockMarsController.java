@@ -29,4 +29,9 @@ public class MockMarsController implements MarsController {
         result.add(new User("Glenn", "Callens", PricePlan.BUSINESS));
         return new HashSet<>(result);
     }
+
+    @Override
+    public User getUser(String userID) {
+        return new User(userID, "Glenn", "Callens", PricePlan.BUSINESS);
+    }
 }
