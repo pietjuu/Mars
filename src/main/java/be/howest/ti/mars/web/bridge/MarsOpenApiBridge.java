@@ -2,17 +2,17 @@ package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.logic.controller.DefaultMarsController;
 import be.howest.ti.mars.logic.controller.MarsController;
+import be.howest.ti.mars.web.auth.BearerAuthHandler;
+import be.howest.ti.mars.web.auth.TokenManager;
+import be.howest.ti.mars.web.auth.Tokens;
+import be.howest.ti.mars.web.auth.UserToken;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
-import be.howest.ti.mars.web.util.BearerAuthHandler;
-import be.howest.ti.mars.web.util.PlainTextTokens;
-import be.howest.ti.mars.web.util.TokenManager;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
-
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -52,18 +52,21 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for createUsers");
         routerBuilder.operation("createUser").handler(this::createUsers);
 
+        LOGGER.log(Level.INFO, "Installing handler for createUsers");
+        routerBuilder.operation("getUser").handler(this::getUser);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
 
     public MarsOpenApiBridge() {
         this.controller = new DefaultMarsController();
-        this.tokenManager = new PlainTextTokens();
+        this.tokenManager = new Tokens();
     }
 
     public MarsOpenApiBridge(MarsController controller) {
         this.controller = controller;
-        this.tokenManager = new PlainTextTokens();
+        this.tokenManager = new Tokens();
     }
 
     private void getInfo(RoutingContext routingContext){
@@ -75,13 +78,18 @@ public class MarsOpenApiBridge {
     }
 
     private void createUsers(RoutingContext routingContext){
-        String firstname = Request.from(routingContext).getUserFirstname();
-        String lastname = Request.from(routingContext).getUserLastname();
-        String subscription = Request.from(routingContext).getUserPricePlan();
+        Request request = Request.from(routingContext);
+        String firstname = request.getUserFirstname();
+        String lastname = request.getUserLastname();
+        String subscription = request.getUserPricePlan();
 
         Response.sendJsonResponse(routingContext, 201, new JsonObject()
-                .put("id", tokenManager.createToken(controller.createUser(firstname, lastname, subscription)))
+                .put("id", tokenManager.createToken(new UserToken(controller.createUser(firstname, lastname, subscription).getId())))
         );
+    }
+
+    private void getUser(RoutingContext routingContext){
+
     }
 
     private void onFailedRequest(RoutingContext ctx) {

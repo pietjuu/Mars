@@ -1,5 +1,6 @@
 package be.howest.ti.mars.web.bridge;
 
+import be.howest.ti.mars.web.auth.UserToken;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
@@ -28,6 +29,7 @@ public class Request {
     public static final String ERROR_BODY = "Unable to decipher the data in the request body. See logs for details.";
     private static final Logger LOGGER = Logger.getLogger(Request.class.getName());
     private final RequestParameters params;
+    private final UserToken userToken;
 
     public static Request from(RoutingContext ctx) {
         return new Request(ctx);
@@ -35,6 +37,11 @@ public class Request {
 
     private Request(RoutingContext ctx) {
         this.params = ctx.get(ValidationHandler.REQUEST_CONTEXT_KEY);
+        this.userToken = (UserToken) ctx.user();
+    }
+
+    public String getToken(){
+        return userToken.getId();
     }
 
     public String getUserFirstname() {
