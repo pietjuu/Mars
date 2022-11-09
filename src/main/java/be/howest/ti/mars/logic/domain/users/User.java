@@ -3,11 +3,8 @@ package be.howest.ti.mars.logic.domain.users;
 import java.util.Objects;
 import java.util.UUID;
 
-public class User {
+public class User extends BaseUser{
 
-    private final String id;
-    private final String firstname;
-    private final String lastname;
     private PricePlan priceplan;
 
     /**
@@ -18,9 +15,7 @@ public class User {
      * @param pricePlan PricePlan enum
      */
     public User(String id, String firstname, String lastname, PricePlan pricePlan) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        super(id, firstname, lastname);
         this.priceplan = pricePlan;
     }
 
@@ -31,22 +26,8 @@ public class User {
      * @param pricePlan enum Price Plan
      */
     public User(String firstname, String lastname, PricePlan pricePlan) {
-        this.id = UUID.randomUUID().toString();
-        this.firstname = firstname;
-        this.lastname = lastname;
+        super(UUID.randomUUID().toString(), firstname, lastname);
         this.priceplan = pricePlan;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
     }
 
     public PricePlan getPricePlan() {
@@ -59,7 +40,7 @@ public class User {
 
     @Override
     public String toString() {
-        return this.firstname + " " + this.lastname;
+        return this.getFirstname() + " " + this.getLastname();
     }
 
     @Override
@@ -67,11 +48,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id);
+        return this.getId().equals(user.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(this.getId());
     }
 }
