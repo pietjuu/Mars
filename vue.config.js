@@ -4,10 +4,10 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       sass: {
-        additionalData: `@use "@/assets/scss/main.scss"; @use "@/assets/scss/colors.scss"; @use "@/assets/scss/constants.scss"; @use "@/assets/scss/fonts.scss";`
+        additionalData: ``// `@use "@/assets/scss/main.scss"; @use "@/assets/scss/colors.scss"; @use "@/assets/scss/constants.scss"; @use "@/assets/scss/fonts.scss";`
       },
       scss: {
-        additionalData: `@use "@/assets/scss/main.scss"; @use "@/assets/scss/colors.scss"; @use "@/assets/scss/constants.scss"; @use "@/assets/scss/fonts.scss";`
+        additionalData: ``//`@use "@/assets/scss/main.scss"; @use "@/assets/scss/colors.scss"; @use "@/assets/scss/constants.scss"; @use "@/assets/scss/fonts.scss";`
       }
     }
   },

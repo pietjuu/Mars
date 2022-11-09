@@ -1,27 +1,18 @@
 <template>
-  <div id="layout">
-    <div id="sidebar-nav">
-
-    </div>
-    <div id="header-and-content">
-      <header></header>
-      <div id="content">
-        <!-- notification component -->
-        <!-- main component -->
-        <p>Hallo</p>
-      </div>
-    </div>
-  </div>
+  <LoggedInLayout/>
 </template>
 
 <script>
+import LoggedInLayout from "@/layouts/LoggedInLayout";
+
 export default {
   name: "App",
-  components: { }
+  components: {
+    LoggedInLayout
+  }
 };
 </script>
 
 <style lang="scss">
-
-
+@use "@/assets/scss/main.scss";
 </style>

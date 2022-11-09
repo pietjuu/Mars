@@ -3,10 +3,20 @@
 /* other variables and constants */
 
 :root {
-  --default-text-size: 1rem;
+  --medium-text-size: 1rem;
+  --large-text-size: 1.25rem;
+  --small-text-size: 0.875rem;
+
+  --default-text-size: var(--small-text-size);
+  --nav-text-size: 0.9375rem;
+  --h1-text-size: 2rem;
+  --h2-text-size: var(--large-text-size);
+  --h3-text-size: var(--medium-text-size);
+
   --default-line-height: 1.6rem;
 
   --threshold-mobile-width: 1024px;
 
-  --border: var(--color-border) solid 0.1rem
+  --border: var(--color-border) solid 0.1rem;
+  --divider: var(--color-divider) solid 0.1rem;
 }
