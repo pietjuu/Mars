@@ -1,11 +1,12 @@
 package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.data.Repositories;
+import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * DefaultMarsController is the default implementation for the MarsController interface.
@@ -36,5 +37,10 @@ public class DefaultMarsController implements MarsController {
         } catch (IllegalArgumentException e){
             throw new NoSuchElementException(String.format("No such element %s", subscription));
         }
+    }
+
+    @Override
+    public Set<BaseUser> getUsers() {
+        return new HashSet<>(Repositories.getInMemoryRepository().getUsers());
     }
 }
