@@ -1,6 +1,5 @@
 #Libaries
 import RPi.GPIO as GPIO
-from time import sleep
 
 #set warnings off
 GPIO.setwarnings(False)
@@ -18,12 +17,10 @@ GPIO.setup(Button, GPIO.IN)
 GPIO.setup(Led_door_closed,GPIO.OUT)
 GPIO.setup(Led_door_open,GPIO.OUT)
 
-#control the lights
+#Set lights off when button is pushed
 while True:
 	button_state = GPIO.input(Button)
-	if button_state == 0:
+	if button_state == 1:
 		GPIO.output(Led_door_closed, GPIO.LOW)
-		GPIO.output(Led_door_open, GPIO.HIGH)
-	else:
-		GPIO.output(Led_door_closed, GPIO.HIGH)
 		GPIO.output(Led_door_open, GPIO.LOW)
+		break
