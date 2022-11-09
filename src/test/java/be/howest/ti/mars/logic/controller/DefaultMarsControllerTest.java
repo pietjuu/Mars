@@ -6,27 +6,43 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DefaultMarsControllerTest {
     @Test
     void testCreateUser(){
-        MockMarsController controller = new MockMarsController();
+        MarsController controller = new DefaultMarsController();
 
-        assertEquals("Glenn", controller.createUser("Glenn", "Callens", "PREMIUM").getFirstname());
+        assertEquals("Bob", controller.createUser("Bob", "Friet", "PREMIUM").getFirstname());
 
     }
 
     @Test
-    void testGetUsers(){
-        MockMarsController controller = new MockMarsController();
+    void testCreateUserWithEmptyFields(){
+        MarsController controller = new DefaultMarsController();
 
-        assertEquals(2, controller.getUsers().size());
+        assertThrows(IllegalArgumentException.class, () -> controller.createUser("", "", "BUSINESS"));
+    }
+
+    @Test
+    void testCreateUserWithWrongPricePlan(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.createUser("Glenn", "Callens", "KOFFIE"));
+    }
+
+    @Test
+    void testGetUsers(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.createUser("Bob", "Friet", "PREMIUM");
+        controller.createUser("Stevie", "Wonder", "PREMIUM");
+
         List<BaseUser> list = new ArrayList<>(controller.getUsers());
-        assertEquals("Thibo", list.get(0).getFirstname());
-        assertEquals("Glenn", list.get(1).getFirstname());
+        assertTrue(list.size() >= 2);
     }
 
 }
