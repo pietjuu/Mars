@@ -60,4 +60,13 @@ public class DefaultMarsController implements MarsController {
             return user;
         }
     }
+
+    @Override
+    public void deleteUser(String userID) {
+        if (StringUtils.isBlank(userID)){
+            throw new IllegalArgumentException("User ID is empty!");
+        } else {
+            repository.deleteUser(userID);
+        }
+    }
 }

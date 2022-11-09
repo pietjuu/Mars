@@ -11,4 +11,6 @@ public interface MarsController {
     Set<BaseUser> getUsers();
 
     User getUser(String userID);
+
+    void deleteUser(String userID);
 }
