@@ -46,6 +46,22 @@ class DefaultMarsControllerTest {
     }
 
     @Test
+    void testGetUser(){
+        MarsController controller = new DefaultMarsController();
+
+        // First add user and determinate the id.
+        controller.createUser( "Bob", "Friet", "PREMIUM");
+        String id = null;
+        for (BaseUser user : controller.getUsers()){
+            if (user.getFirstname().equals("Bob")){
+                id = user.getId();
+            }
+        }
+
+        assertEquals("Bob", controller.getUser(id).getFirstname());
+    }
+
+    @Test
     void testDeleteUser(){
         MarsController controller = new DefaultMarsController();
 
