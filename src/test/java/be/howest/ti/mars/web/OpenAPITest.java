@@ -31,7 +31,7 @@ class OpenAPITest {
     private static final String HOST = "localhost";
     public static final String MSG_200_EXPECTED = "If all goes right, we expect a 200 status";
     public static final String MSG_201_EXPECTED = "If a resource is successfully created.";
-    //public static final String MSG_204_EXPECTED = "If a resource is successfully deleted";
+    public static final String MSG_202_EXPECTED = "If a resource is successfully deleted";
     private Vertx vertx;
     private WebClient webClient;
 
@@ -102,6 +102,16 @@ class OpenAPITest {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
                     assertEquals("0155", response.bodyAsJsonObject().getString("id"));
                     assertEquals("Glenn", response.bodyAsJsonObject().getString("firstname"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void deleteUser(final VertxTestContext testContext){
+        webClient.delete(PORT, HOST, "/api/users/0155").bearerTokenAuthentication("0155").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() ->  {
+                    assertEquals(202, response.statusCode(), MSG_202_EXPECTED);
                     testContext.completeNow();
                 }));
     }
