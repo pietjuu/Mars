@@ -18,8 +18,9 @@ GPIO.setup(Button, GPIO.IN)
 GPIO.setup(Led_door_closed,GPIO.OUT)
 GPIO.setup(Led_door_open,GPIO.OUT)
 
-#Logic program
+#control the lights
 while True:
+	check_keybind()
 	button_state = GPIO.input(Button)
 	if button_state == 0:
 		GPIO.output(Led_door_closed, GPIO.LOW)
