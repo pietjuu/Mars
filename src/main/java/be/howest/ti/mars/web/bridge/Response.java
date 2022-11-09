@@ -17,7 +17,7 @@ public class Response {
         sendJsonResponse(ctx, 200, response);
     }
 
-    private static void sendEmptyResponse(RoutingContext ctx, int statusCode) {
+    public static void sendEmptyResponse(RoutingContext ctx, int statusCode) {
         ctx.response()
                 .setStatusCode(statusCode)
                 .end();
