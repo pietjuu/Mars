@@ -4,7 +4,6 @@
       <Sidebar/>
     </div>
     <div class="header-and-content-wrapper">
-      Content
     </div>
   </div>
 </template>
