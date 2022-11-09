@@ -6,6 +6,9 @@ import be.howest.ti.mars.logic.domain.users.User;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is a repo just for when testing.
+ */
 public class InMemoryRepository implements MarsRepositories{
 
     Set<User> users = new HashSet<>();

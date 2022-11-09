@@ -3,6 +3,9 @@ package be.howest.ti.mars.logic.domain.users;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * User
+ */
 public class User extends BaseUser{
 
     private PricePlan priceplan;
@@ -30,10 +33,18 @@ public class User extends BaseUser{
         this.priceplan = pricePlan;
     }
 
+    /**
+     * Returns price plan
+     * @return PricePlan enum.
+     */
     public PricePlan getPricePlan() {
         return priceplan;
     }
 
+    /**
+     * Set Price plan (mostly when user changes from plan).
+     * @param priceplan Price plan enum.
+     */
     public void setPricePlan(PricePlan priceplan) {
         this.priceplan = priceplan;
     }

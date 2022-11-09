@@ -1,5 +1,8 @@
 package be.howest.ti.mars.logic.domain.users;
 
+/**
+ * Price plan enum.
+ */
 public enum PricePlan {
 
     STANDARD("Standard", 10, 5),

@@ -3,6 +3,9 @@ package be.howest.ti.mars.web.auth;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.impl.UserImpl;
 
+/**
+ * Class for storing token.
+ */
 public class UserToken extends UserImpl {
 
     public UserToken(String id){

@@ -64,11 +64,18 @@ public class MarsOpenApiBridge {
         return routerBuilder.createRouter();
     }
 
+    /**
+     * Constructor, used in default case
+     */
     public MarsOpenApiBridge() {
         this.controller = new DefaultMarsController();
         this.tokenManager = new Tokens();
     }
 
+    /**
+     * Constructor, used in test case.
+     * @param controller in testing case the MockMarsController.
+     */
     public MarsOpenApiBridge(MarsController controller) {
         this.controller = controller;
         this.tokenManager = new Tokens();
