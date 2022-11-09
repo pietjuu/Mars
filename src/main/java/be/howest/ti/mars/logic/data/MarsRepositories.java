@@ -11,4 +11,6 @@ public interface MarsRepositories {
     Set<User> getUsers();
 
     User getUser(String userID);
+
+    void deleteUser(String userID);
 }

@@ -38,4 +38,9 @@ public class InMemoryRepository implements MarsRepositories{
 
         return null;
     }
+
+    @Override
+    public void deleteUser(String userID) {
+        users.removeIf(user -> user.getId().equals(userID));
+    }
 }
