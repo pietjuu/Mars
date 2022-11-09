@@ -6,6 +6,7 @@ import be.howest.ti.mars.web.auth.BearerAuthHandler;
 import be.howest.ti.mars.web.auth.TokenManager;
 import be.howest.ti.mars.web.auth.Tokens;
 import be.howest.ti.mars.web.auth.UserToken;
+import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
@@ -89,6 +90,9 @@ public class MarsOpenApiBridge {
     }
 
     private void getUser(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+
+        Response.sendJsonResponse(routingContext, 200, controller.getUser(id));
 
     }
 
@@ -105,6 +109,8 @@ public class MarsOpenApiBridge {
             code = 400;
         } else if (cause instanceof NoSuchElementException) {
             code = 404;
+        } else if (cause instanceof ForbiddenAccessException) {
+            code = 401;
         } else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
