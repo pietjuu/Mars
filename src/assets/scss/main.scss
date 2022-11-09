@@ -2,6 +2,10 @@
 @use "constants.scss";
 @use "fonts.scss";
 
+html {
+  min-height: 100%;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
@@ -40,6 +44,11 @@ a{
   text-decoration: underline solid var(--color-link);
   color: var(--color-link);
   transition: 0.4s;
+  display: inline-block;
+}
+
+img {
+  width: 100%;
 }
 
 .hidden {

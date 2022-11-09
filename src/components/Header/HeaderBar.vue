@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "HeaderBar"
 }
 </script>
 

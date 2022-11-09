@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "ContentNotification"
+  name: "NotificationBar"
 }
 </script>
 
