@@ -80,7 +80,7 @@ public class MarsOpenApiBridge {
         String subscription = Request.from(routingContext).getUserPricePlan();
 
         Response.sendJsonResponse(routingContext, 201, new JsonObject()
-                .put("token", tokenManager.createToken(controller.createUser(firstname, lastname, subscription)))
+                .put("id", tokenManager.createToken(controller.createUser(firstname, lastname, subscription)))
         );
     }
 
