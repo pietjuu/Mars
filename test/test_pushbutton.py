@@ -13,7 +13,7 @@ Button = 23
 Led_door_closed = 24
 Led_door_open = 25
 
-#Setup button
+#Setup button and start state LED
 GPIO.setup(Button, GPIO.IN)
 GPIO.setup(Led_door_closed,GPIO.OUT)
 GPIO.setup(Led_door_open,GPIO.OUT)
