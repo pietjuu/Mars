@@ -23,4 +23,11 @@ class UserTest {
 
         assertEquals(u1, u2);
     }
+
+    @Test
+    void testToString(){
+        User u1 = new User("1", "Glenn", "Callens", PricePlan.STANDARD);
+
+        assertEquals("Glenn Callens", u1.toString());
+    }
 }
