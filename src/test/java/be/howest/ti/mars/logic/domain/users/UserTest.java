@@ -2,6 +2,9 @@ package be.howest.ti.mars.logic.domain.users;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
@@ -35,8 +38,12 @@ class UserTest {
     void testEqualBaseUser(){
         BaseUser u1 = new BaseUser("1", "Glenn", "Callens");
         BaseUser u2 = new BaseUser("1", "Glenn", "Callens");
+        Set<BaseUser> users = new HashSet<>();
+        users.add(u1);
+        users.add(u2);
 
         assertEquals(u1, u2);
+        assertEquals(1, users.size());
     }
 
     @Test
@@ -45,5 +52,6 @@ class UserTest {
 
         assertEquals(10, u1.getPricePlan().getMaxItems());
         assertEquals(5, u1.getPricePlan().getCostPerMol());
+        assertEquals("Standard", u1.getPricePlan().getName());
     }
 }
