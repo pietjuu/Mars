@@ -15,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(VertxExtension.class)
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert","PMD.AvoidDuplicateLiterals"})
@@ -57,7 +56,15 @@ class OpenAPITest {
 
     @Test
     void getInformation(final VertxTestContext testContext){
-        webClient.get(PORT, HOST, "/").send()
+        // Using of standard controller for testing that constructor
+        WebServer webServer = new WebServer(new MarsOpenApiBridge(), new MarsRtcBridge());
+        vertx.deployVerticle(
+                webServer,
+                testContext.succeedingThenComplete()
+        );
+        WebClient webClient2 = WebClient.create(vertx);
+
+        webClient2.get(PORT, HOST, "/").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
@@ -116,10 +123,30 @@ class OpenAPITest {
                 }));
     }
 
+    @Test
+    void createErrors(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(400, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void createTokenErrors(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/0154").bearerTokenAuthentication("0155").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() ->  {
+                    assertEquals(401, response.statusCode(), MSG_200_EXPECTED);
+                    testContext.completeNow();
+                }));
+    }
+
     private JsonObject createUser(){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.put("firstname", "Bob");
-        jsonObject.put("lastname", "Bob");
+        jsonObject.put("firstname", "bob");
+        jsonObject.put("lastname", "bob");
         jsonObject.put("subscription", "STANDARD");
 
         return jsonObject;
