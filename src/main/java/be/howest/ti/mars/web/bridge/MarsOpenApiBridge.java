@@ -66,15 +66,15 @@ public class MarsOpenApiBridge {
         this.tokenManager = new PlainTextTokens();
     }
 
-    public void getInfo(RoutingContext routingContext){
+    private void getInfo(RoutingContext routingContext){
         Response.sendInformationResponse(routingContext, 1);
     }
 
-    public void getUsers(RoutingContext routingContext) {
+    private void getUsers(RoutingContext routingContext) {
         Response.sendJsonResponse(routingContext, 200, controller.getUsers());
     }
 
-    public void createUsers(RoutingContext routingContext){
+    private void createUsers(RoutingContext routingContext){
         String firstname = Request.from(routingContext).getUserFirstname();
         String lastname = Request.from(routingContext).getUserLastname();
         String subscription = Request.from(routingContext).getUserPricePlan();
