@@ -62,6 +62,20 @@ class DefaultMarsControllerTest {
     }
 
     @Test
+    void testGetUserWithEmptyArgument(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.getUser(""));
+    }
+
+    @Test
+    void testGetUserWithFalseID(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getUser("CANT_EXIST"));
+    }
+
+    @Test
     void testDeleteUser(){
         MarsController controller = new DefaultMarsController();
 
@@ -80,4 +94,10 @@ class DefaultMarsControllerTest {
         assertFalse(controller.getUsers().contains(oldUser));
     }
 
+    @Test
+    void testDeleteUserWithEmptyArgument(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.deleteUser(""));
+    }
 }
