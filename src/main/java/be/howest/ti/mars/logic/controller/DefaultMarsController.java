@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -19,6 +20,8 @@ import java.util.*;
  */
 public class DefaultMarsController implements MarsController {
 
+    MarsRepositories repository = Repositories.getInMemoryRepository();
+
     @Override
     public User createUser(String firstname, String lastname, String subscription) {
 
@@ -30,7 +33,7 @@ public class DefaultMarsController implements MarsController {
 
             PricePlan pricePlan = PricePlan.valueOf(subscription);
             User user = new User(firstname, lastname, pricePlan);
-            Repositories.getInMemoryRepository().addUser(user);
+            repository.addUser(user);
 
             return user;
 
