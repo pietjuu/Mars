@@ -53,8 +53,12 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for createUsers");
         routerBuilder.operation("createUser").handler(this::createUsers);
 
-        LOGGER.log(Level.INFO, "Installing handler for createUsers");
+        LOGGER.log(Level.INFO, "Installing handler for getUser");
         routerBuilder.operation("getUser").handler(this::getUser);
+
+        LOGGER.log(Level.INFO, "Installing handler for deleteUser");
+        routerBuilder.operation("deleteUser").handler(this::deleteUser);
+
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -94,6 +98,13 @@ public class MarsOpenApiBridge {
 
         Response.sendJsonResponse(routingContext, 200, controller.getUser(id));
 
+    }
+
+    private void deleteUser(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+
+        controller.deleteUser(id);
+        Response.sendEmptyResponse(routingContext, 202);
     }
 
     private void onFailedRequest(RoutingContext ctx) {
