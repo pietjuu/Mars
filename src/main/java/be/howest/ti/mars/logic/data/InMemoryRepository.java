@@ -27,4 +27,15 @@ public class InMemoryRepository implements MarsRepositories{
     public Set<User> getUsers() {
         return users;
     }
+
+    @Override
+    public User getUser(String userID) {
+        for(User user : users){
+            if (user.getId().equals(userID)){
+                return user;
+            }
+        }
+
+        return null;
+    }
 }

@@ -9,4 +9,6 @@ public interface MarsRepositories {
     void addUser(User user);
 
     Set<User> getUsers();
+
+    User getUser(String userID);
 }
