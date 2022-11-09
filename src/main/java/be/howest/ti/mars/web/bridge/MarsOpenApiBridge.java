@@ -71,7 +71,7 @@ public class MarsOpenApiBridge {
     }
 
     public void getUsers(RoutingContext routingContext) {
-
+        Response.sendJsonResponse(routingContext, 200, controller.getUsers());
     }
 
     public void createUsers(RoutingContext routingContext){
