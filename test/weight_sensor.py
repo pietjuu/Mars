@@ -36,6 +36,7 @@ def begin():
     lcdcmd(0x28)
     lcdcmd(0x01)
     time.sleep(0.0005)
+    print("functie begin werkt wanneer opgeroepen")
 
 
 print("geen errors check 1")
