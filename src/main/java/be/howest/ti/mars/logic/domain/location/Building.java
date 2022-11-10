@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.domain.location;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Building {
@@ -30,5 +31,18 @@ public class Building {
 
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return id.equals(building.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
