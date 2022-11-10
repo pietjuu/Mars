@@ -37,6 +37,7 @@ def begin():
     lcdcmd(0x01)
     time.sleep(0.0005)
 
+
 # Function for sending commands to LCD
 def lcdcmd(ch):
     gpio.output(RS, 0)
@@ -82,7 +83,8 @@ def lcdcmd(ch):
     time.sleep(0.005)
     gpio.output(EN, 0)
 
-#Write things to LCD screen
+
+# Write things to LCD screen
 def lcdwrite(ch):
     gpio.output(RS, 1)
     gpio.output(D4, 0)
@@ -128,9 +130,11 @@ def lcdwrite(ch):
     time.sleep(0.005)
     gpio.output(EN, 0)
 
-#Clear LCDscreen
+
+# Clear LCDscreen
 def lcdclear():
     lcdcmd(0x01)
+
 
 # LCD screen cursor
 def setCursor(x, y):
@@ -140,7 +144,8 @@ def setCursor(x, y):
         n = 192 + x
     lcdcmd(n)
 
-#Print LCD screen
+
+# Print LCD screen
 def lcdprint(Str):
     l = 0;
 
@@ -148,7 +153,6 @@ def lcdprint(Str):
 
     for i in range(l):
         lcdwrite(ord(Str[i]))
-
 
 
 # Function for reading data from HX711 (amplifier) and return output
