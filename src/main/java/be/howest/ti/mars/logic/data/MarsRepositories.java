@@ -1,6 +1,5 @@
 package be.howest.ti.mars.logic.data;
 
-import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.users.User;
 
@@ -43,4 +42,6 @@ public interface MarsRepositories {
     void addItemToUserBlacklist(Item item, String userID);
 
     void removeItemToUserBlacklist(Item item, String userID);
+
+    int getIndexUserBlackList(String userID);
 }

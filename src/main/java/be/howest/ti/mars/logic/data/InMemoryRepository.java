@@ -83,18 +83,19 @@ public class InMemoryRepository implements MarsRepositories{
 
     @Override
     public void addItemToUserBlacklist(Item item, String userID) {
-        int index = getIntUserBlackList(userID);
+        int index = getIndexUserBlackList(userID);
 
         blackListUser.get(index).addItem(item);
     }
 
     @Override
     public void removeItemToUserBlacklist(Item item, String userID) {
-        int index = getIntUserBlackList(userID);
+        int index = getIndexUserBlackList(userID);
 
         blackListUser.get(index).removeItem(item);
     }
 
+    //TODO write tests
     private UserBlacklist getObjUserBlackList(String userID){
         for (UserBlacklist userBlacklist : blackListUser){
             if (userBlacklist.getUserID().equals(userID)){
@@ -104,7 +105,8 @@ public class InMemoryRepository implements MarsRepositories{
         return null;
     }
 
-    private int getIntUserBlackList(String userID){
+    @Override
+    public int getIndexUserBlackList(String userID){
         int i = 0;
         for (UserBlacklist userBlacklist : blackListUser){
             if (userBlacklist.getUserID().equals(userID)){
