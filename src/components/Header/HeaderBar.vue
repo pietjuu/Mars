@@ -3,7 +3,7 @@
     <div class="desktop-header">
       <div class="header-actions">
         <TextButton :content="`Support`"/>
-        <IconButton :icon="`notifications`"/>
+        <IconButton :icon="`notifications`" :color="`var(--color-text)`"/>
         <ProfileButton :content="`XX`"/>
       </div>
     </div>

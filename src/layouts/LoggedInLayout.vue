@@ -5,6 +5,7 @@
     </div>
     <div class="header-and-content-wrapper">
       <HeaderBar/>
+      <NotificationBar :content="`Item is send to destination.`" :type="`error`"/>
       <MainContent/>
     </div>
   </div>

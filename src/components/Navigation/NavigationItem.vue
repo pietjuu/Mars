@@ -1,12 +1,12 @@
 <template>
-  <a :href="route" class="nav-item">
+  <router-link :to="route" class="nav-item">
     <div class="nav-icon-wrapper">
       <Icon :icon="icon"/>
     </div>
     <div class="nav-content-wrapper">
       <p>{{ title }}</p>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>

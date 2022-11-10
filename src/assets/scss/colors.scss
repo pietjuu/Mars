@@ -17,6 +17,7 @@
   --vt-c-green: #00E941;
   --vt-c-orange: #DA7212;
   --vt-c-purple: #A612DA;
+  --vt-c-red: #C30010;
 
   /* white theme: wt */
   --vt-c-border-wt: rgba(227,235,246,0.8);
@@ -35,7 +36,9 @@
   --color-background: var(--vt-c-white);
   --color-background-mute: var(--vt-c-white-mute-1);
 
+  --color-white: var(--vt-c-white);
   --color-green: var(--vt-c-green);
+  --color-red: var(--vt-c-red);
   --color-orange: var(--vt-c-orange);
   --color-purple: var(--vt-c-purple);
 

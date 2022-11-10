@@ -1,13 +1,15 @@
 <template>
-$END$
+  <div>
+    content
+  </div>
 </template>
 
 <script>
 export default {
-name: "DashboardView"
+  name: "DashboardView"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

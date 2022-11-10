@@ -1,13 +1,13 @@
 <template>
-$END$
+
 </template>
 
 <script>
 export default {
-name: "CalculatePriceView"
+  name: "CalculatePriceView"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

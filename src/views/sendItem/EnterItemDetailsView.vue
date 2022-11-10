@@ -1,13 +1,13 @@
 <template>
-$END$
+
 </template>
 
 <script>
 export default {
-name: "EnterItemDetailsView"
+  name: "EnterItemDetailsView"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

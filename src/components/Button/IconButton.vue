@@ -1,5 +1,5 @@
 <template>
-  <button type="button">
+  <button type="button" :style="{'color':color}">
     <Icon :icon="icon"/>
   </button>
 </template>
@@ -10,7 +10,8 @@ import Icon from "@/components/Icon/Icon";
 export default {
   name: "IconButton",
   props: {
-    icon: String
+    icon: String,
+    color: String
   },
   components: {
     Icon
@@ -21,8 +22,7 @@ export default {
 <style scoped lang="scss">
 
 button {
-  background: var(--color-background);
-  color: var(--color-text);
+  background: transparent;
   border-style: none;
   display: flex;
   align-items: center;
