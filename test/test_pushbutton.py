@@ -11,7 +11,7 @@ Button = 23
 
 #Set pins to LED
 Led_door_closed = 24
-Led_door_open = 25
+Led_door_open = 12
 
 #Setup button and start state LED
 GPIO.setup(Button, GPIO.IN)
