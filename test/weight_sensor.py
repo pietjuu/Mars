@@ -26,6 +26,7 @@ GPIO.setup(D6, GPIO.OUT)
 GPIO.setup(D7, GPIO.OUT)
 GPIO.setup(SCK, GPIO.OUT)
 
+
 # Fucntion to initilize LCD screen
 def begin():
     lcdcmd(0x33)
@@ -35,6 +36,10 @@ def begin():
     lcdcmd(0x28)
     lcdcmd(0x01)
     time.sleep(0.0005)
+
+
+print("geen errors check 1")
+
 
 # Function for sending commands to LCD
 def lcdcmd(ch):
@@ -80,6 +85,10 @@ def lcdcmd(ch):
     GPIO.output(EN, 1)
     time.sleep(0.005)
     GPIO.output(EN, 0)
+
+
+print("geen errors check 2")
+
 
 # Write things to LCD screen
 def lcdwrite(ch):
@@ -127,9 +136,14 @@ def lcdwrite(ch):
     time.sleep(0.005)
     GPIO.output(EN, 0)
 
+
+print("geen errors check 3")
+
+
 # Clear LCDscreen
 def lcdclear():
     lcdcmd(0x01)
+
 
 # LCD screen cursor
 def setCursor(x, y):
@@ -139,6 +153,10 @@ def setCursor(x, y):
         n = 192 + x
     lcdcmd(n)
 
+
+print("geen errors check 4")
+
+
 # Print LCD screen
 def lcdprint(Str):
     l = 0;
@@ -146,14 +164,18 @@ def lcdprint(Str):
     for i in range(l):
         lcdwrite(ord(Str[i]))
 
+
+print("geen errors check 5")
+
+
 # Function for reading data from HX711 (amplifier) and return output
 def readCount():
     i = 0
     Count = 0
-    GPIO.setup(DT, gpio.OUT)
+    GPIO.setup(DT, GPIO.OUT)
     GPIO.output(DT, 1)
     GPIO.output(SCK, 0)
-    GPIO.setup(DT, gpio.IN)
+    GPIO.setup(DT, GPIO.IN)
 
     while GPIO.input(DT) == 1:
         i = 0
@@ -167,5 +189,8 @@ def readCount():
     GPIO.output(SCK, 1)
     Count = Count ^ 0x800000  # uitzoeken waarom
     GPIO.output(SCK, 0)
+    print("Function read count werkt (tot voor de return)")
     return Count
 
+
+print("geen errors check 6")
