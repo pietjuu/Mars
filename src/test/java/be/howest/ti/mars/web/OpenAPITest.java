@@ -11,10 +11,11 @@ import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.commons.util.StringUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(VertxExtension.class)
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert","PMD.AvoidDuplicateLiterals"})
@@ -29,7 +30,7 @@ class OpenAPITest {
     private static final String HOST = "localhost";
     public static final String MSG_200_EXPECTED = "If all goes right, we expect a 200 status";
     public static final String MSG_201_EXPECTED = "If a resource is successfully created.";
-    public static final String MSG_204_EXPECTED = "If a resource is successfully deleted";
+    public static final String MSG_202_EXPECTED = "If a resource is successfully deleted";
     private Vertx vertx;
     private WebClient webClient;
 
@@ -54,74 +55,100 @@ class OpenAPITest {
     }
 
     @Test
-    void getQuote(final VertxTestContext testContext) {
-        webClient.get(PORT, HOST, "/api/quotes/2").send()
+    void getInformation(final VertxTestContext testContext){
+        // Using of standard controller for testing that constructor
+        WebServer webServer = new WebServer(new MarsOpenApiBridge(), new MarsRtcBridge());
+        vertx.deployVerticle(
+                webServer,
+                testContext.succeedingThenComplete()
+        );
+        WebClient webClient2 = WebClient.create(vertx);
+
+        webClient2.get(PORT, HOST, "/").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
-                    assertTrue(
-                            StringUtils.isNotBlank(response.bodyAsJsonObject().getString("value")),
-                            "Empty quotes are not allowed"
-                    );
+                    assertEquals(1, response.bodyAsJsonObject().getInteger("version"), "Version doesn't match");
                     testContext.completeNow();
                 }));
     }
 
     @Test
-    void getQuoteWithInvalidID(final VertxTestContext testContext) {
-        webClient.get(PORT, HOST, "/api/quotes/333").send()
+    void getUsers(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
-                    assertTrue(
-                            StringUtils.isNotBlank(response.bodyAsJsonObject().getString("value")),
-                            "Empty quotes are not allowed"
-                    );
+                    assertEquals(2, response.bodyAsJsonArray().size());
+                    List<String> stringList = new ArrayList<>();
+                    stringList.add(response.bodyAsJsonArray().getJsonObject(0).getString("firstname"));
+                    stringList.add(response.bodyAsJsonArray().getJsonObject(1).getString("firstname"));
+
+                    assertTrue(stringList.contains("Thibo"));
+                    assertTrue(stringList.contains("Glenn"));
                     testContext.completeNow();
                 }));
     }
 
     @Test
-    void createQuote(final VertxTestContext testContext) {
-        String testQuote = "some value";
-        webClient.post(PORT, HOST, "/api/quotes").sendJsonObject(createQuote(testQuote))
+    void createUsers(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/users").sendJsonObject(createUser())
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(201, response.statusCode(), MSG_201_EXPECTED);
-                    assertEquals(
-                            testQuote,
-                            response.bodyAsJsonObject().getString("value"),
-                            "Quote does not match " + testQuote);
+                    assertEquals("testID01", response.bodyAsJsonObject().getString("id"));
                     testContext.completeNow();
                 }));
     }
 
     @Test
-    void updateQuote(final VertxTestContext testContext) {
-        String testQuote = "some value";
-        webClient.put(PORT, HOST, "/api/quotes/0").sendJsonObject(createQuote(testQuote))
+    void getUser(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/0155").bearerTokenAuthentication("0155").send()
                 .onFailure(testContext::failNow)
-                .onSuccess(response -> testContext.verify(() -> {
+                .onSuccess(response -> testContext.verify(() ->  {
                     assertEquals(200, response.statusCode(), MSG_200_EXPECTED);
-                    assertEquals(
-                            testQuote,
-                            response.bodyAsJsonObject().getString("value"),
-                            "Quote does not match " + testQuote);
+                    assertEquals("0155", response.bodyAsJsonObject().getString("id"));
+                    assertEquals("Glenn", response.bodyAsJsonObject().getString("firstname"));
                     testContext.completeNow();
                 }));
     }
 
     @Test
-    void deleteQuote(final VertxTestContext testContext) {
-        webClient.delete(PORT, HOST, "/api/quotes/1").send()
+    void deleteUser(final VertxTestContext testContext){
+        webClient.delete(PORT, HOST, "/api/users/0155").bearerTokenAuthentication("0155").send()
                 .onFailure(testContext::failNow)
-                .onSuccess(response -> testContext.verify(() -> {
-                    assertEquals(204, response.statusCode(), MSG_204_EXPECTED);
+                .onSuccess(response -> testContext.verify(() ->  {
+                    assertEquals(202, response.statusCode(), MSG_202_EXPECTED);
                     testContext.completeNow();
                 }));
     }
 
-    private JsonObject createQuote(String quote) {
-        return new JsonObject().put("quote", quote);
+    @Test
+    void createErrors(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(400, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void createTokenErrors(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/0154").bearerTokenAuthentication("0155").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() ->  {
+                    assertEquals(401, response.statusCode(), MSG_200_EXPECTED);
+                    testContext.completeNow();
+                }));
+    }
+
+    private JsonObject createUser(){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("firstname", "bob");
+        jsonObject.put("lastname", "bob");
+        jsonObject.put("subscription", "STANDARD");
+
+        return jsonObject;
     }
 }

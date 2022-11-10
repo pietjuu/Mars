@@ -17,13 +17,18 @@ public class Response {
         sendJsonResponse(ctx, 200, response);
     }
 
-    private static void sendEmptyResponse(RoutingContext ctx, int statusCode) {
+    public static void sendEmptyResponse(RoutingContext ctx, int statusCode) {
         ctx.response()
                 .setStatusCode(statusCode)
                 .end();
     }
 
-    private static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
+    public static void sendInformationResponse(RoutingContext ctx, int version){
+        sendOkJsonResponse(ctx,  new JsonObject()
+                .put("version", version));
+    }
+
+    public static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
         ctx.response()
                 .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .setStatusCode(statusCode)
