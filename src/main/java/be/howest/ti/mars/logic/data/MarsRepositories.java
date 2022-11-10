@@ -40,7 +40,7 @@ public interface MarsRepositories {
 
     UserBlacklist createUserBlacklist(String userID);
 
-    void addItemToUserBlacklist(Item item);
+    void addItemToUserBlacklist(Item item, String userID);
 
-    void removeItemToUserBlacklist(Item item);
+    void removeItemToUserBlacklist(Item item, String userID);
 }
