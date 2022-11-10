@@ -84,9 +84,6 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public void addItemToUserBlacklist(Item item, String userID) {
         int index = getIntUserBlackList(userID);
-        if(index == -2){
-            throw new NoSuchElementException("The blacklist of that user doesn't exist!");
-        }
 
         blackListUser.get(index).addItem(item);
     }
@@ -94,9 +91,6 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public void removeItemToUserBlacklist(Item item, String userID) {
         int index = getIntUserBlackList(userID);
-        if(index == -2){
-            throw new NoSuchElementException("The blacklist of that user doesn't exist!");
-        }
 
         blackListUser.get(index).removeItem(item);
     }
