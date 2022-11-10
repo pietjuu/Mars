@@ -86,6 +86,7 @@ def lcdcmd(ch):
     GPIO.output(EN, 1)
     time.sleep(0.005)
     GPIO.output(EN, 0)
+    print("functie lcdcmd werkt wanneer opgeroepen")
 
 
 print("geen errors check 2")
@@ -197,3 +198,4 @@ def readCount():
 print("geen errors check 6")
 
 begin()
+lcdcmd(0x01)
