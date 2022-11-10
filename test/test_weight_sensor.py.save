@@ -1,0 +1,15 @@
+#Libraries
+import RPi.GPIO as GPIO
+from time import sleep
+from hx711 import HX711
+
+#Set warnings off (optional)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
+#Set sensor pins
+hx = HX711(dout_pin=5, pd_sck_pin=6)
+
+#Reset sensor
+ err = hx.reset()
+

@@ -1,6 +1,7 @@
 #Libraries
 import RPi.GPIO as GPIO
 from time import sleep
+
 #Set warnings off (optional)
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -12,7 +13,6 @@ LED = 24
 #Setup Button and LED
 GPIO.setup(Button,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(LED,GPIO.OUT)
-#flag = 0
 
 '''
 while True:
