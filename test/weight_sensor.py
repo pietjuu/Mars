@@ -195,3 +195,5 @@ def readCount():
 
 
 print("geen errors check 6")
+
+begin()
