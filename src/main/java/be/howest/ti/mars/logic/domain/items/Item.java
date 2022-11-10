@@ -3,7 +3,6 @@ package be.howest.ti.mars.logic.domain.items;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
