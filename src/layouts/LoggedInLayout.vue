@@ -4,6 +4,7 @@
       <Sidebar/>
     </div>
     <div class="header-and-content-wrapper">
+      <HeaderBar/>
     </div>
   </div>
 </template>
@@ -37,6 +38,11 @@ export default {
 .sidebar-wrapper {
   position: relative;
   float: left;
+}
+
+.header-and-content-wrapper {
+  height: 100vh;
+  position: relative;
 }
 
 </style>

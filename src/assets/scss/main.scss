@@ -52,6 +52,22 @@ img {
   width: 100%;
 }
 
+button {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-text-button);
+  border-style: none;
+  font-size: var(--default-text-size);
+  font-family:var(--default-font-style);
+}
+
 .hidden {
   display: none;
 }
+
+@media (hover: hover) {
+  a, button {
+    cursor: pointer;
+  }
+}
+
