@@ -87,4 +87,14 @@ public class Item {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return name + ": \n" +
+                "id: " + id + " \n" +
+                "size: " + size + " \n" +
+                "status: " + status + " \n" +
+                "SendTime: " + sendTime + " \n" +
+                "ReceivedTime: " + receivedTime + " \n" +
+                "Atoms: " + atoms;
+    }
 }
