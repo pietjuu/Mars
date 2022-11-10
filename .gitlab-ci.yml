@@ -1,10 +1,5 @@
 image: timbru31/java-node:11-azul-alpine-jdk
 
-stages:
-  - build
-  - QA
-  - deploy
-
 build:
   stage: build
   script:
