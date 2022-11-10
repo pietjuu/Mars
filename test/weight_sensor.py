@@ -1,5 +1,5 @@
 # Libaries
-import RPi.GPIO as gpio
+import RPi.GPIO as GPIO
 import time
 
 # Set warnings off
@@ -17,15 +17,14 @@ DT = 27  # DT = on amplifier connected to RPI
 SCK = 17  # SCK = on amplifier connected to RPI
 
 # Setup state from components
-gpio.setmode(gpio.BCM)
-gpio.setup(RS, gpio.OUT)
-gpio.setup(EN, gpio.OUT)
-gpio.setup(D4, gpio.OUT)
-gpio.setup(D5, gpio.OUT)
-gpio.setup(D6, gpio.OUT)
-gpio.setup(D7, gpio.OUT)
-gpio.setup(SCK, gpio.OUT)
-
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(RS, GPIO.OUT)
+GPIO.setup(EN, GPIO.OUT)
+GPIO.setup(D4, GPIO.OUT)
+GPIO.setup(D5, GPIO.OUT)
+GPIO.setup(D6, GPIO.OUT)
+GPIO.setup(D7, GPIO.OUT)
+GPIO.setup(SCK, GPIO.OUT)
 
 # Fucntion to initilize LCD screen
 def begin():
@@ -37,104 +36,100 @@ def begin():
     lcdcmd(0x01)
     time.sleep(0.0005)
 
-
 # Function for sending commands to LCD
 def lcdcmd(ch):
-    gpio.output(RS, 0)
-    gpio.output(D4, 0)
-    gpio.output(D5, 0)
-    gpio.output(D6, 0)
-    gpio.output(D7, 0)
+    GPIO.output(RS, 0)
+    GPIO.output(D4, 0)
+    GPIO.output(D5, 0)
+    GPIO.output(D6, 0)
+    GPIO.output(D7, 0)
 
     if ch & 0x10 == 0x10:
-        gpio.output(D4, 1)
+        GPIO.output(D4, 1)
 
     if ch & 0x20 == 0x20:
-        gpio.output(D5, 1)
+        GPIO.output(D5, 1)
 
     if ch & 0x40 == 0x40:
-        gpio.output(D6, 1)
+        GPIO.output(D6, 1)
 
     if ch & 0x80 == 0x80:
-        gpio.output(D7, 1)
+        GPIO.output(D7, 1)
 
-    gpio.output(EN, 1)
+    GPIO.output(EN, 1)
     time.sleep(0.005)
-    gpio.output(EN, 0)
+    GPIO.output(EN, 0)
     # Low bits
-    gpio.output(D4, 0)
-    gpio.output(D5, 0)
-    gpio.output(D6, 0)
-    gpio.output(D7, 0)
+    GPIO.output(D4, 0)
+    GPIO.output(D5, 0)
+    GPIO.output(D6, 0)
+    GPIO.output(D7, 0)
 
     if ch & 0x01 == 0x01:
-        gpio.output(D4, 1)
+        GPIO.output(D4, 1)
 
     if ch & 0x02 == 0x02:
-        gpio.output(D5, 1)
+        GPIO.output(D5, 1)
 
     if ch & 0x04 == 0x04:
-        gpio.output(D6, 1)
+        GPIO.output(D6, 1)
 
     if ch & 0x08 == 0x08:
-        gpio.output(D7, 1)
+        GPIO.output(D7, 1)
 
-    gpio.output(EN, 1)
+    GPIO.output(EN, 1)
     time.sleep(0.005)
-    gpio.output(EN, 0)
-
+    GPIO.output(EN, 0)
 
 # Write things to LCD screen
 def lcdwrite(ch):
-    gpio.output(RS, 1)
-    gpio.output(D4, 0)
-    gpio.output(D5, 0)
-    gpio.output(D6, 0)
-    gpio.output(D7, 0)
+    GPIO.output(RS, 1)
+    GPIO.output(D4, 0)
+    GPIO.output(D5, 0)
+    GPIO.output(D6, 0)
+    GPIO.output(D7, 0)
 
     if ch & 0x10 == 0x10:
-        gpio.output(D4, 1)
+        GPIO.output(D4, 1)
 
     if ch & 0x20 == 0x20:
-        gpio.output(D5, 1)
+        GPIO.output(D5, 1)
 
     if ch & 0x40 == 0x40:
-        gpio.output(D6, 1)
+        GPIO.output(D6, 1)
 
     if ch & 0x80 == 0x80:
-        gpio.output(D7, 1)
+        GPIO.output(D7, 1)
 
-    gpio.output(EN, 1)
+    GPIO.output(EN, 1)
     time.sleep(0.005)
-    gpio.output(EN, 0)
+    GPIO.output(EN, 0)
 
     # Low bits
-    gpio.output(D4, 0)
-    gpio.output(D5, 0)
-    gpio.output(D6, 0)
-    gpio.output(D7, 0)
+    GPIO.output(D4, 0)
+    GPIO.output(D5, 0)
+    GPIO.output(D6, 0)
+    GPIO.output(D7, 0)
 
     if ch & 0x01 == 0x01:
-        gpio.output(D4, 1)
+        GPIO.output(D4, 1)
 
     if ch & 0x02 == 0x02:
-        gpio.output(D5, 1)
+        GPIO.output(D5, 1)
 
     if ch & 0x04 == 0x04:
-        gpio.output(D6, 1)
+        GPIO.output(D6, 1)
 
     if ch & 0x08 == 0x08:
-        gpio.output(D7, 1)
+        GPIO.output(D7, 1)
 
-    gpio.output(EN, 1)
+    GPIO.output(EN, 1)
     time.sleep(0.005)
-    gpio.output(EN, 0)
-
+    GPIO.output(EN, 0)
 
 # Clear LCDscreen
 def lcdclear():
     lcdcmd(0x01)
-
 
 # LCD screen cursor
 def setCursor(x, y):
@@ -144,36 +139,33 @@ def setCursor(x, y):
         n = 192 + x
     lcdcmd(n)
 
-
 # Print LCD screen
 def lcdprint(Str):
     l = 0;
-
     l = len(Str)
-
     for i in range(l):
         lcdwrite(ord(Str[i]))
-
 
 # Function for reading data from HX711 (amplifier) and return output
 def readCount():
     i = 0
     Count = 0
-    gpio.setup(DT, gpio.OUT)
-    gpio.output(DT, 1)
-    gpio.output(SCK, 0)
-    gpio.setup(DT, gpio.IN)
+    GPIO.setup(DT, gpio.OUT)
+    GPIO.output(DT, 1)
+    GPIO.output(SCK, 0)
+    GPIO.setup(DT, gpio.IN)
 
-    while gpio.input(DT) == 1:
+    while GPIO.input(DT) == 1:
         i = 0
     for i in range(24):
-        gpio.output(SCK, 1)
+        GPIO.output(SCK, 1)
         Count = Count << 1
-        gpio.output(SCK, 0)
-        if gpio.input(DT) == 0:
+        GPIO.output(SCK, 0)
+        if GPIO.input(DT) == 0:
             Count = Count + 1
 
-    gpio.output(SCK, 1)
+    GPIO.output(SCK, 1)
     Count = Count ^ 0x800000  # uitzoeken waarom
-    gpio.output(SCK, 0)
+    GPIO.output(SCK, 0)
     return Count
+
