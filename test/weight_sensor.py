@@ -140,6 +140,17 @@ def setCursor(x, y):
         n = 192 + x
     lcdcmd(n)
 
+#Print LCD screen
+def lcdprint(Str):
+    l = 0;
+
+    l = len(Str)
+
+    for i in range(l):
+        lcdwrite(ord(Str[i]))
+
+
+
 # Function for reading data from HX711 (amplifier) and return output
 def readCount():
     i = 0
