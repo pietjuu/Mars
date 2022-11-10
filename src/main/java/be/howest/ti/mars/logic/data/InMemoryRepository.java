@@ -1,9 +1,13 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,6 +16,7 @@ import java.util.Set;
 public class InMemoryRepository implements MarsRepositories{
 
     Set<User> users = new HashSet<>();
+    Set<Item> shippertBlacklist = new HashSet<>();
 
     public InMemoryRepository(){
         addUser(new User("Thibo", "Verbeerst", PricePlan.BUSINESS));
@@ -19,6 +24,8 @@ public class InMemoryRepository implements MarsRepositories{
         addUser(new User("Delia", "Vervaeke", PricePlan.STANDARD));
         addUser(new User("Wiebe", "Desmadryl", PricePlan.STANDARD));
         addUser(new User("Glenn", "Callens", PricePlan.PREMIUM));
+        shippertBlacklist.add(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
+        shippertBlacklist.add(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
     }
 
     @Override
@@ -52,5 +59,10 @@ public class InMemoryRepository implements MarsRepositories{
         }
 
         users.remove(deletedUser);
+    }
+
+    @Override
+    public List<Item> getShippertBlacklist() {
+        return new ArrayList<>(shippertBlacklist);
     }
 }
