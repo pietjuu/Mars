@@ -2,24 +2,24 @@ package be.howest.ti.mars.logic.domain.location;
 
 public class Coordinates {
 
-    private final String longitude;
-    private final String latitude;
+    private final float longitude;
+    private final float latitude;
 
-    public Coordinates(String longitude, String latitude){
+    public Coordinates(float longitude, float latitude){
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
     @Override
     public String toString() {
-        return this.longitude + " " + this.latitude;
+        return "Longitude: " + this.longitude + ", Latitude: " + this.latitude;
     }
 }
