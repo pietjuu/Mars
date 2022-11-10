@@ -16,6 +16,7 @@ public class Item {
     private LocalDateTime receivedTime;
     private int atoms = 0;
 
+    //TODO test it.
     public Item(String name){
         this.id = UUID.randomUUID().toString();
         this.status = ItemStatus.UNDEFINED;
