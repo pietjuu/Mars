@@ -25,17 +25,17 @@ public class InMemoryRepository implements MarsRepositories{
         addUser(new User("T-5", "Glenn", "Callens", PricePlan.PREMIUM));
         shippertBlacklist.add(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
         shippertBlacklist.add(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
-        blackListUser.add(createUserBlacklist("T-1"));
-        blackListUser.add(createUserBlacklist("T-2"));
-        blackListUser.add(createUserBlacklist("T-3"));
-        blackListUser.add(createUserBlacklist("T-4"));
-        blackListUser.add(createUserBlacklist("T-5"));
+        createUserBlacklist("T-1");
+        createUserBlacklist("T-2");
+        createUserBlacklist("T-3");
+        createUserBlacklist("T-4");
+        createUserBlacklist("T-5");
     }
 
     @Override
     public void addUser(User user) {
         users.add(user);
-        blackListUser.add(createUserBlacklist(user.getId()));
+        createUserBlacklist(user.getId());
     }
 
     @Override
@@ -77,8 +77,8 @@ public class InMemoryRepository implements MarsRepositories{
     }
 
     @Override
-    public UserBlacklist createUserBlacklist(String userID) {
-        return new UserBlacklist(userID);
+    public void createUserBlacklist(String userID) {
+        blackListUser.add(new UserBlacklist(userID));
     }
 
     @Override
