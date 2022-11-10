@@ -82,6 +82,63 @@ def lcdcmd(ch):
     time.sleep(0.005)
     gpio.output(EN, 0)
 
+#Write things to LCD screen
+def lcdwrite(ch):
+    gpio.output(RS, 1)
+    gpio.output(D4, 0)
+    gpio.output(D5, 0)
+    gpio.output(D6, 0)
+    gpio.output(D7, 0)
+
+    if ch & 0x10 == 0x10:
+        gpio.output(D4, 1)
+
+    if ch & 0x20 == 0x20:
+        gpio.output(D5, 1)
+
+    if ch & 0x40 == 0x40:
+        gpio.output(D6, 1)
+
+    if ch & 0x80 == 0x80:
+        gpio.output(D7, 1)
+
+    gpio.output(EN, 1)
+    time.sleep(0.005)
+    gpio.output(EN, 0)
+
+    # Low bits
+    gpio.output(D4, 0)
+    gpio.output(D5, 0)
+    gpio.output(D6, 0)
+    gpio.output(D7, 0)
+
+    if ch & 0x01 == 0x01:
+        gpio.output(D4, 1)
+
+    if ch & 0x02 == 0x02:
+        gpio.output(D5, 1)
+
+    if ch & 0x04 == 0x04:
+        gpio.output(D6, 1)
+
+    if ch & 0x08 == 0x08:
+        gpio.output(D7, 1)
+
+    gpio.output(EN, 1)
+    time.sleep(0.005)
+    gpio.output(EN, 0)
+
+#Clear LCDscreen
+def lcdclear():
+    lcdcmd(0x01)
+
+# LCD screen cursor
+def setCursor(x, y):
+    if y == 0:
+        n = 128 + x
+    elif y == 1:
+        n = 192 + x
+    lcdcmd(n)
 
 # Function for reading data from HX711 (amplifier) and return output
 def readCount():
