@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.domain.items;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,6 +32,10 @@ public class Item {
     }
 
     public void setStatus(ItemStatus status) {
+
+        if (status.equals(ItemStatus.COMPLETED) && (Objects.isNull(this.receivedTime) || Objects.isNull(this.sendTime))){
+            throw new IllegalStateException("There is no received time or send time set.");
+        }
         this.status = status;
     }
 
