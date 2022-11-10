@@ -5,6 +5,7 @@
     </div>
     <div class="header-and-content-wrapper">
       <HeaderBar/>
+      <MainContent/>
     </div>
   </div>
 </template>
@@ -28,7 +29,10 @@ export default {
 
 <style scoped lang="scss">
 
+
 #logged-in-layout {
+  --sidebar-width: 16rem;
+
   position: fixed;
   width: 100vw;
   height: 100vw;
@@ -36,13 +40,18 @@ export default {
 }
 
 .sidebar-wrapper {
-  position: relative;
-  float: left;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: var(--sidebar-width);
 }
 
 .header-and-content-wrapper {
   height: 100vh;
   position: relative;
+  margin-left: var(--sidebar-width);
 }
 
 </style>

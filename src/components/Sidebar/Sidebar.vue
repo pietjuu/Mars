@@ -27,9 +27,8 @@ export default {
 <style scoped lang="scss">
 
  div {
-   width: 16rem;
-   overflow: hidden;
-   height: 100vh;
+   --logo-height: 4rem;
+
    border-right: var(--border);
  }
 
@@ -38,12 +37,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 4rem;
+  height: var(--logo-height);
   overflow: hidden;
 }
 
 .sidebar > .navigation-wrapper {
-  height: calc(100vh - 4rem);
+  height: calc(100vh - var(--logo-height));
   padding-top: 0.625rem;
   overflow: auto;
 }
