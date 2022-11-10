@@ -16,6 +16,13 @@ public class Item {
     private LocalDateTime receivedTime;
     private int atoms = 0;
 
+    public Item(String name){
+        this.id = UUID.randomUUID().toString();
+        this.status = ItemStatus.UNDEFINED;
+        this.size = new Size(0,0,0);
+        this.name = name;
+    }
+
     public Item(String name, Size size) {
         this.id = UUID.randomUUID().toString();
         this.status = ItemStatus.UNDEFINED;
