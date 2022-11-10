@@ -29,6 +29,12 @@ class InMemoryRepositoryTest {
     }
 
     @Test
+    void getUserNull(){
+        InMemoryRepository repo = new InMemoryRepository();
+        assertNull(repo.getUser("blabla"));
+    }
+
+    @Test
     void deleteUser() {
         InMemoryRepository repo = new InMemoryRepository();
 
@@ -47,7 +53,7 @@ class InMemoryRepositoryTest {
     void getShippertBlacklist() {
         InMemoryRepository repo = new InMemoryRepository();
 
-        assertEquals(2, repo.shippertBlacklist.size());
+        assertEquals(2, repo.getShippertBlacklist().size());
     }
 
     @Test
