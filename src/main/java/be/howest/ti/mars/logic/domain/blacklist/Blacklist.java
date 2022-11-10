@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Blacklist {
 
-    private final Set<Item> list;
+    protected final Set<Item> list;
 
     public Blacklist(){
         this.list = new HashSet<>();
