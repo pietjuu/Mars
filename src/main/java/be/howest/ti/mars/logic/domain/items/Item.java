@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.domain.items;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Item {
@@ -72,4 +73,18 @@ public class Item {
     public int getAtoms() {
         return atoms;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id.equals(item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }
