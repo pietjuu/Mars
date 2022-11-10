@@ -15,7 +15,7 @@ public class Item {
     private ItemStatus status;
     private LocalDateTime sendTime;
     private LocalDateTime receivedTime;
-    private int atoms;
+    private int atoms = 0;
 
     public Item(String name, Size size) {
         this.id = UUID.randomUUID().toString();
