@@ -1,5 +1,7 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
+import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -17,20 +19,27 @@ public class InMemoryRepository implements MarsRepositories{
 
     Set<User> users = new HashSet<>();
     Set<Item> shippertBlacklist = new HashSet<>();
+    List<UserBlacklist> userBlackList = new ArrayList<>();
 
     public InMemoryRepository(){
-        addUser(new User("Thibo", "Verbeerst", PricePlan.BUSINESS));
-        addUser(new User("Pieter", "Verheye", PricePlan.PREMIUM));
-        addUser(new User("Delia", "Vervaeke", PricePlan.STANDARD));
-        addUser(new User("Wiebe", "Desmadryl", PricePlan.STANDARD));
-        addUser(new User("Glenn", "Callens", PricePlan.PREMIUM));
+        addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
+        addUser(new User("T-2", "Pieter", "Verheye", PricePlan.PREMIUM));
+        addUser(new User("T-3", "Delia", "Vervaeke", PricePlan.STANDARD));
+        addUser(new User("T-4", "Wiebe", "Desmadryl", PricePlan.STANDARD));
+        addUser(new User("T-5", "Glenn", "Callens", PricePlan.PREMIUM));
         shippertBlacklist.add(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
         shippertBlacklist.add(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
+        userBlackList.add(createUserBlacklist("T-1"));
+        userBlackList.add(createUserBlacklist("T-2"));
+        userBlackList.add(createUserBlacklist("T-3"));
+        userBlackList.add(createUserBlacklist("T-4"));
+        userBlackList.add(createUserBlacklist("T-5"));
     }
 
     @Override
     public void addUser(User user) {
         users.add(user);
+        userBlackList.add(createUserBlacklist(user.getId()));
     }
 
     @Override
@@ -64,5 +73,25 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public List<Item> getShippertBlacklist() {
         return new ArrayList<>(shippertBlacklist);
+    }
+
+    @Override
+    public List<Item> getUserBlacklist(String userID) {
+        return null;
+    }
+
+    @Override
+    public UserBlacklist createUserBlacklist(String userID) {
+        return new UserBlacklist(userID);
+    }
+
+    @Override
+    public void addUserBlacklist(Item item) {
+
+    }
+
+    @Override
+    public void removeUserBlacklist(Item item) {
+
     }
 }
