@@ -17,4 +17,9 @@ public class Coordinates {
     public String getLatitude() {
         return latitude;
     }
+
+    @Override
+    public String toString() {
+        return this.longitude + " " + this.latitude;
+    }
 }
