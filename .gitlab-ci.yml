@@ -4,12 +4,6 @@ stages:
   - QA
   - deploy
 
-build:
-  stage: build
-  script:
-    - npm install
-    - npm run build
-
 validateHTML:
   stage: QA
   script:
