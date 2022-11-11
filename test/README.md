@@ -28,7 +28,7 @@ python3 /home/pi/shippert/transporter/test/GPIO_Cleanup.py
     - Pin 6 is the ground pin and is connected with the breadboard (see schema)
     - Pin 2 is the 5 Volt pin and is connected with the breadboard (see schema)
 
-![Getting Started](./schema-LED-PushButton.jpg)
+![](2022-11-11-23-36-31.png)
 
 # 2) Hardware conenction file LCD_test.py
 Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
