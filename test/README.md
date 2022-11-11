@@ -1,10 +1,10 @@
 # What is in this file
 1) Hardware connection file test_pushbutton.py + explanation
-2) Hardware connection file LCD_test.py
-3) Hardware connection file test_weight_sensor.py
-4) Hardware connection file weight_sensor_and_LCD.py
+2) Hardware connection file LCD_test.py + explanation
+3) Hardware connection file test_weight_sensor.py + explanation
+4) Hardware connection file weight_sensor_and_LCD.py + explanation
 5) Which packages have been used
-6) Explanation of every script
+
 
 # 1) Hardware conenction file test_pushbutton.py
 Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
