@@ -52,9 +52,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  base: `/${CONFIG.group}`,
-  history: createWebHistory(),
+  history: createWebHistory(`/${CONFIG.group}`),
   routes
-})
+});
 
-export default router
+export default router;
