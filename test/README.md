@@ -13,7 +13,7 @@ You can install those packages with the following commands:
 sudo pip3 install [library_name]
 ```
 
-	- RPi.GPIO (for using GPIO pins o RPI)
+	- RPi.GPIO (for using GPIO pins of the RPI)
 	- hx711 (for weight sensor)
 	- RPLCD (for LCD screen)
 
@@ -43,7 +43,7 @@ python3 /home/pi/shippert/transporter/test/GPIO_Cleanup.py
 ![](schemas/schema-LED-Pushbutton.png)
 
 # 3) Hardware conenction file LCD_test.py
-Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
+The LCD screen is connected with the RPI with GPIO pins (input output pins).
 Below you find a schema and how everything is connected.
 This script print for 5 seconds "hello world" on the LCD screen
 To execute this script execute the following command:
@@ -60,3 +60,19 @@ The script stops automatically.
     - Pin 5 is GPIO (SDL) and is connected with the LCD screen SDL pin (Orange) (see schema)
 
 ![](schemas/schema-LCD-Screen.png)
+
+
+# 4) Hardware connection file test_weight_sensor.py + explanation
+The weight sensor is made from 2 pieces. We have the sensor itself (metal bar with wires) and we have the HX711 (chip).
+The HX711 is purely to amplify the signal of the sensor.
+This script isn't finished
+To execute this script execute the following command:
+
+```python
+python3 /home/pi/shippert/transporter/test/test_weight_sensor.py
+```
+
+    - Pin 6 is the ground pin and is connected with the LCD screen GND pin (Black) (see schema)
+    - Pin 4 is the 5 Volt pin and is connected with the LCD screen VCC pin (Brown) (see schema)
+    - Pin 3 is GPIO (SDA) and is connected with the LCD screen SDA pin (Red) (see schema)
+    - Pin 5 is GPIO (SDL) and is connected with the LCD screen SDL pin (Orange) (see schema)
