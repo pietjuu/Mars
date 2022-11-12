@@ -51,3 +51,5 @@ function logError(error) {
 function call(request, successHandler, errorHandler) {
     fetch(request).then(successHandler).catch(errorHandler);
 }
+
+export { get, post, put, remove };

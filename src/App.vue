@@ -8,7 +8,7 @@ import LoggedInLayout from "@/layouts/LoggedInLayout";
 export default {
   name: "App",
   components: {
-    LoggedInLayout
+    LoggedInLayout,
   }
 };
 </script>

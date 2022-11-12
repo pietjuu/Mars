@@ -11,9 +11,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: {
-      default: DashboardView,
-    }
+    component: DashboardView
   },
   {
     path: '/send-item',
@@ -28,6 +26,11 @@ const routes = [
   {
     path: '/destinations',
     name: 'Destinations',
+    component: DestinationsView
+  },
+  {
+    path: '/statistics',
+    name: 'Statistics',
     component: DestinationsView
   },
   {

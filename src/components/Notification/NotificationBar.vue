@@ -1,37 +1,47 @@
 <template>
- <div v-show="show" class="notification" :class="type">
+ <div class="notification" :class="notificationType">
    <div class="notification-content">
-     <p>{{ content }}</p>
+     <Icon :icon="icon()" :color="`var(--color-white)`"/>
+     <p>{{ notificationContent }}</p>
    </div>
    <div class="close-notification">
-     <IconButton :icon="`close`" :color="`var(--color-white)`" @click="closeIcon"/>
+     <IconButton :icon="`close`" :color="`var(--color-white)`" @click="close"/>
    </div>
  </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 import IconButton from "@/components/Button/IconButton";
+import Icon from "@/components/Icon/Icon";
 
 export default {
   name: "NotificationBar",
-  data() {
-    return {
-      show: true
-    }
-  },
   created() {
-    setTimeout(() => this.show = false, 8000)
+    setTimeout(this.close, 8000)
   },
   components: {
-    IconButton
+    IconButton,
+    Icon
   },
-  props: {
-    content: String,
-    type: String
+  computed: {
+    ...mapGetters(['notificationContent', 'notificationType'])
   },
   methods: {
-    closeIcon() {
-      this.show = false;
+    ...mapActions(['removeNotification']),
+    close() {
+      this.removeNotification();
+    },
+    icon() {
+      switch (this.notificationType){
+        case "error":
+          return `error`;
+        case "success":
+          return `check_circle`;
+        default:
+          return `info`;
+      }
     }
   }
 }
@@ -49,16 +59,24 @@ export default {
   padding: 0 1rem;
 }
 
+.notification-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.info {
+  background-color: var(--color-secondary-soft);
+}
+
 .success {
   background-color: var(--color-green);
 }
 
-.failed {
-  background-color: var(--color-red);
-}
-
 .error {
-  background-color: var(--color-orange);
+  background-color: var(--color-red);
 }
 
 </style>

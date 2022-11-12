@@ -1,29 +1,56 @@
 <template>
-  <div id="logged-in-layout">
+  <LoadApp v-if="!loaded"/>
+  <div id="logged-in-layout" v-if="loaded">
     <div class="sidebar-wrapper">
       <Sidebar/>
     </div>
     <div class="header-and-content-wrapper">
       <HeaderBar/>
-      <NotificationBar :content="`Item is send to destination.`" :type="`error`"/>
+      <NotificationBar v-show="notificationShow"/>
       <MainContent/>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
+import LoadApp from "@/components/Load/LoadApp";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import HeaderBar from "@/components/Header/HeaderBar";
 import NotificationBar from "@/components/Notification/NotificationBar";
 import MainContent from "@/components/Main/MainContent";
 
+
 export default {
   name: "BaseLayout",
   components: {
+    LoadApp,
     Sidebar,
     HeaderBar,
     NotificationBar,
     MainContent
+  },
+  data() {
+    return {
+      loaded: false
+    }
+  },
+  computed: {
+    ...mapGetters(['notificationShow', 'user'])
+  },
+  created() {
+    // load screen by default 2sec
+    setTimeout(async () => {
+      // set loaded true after all requests finished
+      await this.fetchUser();
+      this.loaded = true;
+
+      this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
+    }, 1000);
+  },
+  methods: {
+    ...mapActions(["fetchUser", "createNotification"])
   }
 }
 </script>
