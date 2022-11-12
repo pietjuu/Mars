@@ -1,12 +1,23 @@
 # What is in this file
-1) Hardware connection file test_pushbutton.py + explanation
-2) Hardware connection file LCD_test.py + explanation
-3) Hardware connection file test_weight_sensor.py + explanation
-4) Hardware connection file weight_sensor_and_LCD.py + explanation
-5) Which packages have been used
+1) Which libraries have been used
+2) Hardware connection file test_pushbutton.py + explanation
+3) Hardware connection file LCD_test.py + explanation
+4) Hardware connection file test_weight_sensor.py + explanation
+5) Hardware connection file weight_sensor_and_LCD.py + explanation
 
+# 1) Which libraries have been used
+Below you find a list with the libraries that we used. 
+You can install those packages with the following commands:
 
-# 1) Hardware conenction file test_pushbutton.py
+```bash
+sudo pip3 install [library_name]
+```
+
+	- RPi.GPIO (for using GPIO pins o RPI)
+	- hx711 (for weight sensor)
+	- RPLCD (for LCD screen)
+
+# 2) Hardware conenction file test_pushbutton.py
 Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
 Below you find a schema and how everything is connected.
 This script makes the Yellow LED glow if the button isn't pushed and makes the green LED glow if the button is pushed.
@@ -31,7 +42,7 @@ python3 /home/pi/shippert/transporter/test/GPIO_Cleanup.py
 
 ![](schemas/schema-LED-Pushbutton.png)
 
-# 2) Hardware conenction file LCD_test.py
+# 3) Hardware conenction file LCD_test.py
 Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
 Below you find a schema and how everything is connected.
 This script print for 5 seconds "hello world" on the LCD screen
