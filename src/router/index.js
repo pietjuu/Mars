@@ -52,7 +52,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(`/${CONFIG.group}`),
+  base: `/${CONFIG.group}`,
+  history: createWebHistory(),
   routes
 });
 
