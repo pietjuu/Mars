@@ -11,48 +11,48 @@ import BlacklistView from "@/views/BlacklistView";
 
 const routes = [
   {
-    path: '/',
-    redirect: '/dashboard'
+    path: `/`,
+    alias: `/${CONFIG.group}/`,
+    redirect: `/${CONFIG.group}/dashboard`
   },
   {
-    path: '/dashboard',
+    path: `/${CONFIG.group}/dashboard`,
     name: 'Dashboard',
     component: DashboardView
   },
   {
-    path: '/send-item',
+    path: `/${CONFIG.group}/send-item`,
     name: 'Send Item',
     component: SendItemView
   },
   {
-    path: '/calculate-price',
+    path: `/${CONFIG.group}/calculate-price`,
     name: 'Calculate Price',
     component: CalculatePriceView
   },
   {
-    path: '/destinations',
+    path: `/${CONFIG.group}/destinations`,
     name: 'Destinations',
     component: DestinationsView
   },
   {
-    path: '/statistics',
+    path: `/${CONFIG.group}/statistics`,
     name: 'Statistics',
     component: DestinationsView
   },
   {
-    path: '/history',
+    path: `/${CONFIG.group}/history`,
     name: 'History',
     component: HistoryView
   },
   {
-    path: '/blacklist',
+    path: `/${CONFIG.group}/blacklist`,
     name: 'Blacklist',
     component: BlacklistView
   }
 ]
 
 const router = createRouter({
-  base: `/${CONFIG.group}`,
   history: createWebHistory(),
   routes
 });
