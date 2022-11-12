@@ -1,4 +1,4 @@
-import { loadFromStorage } from "@/assets/js/data-connector/local-storage-abstractor";
+import { TOKEN } from "@/main";
 import { get } from "@/assets/js/data-connector/api-communication-abstractor";
 
 function requestStarted(commit) {
@@ -38,11 +38,10 @@ const getters = {
 
 const actions = {
     async fetchUser({ commit }) {
-        const userId = loadFromStorage('userId');
 
         requestStarted(commit);
 
-        await get(`users/${userId}`,(user) => requestSuccess(commit, user),(error) => requestFailed(commit, error));
+        await get(`users/${TOKEN}`,(user) => requestSuccess(commit, user),(error) => requestFailed(commit, error));
     }
 };
 
