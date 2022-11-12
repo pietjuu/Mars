@@ -1,4 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
+const CONFIG = require("@/config.json");
+
 module.exports = defineConfig({
   transpileDependencies: true,
   css: {
@@ -11,5 +13,6 @@ module.exports = defineConfig({
         `
       }
     }
-  }
+  },
+  publicPath: process.env.NODE_ENV === 'production' ? `/${CONFIG.group}` : '/'
 })

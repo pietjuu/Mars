@@ -1,4 +1,4 @@
 {
-  "/api/*": "/$1",
+  "/mars-05/api/*": "/$1",
   "/:resource/:id": "/:resource/:id"
 }
