@@ -1,6 +1,7 @@
 <template>
   <LoadApp v-if="!loaded"/>
-  <div id="logged-in-layout" v-if="loaded">
+  <Error v-if="error.state" :msg="error.message"/>
+  <div id="logged-in-layout" v-if="loaded && !error.state">
     <div class="sidebar-wrapper">
       <Sidebar/>
     </div>
@@ -20,11 +21,13 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import HeaderBar from "@/components/Header/HeaderBar";
 import NotificationBar from "@/components/Notification/NotificationBar";
 import MainContent from "@/components/Main/MainContent";
+import Error from "@/components/Error/Error";
 
 
 export default {
   name: "BaseLayout",
   components: {
+    Error,
     LoadApp,
     Sidebar,
     HeaderBar,
@@ -33,7 +36,11 @@ export default {
   },
   data() {
     return {
-      loaded: false
+      loaded: false,
+      error: {
+        state: false,
+        message: "Error"
+      }
     }
   },
   computed: {
@@ -43,7 +50,10 @@ export default {
     // load screen by default 2sec
     setTimeout(async () => {
       // set loaded true after all requests finished
-      await this.fetchUser();
+      await this.fetchUser().catch(() => {
+        this.error.state = true;
+        this.error.message = "Failed to identify user...";
+      });
       this.loaded = true;
 
       this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});

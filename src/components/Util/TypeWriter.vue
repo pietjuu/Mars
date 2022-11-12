@@ -11,12 +11,15 @@
 // Source: https://css-tricks.com/snippets/css/typewriter-effect/
 
 export default {
-  name: "TypeWriterLoad",
+  name: "TypeWriter",
   data() {
     return {
-      text: "Loading Shippert...",
+      text: this.value,
       content: ""
     }
+  },
+  props: {
+    value: String
   },
   methods: {
     typeWriter(text, i) {
