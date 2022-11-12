@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import DashboardView from "@/views/DashboardView";
 import SendItemView from "@/views/SendItemView";
@@ -8,6 +8,10 @@ import HistoryView from "@/views/HistoryView";
 import BlacklistView from "@/views/BlacklistView";
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/dashboard'
+  },
   {
     path: '/dashboard',
     name: 'Dashboard',
@@ -46,7 +50,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
