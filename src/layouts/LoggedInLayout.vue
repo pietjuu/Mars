@@ -1,7 +1,7 @@
 <template>
-  <LoadApp v-if="!loaded"/>
-  <Error v-if="error.state" :msg="error.message"/>
-  <div id="logged-in-layout" v-if="loaded && !error.state">
+  <LoadApp v-if="!loaded && !error.state"/>
+  <Error v-if="error.state" :messages="error.messages"/>
+  <div id="logged-in-layout" v-if="loaded">
     <div class="sidebar-wrapper">
       <Sidebar/>
     </div>
@@ -39,24 +39,28 @@ export default {
       loaded: false,
       error: {
         state: false,
-        message: "Error"
+        messages: []
       }
     }
   },
   computed: {
-    ...mapGetters(['notificationShow', 'user'])
+    ...mapGetters(['notificationShow', 'user', 'userRequest'])
   },
   created() {
     // load screen by default 2sec
     setTimeout(async () => {
-      // set loaded true after all requests finished
-      await this.fetchUser().catch(() => {
-        this.error.state = true;
-        this.error.message = "Failed to identify user...";
-      });
-      this.loaded = true;
 
-      this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
+      await this.fetchUser();
+
+      if (this.userRequest.error) {
+        this.error.state = true;
+        this.error.messages.push(this.userRequest.message);
+        this.error.messages.push("Contact shippert support...");
+      }
+      else {
+        this.loaded = true;
+        this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
+      }
     }, 1000);
   },
   methods: {

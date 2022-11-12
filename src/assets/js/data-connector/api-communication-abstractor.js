@@ -5,7 +5,7 @@ function get(uri, successHandler = logJson, failureHandler = logError) {
         method: 'GET',
     });
 
-    call(request, successHandler, failureHandler);
+    return call(request, successHandler, failureHandler);
 }
 
 function post(uri, body, successHandler = logJson, failureHandler = logError) {
@@ -17,7 +17,7 @@ function post(uri, body, successHandler = logJson, failureHandler = logError) {
         body: JSON.stringify(body)
     });
 
-    call(request, successHandler, failureHandler);
+    return call(request, successHandler, failureHandler);
 }
 
 function put(uri, body, successHandler = logJson, failureHandler = logError) {
@@ -29,7 +29,7 @@ function put(uri, body, successHandler = logJson, failureHandler = logError) {
         body: JSON.stringify(body)
     });
 
-    call(request, successHandler, failureHandler);
+    return call(request, successHandler, failureHandler);
 }
 
 function remove(uri, successHandler = logJson, failureHandler = logError) {
@@ -37,7 +37,7 @@ function remove(uri, successHandler = logJson, failureHandler = logError) {
         method: 'DELETE',
     });
 
-    call(request, successHandler, failureHandler);
+    return call(request, successHandler, failureHandler);
 }
 
 function logJson(response) {
@@ -49,7 +49,15 @@ function logError(error) {
 }
 
 function call(request, successHandler, errorHandler) {
-    fetch(request).then(successHandler).catch(errorHandler);
+    return fetch(request)
+        .then(response => {
+            if (!response.ok) {
+                throw response;
+            }
+            return response.json();
+        })
+        .then(successHandler)
+        .catch(errorHandler);
 }
 
 export { get, post, put, remove };

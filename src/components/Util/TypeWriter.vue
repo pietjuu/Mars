@@ -14,26 +14,34 @@ export default {
   name: "TypeWriter",
   data() {
     return {
-      text: this.value,
       content: ""
     }
   },
   props: {
-    value: String
+    values: Array
   },
   methods: {
-    typeWriter(text, i) {
+    typeWriter(text, i, fnCallback) {
       if (i < (text.length)) {
-        this.content = text.substring(0, i+1);
+        this.content = text.substring(0, i + 1);
 
-        setTimeout(() => {
-          this.typeWriter(text, i + 1)
-        }, 100);
+        setTimeout(() => this.typeWriter(text, i + 1, fnCallback), 100);
+      }
+      else {
+        setTimeout(fnCallback, 1000);
+      }
+    },
+    startTextAnimation(i) {
+      if (typeof this.values[i] == 'undefined') {
+        setTimeout(() => this.startTextAnimation(0), 5000);
+      }
+      else if (i < this.values[i].length) {
+        this.typeWriter(this.values[i], 0, () => this.startTextAnimation(i + 1));
       }
     }
   },
   created() {
-    this.typeWriter(this.text, 0);
+    this.startTextAnimation(0);
   }
 }
 </script>

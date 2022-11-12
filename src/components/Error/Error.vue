@@ -1,5 +1,5 @@
 <template>
-  <TypeWriter :value="msg"/>
+  <TypeWriter :values="messages"/>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     TypeWriter
   },
   props: {
-    msg: String
+    messages: Array
   }
 }
 </script>
