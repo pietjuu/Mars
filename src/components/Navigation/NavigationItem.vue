@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: routeName }" class="nav-item">
+  <router-link :to="route" class="nav-item">
     <div class="nav-icon-wrapper">
       <Icon :icon="icon"/>
     </div>
@@ -15,7 +15,7 @@ import Icon from "@/components/Icon/Icon";
 export default {
   name: "NavigationItem",
   props: {
-    routeName: String,
+    route: String,
     title: String,
     icon: String
   },

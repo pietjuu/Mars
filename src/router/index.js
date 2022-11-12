@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const CONFIG = require("@/config.json");
 
@@ -12,48 +12,47 @@ import BlacklistView from "@/views/BlacklistView";
 const routes = [
   {
     path: `/`,
-    alias: `/${CONFIG.group}/`,
-    redirect: `/${CONFIG.group}/dashboard`
+    redirect: `/dashboard`
   },
   {
-    path: `/${CONFIG.group}/dashboard`,
+    path: `/dashboard`,
     name: 'Dashboard',
     component: DashboardView
   },
   {
-    path: `/${CONFIG.group}/send-item`,
+    path: `/send-item`,
     name: 'Send Item',
     component: SendItemView
   },
   {
-    path: `/${CONFIG.group}/calculate-price`,
+    path: `/calculate-price`,
     name: 'Calculate Price',
     component: CalculatePriceView
   },
   {
-    path: `/${CONFIG.group}/destinations`,
+    path: `/destinations`,
     name: 'Destinations',
     component: DestinationsView
   },
   {
-    path: `/${CONFIG.group}/statistics`,
+    path: `}/statistics`,
     name: 'Statistics',
     component: DestinationsView
   },
   {
-    path: `/${CONFIG.group}/history`,
+    path: `/history`,
     name: 'History',
     component: HistoryView
   },
   {
-    path: `/${CONFIG.group}/blacklist`,
+    path: `/blacklist`,
     name: 'Blacklist',
     component: BlacklistView
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 });
 

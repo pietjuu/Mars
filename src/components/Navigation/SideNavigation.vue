@@ -1,13 +1,13 @@
 <template>
   <nav class="navigation-items-wrapper">
     <ul>
-      <li><NavigationItem :routeName="`Dashboard`" :title="`Dashboard`" :icon="`home`"/></li>
-      <li><NavigationItem :routeName="`Send Item`" :title="`Send Item`" :icon="`outgoing_mail `"/></li>
-      <li><NavigationItem :routeName="`Calculate Price`" :title="`Calculate Price`" :icon="`payments `"/></li>
-      <li><NavigationItem :routeName="`Destinations`" :title="`Destinations`" :icon="`map `"/></li>
-      <li><NavigationItem :routeName="`Statistics`" :title="`Statistics`" :icon="`monitoring `"/></li>
-      <li><NavigationItem :routeName="`History`" :title="`History`" :icon="`history `"/></li>
-      <li><NavigationItem :routeName="`Blacklist`" :title="`Blacklist`" :icon="`block `"/></li>
+      <li><NavigationItem :route="`/dashboard`" :title="`Dashboard`" :icon="`home`"/></li>
+      <li><NavigationItem :route="`/send-item`" :title="`Send Item`" :icon="`outgoing_mail `"/></li>
+      <li><NavigationItem :route="`/calculate-price`" :title="`Calculate Price`" :icon="`payments `"/></li>
+      <li><NavigationItem :route="`/destinations`" :title="`Destinations`" :icon="`map `"/></li>
+      <li><NavigationItem :route="`/statistics`" :title="`Statistics`" :icon="`monitoring `"/></li>
+      <li><NavigationItem :route="`/history`" :title="`History`" :icon="`history `"/></li>
+      <li><NavigationItem :route="`/blacklist`" :title="`Blacklist`" :icon="`block `"/></li>
     </ul>
   </nav>
 </template>
