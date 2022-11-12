@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-const CONFIG = require("@/config.json");
+const CONFIG = require("./src/config.json");
 
 module.exports = defineConfig({
   transpileDependencies: true,
