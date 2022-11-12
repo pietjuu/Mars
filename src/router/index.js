@@ -35,7 +35,7 @@ const routes = [
     component: DestinationsView
   },
   {
-    path: `}/statistics`,
+    path: `/statistics`,
     name: 'Statistics',
     component: DestinationsView
   },
