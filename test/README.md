@@ -16,7 +16,7 @@ sudo pip3 install [library_name]
 	- RPi.GPIO (for using GPIO pins of the RPI)
 	- hx711 (for weight sensor)
 	- RPLCD (for LCD screen)
-
+	- 'git+https://github.com/bytedisciple/HX711.git#egg=HX711&subdirectory=HX711_Python3' (also for weight sensor)
 # 2) Hardware conenction file test_pushbutton.py
 Everything on the breadboard is connected with the RPI with GPIO pins (input output pins).
 Below you find a schema and how everything is connected.
