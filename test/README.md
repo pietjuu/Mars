@@ -74,12 +74,14 @@ python3 /home/pi/shippert/transporter/test/test_weight_sensor.py
 
 
 Connection from RPI and breadbord to HX711
+
     - Pin 2 is the 5 Volt pin and is connected with the breadboard and via breadboard connected with VOC pin on the HX711 (see schema)
     - pin 31 is GPIO 6 and is connected with the SCK pin on the HX711 (see schema)
     - pin 29 is GPIO 5 and is connected with the DT pin on the HX711 (see schema)
     - pin 9 is the ground and is connected with the GND pin on the HX711 (see schema)
 
 Connection from HX711 to weight sensor
+
     - E+ is connected with the red wire (see schema)
     - E- is connected with the black wire (see schema)
     - A- is connected with the white wire (see schema)
