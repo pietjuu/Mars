@@ -1,44 +1,48 @@
-import { API } from '@/main.js'
+import { API, TOKEN } from '@/main.js'
 
 function get(uri, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(API + uri, {
-        method: 'GET',
-    });
+    const options = constructOptions('get');
+    const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
 function post(uri, body, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(API + uri, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json;'
-        },
-        body: JSON.stringify(body)
-    });
+    const options = constructOptions('POST', body);
+    const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
 function put(uri, body, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(API + uri, {
-        method: 'PUT',
-        headers: {
-            'Content-type': 'application/json;'
-        },
-        body: JSON.stringify(body)
-    });
+    const options = constructOptions('PUT', body);
+    const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
 function remove(uri, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(API + uri, {
-        method: 'DELETE',
-    });
+    const options = constructOptions('DELETE');
+    const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
+
+function constructOptions(httpVerb, requestBody){
+    const options= {};
+    options.method = httpVerb;
+
+    options.headers = {};
+    options.headers["Content-Type"] = "application/json";
+
+    if(TOKEN !== null) {
+        options.headers["Authorization"] = "Bearer " + TOKEN;
+    }
+
+    options.body = JSON.stringify(requestBody);
+    return options;
+}
+
 
 function logJson(response) {
     response.json().then(console.log);

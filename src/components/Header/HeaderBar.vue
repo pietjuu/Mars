@@ -2,7 +2,7 @@
   <header class="header-wrapper">
     <div class="desktop-header">
       <div class="header-actions">
-        <TextButton :content="`Support`"/>
+        <TextButton :content="`Support`" @click="goToSupport()"/>
         <IconButton :icon="`notifications`" :color="`var(--color-text)`"/>
         <ProfileButton :content="initials()"/>
       </div>
@@ -24,6 +24,9 @@ export default {
       const char1 = this.user.firstname.charAt(0).toUpperCase();
       const char2 = this.user.lastname.charAt(0).toUpperCase();
       return char1 + char2;
+    },
+    goToSupport() {
+      window.open(`https://thiboverbeerst.wixsite.com/shippert/contact-4`);
     }
   },
   computed: {

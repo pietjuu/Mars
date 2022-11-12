@@ -1,8 +1,6 @@
 <template>
-  <div class="load-wrapper">
-    <div class="typewriter">
-      <h1>{{ content }} <span></span></h1>
-    </div>
+  <div class="typewriter">
+    <h1>{{ content }} <span></span></h1>
   </div>
 </template>
 
@@ -47,14 +45,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-.load-wrapper {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .typewriter {
   width: fit-content;
