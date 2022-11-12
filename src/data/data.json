@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": "133",
+      "firstname": "Thibo",
+      "lastname": "Verbeerst",
+      "totalSent": 323,
+      "totalReceived": 145,
+      "limit": {
+        "reached": 6,
+        "max": 100
+      },
+      "notifications": [
+        {
+          "title": "Alarm Clock from Thibo Verbeerst Sent to Glenn Callens",
+          "time": "2052-11-14 13:30",
+          "message": "Status: UNDERWAY \nSent to Farm Dome 230 for Glenn Callens\n Sent from Sleep Dome 8473 by Thibo Verbeerst"
+        },
+        {
+          "title": "Alarm Clock from Thibo Verbeerst Sent to Glenn Callens",
+          "time": "2052-11-14 13:30",
+          "message": "Status: DELIVERED \nSent to Farm Dome 230 for Glenn Callens\n Sent from Sleep Dome 8473 by Thibo Verbeerst"
+        }
+      ]
+    },
+    {
+      "id": "69",
+      "firstname": "Laura",
+      "lastname": "Omloop"
+    },
+    {
+      "id": "556",
+      "firstname": "Kannie",
+      "lastname": "Drinken"
+    }
+  ]
+}

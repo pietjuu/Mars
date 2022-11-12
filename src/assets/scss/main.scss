@@ -1,0 +1,73 @@
+@use "reset.scss";
+@use "colors.scss";
+@use "constants.scss";
+@use "fonts.scss";
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: var(--default-line-height);
+  font-family:var(--default-font-style);
+  font-size: var(--default-text-size);
+}
+
+h1 {
+  color: var(--color-heading1);
+  font-size: var(--h1-text-size);
+  line-height: 140%;
+}
+
+h2 {
+  color: var(--color-heading2);
+  font-size: var(--h2-text-size);
+}
+
+h3 {
+  color: var(--color-heading3);
+  font-size: var(--h3-text-size);
+}
+
+nav {
+  font-size: var(--nav-text-size);
+}
+
+strong {
+  font-weight: bold;
+}
+
+a, router-link{
+  text-decoration: underline solid var(--color-link);
+  color: var(--color-link);
+  transition: 0.4s;
+  display: inline-block;
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-text-button);
+  border-style: none;
+  font-size: var(--default-text-size);
+  font-family:var(--default-font-style);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (hover: hover) {
+  a, button, router-link {
+    cursor: pointer;
+  }
+}
+

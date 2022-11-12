@@ -1,14 +1,7 @@
-function poc() {
-    const messageBody = {
-        "quote": "some quote"
-    };
-    get("quotes/1");
-    post("quotes", messageBody);
-    put("quotes/1", messageBody);
-}
+import { API } from '@/main.js'
 
 function get(uri, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(api + uri, {
+    const request = new Request(API + uri, {
         method: 'GET',
     });
 
@@ -16,7 +9,7 @@ function get(uri, successHandler = logJson, failureHandler = logError) {
 }
 
 function post(uri, body, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(api + uri, {
+    const request = new Request(API + uri, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json;'
@@ -28,7 +21,7 @@ function post(uri, body, successHandler = logJson, failureHandler = logError) {
 }
 
 function put(uri, body, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(api + uri, {
+    const request = new Request(API + uri, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json;'
@@ -40,7 +33,7 @@ function put(uri, body, successHandler = logJson, failureHandler = logError) {
 }
 
 function remove(uri, successHandler = logJson, failureHandler = logError) {
-    const request = new Request(api + uri, {
+    const request = new Request(API + uri, {
         method: 'DELETE',
     });
 
@@ -58,3 +51,5 @@ function logError(error) {
 function call(request, successHandler, errorHandler) {
     fetch(request).then(successHandler).catch(errorHandler);
 }
+
+export { get, post, put, remove };
