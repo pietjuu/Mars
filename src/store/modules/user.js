@@ -1,4 +1,5 @@
 import { loadFromStorage } from "@/assets/js/data-connector/local-storage-abstractor";
+import {API} from "@/main";
 
 const state = {
     user: { }
@@ -12,7 +13,7 @@ const actions = {
     async fetchUser({ commit }) {
         const userId = loadFromStorage('userId');
 
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+        const response = await fetch(`${API}users/${userId}`);
         const user = await response.json();
         commit('setUser', user)
     }

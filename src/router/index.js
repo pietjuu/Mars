@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+
+const CONFIG = require("@/config.json");
 
 import DashboardView from "@/views/DashboardView";
 import SendItemView from "@/views/SendItemView";
@@ -50,6 +52,7 @@ const routes = [
 ]
 
 const router = createRouter({
+  base: `/${CONFIG.group}`,
   history: createWebHistory(),
   routes
 })
