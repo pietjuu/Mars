@@ -100,6 +100,7 @@ export default {
   height: 100vh;
   background-color: var(--color-background-mute);
   padding: 2.5rem;
+  overflow: scroll;
 }
 
 </style>
