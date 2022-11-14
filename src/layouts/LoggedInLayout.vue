@@ -8,7 +8,9 @@
     <div class="header-and-content-wrapper">
       <HeaderBar/>
       <NotificationBar v-show="notificationShow"/>
-      <MainContent/>
+      <section class="content-wrapper">
+        <router-view/>
+      </section>
     </div>
   </div>
 </template>
@@ -20,19 +22,17 @@ import LoadApp from "@/components/Load/LoadApp";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import HeaderBar from "@/components/Header/HeaderBar";
 import NotificationBar from "@/components/Notification/NotificationBar";
-import MainContent from "@/components/Main/MainContent";
 import Error from "@/components/Error/Error";
 
 
 export default {
-  name: "BaseLayout",
+  name: "LoggedInLayout",
   components: {
     Error,
     LoadApp,
     Sidebar,
     HeaderBar,
-    NotificationBar,
-    MainContent
+    NotificationBar
   },
   data() {
     return {
@@ -94,6 +94,12 @@ export default {
   height: 100vh;
   position: relative;
   margin-left: var(--sidebar-width);
+}
+
+.content-wrapper {
+  height: 100vh;
+  background-color: var(--color-background-mute);
+  padding: 2.5rem;
 }
 
 </style>
