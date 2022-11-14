@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
     <div class="logo-wrapper">
-      <a href="/dashboard">
+      <router-link :to="`/dashboard`">
         <TransparentLogo :titleTxt="`Sidebar Logo Shippert`" :width="`70%`"/>
-      </a>
+      </router-link>
     </div>
     <div class="navigation-wrapper">
       <SideNavigation/>

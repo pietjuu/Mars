@@ -2,7 +2,12 @@
   <div class="send-item-wrapper">
     <HeaderContent :title="`Send Item`"/>
     <main>
-      <ProgressBar :texts="[`Step 1`, `Step 2`, `Step 3`, `Step 4`]"/>
+      <div class="progress-bar-wrapper">
+        <ProgressBar :steps="steps"/>
+      </div>
+      <div class="send-item-views">
+        <ConnectTransporterView/>
+      </div>
     </main>
   </div>
 </template>
@@ -11,11 +16,19 @@
 import HeaderContent from "@/components/Header/HeaderContent";
 import ProgressBar from "@/components/Progress/ProgressBar";
 
+import ConnectTransporterView from "@/views/SendItem/ConnectTransporterView";
+import {mapGetters} from "vuex";
+
+
 export default {
   name: "SendItemView",
+  computed: {
+    ...mapGetters([`steps`])
+  },
   components: {
     HeaderContent,
-    ProgressBar
+    ProgressBar,
+    ConnectTransporterView
   }
 }
 </script>
