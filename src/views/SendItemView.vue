@@ -6,7 +6,8 @@
         <ProgressBar :steps="steps"/>
       </div>
       <div class="send-item-views">
-        <ConnectTransporterView/>
+        <!-- <ConnectTransporterView/> -->
+        <EnterItemDetailsView/>
       </div>
     </main>
   </div>
@@ -17,6 +18,8 @@ import HeaderContent from "@/components/Header/HeaderContent";
 import ProgressBar from "@/components/Progress/ProgressBar";
 
 import ConnectTransporterView from "@/views/SendItem/ConnectTransporterView";
+import EnterItemDetailsView from "@/views/SendItem/EnterItemDetailsView";
+
 import {mapGetters} from "vuex";
 
 
@@ -28,7 +31,8 @@ export default {
   components: {
     HeaderContent,
     ProgressBar,
-    ConnectTransporterView
+    ConnectTransporterView,
+    EnterItemDetailsView
   }
 }
 </script>

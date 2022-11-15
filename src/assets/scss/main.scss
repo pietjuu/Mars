@@ -101,6 +101,12 @@ input {
   padding: 0.5rem 1rem;
 }
 
+.important {
+  color: var(--color-secondary);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
 @media (hover: hover) {
   a, button, router-link {
     cursor: pointer;

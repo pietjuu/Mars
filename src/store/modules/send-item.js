@@ -7,7 +7,7 @@ const state = {
         },
         {
             number: 2,
-            text: `STEP 2: Package Details`,
+            text: `STEP 2: Item Details`,
             inProgress: false
         },
         {
