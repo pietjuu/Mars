@@ -87,8 +87,8 @@ while True:
     try:
         if door_closed():
             write_ready()
-            if start_1():
-                write_package_send_with_led()
+        elif start_1() & door_closed():
+            write_package_send_with_led()
         elif door_open():
             write_not_ready()
         else:
