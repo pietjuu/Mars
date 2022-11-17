@@ -100,4 +100,83 @@ class DefaultMarsControllerTest {
 
         assertThrows(IllegalArgumentException.class, () -> controller.deleteUser(""));
     }
+
+    @Test
+    void testGetShippertBlacklist(){
+        MarsController controller = new DefaultMarsController();
+
+        assertEquals(2, controller.getShippertBlacklist().size());
+    }
+
+    @Test
+    void testGetUserBlackList(){
+        MarsController controller = new DefaultMarsController();
+
+        assertEquals(1, controller.getUserBlacklist("T-1").size());
+    }
+
+    @Test
+    void testGetUserBlacklistWithNonExistingUser(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getUserBlacklist("notExists"));
+    }
+
+    @Test
+    void testAddBlacklistItem(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
+        controller.addItemToUserBlacklist("Apple", id);
+
+        assertEquals(1, controller.getUserBlacklist(id).size());
+    }
+
+    @Test
+    void testAddBlackListItemWithNonExistingUser(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.addItemToUserBlacklist("Apple", "NotExist"));
+    }
+
+    @Test
+    void testAddBlackListItemWithDuplicateItem(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
+        controller.addItemToUserBlacklist("Apple", id);
+
+        assertEquals(1, controller.getUserBlacklist(id).size());
+        assertThrows(IllegalArgumentException.class, () -> controller.addItemToUserBlacklist("Apple", id));
+    }
+
+    @Test
+    void testDeleteBlacklistItem(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
+        controller.addItemToUserBlacklist("Apple", id);
+
+        assertEquals(1, controller.getUserBlacklist(id).size());
+
+        controller.deleteItemToUserBlacklist("Apple", id);
+
+        assertEquals(0, controller.getUserBlacklist(id).size());
+    }
+
+    @Test
+    void testDeleteBlackListItemWithNonExistingUser(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.deleteItemToUserBlacklist("Apple", "NotExist"));
+    }
+
+    @Test
+    void testDeleteBlackListItemWithNonExistingItem(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.deleteItemToUserBlacklist("Apple", id));
+    }
 }
