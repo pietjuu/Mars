@@ -63,7 +63,7 @@ def start_1():
         return True
     else:
         return False
-print(start_1())
+
 
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
@@ -97,6 +97,11 @@ while True:
             write_not_ready()
         else:
             print("fout in programma")
+
+        if door_closed() == True & start_1() == True:
+            write_package_send_with_led()
+        else:
+            print("kapot")
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
