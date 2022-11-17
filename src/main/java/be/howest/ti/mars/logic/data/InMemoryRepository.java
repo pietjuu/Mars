@@ -27,14 +27,7 @@ public class InMemoryRepository implements MarsRepositories{
         addUser(new User("T-5", "Glenn", "Callens", PricePlan.PREMIUM));
         shippertBlacklist.addItem(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
         shippertBlacklist.addItem(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
-        usersBlacklists.put("T-1", new UserBlacklist("T-1"));
         usersBlacklists.get("T-1").addItem(new Item("Apple"));
-
-        createUserBlacklist("T-1");
-        createUserBlacklist("T-2");
-        createUserBlacklist("T-3");
-        createUserBlacklist("T-4");
-        createUserBlacklist("T-5");
     }
 
     @Override
