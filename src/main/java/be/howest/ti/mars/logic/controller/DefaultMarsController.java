@@ -2,6 +2,8 @@ package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
+import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
+import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -72,24 +74,24 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public List<Item> getShippertBlacklist() {
+    public Blacklist getShippertBlacklist() {
         return repository.getShippertBlacklist();
     }
 
     @Override
-    public List<Item> getUserBlacklist(String userID) {
+    public UserBlacklist getUserBlacklist(String userID) {
        return repository.getUserBlacklist(userID);
     }
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
-        if (repository.getIndexUserBlackList(userID) == -1){
+        if (!repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException("User ID doesn't exist in user blacklists!");
         }
 
         Item i = new Item(itemName);
 
-        if (repository.getUserBlacklist(userID).contains(i)){
+        if (repository.getUserBlacklist(userID).containsItem(itemName)){
             throw new IllegalArgumentException("Item already added in user blacklist!");
         }
 
@@ -98,13 +100,13 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteItemToUserBlacklist(String itemName, String userID) {
-        if (repository.getIndexUserBlackList(userID) == -1){
+        if (!repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException("User ID doesn't exist in user blacklists!");
         }
 
         Item i = new Item(itemName);
 
-        if (!repository.getUserBlacklist(userID).contains(i)){
+        if (!repository.getUserBlacklist(userID).containsItem(itemName)){
             throw new IllegalArgumentException("Item didn't exist in user blacklist!");
         }
 
