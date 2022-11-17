@@ -35,6 +35,10 @@ public class Response {
                 .end(Json.encodePrettily(response));
     }
 
+    public static void sendItems(RoutingContext ctx, Object response){
+        sendOkJsonResponse(ctx,  new JsonObject().put("items", response));
+    }
+
     public static void sendFailure(RoutingContext ctx, int code, String quote) {
         sendJsonResponse(ctx, code, new JsonObject()
                 .put("failure", code)
