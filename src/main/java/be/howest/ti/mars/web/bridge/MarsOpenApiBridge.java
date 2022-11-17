@@ -62,6 +62,8 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for getShippertBlacklist");
         routerBuilder.operation("getShippertBlacklist").handler(this::getShippertBlacklist);
 
+        LOGGER.log(Level.INFO, "Installing handler for getUserBlacklist");
+        routerBuilder.operation("getUserBlacklist").handler(this::getUserBlacklist);
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -119,6 +121,12 @@ public class MarsOpenApiBridge {
 
     private void getShippertBlacklist(RoutingContext routingContext){
         Response.sendItems(routingContext, controller.getShippertBlacklist());
+    }
+
+    private void getUserBlacklist(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+
+        Response.sendItems(routingContext, controller.getUserBlacklist(id));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
