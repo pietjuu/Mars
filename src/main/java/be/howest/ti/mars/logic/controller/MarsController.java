@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,4 +39,32 @@ public interface MarsController {
      * @param userID uuid
      */
     void deleteUser(String userID);
+
+    /**
+     * Get the blacklist of Shippert, which every user is bound to.
+     * @return List of string with item names.
+     */
+    List<String> getShippertBlacklist();
+
+    /**
+     * Get the blacklist of a user.
+     * @param userID User id.
+     * @return List of string with item names.
+     */
+    List<String> getUserBlacklist(String userID);
+
+    /**
+     * Add item to users blacklist
+     * @param itemName Item name ex. gun
+     * @param userID User ID
+     */
+    void addItemToUserBlacklist(String itemName, String userID);
+
+    /**
+     * Delete item from user blacklist.
+     * @param itemName Item name ex. gun
+     * @param userID User ID
+     */
+    void deleteItemToUserBlacklist(String itemName, String userID);
+
 }

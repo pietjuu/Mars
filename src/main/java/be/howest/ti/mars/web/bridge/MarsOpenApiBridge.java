@@ -59,6 +59,17 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for deleteUser");
         routerBuilder.operation("deleteUser").handler(this::deleteUser);
 
+        LOGGER.log(Level.INFO, "Installing handler for getShippertBlacklist");
+        routerBuilder.operation("getShippertBlacklist").handler(this::getShippertBlacklist);
+
+        LOGGER.log(Level.INFO, "Installing handler for getUserBlacklist");
+        routerBuilder.operation("getUserBlacklist").handler(this::getUserBlacklist);
+
+        LOGGER.log(Level.INFO, "Installing handler for addItemToUserBlacklist");
+        routerBuilder.operation("addItemToUserBlacklist").handler(this::addItemToUserBlacklist);
+
+        LOGGER.log(Level.INFO, "Installing handler for deleteItemFromUserBlacklist");
+        routerBuilder.operation("deleteItemFromUserBlacklist").handler(this::deleteItemFromUserBlacklist);
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -111,6 +122,32 @@ public class MarsOpenApiBridge {
         String id = Request.from(routingContext).getUserID();
 
         controller.deleteUser(id);
+        Response.sendEmptyResponse(routingContext, 202);
+    }
+
+    private void getShippertBlacklist(RoutingContext routingContext){
+        Response.sendItems(routingContext, controller.getShippertBlacklist());
+    }
+
+    private void getUserBlacklist(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+
+        Response.sendItems(routingContext, controller.getUserBlacklist(id));
+    }
+
+    private void addItemToUserBlacklist(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+        String itemName = Request.from(routingContext).getItemNameBody();
+
+        controller.addItemToUserBlacklist(itemName, id);
+        Response.sendEmptyResponse(routingContext, 201);
+    }
+
+    private void deleteItemFromUserBlacklist(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+        String itemName = Request.from(routingContext).getItemNameParam();
+
+        controller.deleteItemToUserBlacklist(itemName, id);
         Response.sendEmptyResponse(routingContext, 202);
     }
 

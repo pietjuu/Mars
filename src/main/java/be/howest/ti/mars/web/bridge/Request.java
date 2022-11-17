@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 public class Request {
     public static final String ERROR_BODY = "Unable to decipher the data in the request body. See logs for details.";
     private static final Logger LOGGER = Logger.getLogger(Request.class.getName());
+    public static final String ITEM_NAME = "itemName";
     private final RequestParameters params;
     private final UserToken userToken;
 
@@ -63,6 +64,28 @@ public class Request {
             return params.body().get().toString();
         } catch (IllegalArgumentException ex) {
             LOGGER.log(Level.INFO, "Unable to decipher 'lastname' in the body of POST user", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getItemNameBody(){
+        try {
+            if (params.body().isJsonObject())
+                return params.body().getJsonObject().getString(ITEM_NAME);
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'itemName' in the body of GET blacklist", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getItemNameParam(){
+        try {
+            if (!params.pathParameter(ITEM_NAME).isNull())
+                return params.pathParameter(ITEM_NAME).toString();
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'itemName' in the path of POST blacklist", ex);
             throw new MalformedRequestException(ERROR_BODY);
         }
     }

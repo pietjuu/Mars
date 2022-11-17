@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Item class
+ */
 public class Item {
 
     private final String id;
@@ -16,6 +19,22 @@ public class Item {
     private LocalDateTime receivedTime;
     private int atoms = 0;
 
+    /**
+     * Constructor
+     * @param name name of item
+     */
+    public Item(String name){
+        this.id = UUID.randomUUID().toString();
+        this.status = ItemStatus.UNDEFINED;
+        this.size = new Size(0,0,0);
+        this.name = name;
+    }
+
+    /**
+     * Constructor
+     * @param name name of item
+     * @param size size of item
+     */
     public Item(String name, Size size) {
         this.id = UUID.randomUUID().toString();
         this.status = ItemStatus.UNDEFINED;
@@ -23,6 +42,12 @@ public class Item {
         this.size = size;
     }
 
+    /**
+     * Constructor - this should only be used when importing.
+     * @param id uuid
+     * @param name name of item
+     * @param size size of item
+     */
     public Item(String id, String name, Size size){
         this.id = id;
         this.status = ItemStatus.UNDEFINED;
@@ -83,12 +108,12 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id.equals(item.id);
+        return Objects.equals(name, item.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 
     @Override
