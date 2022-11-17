@@ -41,7 +41,9 @@ def door_closed():
     if button_state == 1:
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
-    return True
+        return True
+    else:
+        return False
 
 
 def door_open():
@@ -49,15 +51,18 @@ def door_open():
     if button_state == 0:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
-    return True
+        return True
+    else:
+        return False
 
 
 def start_1():
     button_state = GPIO.input(Button_start)
     if button_state == 1:
         GPIO.output(Led_package_send, GPIO.HIGH)
-    return True
-
+        return True
+    else:
+        return False
 print(start_1())
 
 def write_ready():
@@ -88,8 +93,6 @@ while True:
     try:
         if door_closed():
             write_ready()
-        elif door_closed() & start_1():
-            write_package_send_with_led()
         elif door_open():
             write_not_ready()
         else:
