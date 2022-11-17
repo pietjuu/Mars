@@ -94,10 +94,13 @@ def cleanAndExit():
 
 while True:
     try:
+        print("voor de if", door_closed())
         if door_closed() == True & start_1() == False:
             write_ready()
+            print("na de if", door_closed())
             print("eerste if statement")
         elif door_open():
+            print(door_open())
             write_not_ready()
             print("tweede elf statement")
         else:
