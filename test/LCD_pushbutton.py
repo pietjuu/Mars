@@ -1,7 +1,7 @@
 # Libraries
+import sys
 import RPi.GPIO as GPIO
 from RPLCD import i2c
-from time import sleep
 
 # set warnings off
 GPIO.setwarnings(False)
@@ -41,8 +41,6 @@ def door_closed():
     if button_state == 1:
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
-        print("functie door closed werkt")
-        sleep(2)
         return True
 
 
@@ -51,7 +49,6 @@ def door_open():
     if button_state == 0:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
-        print("functie door open werkt")
         return True
 
 
@@ -59,7 +56,6 @@ def start_1():
     button_state = GPIO.input(Button_start)
     if button_state == 1:
         GPIO.output(Led_package_send, GPIO.HIGH)
-        print("functie lampje send werkt")
         return True
 
 
@@ -69,16 +65,10 @@ def write_ready():
     return True
 
 
-print(write_ready())
-
-
 def write_not_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package isn't ready")
     return True
-
-
-print(write_not_ready())
 
 
 def write_package_send_with_led():
@@ -87,12 +77,22 @@ def write_package_send_with_led():
     return True
 
 
+def cleanAndExit():
+    print("Cleaning...")
+    print("Bye!")
+    sys.exit()
+
+
 while True:
-    if door_closed():
-        write_ready()
-        if start_1():
-            write_package_send_with_led()
-    elif door_open():
-        write_not_ready()
-    else:
-        print("fout in programma")
+    try:
+        if door_closed():
+            write_ready()
+            if start_1():
+                write_package_send_with_led()
+        elif door_open():
+            write_not_ready()
+        else:
+            print("fout in programma")
+
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
