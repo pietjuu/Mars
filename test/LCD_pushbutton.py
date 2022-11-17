@@ -2,6 +2,7 @@
 import sys
 import RPi.GPIO as GPIO
 from RPLCD import i2c
+from time import sleep
 
 # set warnings off
 GPIO.setwarnings(False)
@@ -92,32 +93,41 @@ def cleanAndExit():
 while True:
     button_state_sensor = GPIO.input(Button_sensor)
     button_state_start = GPIO.input(Button_start)
+
+    print(button_state_start)
+    sleep(1)
+    print(button_state_sensor)
+    sleep(1)
     # deur dicht en startknop ingedrukt
-    if button_state_start == 1 & button_state_sensor == 1:
-        GPIO.output(Led_package_send, GPIO.HIGH)
-        GPIO.output(Led_door_closed, GPIO.HIGH)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        write_package_send_with_led()
+    if button_state_start == 0 & button_state_sensor == 0:
+        print("if statement, niks ingedrukt")
+        GPIO.output(Led_door_closed, GPIO.LOW)
+        GPIO.output(Led_door_open, GPIO.HIGH)
+        GPIO.output(Led_package_send, GPIO.LOW)
+        write_not_ready()
 
     # deur dicht startknop niet ingedrukt
     elif button_state_start == 0 & button_state_sensor == 1:
+        print("eerste elif statement, sensor ingedrukt")
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
         GPIO.output(Led_package_send, GPIO.LOW)
         write_ready()
 
     # deur open start ingedrukt
-    elif button_state_sensor == 0 & button_state_start == 1:
+    elif button_state_start == 1 & button_state_sensor == 0:
+        print("tweede elif statement, startknop ingedrukt")
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
         GPIO.output(Led_package_send, GPIO.LOW)
         write_not_ready()
 
     # deur open start niet ingedrukt
-    elif button_state_sensor == 0 & button_state_start == 0:
-        GPIO.output(Led_door_closed, GPIO.LOW)
-        GPIO.output(Led_door_open, GPIO.HIGH)
-        GPIO.output(Led_package_send, GPIO.LOW)
+    elif button_state_sensor == 1 & button_state_start == 1:
+        print("derde elif statement, beide knoppen ingedrukt")
+        GPIO.output(Led_door_closed, GPIO.HIGH)
+        GPIO.output(Led_door_open, GPIO.LOW)
+        GPIO.output(Led_package_send, GPIO.HIGH)
         write_not_ready()
 
     else:
