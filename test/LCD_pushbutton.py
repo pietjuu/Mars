@@ -56,8 +56,9 @@ def start_1():
     button_state = GPIO.input(Button_start)
     if button_state == 1:
         GPIO.output(Led_package_send, GPIO.HIGH)
-        return True
+    return True
 
+print(start_1())
 
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
@@ -87,7 +88,7 @@ while True:
     try:
         if door_closed():
             write_ready()
-        elif start_1() & door_closed():
+        elif door_closed():
             write_package_send_with_led()
         elif door_open():
             write_not_ready()
