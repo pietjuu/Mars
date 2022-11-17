@@ -21,6 +21,9 @@ def cleanAndExit():
     print("Bye!")
     sys.exit()
 
+#set warnings off
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
 
 hx = HX711(5, 6)
 
