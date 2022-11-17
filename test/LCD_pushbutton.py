@@ -122,7 +122,6 @@ while True:
 
     else:
         print("fout in programma")
-        break
 
 """
 while True:
