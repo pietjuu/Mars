@@ -3,14 +3,15 @@ import time
 import sys
 
 EMULATE_HX711 = False
-referenceUnit = 1
+#referenceUnit = 1
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
     from hx711 import HX711
+    print("imported hx711")
 else:
     from emulated_hx711 import HX711
-
+    print("imported emulated_hx711")
 
 def cleanAndExit():
     print("Cleaning...")
@@ -29,7 +30,8 @@ hx = HX711(5, 6)
 
 
 #set reference unit
-hx.set_reference_unit(referenceUnit)
+hx.set_reference_unit(113)
+#hx.set_reference_unit(referenceUnit)
 hx.reset()
 
 hx.tare()
