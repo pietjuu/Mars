@@ -38,6 +38,7 @@ def door_closed():
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
         print("functie door closed werkt")
+        sleep(2)
 
 
 def door_open():
@@ -46,7 +47,7 @@ def door_open():
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
         print("functie door open werkt")
-
+        sleep(2)
 
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
@@ -59,8 +60,10 @@ def write_not_ready():
 
 while True:
     if door_closed():
+        print("test if")
         write_ready()
     elif door_open():
+        print("test elif")
         write_not_ready()
     else:
         print("fout in programma")
