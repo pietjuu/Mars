@@ -41,6 +41,9 @@ def door_closed():
         sleep(2)
 
 
+print(door_closed())
+
+
 def door_open():
     button_state = GPIO.input(Button)
     if button_state == 0:
@@ -49,9 +52,11 @@ def door_open():
         print("functie door open werkt")
         sleep(2)
 
+
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is ready")
+
 
 def write_not_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
