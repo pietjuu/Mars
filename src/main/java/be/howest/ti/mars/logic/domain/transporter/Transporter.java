@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.domain.transporter;
 
+import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.location.Building;
 
 import java.util.Objects;
@@ -63,6 +64,10 @@ public class Transporter {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public boolean itemFits(Item item){
+        return this.size.getHeight() > item.getSize().getHeight() && this.size.getLength() > item.getSize().getLength() && this.size.getWidth() > item.getSize().getHeight();
     }
 
     @Override
