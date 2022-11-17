@@ -59,6 +59,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for deleteUser");
         routerBuilder.operation("deleteUser").handler(this::deleteUser);
 
+        LOGGER.log(Level.INFO, "Installing handler for getShippertBlacklist");
+        routerBuilder.operation("getShippertBlacklist").handler(this::getShippertBlacklist);
+
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -112,6 +115,10 @@ public class MarsOpenApiBridge {
 
         controller.deleteUser(id);
         Response.sendEmptyResponse(routingContext, 202);
+    }
+
+    private void getShippertBlacklist(RoutingContext routingContext){
+        Response.sendItems(routingContext, controller.getShippertBlacklist());
     }
 
     private void onFailedRequest(RoutingContext ctx) {
