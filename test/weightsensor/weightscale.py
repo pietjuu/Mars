@@ -24,10 +24,11 @@ def cleanAndExit():
 
 #set warnings off
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
+#GPIO.setmode(GPIO.BCM)
+
 
 hx = HX711(5, 6)
-
+hx.set_reading_format("LSB", "MSB")
 
 #set reference unit
 #hx.set_reference_unit(113)
@@ -44,13 +45,13 @@ while True:
         # for the first parameter of "hx.set_reading_format("LSB", "MSB")".
         # Comment the two lines "val = hx.get_weight(5)" and "print val" and uncomment these three lines to see what it prints.
 
-        # np_arr8_string = hx.get_np_arr8_string()
-        # binary_string = hx.get_binary_string()
-        # print binary_string + " " + np_arr8_string
+         #np_arr8_string = hx.get_np_arr8_string()
+         #binary_string = hx.get_binary_string()
+         #print(binary_string + " " + np_arr8_string)
 
         # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
-        val = hx.get_weight()
-        print(val)
+         val = hx.get_weight()
+         print(val)
 
         # To get weight from both channels (if you have load cells hooked up
         # to both channel A and B), do something like this
