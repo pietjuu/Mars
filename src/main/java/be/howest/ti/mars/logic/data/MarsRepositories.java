@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.data;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 
 import java.util.Set;
@@ -73,4 +74,14 @@ public interface MarsRepositories {
      * @return boolean
      */
     boolean isUserBlackListExist(String userID);
+
+    Set<Transporter> getTransporters();
+
+    void addTransporter(Transporter transporter);
+
+    Transporter getTransporter(String transporterID);
+
+    void updateTransporter(Transporter transporter);
+
+    void deleteTransporter(Transporter transporter);
 }
