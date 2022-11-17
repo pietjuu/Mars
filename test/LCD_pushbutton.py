@@ -93,21 +93,18 @@ def cleanAndExit():
 
 
 while True:
+    if door_closed() == True & start_1() == True:
+        write_package_send_with_led()
     try:
-        print("voor de if", door_closed())
-        if door_closed() == True & start_1() == False:
+        if door_closed():
             write_ready()
-            print("na de if", door_closed())
-            print("eerste if statement")
         elif door_open():
             print(door_open())
             write_not_ready()
-            print("tweede elf statement")
         else:
             print("fout in programma")
 
-        if door_closed() == True & start_1() == True:
-            write_package_send_with_led()
+
 
 
     except (KeyboardInterrupt, SystemExit):
