@@ -46,6 +46,9 @@ def door_closed():
         return False
 
 
+print(door_closed())
+
+
 def door_open():
     button_state = GPIO.input(Button_sensor)
     if button_state == 0:
@@ -91,7 +94,7 @@ def cleanAndExit():
 
 while True:
     try:
-        if door_closed() & start_1() == False:
+        if door_closed() == True & start_1() == False:
             write_ready()
             print("eerste if statement")
         elif door_open():
