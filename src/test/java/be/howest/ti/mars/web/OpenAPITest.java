@@ -147,7 +147,7 @@ class OpenAPITest {
 
     @Test
     void addItemToUserBlacklist(final VertxTestContext testContext){
-        webClient.post(PORT, HOST, "/api/users/te-1/blacklist").bearerTokenAuthentication("te-1").send()
+        webClient.post(PORT, HOST, "/api/users/te-1/blacklist").bearerTokenAuthentication("te-1").sendJsonObject(new JsonObject().put("itemName", "cheese"))
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(201, response.statusCode());
@@ -157,7 +157,7 @@ class OpenAPITest {
 
     @Test
     void deleteItemToUserBlacklist(final VertxTestContext testContext){
-        webClient.delete(PORT, HOST, "/api/users/te-1/blacklist").bearerTokenAuthentication("te-1").send()
+        webClient.delete(PORT, HOST, "/api/users/te-1/blacklist/cheese").bearerTokenAuthentication("te-1").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(202, response.statusCode());
