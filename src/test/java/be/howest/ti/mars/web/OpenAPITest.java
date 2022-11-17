@@ -124,7 +124,18 @@ class OpenAPITest {
     }
 
     @Test
-    void createErrors(final VertxTestContext testContext){
+    void getShippertBlackList(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/blacklist").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode());
+                    assertEquals("Gun", response.bodyAsJsonObject().getJsonArray("items").getString(0));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void createUserErrors(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
