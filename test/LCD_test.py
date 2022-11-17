@@ -16,8 +16,7 @@ address = 0x3f
 port = 1 # 0 on an older Raspberry Pi
 
 # Initialise the LCD
-lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap,
-                  cols=cols, rows=rows)
+lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
 
 # Write a string on first line and move to next line
 lcd.write_string('Hello world')
