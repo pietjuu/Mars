@@ -12,6 +12,7 @@ Button = 23
 #Set pins to LED
 Led_door_closed = 24
 Led_door_open = 12
+Led_package_send = 17
 
 #Setup button and start state LED
 GPIO.setup(Button, GPIO.IN)
@@ -38,6 +39,7 @@ while True:
 	if button_state == 1:
 		GPIO.output(Led_door_closed, GPIO.LOW)
 		GPIO.output(Led_door_open, GPIO.LOW)
+		GPIO.output(Led_package_send, GPIO.LOW)
 	if button_state == 1:
 		lcd.close(clear=True)
 		break
