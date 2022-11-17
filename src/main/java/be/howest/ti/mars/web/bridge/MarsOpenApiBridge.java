@@ -68,6 +68,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for addItemToUserBlacklist");
         routerBuilder.operation("addItemToUserBlacklist").handler(this::addItemToUserBlacklist);
 
+        LOGGER.log(Level.INFO, "Installing handler for deleteItemFromUserBlacklist");
+        routerBuilder.operation("deleteItemFromUserBlacklist").handler(this::deleteItemFromUserBlacklist);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -134,10 +137,18 @@ public class MarsOpenApiBridge {
 
     private void addItemToUserBlacklist(RoutingContext routingContext){
         String id = Request.from(routingContext).getUserID();
-        String itemName = Request.from(routingContext).getItemName();
+        String itemName = Request.from(routingContext).getItemNameBody();
 
         controller.addItemToUserBlacklist(itemName, id);
         Response.sendEmptyResponse(routingContext, 201);
+    }
+
+    private void deleteItemFromUserBlacklist(RoutingContext routingContext){
+        String id = Request.from(routingContext).getUserID();
+        String itemName = Request.from(routingContext).getItemNameParam();
+
+        controller.deleteItemToUserBlacklist(itemName, id);
+        Response.sendEmptyResponse(routingContext, 202);
     }
 
     private void onFailedRequest(RoutingContext ctx) {
