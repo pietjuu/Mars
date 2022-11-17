@@ -46,9 +46,6 @@ def door_closed():
         return False
 
 
-print(door_closed())
-
-
 def door_open():
     button_state = GPIO.input(Button_sensor)
     if button_state == 0:
@@ -93,6 +90,31 @@ def cleanAndExit():
 
 
 while True:
+    button_state_sensor = GPIO.input(Button_sensor)
+    button_state_start = GPIO.input(Button_start)
+    # deur dicht en startknop ingedrukt
+    if button_state_start == 1 & button_state_sensor == 1:
+        GPIO.output(Led_package_send, GPIO.HIGH)
+        GPIO.output(Led_door_closed, GPIO.HIGH)
+        GPIO.output(Led_door_open, GPIO.LOW)
+        write_package_send_with_led()
+    elif button_state_start == 0 & button_state_sensor == 1:
+        GPIO.output(Led_package_send, GPIO.HIGH)
+        GPIO.output(Led_door_closed, GPIO.HIGH)
+        write_ready()
+    # deur open start ingedrukt
+    elif button_state_sensor == 0 & button_state_start == 1:
+        GPIO.output(Led_door_closed, GPIO.LOW)
+        GPIO.output(Led_door_open, GPIO.HIGH)
+        write_not_ready()
+    # deur open start niet ingedrukt
+    elif button_state_sensor == 0 & button_state_start == 0:
+        GPIO.output(Led_door_closed, GPIO.LOW)
+        GPIO.output(Led_door_open, GPIO.HIGH)
+        write_not_ready()
+
+"""
+while True:
 
     try:
         if door_closed() & start_1() == False:
@@ -108,3 +130,4 @@ while True:
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
+"""
