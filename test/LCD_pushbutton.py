@@ -98,20 +98,31 @@ while True:
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
         write_package_send_with_led()
+
+    # deur dicht startknop niet ingedrukt
     elif button_state_start == 0 & button_state_sensor == 1:
-        GPIO.output(Led_package_send, GPIO.HIGH)
         GPIO.output(Led_door_closed, GPIO.HIGH)
+        GPIO.output(Led_door_open, GPIO.LOW)
+        GPIO.output(Led_package_send, GPIO.LOW)
         write_ready()
+
     # deur open start ingedrukt
     elif button_state_sensor == 0 & button_state_start == 1:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
+        GPIO.output(Led_package_send, GPIO.LOW)
         write_not_ready()
+
     # deur open start niet ingedrukt
     elif button_state_sensor == 0 & button_state_start == 0:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
+        GPIO.output(Led_package_send, GPIO.LOW)
         write_not_ready()
+
+    else:
+        print("fout in programma")
+        break
 
 """
 while True:
