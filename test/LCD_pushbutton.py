@@ -41,7 +41,7 @@ def door_closed():
     if button_state == 1:
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
-        return True
+    return True
 
 
 def door_open():
@@ -49,7 +49,7 @@ def door_open():
     if button_state == 0:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
-        return True
+    return True
 
 
 def start_1():
