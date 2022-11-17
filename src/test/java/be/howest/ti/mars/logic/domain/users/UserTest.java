@@ -55,7 +55,7 @@ class UserTest {
         users.add(u2);
 
         assertNotEquals(u1, u2);
-        assertEquals(1, users.size());
+        assertEquals(2, users.size());
     }
 
     @Test
