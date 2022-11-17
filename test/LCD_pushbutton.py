@@ -20,20 +20,24 @@ address = 0x3f
 port = 1
 
 # Set pins to button
-Button = 23
+Button_sensor = 23
+Button_start = 16
 
 # Set pins to LED
 Led_door_closed = 24
 Led_door_open = 12
+Led_package_send = 17
 
 # Setup button and start state LED
-GPIO.setup(Button, GPIO.IN)
+GPIO.setup(Button_sensor, GPIO.IN)
+GPIO.setup(Button_start, GPIO.IN)
 GPIO.setup(Led_door_closed, GPIO.OUT)
 GPIO.setup(Led_door_open, GPIO.OUT)
+GPIO.setup(Led_package_send, GPIO.OUT)
 
 
 def door_closed():
-    button_state = GPIO.input(Button)
+    button_state = GPIO.input(Button_sensor)
     if button_state == 1:
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
@@ -42,25 +46,28 @@ def door_closed():
         return True
 
 
-print(door_closed())
-
-
 def door_open():
-    button_state = GPIO.input(Button)
+    button_state = GPIO.input(Button_sensor)
     if button_state == 0:
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
         print("functie door open werkt")
-        sleep(2)
         return True
 
-print(door_closed())
+
+def start_1():
+    button_state = GPIO.input(Button_start)
+    if button_state == 1:
+        GPIO.output(Led_package_send, GPIO.HIGH)
+        print("functie lampje send werkt")
+        return True
 
 
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is ready")
     return True
+
 
 print(write_ready())
 
@@ -70,14 +77,22 @@ def write_not_ready():
     lcd.write_string("Package isn't ready")
     return True
 
+
 print(write_not_ready())
+
+
+def write_package_send_with_led():
+    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+    lcd.write_string("Package is send")
+    return True
+
 
 while True:
     if door_closed():
-        print("test if")
         write_ready()
+        if start_1():
+            write_package_send_with_led()
     elif door_open():
-        print("test elif")
         write_not_ready()
     else:
         print("fout in programma")
