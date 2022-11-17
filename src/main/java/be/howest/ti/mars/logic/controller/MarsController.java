@@ -40,12 +40,31 @@ public interface MarsController {
      */
     void deleteUser(String userID);
 
+    /**
+     * Get the blacklist of Shippert, which every user is bound to.
+     * @return List of string with item names.
+     */
     List<String> getShippertBlacklist();
 
+    /**
+     * Get the blacklist of a user.
+     * @param userID User id.
+     * @return List of string with item names.
+     */
     List<String> getUserBlacklist(String userID);
 
+    /**
+     * Add item to users blacklist
+     * @param itemName Item name ex. gun
+     * @param userID User ID
+     */
     void addItemToUserBlacklist(String itemName, String userID);
 
+    /**
+     * Delete item from user blacklist.
+     * @param itemName Item name ex. gun
+     * @param userID User ID
+     */
     void deleteItemToUserBlacklist(String itemName, String userID);
 
 }
