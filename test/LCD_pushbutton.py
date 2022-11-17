@@ -94,7 +94,7 @@ def cleanAndExit():
 
 while True:
     try:
-        if door_closed() == True & start_1() == False:
+        if door_closed():
             write_ready()
             print("eerste if statement")
         elif door_open():
