@@ -2,12 +2,12 @@ package be.howest.ti.mars.logic.domain.transporter;
 
 import be.howest.ti.mars.logic.domain.location.Building;
 
-import java.net.Inet4Address;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Transporter {
 
-    private String id;
+    private final String id;
     private String name;
     private Size size;
     private Building building;
@@ -26,6 +26,42 @@ public class Transporter {
         this.name = name;
         this.size = size;
         this.building = building;
+        this.ip = ip;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public void setIp(String ip) {
         this.ip = ip;
     }
 }
