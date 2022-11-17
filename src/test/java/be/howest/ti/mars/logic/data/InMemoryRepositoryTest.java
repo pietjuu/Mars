@@ -1,7 +1,6 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
-import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.junit.jupiter.api.Test;
@@ -53,28 +52,50 @@ class InMemoryRepositoryTest {
     void getShippertBlacklist() {
         InMemoryRepository repo = new InMemoryRepository();
 
-        assertEquals(2, repo.getShippertBlacklist().size());
+        assertEquals(2, repo.getShippertBlacklist().getItems().size());
     }
 
     @Test
     void getUserBlacklist() {
         InMemoryRepository repo = new InMemoryRepository();
-        User user = new User("1", "Glenn", "Callens", PricePlan.STANDARD);
-        Item i = new Item("Apple", new Size(1,1,1));
-        repo.createUserBlacklist(user.getId());
-        repo.addItemToUserBlacklist(i, user.getId());
-        assertEquals(1, repo.getUserBlacklist(user.getId()).size());
+
+        assertEquals(1, repo.getUserBlacklist("T-1").getItems().size());
     }
 
     @Test
-    void removeItemToUserBlacklist() {
+    void createUserBlacklist(){
         InMemoryRepository repo = new InMemoryRepository();
-        User user = new User("1", "Glenn", "Callens", PricePlan.STANDARD);
-        Item i = new Item("Apple", new Size(1,1,1));
+
+        repo.createUserBlacklist("T-5");
+
+        assertTrue(repo.isUserBlackListExist("T-5"));
+    }
+
+    @Test
+    void addItemToUserBlacklist(){
+        InMemoryRepository repo = new InMemoryRepository();
+        User user = new User("TE-1", "Glenn", "Callens", PricePlan.STANDARD);
+        Item item = new Item("Airpods");
+
         repo.createUserBlacklist(user.getId());
-        repo.addItemToUserBlacklist(i, user.getId());
-        assertEquals(1, repo.getUserBlacklist(user.getId()).size());
-        repo.removeItemToUserBlacklist(i, user.getId());
-        assertEquals(0, repo.getUserBlacklist(user.getId()).size());
+        repo.addItemToUserBlacklist(item, user.getId());
+
+        assertEquals("Airpods", repo.getUserBlacklist(user.getId()).getItems().get(0).getName());
+    }
+
+    @Test
+    void removeItemFroBlacklist(){
+        InMemoryRepository repo = new InMemoryRepository();
+        User user = new User("TE-1", "Glenn", "Callens", PricePlan.STANDARD);
+        Item item = new Item("Airpods");
+
+        repo.createUserBlacklist(user.getId());
+        repo.addItemToUserBlacklist(item, user.getId());
+
+        assertEquals("Airpods", repo.getUserBlacklist(user.getId()).getItems().get(0).getName());
+
+        repo.removeItemToUserBlacklist(item, user.getId());
+
+        assertEquals(0, repo.getUserBlacklist(user.getId()).getItems().size());
     }
 }
