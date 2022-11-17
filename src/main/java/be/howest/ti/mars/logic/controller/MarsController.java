@@ -1,9 +1,9 @@
 package be.howest.ti.mars.logic.controller;
 
-import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
-import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,9 +40,9 @@ public interface MarsController {
      */
     void deleteUser(String userID);
 
-    Blacklist getShippertBlacklist();
+    List<String> getShippertBlacklist();
 
-    UserBlacklist getUserBlacklist(String userID);
+    List<String> getUserBlacklist(String userID);
 
     void addItemToUserBlacklist(String itemName, String userID);
 

@@ -7,9 +7,7 @@ import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 public class MockMarsController implements MarsController {
 
@@ -43,19 +41,19 @@ public class MockMarsController implements MarsController {
     }
 
     @Override
-    public Blacklist getShippertBlacklist() {
+    public List<String> getShippertBlacklist() {
         Blacklist blacklist = new Blacklist();
-        blacklist.addItem(new Item("Apple"));
+        blacklist.addItem(new Item("Gun"));
 
-        return blacklist;
+        return Collections.singletonList(blacklist.getItems().get(0).getName());
     }
 
     @Override
-    public UserBlacklist getUserBlacklist(String userID) {
+    public List<String> getUserBlacklist(String userID) {
         UserBlacklist userBlacklist = new UserBlacklist(userID);
         userBlacklist.addItem(new Item("Bananas"));
 
-        return userBlacklist;
+        return Collections.singletonList(userBlacklist.getItems().get(0).getName());
     }
 
     @Override

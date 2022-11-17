@@ -2,8 +2,6 @@ package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
-import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
-import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -23,6 +21,7 @@ import java.util.*;
  */
 public class DefaultMarsController implements MarsController {
 
+    public static final String USERID_BLACKLIST_DOESNT_EXIST = "User ID doesn't exist in user blacklists!";
     MarsRepositories repository = Repositories.getInMemoryRepository();
 
     @Override
@@ -74,19 +73,33 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Blacklist getShippertBlacklist() {
-        return repository.getShippertBlacklist();
+    public List<String> getShippertBlacklist() {
+        List<String> result = new ArrayList<>();
+        for (Item i : repository.getShippertBlacklist().getItems()){
+            result.add(i.getName());
+        }
+
+        return result;
     }
 
     @Override
-    public UserBlacklist getUserBlacklist(String userID) {
-       return repository.getUserBlacklist(userID);
+    public List<String> getUserBlacklist(String userID) {
+       if (repository.isUserBlackListExist(userID)){
+           throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
+       }
+
+       List<String> result = new ArrayList<>();
+       for (Item i : repository.getUserBlacklist(userID).getItems()){
+           result.add(i.getName());
+       }
+
+       return result;
     }
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
         if (!repository.isUserBlackListExist(userID)){
-            throw new NoSuchElementException("User ID doesn't exist in user blacklists!");
+            throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
         Item i = new Item(itemName);
@@ -101,7 +114,7 @@ public class DefaultMarsController implements MarsController {
     @Override
     public void deleteItemToUserBlacklist(String itemName, String userID) {
         if (!repository.isUserBlackListExist(userID)){
-            throw new NoSuchElementException("User ID doesn't exist in user blacklists!");
+            throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
         Item i = new Item(itemName);
