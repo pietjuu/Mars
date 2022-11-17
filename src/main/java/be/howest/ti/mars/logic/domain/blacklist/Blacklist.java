@@ -23,4 +23,16 @@ public class Blacklist {
         list.add(item);
     }
 
+    public boolean containsItem(String itemName){
+        boolean result = false;
+        for (Item i : list){
+            if (i.getName().equals(itemName)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
 }
