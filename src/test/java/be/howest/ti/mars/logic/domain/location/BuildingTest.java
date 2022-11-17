@@ -47,4 +47,16 @@ class BuildingTest {
         assertEquals("Longitude: " + 1f + ", Latitude: " + 2f, building.getCoordinates().toString());
     }
 
+    @Test
+    void testBuildingsNotEqual(){
+        Building building1 = new Building("aa", TypeOfLocation.RESIDENCE, new Coordinates(48.36769f,  2.96351f));
+        Building building2 = new Building("aaa", TypeOfLocation.RESIDENCE, new Coordinates(47.36769f,  2.96351f));
+        Set<Building> buildings = new HashSet<>();
+        buildings.add(building1);
+        buildings.add(building2);
+
+        assertNotEquals(building1, building2);
+        assertEquals(2 , buildings.size());
+    }
+
 }

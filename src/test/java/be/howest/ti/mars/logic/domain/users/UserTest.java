@@ -47,6 +47,18 @@ class UserTest {
     }
 
     @Test
+    void testNotEqualBaseUser(){
+        BaseUser u1 = new BaseUser("1", "Glenn", "Callens");
+        BaseUser u2 = new BaseUser("2", "Glenn", "Callens");
+        Set<BaseUser> users = new HashSet<>();
+        users.add(u1);
+        users.add(u2);
+
+        assertNotEquals(u1, u2);
+        assertEquals(1, users.size());
+    }
+
+    @Test
     void testPricePlain(){
         User u1 = new User("1", "Glenn", "Callens", PricePlan.STANDARD);
 

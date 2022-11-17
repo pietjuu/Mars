@@ -119,4 +119,16 @@ class ItemTest {
 
         assertEquals(1, items.size());
     }
+
+    @Test
+    void testNotEqual(){
+        Item i = new Item("1", "Apple", new Size(1,1,1));
+        Item i2 = new Item("2", "Banana", new Size(1,1,1));
+        Set<Item> items = new HashSet<>();
+        items.add(i);
+        items.add(i2);
+
+        assertNotEquals(i, i2);
+        assertEquals(2, items.size());
+    }
 }

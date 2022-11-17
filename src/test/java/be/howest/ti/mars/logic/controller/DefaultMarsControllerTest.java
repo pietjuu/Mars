@@ -25,6 +25,8 @@ class DefaultMarsControllerTest {
         MarsController controller = new DefaultMarsController();
 
         assertThrows(IllegalArgumentException.class, () -> controller.createUser("", "", "BUSINESS"));
+        assertThrows(IllegalArgumentException.class, () -> controller.createUser("BOE", "BOE", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.createUser("", "BOE", "BOE"));
     }
 
     @Test
