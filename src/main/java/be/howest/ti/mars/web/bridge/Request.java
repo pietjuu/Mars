@@ -67,6 +67,17 @@ public class Request {
         }
     }
 
+    public String getItemName(){
+        try {
+            if (params.body().isJsonObject())
+                return params.body().getJsonObject().getString("itemName");
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'itemName' in the body of POST blacklist", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
     public String getUserID() {
         try {
             if (!params.pathParameter("userId").getString().equals(getToken())){
