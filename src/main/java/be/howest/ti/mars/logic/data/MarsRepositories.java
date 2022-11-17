@@ -34,15 +34,43 @@ public interface MarsRepositories {
      */
     void deleteUser(String userID);
 
+    /**
+     * Get the Shippert blacklist
+     * @return Blacklist
+     */
     Blacklist getShippertBlacklist();
 
+    /**
+     * Get the user blacklist
+     * @param userID User ID
+     * @return UserBlacklist object
+     */
     UserBlacklist getUserBlacklist(String userID);
 
+    /**
+     * Create user blacklist
+     * @param userID UUID
+     */
     void createUserBlacklist(String userID);
 
+    /**
+     * Add an item to a user blacklist
+     * @param item item name
+     * @param userID UUID
+     */
     void addItemToUserBlacklist(Item item, String userID);
 
+    /**
+     * Delete an item to a user blacklist
+     * @param item item name
+     * @param userID UUID
+     */
     void removeItemToUserBlacklist(Item item, String userID);
 
+    /**
+     * Does the user have a blacklist?
+     * @param userID uuid
+     * @return boolean
+     */
     boolean isUserBlackListExist(String userID);
 }
