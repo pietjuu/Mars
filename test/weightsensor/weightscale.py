@@ -3,7 +3,7 @@ import time
 import sys
 
 EMULATE_HX711 = False
-referenceUnit = 1
+referenceUnit = 500
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
@@ -28,11 +28,11 @@ def cleanAndExit():
 
 # set warnings off
 GPIO.setwarnings(False)
-# GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)
 
 
 hx = HX711(5, 6)
-hx.set_reading_format("LSB", "MSB")
+#hx.set_reading_format("LSB", "MSB")
 
 # set reference unit
 # hx.set_reference_unit(113)
@@ -63,9 +63,9 @@ while True:
         # val_B = hx.get_weight_B(5)
         # print "A: %s  B: %s" % ( val_A, val_B )
 
-    hx.power_down()
-    hx.power_up()
-    time.sleep(0.1)
+        hx.power_down()
+        hx.power_up()
+        time.sleep(0.1)
 
-except (KeyboardInterrupt, SystemExit):
-cleanAndExit()
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
