@@ -53,15 +53,23 @@ def door_open():
         sleep(2)
 
 
+print(door_closed())
+
+
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is ready")
+
+
+print(write_ready())
 
 
 def write_not_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package isn't ready")
 
+
+print(write_not_ready())
 
 while True:
     if door_closed():
