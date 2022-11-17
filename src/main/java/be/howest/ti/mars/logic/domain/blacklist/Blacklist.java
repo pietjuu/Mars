@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Blacklist class
+ * Should only be directly called when it is about the Shippert blacklist.
+ */
 public class Blacklist {
 
     protected final Set<Item> list;
