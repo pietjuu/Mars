@@ -93,15 +93,16 @@ while True:
     try:
         if door_closed() & start_1() == False:
             write_ready()
+            print("eerste if statement")
         elif door_open():
             write_not_ready()
+            print("eerste elf statement")
         else:
             print("fout in programma")
 
         if door_closed() == True & start_1() == True:
             write_package_send_with_led()
-        else:
-            print("kapot")
+
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
