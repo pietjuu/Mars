@@ -1,9 +1,10 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
+import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.users.User;
 
-import java.util.List;
 import java.util.Set;
 
 public interface MarsRepositories {
@@ -33,9 +34,9 @@ public interface MarsRepositories {
      */
     void deleteUser(String userID);
 
-    List<Item> getShippertBlacklist();
+    Blacklist getShippertBlacklist();
 
-    List<Item> getUserBlacklist(String userID);
+    UserBlacklist getUserBlacklist(String userID);
 
     void createUserBlacklist(String userID);
 
@@ -43,5 +44,5 @@ public interface MarsRepositories {
 
     void removeItemToUserBlacklist(Item item, String userID);
 
-    int getIndexUserBlackList(String userID);
+    boolean isUserBlackListExist(String userID);
 }

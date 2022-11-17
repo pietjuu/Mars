@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.transporter.Size;
@@ -14,8 +15,9 @@ import java.util.*;
 public class InMemoryRepository implements MarsRepositories{
 
     Set<User> users = new HashSet<>();
-    Set<Item> shippertBlacklist = new HashSet<>();
-    List<UserBlacklist> blackListUser = new ArrayList<>();
+
+    Map<String, UserBlacklist> usersBlacklists = new HashMap<>();
+    Blacklist shippertBlacklist = new Blacklist();
 
     public InMemoryRepository(){
         addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
@@ -23,8 +25,11 @@ public class InMemoryRepository implements MarsRepositories{
         addUser(new User("T-3", "Delia", "Vervaeke", PricePlan.STANDARD));
         addUser(new User("T-4", "Wiebe", "Desmadryl", PricePlan.STANDARD));
         addUser(new User("T-5", "Glenn", "Callens", PricePlan.PREMIUM));
-        shippertBlacklist.add(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
-        shippertBlacklist.add(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
+        shippertBlacklist.addItem(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
+        shippertBlacklist.addItem(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
+        usersBlacklists.put("T-1", new UserBlacklist("T-1"));
+        usersBlacklists.get("T-1").addItem(new Item("Apple"));
+
         createUserBlacklist("T-1");
         createUserBlacklist("T-2");
         createUserBlacklist("T-3");
@@ -67,53 +72,36 @@ public class InMemoryRepository implements MarsRepositories{
     }
 
     @Override
-    public List<Item> getShippertBlacklist() {
-        return new ArrayList<>(shippertBlacklist);
+    public Blacklist getShippertBlacklist() {
+        return shippertBlacklist;
     }
 
     @Override
-    public List<Item> getUserBlacklist(String userID) {
-        return Objects.requireNonNull(getObjUserBlackList(userID)).getItems();
+    public UserBlacklist getUserBlacklist(String userID) {
+        return usersBlacklists.get(userID);
     }
 
     @Override
     public void createUserBlacklist(String userID) {
-        blackListUser.add(new UserBlacklist(userID));
+        usersBlacklists.put(userID, new UserBlacklist(userID));
     }
 
     @Override
     public void addItemToUserBlacklist(Item item, String userID) {
-        int index = getIndexUserBlackList(userID);
-
-        blackListUser.get(index).addItem(item);
+        if (usersBlacklists.containsKey(userID)) {
+            usersBlacklists.get(userID).addItem(item);
+        }
     }
 
     @Override
     public void removeItemToUserBlacklist(Item item, String userID) {
-        int index = getIndexUserBlackList(userID);
-
-        blackListUser.get(index).removeItem(item);
-    }
-
-    //TODO write tests
-    private UserBlacklist getObjUserBlackList(String userID){
-        for (UserBlacklist userBlacklist : blackListUser){
-            if (userBlacklist.getUserID().equals(userID)){
-                return userBlacklist;
-            }
+        if (usersBlacklists.containsKey(userID)) {
+            usersBlacklists.get(userID).removeItem(item);
         }
-        return null;
     }
 
     @Override
-    public int getIndexUserBlackList(String userID){
-        int i = 0;
-        for (UserBlacklist userBlacklist : blackListUser){
-            if (userBlacklist.getUserID().equals(userID)){
-                return i;
-            }
-            i += 1;
-        }
-        return -1;
+    public boolean isUserBlackListExist(String userID){
+       return usersBlacklists.containsKey(userID);
     }
 }
