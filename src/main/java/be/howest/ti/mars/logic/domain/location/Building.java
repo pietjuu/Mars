@@ -45,4 +45,11 @@ public class Building {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Building: " + id + "\n" +
+                "typeOfLocation" + typeOfLocation + "\n" +
+                "coordinates: " + coordinates;
+    }
 }
