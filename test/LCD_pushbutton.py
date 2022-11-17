@@ -99,7 +99,7 @@ while True:
             print("eerste if statement")
         elif door_open():
             write_not_ready()
-            print("eerste elf statement")
+            print("tweede elf statement")
         else:
             print("fout in programma")
 
