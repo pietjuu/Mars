@@ -108,6 +108,11 @@ input {
   font-size: 2rem;
 }
 
+.flex-center-row {
+  @include mixins.flex(row, center, center);
+}
+
+
 @media (hover: hover) {
   a, button, router-link {
     cursor: pointer;
