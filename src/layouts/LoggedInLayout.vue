@@ -76,7 +76,8 @@ export default {
   --sidebar-width: 16rem;
 
   position: fixed;
-  @include size(100vw);
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
 }
 
