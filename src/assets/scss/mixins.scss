@@ -8,3 +8,37 @@
   width: $width;
   height: $height;
 }
+
+
+// POSITION: FIXED
+@mixin pos-fixed($top : 0, $left : 0, $bottom : 0, $right : 0) {
+  position: fixed;
+  top: $top;
+  left: $left;
+  bottom: $bottom;
+  right: $right;
+}
+
+@mixin pos-fixed-top-left($top : 0, $left : 0) {
+  position: fixed;
+  top: $top;
+  left: $left;
+}
+
+@mixin pos-fixed-top-right($top : 0, $right : 0) {
+  position: fixed;
+  top: $top;
+  right: $right;
+}
+
+@mixin pos-fixed-bottom-left($bottom : 0, $left : 0) {
+  position: fixed;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin pos-fixed-bottom-right($bottom : 0, $right : 0) {
+  position: fixed;
+  bottom: $bottom;
+  right: $right;
+}
