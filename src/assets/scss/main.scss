@@ -95,6 +95,10 @@ input {
   display: none;
 }
 
+.no-text-decoration {
+  text-decoration: none;
+}
+
 .box {
   background-color: var(--color-background);
   border-radius: var(--box-radius);
