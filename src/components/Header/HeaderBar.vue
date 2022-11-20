@@ -43,6 +43,7 @@ export default {
 <style scoped lang="scss">
 
 .header-wrapper {
+  /* height is used in .content-wrapper! */
   height: 4rem;
   display: flex;
   flex: auto;

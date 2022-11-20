@@ -16,11 +16,12 @@ export default {
 <style scoped lang="scss">
 
 header {
+  /* total height is 5rem - value used in <main/> ! */
   border-bottom: var(--divider);
-  margin-bottom: 1rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
 
   h1 {
-    margin-bottom: 1rem;
     font-weight: bold;
   }
 
