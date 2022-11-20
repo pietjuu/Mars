@@ -10,7 +10,7 @@ const API = `${CONFIG.host ? CONFIG.host + '/': ''}${CONFIG.group ? CONFIG.group
 
 // Simulate identifier that is included in watch
 import { saveToStorage, loadFromStorage } from "@/assets/js/data-connector/local-storage-abstractor";
-saveToStorage('userId', "bcae138d-5057-4a51-98dd-772e55c781d3");
+saveToStorage('userId', "T-1");
 
 const TOKEN = loadFromStorage('userId');
 
@@ -21,4 +21,4 @@ app.use(router);
 app.use(store);
 app.mount("#app");
 
-export { API, TOKEN }
+export { API, TOKEN };
