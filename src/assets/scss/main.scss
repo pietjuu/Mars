@@ -121,6 +121,12 @@ input {
   align-items: center;
 }
 
+.flex-space-between-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @media (hover: hover) {
   a, button, router-link {
     cursor: pointer;
