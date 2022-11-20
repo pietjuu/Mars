@@ -4,11 +4,20 @@
   margin-right: auto;
 }
 
-@mixin size($width : 100%, $height : 100%) {
-  width: $width;
-  height: $height;
+@mixin size($size : 100%) {
+  width: $size;
+  height: $size;
 }
 
+
+// DISPLAY: FLEX
+@mixin flex($direction : initial, $justify-content : initial, $align-items : initial, $wrap : initial) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $wrap;
+}
 
 // POSITION: FIXED
 @mixin pos-fixed($top : 0, $left : 0, $bottom : 0, $right : 0) {
