@@ -116,6 +116,11 @@ input {
   @include mixins.flex(column, center, center);
 }
 
+.flex-center-vertical {
+  display: flex;
+  align-items: center;
+}
+
 @media (hover: hover) {
   a, button, router-link {
     cursor: pointer;
