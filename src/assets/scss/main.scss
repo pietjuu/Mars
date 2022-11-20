@@ -127,6 +127,12 @@ input {
   justify-content: space-between;
 }
 
+.flex-space-between-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 @media (hover: hover) {
   a, button, router-link {
     cursor: pointer;
