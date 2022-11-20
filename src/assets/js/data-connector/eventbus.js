@@ -1,4 +1,4 @@
-import EventBus from "@/assets/js/libs/vertx-eventbus"
+import { EventBus } from "@/assets/js/libs/vertx-eventbus"
 
 const CHANNEL_TO_SERVER = "events.to.server";
 const EVENTBUS_PATH = "http://localhost:8080/events";
