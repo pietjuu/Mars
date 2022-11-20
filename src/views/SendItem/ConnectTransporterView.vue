@@ -3,9 +3,9 @@
 
     <InfoBox :text="infoText"/>
 
-    <div class="form-and-message-wrapper">
+    <div class="form-and-message-wrapper flex-space-between-row">
 
-      <div class="info-message box">
+      <div class="info-message box flex-center-col">
         <img src="@/assets/media/transporter.png" alt="">
         <p>Place item in the Transporter and close the door!</p>
       </div>
@@ -16,7 +16,7 @@
             <legend>Connect  Your Transporter</legend>
 
             <label for="transporter-id">Enter ID of The Transporter You want to Send <span>from</span> <span>*</span></label>
-            <div>
+            <div class="flex-center-vertical">
               <input type="text" id="transporter-id" name="transporter-id" required autocomplete="off" placeholder="Enter the ID here"/>
               <TextIconButton :content="`Link`" :icon="`link`" :width="`6.5rem`" :height="`2.3rem`"/>
             </div>
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       infoText: `To send your item, we need to know which Transporter you’re sending from. To connect to your transporter, whom you’re sending from, you must enter the Transporter ID. Afterwards you can click “Link”.`
-    }
+    };
   },
   methods: {
     ...mapActions(['setStepToInProgress'])
@@ -52,15 +52,12 @@ export default {
   created() {
     this.setStepToInProgress(1);
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 
 .form-and-message-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   gap: 1rem;
 
   > .box {
@@ -69,20 +66,14 @@ export default {
   }
 
   .info-message {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     color: var(--color-heading2);
     font-size: var(--h2-text-size);
     font-weight: bold;
     padding-bottom: 2rem;
   }
 
-  fieldset > div {
-    display: flex;
+  fieldset .flex-center-vertical {
     gap: 0.5rem;
-    align-items: center;
   }
 
 

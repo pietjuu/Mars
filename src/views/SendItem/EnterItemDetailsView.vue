@@ -1,11 +1,11 @@
 <template>
   <div class="item-details-wrapper">
     <div class="item-price box">
-      <div class="item-price-title">
+      <div class="item-price-title flex-space-between-row">
         <h2>Calculated Price to Send Item</h2>
         <Icon :icon="`payments`"/>
       </div>
-      <div class="item-price-value">
+      <div class="item-price-value flex-center-row">
         <span class="important">MC {{ price }}</span>
       </div>
     </div>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       price: 200
-    }
+    };
   },
   computed: {
     ...mapGetters(['user'])
@@ -41,7 +41,7 @@ export default {
   components: {
     Icon
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -72,14 +72,6 @@ h2 {
 .item-price-value {
   align-self: center;
   flex: 1 1 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.item-price-title {
-  display: flex;
-  justify-content: space-between;
 }
 
 </style>

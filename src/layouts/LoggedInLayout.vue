@@ -41,7 +41,7 @@ export default {
         state: false,
         messages: []
       }
-    }
+    };
   },
   computed: {
     ...mapGetters(['notificationShow', 'user', 'userRequest'])
@@ -66,7 +66,7 @@ export default {
   methods: {
     ...mapActions(["fetchUser", "createNotification"])
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -76,23 +76,20 @@ export default {
   --sidebar-width: 16rem;
 
   position: fixed;
-  width: 100vw;
-  height: 100vw;
+  @include size(100vw);
   overflow: hidden;
 }
 
 .sidebar-wrapper {
-  position: fixed;
-  left: 0;
-  top: 0;
+  @include pos-fixed-top-left();
   overflow: hidden;
   height: 100vh;
   width: var(--sidebar-width);
 }
 
 .header-and-content-wrapper {
-  height: 100vh;
   position: relative;
+  height: 100vh;
   margin-left: var(--sidebar-width);
 }
 

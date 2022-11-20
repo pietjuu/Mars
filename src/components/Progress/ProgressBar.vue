@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-bar">
+  <div class="progress-bar flex-space-between-row">
     <ProgressItem v-for="step in steps" :id="step.number" :text="step.text" :inProgress="step.inProgress"/>
   </div>
 </template>
@@ -15,15 +15,12 @@ export default {
   components: {
     ProgressItem
   }
-}
+};
 </script>
 
 <style scoped>
 
 .progress-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   gap: 1rem;
   background-image: url("@/assets/media/line.png");
   background-position: center center;

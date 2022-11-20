@@ -1,9 +1,9 @@
 <template>
-  <router-link :to="route" class="nav-item">
+  <router-link :to="route" class="nav-item flex-center-vertical">
     <div class="nav-icon-wrapper">
       <Icon :icon="icon"/>
     </div>
-    <div class="nav-content-wrapper">
+    <div class="nav-content-wrapper flex-center-vertical">
       <p>{{ title }}</p>
     </div>
   </router-link>
@@ -22,24 +22,19 @@ export default {
   components: {
     Icon
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 
 .nav-item {
   color: var(--color-text);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   min-height: 3rem;
   padding: 0 1rem;
   text-decoration: none;
 }
 
 .nav-content-wrapper {
-  display: flex;
-  align-items: center;
   flex-wrap: wrap;
   margin-left: 0.625rem;
   padding: 0.75rem 0;

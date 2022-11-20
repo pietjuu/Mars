@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :style="{'color':color}">
+  <button class="flex-center-row" type="button" :style="{'color':color}">
     <Icon :icon="icon"/>
   </button>
 </template>
@@ -16,7 +16,7 @@ export default {
   components: {
     Icon
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -24,9 +24,6 @@ export default {
 button {
   background: transparent;
   border-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 1.75rem;
   width: 3.125rem;
 }

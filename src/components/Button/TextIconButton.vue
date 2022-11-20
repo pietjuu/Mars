@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :style="{width: width, height: height}">
+  <button class="flex-center-row" type="button" :style="{width: width, height: height}">
     <Icon :icon="icon"/>
     <span class="button-content">{{ content }}</span>
   </button>
@@ -18,16 +18,13 @@ export default {
     width: String,
     height: String
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 
 button {
   border-radius: 0.375rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 0.5rem;
   min-width: 3.125rem;
   padding: 0 0.75rem;

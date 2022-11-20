@@ -1,5 +1,5 @@
 <template>
-  <div class="load-wrapper">
+  <div class="load-wrapper flex-center-row">
     <img src="@/assets/media/loading.gif" alt="Loading" title="Loading">
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "LoadApp"
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -15,14 +15,10 @@ export default {
 .load-wrapper {
   height: 100vh;
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 img {
-  width: 5rem;
-  height: 5rem;
+  @include size(5rem);
 }
 
 </style>

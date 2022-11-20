@@ -1,7 +1,7 @@
 <template>
   <header class="header-wrapper">
     <div class="desktop-header">
-      <div class="header-actions">
+      <div class="header-actions flex-center-row">
         <TextButton :content="`Support`" @click="goToSupport()"/>
         <IconButton :icon="`notifications`" :color="`var(--color-text)`"/>
         <ProfileButton :content="initials()"/>
@@ -37,7 +37,7 @@ export default {
     IconButton,
     ProfileButton
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -54,10 +54,6 @@ export default {
 }
 
 .header-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   gap: 2rem;
 }
 

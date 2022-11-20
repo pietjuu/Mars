@@ -1,5 +1,5 @@
 <template>
-  <div class="error-wrapper">
+  <div class="error-wrapper flex-center-col">
     <TypeWriter :values="messages"/>
     <TextButton :content="`Support`" @click="goToSupport()"/>
   </div>
@@ -23,7 +23,7 @@ export default {
       window.open(`https://thiboverbeerst.wixsite.com/shippert/contact-4`);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -31,10 +31,6 @@ export default {
 .error-wrapper {
   height: 100vh;
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 </style>
