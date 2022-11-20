@@ -95,7 +95,8 @@ export default {
 }
 
 .content-wrapper {
-  height: 100vh;
+  /* 5rem from padding and 4rem is from header bar */
+  height: calc(100vh - 5rem - 4rem);
   background-color: var(--color-background-mute);
   padding: 2.5rem;
   overflow: scroll;
