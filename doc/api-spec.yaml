@@ -7,10 +7,30 @@ servers:
   - url: http://localhost:5000
     description: 'Local API'
 paths:
+  /api/location:
+    get:
+      description: Get location coordinates of Transporter
+      operationId: location
+      tags: [ General ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  longitude:
+                    type: integer
+                  latitude:
+                    type: integer
+                example:
+                  longitude: 3.739375315010267
+                  latitude: 51.17206082023195
   /api/status:
     get:
       description: Get status of Transporter
-      operationId: get_status
+      operationId: status
       tags: [ General ]
       responses:
         200:
