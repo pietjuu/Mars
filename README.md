@@ -23,3 +23,46 @@ To stop running the server on startup execute the following command:
 ```bash
 sudo ./bin/uninstall.sh
 ```
+
+
+## Transporter APIs on Docker Containers
+To simulate real Transporter devices on Mars, we are running 10 Transporter APIs on docker containers on a server of Thibo Verbeerst.
+
+There are now 3 type of Transporter APIs configured.
+1. Always Ready Transporter (aka door closed)
+2. Always Not Ready Transporter (aka door open)
+3. Status of Transporter is random
+
+> Note: location of transporter is always random, number scanned molecules is always random
+
+### Transporter API addresses:
+> **IMPORTANT:** addresses only work with **http** protocol
+1. Always Ready Transporter (aka door closed)
+    - http://t1.shippert.thiboverbeerst.com
+    - http://t2.shippert.thiboverbeerst.com
+    - http://t3.shippert.thiboverbeerst.com
+    - http://t4.shippert.thiboverbeerst.com
+
+2. Always Not Ready Transporter (aka door open)
+    - http://t5.shippert.thiboverbeerst.com
+    - http://t6.shippert.thiboverbeerst.com
+
+3. Status of Transporter is random
+    - http://t7.shippert.thiboverbeerst.com
+    - http://t8.shippert.thiboverbeerst.com
+    - http://t9.shippert.thiboverbeerst.com
+    - http://t10.shippert.thiboverbeerst.com
+
+### Thibo's Server Schedule
+These addresses / the server is online on:
+- Monday: 19u00 - 23u00
+- Tuesday: 19u00 - 23u00
+- Wednesday: 19u00 - 23u00
+- Thursday: 19u00 - 23u00
+- Friday: offline
+- Weekend: 12u00 - 21u00
+
+Want the server to be online at a specific time?  
+contact: thibo.verbeerst@student.howest.be
+
+Note: the Transporter servers will be destroyed on **16 February 2023**

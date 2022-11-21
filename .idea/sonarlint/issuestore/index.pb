@@ -1,8 +1,6 @@
 
 R
 "transporter/controller/__init__.py,9\4\94a5060d2ce07140ff47b13ab2bdc0747b3b7307
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 6
 run.py,8\0\806d6ceb4e60342798038124ccf7dc1a423a4433
 Z
