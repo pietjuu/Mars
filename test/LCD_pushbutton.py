@@ -89,7 +89,22 @@ def cleanAndExit():
     print("Bye!")
     sys.exit()
 
+# debugging code om te kijken of de if statements werken
+while True:
+    button_state_sensor = GPIO.input(Button_sensor)
+    button_state_start = GPIO.input(Button_start)
 
+    if button_state_start == 0 & button_state_sensor == 1:
+        print("eerste elif statement, sensor ingedrukt")
+        GPIO.output(Led_door_closed, GPIO.HIGH)
+        GPIO.output(Led_door_open, GPIO.LOW)
+        GPIO.output(Led_package_send, GPIO.LOW)
+        write_ready()
+    else:
+        print("fout in programma")
+
+# code die zou moeten werken zonder functies
+"""
 while True:
     button_state_sensor = GPIO.input(Button_sensor)
     button_state_start = GPIO.input(Button_start)
@@ -133,6 +148,9 @@ while True:
     else:
         print("fout in programma")
 
+"""
+
+# code die zou moeten werken met functies + TODO uitzetten wit lampje niet vergeten
 """
 while True:
 
