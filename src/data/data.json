@@ -33,5 +33,61 @@
       "firstname": "Kannie",
       "lastname": "Drinken"
     }
+  ],
+  "transporters": [
+    {
+      "id": "T-1",
+      "name": "Transporter of Glenn",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "longitude": 4.242362690474167,
+        "latitude": 51.21175585969615
+      },
+      "building": {
+        "typeOfBuilding": "Home",
+        "id": "135b2235"
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-2",
+      "name": "Farm 200 D2",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "longitude": 5.512043247664388,
+        "latitude": 50.86603005962442
+      },
+      "building": {
+        "typeOfBuilding": "Home",
+        "id": "135b2235"
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-3",
+      "name": "Garbage 34",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "longitude": 5.388078883197738,
+        "latitude": 50.78748919533741
+      },
+      "building": {
+        "typeOfBuilding": "Garbage Point",
+        "id": "135b2235"
+      },
+      "ipAddress": "192.168.9.1"
+    }
   ]
 }
