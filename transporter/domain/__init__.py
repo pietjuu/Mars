@@ -1,1 +1,1 @@
-from .. import mock_molecules_scan
+from .. import mock_molecules_scan, mock_locations
