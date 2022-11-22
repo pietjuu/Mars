@@ -15,27 +15,27 @@
       </div>
       <div class="location-details box">
         <h2>Location Details</h2>
-        <ul>
+        <ul v-if="selectedLocation !== undefined">
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`badge`"/>
               <p class="flex-center-vertical">ID: </p>
             </div>
-            <span class="location-id location-value flex-center-vertical">T-1</span>
+            <span class="location-id location-value flex-center-vertical">{{ selectedLocation["id"] }}</span>
           </li>
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`description`"/>
               <p class="flex-center-vertical">Name: </p>
             </div>
-            <span class="location-name location-value flex-center-vertical">Farm 200 D2</span>
+            <span class="location-name location-value flex-center-vertical">{{ selectedLocation["name"] }}</span>
           </li>
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`category`"/>
               <p class="flex-center-vertical">Type: </p>
             </div>
-            <span class="location-type location-value flex-center-vertical">Garbage Point</span>
+            <span class="location-type location-value flex-center-vertical"> {{ selectedLocation["typeOfBuilding"] }} </span>
           </li>
           <li>
             <div class="icon-text-wrapper">
@@ -43,7 +43,11 @@
               <p class="flex-center-vertical">Size: </p>
             </div>
             <span class="location-size location-value flex-center-vertical">
-              <span class="location-size-length">40cm</span>x<span class="location-size-width">50cm</span>x<span class="location-size-depth">50cm</span>
+              <span class="location-size-length">{{ selectedLocation["length"] }}cm</span>
+              x
+              <span class="location-size-width">{{ selectedLocation["width"] }}cm</span>
+              x
+              <span class="location-size-depth">{{ selectedLocation["size"]["depth"] }}cm</span>
             </span>
           </li>
           <li>
@@ -51,14 +55,18 @@
               <Icon :icon="`my_location`"/>
               <p class="flex-center-vertical">Longitude: </p>
             </div>
-            <span class="location-longitude location-value flex-center-vertical">090DFJDD</span>
+            <span class="location-longitude location-value flex-center-vertical">{{
+                selectedLocation["location"]["longitude"]
+              }}</span>
           </li>
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`my_location`"/>
               <p class="flex-center-vertical">Latitude: </p>
             </div>
-            <span class="location-latitude location-value flex-center-vertical">090DFJDD</span>
+            <span class="location-latitude location-value flex-center-vertical">{{
+                selectedLocation["location"]["latitude"]
+              }}</span>
           </li>
         </ul>
       </div>
@@ -71,6 +79,7 @@ import HeaderContent from "@/components/Header/HeaderContent";
 import DestinationMap from "@/components/Map/DestinationMap";
 import IconAndText from "@/components/Item/IconAndText";
 import Icon from "@/components/Icon/Icon";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "DestinationsView",
@@ -79,6 +88,17 @@ export default {
     HeaderContent,
     DestinationMap,
     Icon
+  },
+  methods: {
+    ...mapActions(["fetchTransporters"])
+  },
+  data() {
+    return {
+      selectedLocation: this.selectedTransporterOnMap
+    };
+  },
+  computed: {
+    ...mapGetters(["selectedTransporterOnMap"])
   }
 };
 </script>
