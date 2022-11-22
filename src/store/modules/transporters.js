@@ -36,9 +36,9 @@ const getters = {
 };
 
 const actions = {
-    fetchTransporters({ commit }) {
+    async fetchTransporters({ commit }) {
         requestStarted(commit);
-        get(`transporters`,(transporters) => requestSuccess(commit, transporters),(error) => requestFailed(commit, error));
+        await get(`transporters`,(transporters) => requestSuccess(commit, transporters),(error) => requestFailed(commit, error));
     }
 };
 
