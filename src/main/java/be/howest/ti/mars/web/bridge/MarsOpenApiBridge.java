@@ -77,6 +77,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for getTransporter");
         routerBuilder.operation("getTransporter").handler(this::getTransporter);
 
+        LOGGER.log(Level.INFO, "Installing handler for createTransporter");
+        routerBuilder.operation("createTransporter").handler(this::createTransporter);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -165,6 +168,22 @@ public class MarsOpenApiBridge {
         String id = Request.from(routingContext).getTransporterID();
 
         Response.sendTransporter(routingContext, controller.getTransporter(id));
+    }
+
+    private void createTransporter(RoutingContext routingContext){
+        String name = Request.from(routingContext).getTransporterNameBody();
+        Double[] size = Request.from(routingContext).getTransporterSizeBody();
+        Float[] coordinates = Request.from(routingContext).getTransporterCoordinatesBody();
+        String typeOfBuilding = Request.from(routingContext).getTransporterTypeOfBuildingBody();
+        String ipAddress = Request.from(routingContext).getTransporterIpAddressBody();
+
+        Response.sendJsonResponse(routingContext, 201, controller.createTransporter(
+                name,
+                controller.createSize(size),
+                controller.createCoordinates(coordinates),
+                typeOfBuilding,
+                ipAddress
+        ));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
