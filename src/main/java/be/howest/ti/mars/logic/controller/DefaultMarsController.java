@@ -3,6 +3,9 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
@@ -124,5 +127,40 @@ public class DefaultMarsController implements MarsController {
         }
 
         repository.removeItemToUserBlacklist(i, userID);
+    }
+
+    @Override
+    public Size createSize(float length, float width, float depth) {
+        return null;
+    }
+
+    @Override
+    public Coordinates createCoordinates(float longitude, float latitude) {
+        return null;
+    }
+
+    @Override
+    public String addTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String id, String ipAddress) {
+        return null;
+    }
+
+    @Override
+    public List<Transporter> getTransporters() {
+        return null;
+    }
+
+    @Override
+    public Transporter getTransporter(String transporterID) {
+        return null;
+    }
+
+    @Override
+    public Transporter updateTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String id, String ipAddress) {
+        return null;
+    }
+
+    @Override
+    public void deleteTransporter(String transporterID) {
+
     }
 }
