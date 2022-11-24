@@ -164,7 +164,7 @@ public class MarsOpenApiBridge {
     private void getTransporter(RoutingContext routingContext){
         String id = Request.from(routingContext).getTransporterID();
 
-        Response.sendJsonResponse(routingContext, 200, controller.getTransporter(id));
+        Response.sendTransporter(routingContext, controller.getTransporter(id));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
