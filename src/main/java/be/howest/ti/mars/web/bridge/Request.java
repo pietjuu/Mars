@@ -3,6 +3,7 @@ package be.howest.ti.mars.web.bridge;
 import be.howest.ti.mars.web.auth.UserToken;
 import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
 import io.vertx.ext.web.validation.ValidationHandler;
@@ -126,4 +127,66 @@ public class Request {
         }
     }
 
+    public String getTransporterNameBody(){
+        try {
+            if (params.body().isJsonObject())
+                return params.body().getJsonObject().getString("name");
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'name' in the body of POST transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public Double[] getTransporterSizeBody(){
+        try {
+            if (params.body().isJsonObject()){
+                JsonObject size = params.body().getJsonObject().getJsonObject("size");
+                return new Double[]{size.getDouble("length"), size.getDouble("width"), size.getDouble("depth")};
+            }
+
+            return new Double[]{};
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'size' in the body of POST transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public Float[] getTransporterCoordinatesBody(){
+        try {
+            if (params.body().isJsonObject()){
+                JsonObject size = params.body().getJsonObject().getJsonObject("location").getJsonObject("coordinates");
+                return new Float[]{size.getFloat("longitude"), size.getFloat("latitude")};
+            }
+
+            return new Float[]{};
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'size' in the body of POST transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getTransporterTypeOfBuildingBody(){
+        try {
+            if (params.body().isJsonObject()){
+                return params.body().getJsonObject().getJsonObject("location").getJsonObject("building").getString("typeOfBuilding");
+            }
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'typeOfBuilding' in the body of POST transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getTransporterIpAddressBody(){
+        try {
+            if (params.body().isJsonObject()){
+                return params.body().getJsonObject().getString("ipAddress");
+            }
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'ipAddress' in the body of POST transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
 }
