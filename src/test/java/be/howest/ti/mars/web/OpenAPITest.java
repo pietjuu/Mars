@@ -171,6 +171,8 @@ class OpenAPITest {
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode());
+                    assertEquals(1, response.bodyAsJsonArray().size());
+                    assertEquals("TTT-1", response.bodyAsJsonArray().getJsonObject(0).getString("id"));
                     testContext.completeNow();
                 }));
     }
