@@ -52,6 +52,11 @@ def start_1():
     return button_state == 1
 
 
+def start_0():
+    button_state = GPIO.input(Button_start)
+    return button_state == 0
+
+
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is ready")
@@ -76,15 +81,38 @@ def cleanAndExit():
     sys.exit()
 
 
-def setLedState(led1_state, led2_state, led3_state):
+def set_led_state(led1_state, led2_state, led3_state):
     GPIO.output(Led_door_closed, led1_state)
     GPIO.output(Led_door_open, led2_state)
     GPIO.output(Led_package_send, led3_state)
 
 
+while True:
+    try:
+        #  button_state_start == 0 and button_state_sensor == 0:
+        if start_0() == True and door_open() == True:
+            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+            write_not_ready()
+        # button_state_start == 0 and button_state_sensor == 1:
+        elif start_0() == True and door_closed() == True:
+            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
+            write_ready()
+        # button_state_start == 1 and button_state_sensor == 0:
+        elif start_1() == True and door_open() == True:
+            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+            write_not_ready()
+        # button_state_sensor == 1 and button_state_start == 1:
+        elif start_1() == True and door_closed() == True:
+            set_led_state(GPIO.LOW, GPIO.LOW, GPIO.HIGH)
+            write_package_send_with_led()
+            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
+        # else statement
+        else:
+            print("fout in programma")
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
 
-
-
+"""
 # code die zou moeten werken zonder functies
 
 while True:
@@ -148,3 +176,4 @@ while True:
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
+"""
