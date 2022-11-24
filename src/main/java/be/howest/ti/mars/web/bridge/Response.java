@@ -64,6 +64,16 @@ public class Response {
                 .end(Json.encodePrettily(getTransporterInJsonObject(transporter)));
     }
 
+    public static void sendCreateTransporter(RoutingContext ctx, String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("id", id);
+
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(201)
+                .end(Json.encodePrettily(jsonObject));
+    }
+
     private static JsonObject getTransporterInJsonObject(Transporter transporter){
         JsonObject transporterJson = new JsonObject();
         transporterJson.put("id", transporter.getId());
