@@ -3,7 +3,11 @@ package be.howest.ti.mars.logic.data;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Building;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 
@@ -18,6 +22,7 @@ public class InMemoryRepository implements MarsRepositories{
 
     Map<String, UserBlacklist> usersBlacklists = new HashMap<>();
     Blacklist shippertBlacklist = new Blacklist();
+    Map<String, Transporter> transporters = new HashMap<>();
 
     public InMemoryRepository(){
         addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
@@ -28,6 +33,9 @@ public class InMemoryRepository implements MarsRepositories{
         shippertBlacklist.addItem(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
         shippertBlacklist.addItem(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
         usersBlacklists.get("T-1").addItem(new Item("Apple"));
+        transporters.put("TT-1", new Transporter("TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.1"));
+        transporters.put("TT-2", new Transporter("TT-2", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.2"));
+        transporters.put("TT-3", new Transporter("TT-3", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.3"));
     }
 
     @Override
@@ -96,5 +104,30 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public boolean isUserBlackListExist(String userID){
        return usersBlacklists.containsKey(userID);
+    }
+
+    @Override
+    public Set<Transporter> getTransporters() {
+        return new HashSet<>(transporters.values());
+    }
+
+    @Override
+    public void addTransporter(Transporter transporter) {
+        transporters.put(transporter.getId(), transporter);
+    }
+
+    @Override
+    public Transporter getTransporter(String transporterID) {
+        return transporters.get(transporterID);
+    }
+
+    @Override
+    public void updateTransporter(Transporter transporter) {
+        transporters.replace(transporter.getId(), transporter);
+    }
+
+    @Override
+    public void deleteTransporter(Transporter transporter) {
+        transporters.remove(transporter.getId());
     }
 }
