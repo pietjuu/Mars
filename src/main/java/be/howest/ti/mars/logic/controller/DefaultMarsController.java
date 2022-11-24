@@ -155,7 +155,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public List<Transporter> getTransporters() {
-        return null;
+        return new ArrayList<>(repository.getTransporters());
     }
 
     @Override
