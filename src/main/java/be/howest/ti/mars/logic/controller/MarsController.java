@@ -1,5 +1,8 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
 
@@ -67,4 +70,17 @@ public interface MarsController {
      */
     void deleteItemToUserBlacklist(String itemName, String userID);
 
+    Size createSize(float length, float width, float depth);
+
+    Coordinates createCoordinates(float longitude, float latitude);
+
+    String addTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String id, String ipAddress);
+
+    List<Transporter> getTransporters();
+
+    Transporter getTransporter(String transporterID);
+
+    Transporter updateTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String id, String ipAddress);
+
+    void deleteTransporter(String transporterID);
 }
