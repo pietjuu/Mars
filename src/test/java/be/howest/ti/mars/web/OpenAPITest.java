@@ -179,7 +179,7 @@ class OpenAPITest {
 
     @Test
     void getTransporter(final VertxTestContext testContext){
-        webClient.get(PORT, HOST, "/api/transporter/testingTransporter").send()
+        webClient.get(PORT, HOST, "/api/transporters/testingTransporter").bearerTokenAuthentication("te-1").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode());
