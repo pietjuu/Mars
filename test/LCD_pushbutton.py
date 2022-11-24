@@ -39,31 +39,17 @@ GPIO.setup(Led_package_send, GPIO.OUT)
 
 def door_closed():
     button_state = GPIO.input(Button_sensor)
-    if button_state == 1:
-        GPIO.output(Led_door_closed, GPIO.HIGH)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        return True
-    else:
-        return False
+    return button_state == 1
 
 
 def door_open():
     button_state = GPIO.input(Button_sensor)
-    if button_state == 0:
-        GPIO.output(Led_door_closed, GPIO.LOW)
-        GPIO.output(Led_door_open, GPIO.HIGH)
-        return True
-    else:
-        return False
+    return button_state == 0
 
 
 def start_1():
     button_state = GPIO.input(Button_start)
-    if button_state == 1:
-        GPIO.output(Led_package_send, GPIO.HIGH)
-        return True
-    else:
-        return False
+    return button_state == 1
 
 
 def write_ready():
@@ -89,19 +75,15 @@ def cleanAndExit():
     print("Bye!")
     sys.exit()
 
-# debugging code om te kijken of de if statements werken
-while True:
-    button_state_sensor = GPIO.input(Button_sensor)
-    button_state_start = GPIO.input(Button_start)
 
-    if button_state_start == 0 & button_state_sensor == 1:
-        print("eerste elif statement, sensor ingedrukt")
-        GPIO.output(Led_door_closed, GPIO.HIGH)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        GPIO.output(Led_package_send, GPIO.LOW)
-        write_ready()
-    else:
-        print("fout in programma")
+def setLedState(led1_state, led2_state, led3_state):
+    GPIO.output(Led_door_closed, led1_state)
+    GPIO.output(Led_door_open, led2_state)
+    GPIO.output(Led_package_send, led3_state)
+
+
+
+
 
 # code die zou moeten werken zonder functies
 
@@ -148,10 +130,8 @@ while True:
     else:
         print("fout in programma")
 
-
-
 # code die zou moeten werken met functies + TODO uitzetten wit lampje niet vergeten
-"""
+
 while True:
 
     try:
@@ -168,4 +148,3 @@ while True:
 
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
-"""
