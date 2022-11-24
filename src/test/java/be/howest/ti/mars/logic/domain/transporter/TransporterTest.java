@@ -101,8 +101,6 @@ class TransporterTest {
         Building b = new Building("TE-3", TypeOfLocation.RESIDENCE, new Coordinates(2f, 2f));
         Transporter t = new Transporter("TE-1", "Basement", new Size(5, 5, 5), b, "192.168.0.1");
 
-        System.out.println(t);
-
         assertEquals(res, t.toString());
     }
 }
