@@ -70,9 +70,9 @@ public interface MarsController {
      */
     void deleteItemToUserBlacklist(String itemName, String userID);
 
-    Size createSize(double length, double width, double depth);
+    Size createSize(Double[] size);
 
-    Coordinates createCoordinates(float longitude, float latitude);
+    Coordinates createCoordinates(Float[] coords);
 
     String createTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
 

@@ -132,13 +132,13 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Size createSize(double length, double width, double depth) {
-        return new Size(length, width, depth);
+    public Size createSize(Double[] size) {
+        return new Size(size[0], size[1], size[2]);
     }
 
     @Override
-    public Coordinates createCoordinates(float longitude, float latitude) {
-        return new Coordinates(longitude, latitude);
+    public Coordinates createCoordinates(Float[] coords) {
+        return new Coordinates(coords[0], coords[1]);
     }
 
     @Override
