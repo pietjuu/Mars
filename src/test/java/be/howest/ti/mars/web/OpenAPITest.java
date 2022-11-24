@@ -200,6 +200,17 @@ class OpenAPITest {
     }
 
     @Test
+    void updateTransporter(final VertxTestContext testContext){
+        webClient.put(PORT, HOST, "/api/transporters/kitchen").bearerTokenAuthentication("te-1").sendJsonObject(createTransporter())
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(201, response.statusCode());
+                    assertEquals("Banana", response.bodyAsJsonObject().getString("name"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
     void createUserErrors(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
                 .onFailure(testContext::failNow)
