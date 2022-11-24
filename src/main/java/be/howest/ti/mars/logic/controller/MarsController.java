@@ -70,7 +70,7 @@ public interface MarsController {
      */
     void deleteItemToUserBlacklist(String itemName, String userID);
 
-    Size createSize(float length, float width, float depth);
+    Size createSize(double length, double width, double depth);
 
     Coordinates createCoordinates(float longitude, float latitude);
 
