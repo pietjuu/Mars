@@ -183,7 +183,7 @@ public class MarsOpenApiBridge {
         String typeOfBuilding = Request.from(routingContext).getTransporterTypeOfBuildingBody();
         String ipAddress = Request.from(routingContext).getTransporterIpAddressBody();
 
-        Response.sendJsonResponse(routingContext, 201, controller.createTransporter(
+        Response.sendCreateTransporter(routingContext, controller.createTransporter(
                 name,
                 controller.createSize(size),
                 controller.createCoordinates(coordinates),
