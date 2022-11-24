@@ -75,13 +75,13 @@ public interface MarsController {
 
     Coordinates createCoordinates(float longitude, float latitude);
 
-    String addTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String id, String ipAddress);
+    String addTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
 
     List<Transporter> getTransporters();
 
     Transporter getTransporter(String transporterID);
 
-    Transporter updateTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String id, String ipAddress);
+    Transporter updateTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
 
     void deleteTransporter(String transporterID);
 
