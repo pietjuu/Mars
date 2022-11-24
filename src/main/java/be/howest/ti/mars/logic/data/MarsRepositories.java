@@ -93,5 +93,5 @@ public interface MarsRepositories {
 
     Building getBuilding(String buildingID);
 
-    boolean isBuildingOnLocation(Coordinates coordinates);
+    Building getBuildingFromCoordinates(Coordinates coordinates);
 }

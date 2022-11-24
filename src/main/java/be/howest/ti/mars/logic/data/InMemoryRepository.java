@@ -152,12 +152,12 @@ public class InMemoryRepository implements MarsRepositories{
     }
 
     @Override
-    public boolean isBuildingOnLocation(Coordinates coordinates) {
+    public Building getBuildingFromCoordinates(Coordinates coordinates) {
         for (Map.Entry<String, Building> entry : buildings.entrySet()){
             if (entry.getValue().getCoordinates().equals(coordinates)){
-                return true;
+                return entry.getValue();
             }
         }
-        return false;
+        return null;
     }
 }
