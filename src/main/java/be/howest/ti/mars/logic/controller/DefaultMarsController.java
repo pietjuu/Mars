@@ -160,7 +160,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Transporter getTransporter(String transporterID) {
-        return null;
+        return repository.getTransporter(transporterID);
     }
 
     @Override
