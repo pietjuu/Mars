@@ -21,39 +21,39 @@ address = 0x3f
 port = 1
 
 # Set pins to button
-Button_sensor = 23
-Button_start = 16
+button_sensor = 23
+button_start = 16
 
 # Set pins to LED
-Led_door_closed = 24
-Led_door_open = 12
-Led_package_send = 17
+led_door_closed = 24
+led_door_open = 12
+led_package_send = 17
 
 # Setup button and start state LED
-GPIO.setup(Button_sensor, GPIO.IN)
-GPIO.setup(Button_start, GPIO.IN)
-GPIO.setup(Led_door_closed, GPIO.OUT)
-GPIO.setup(Led_door_open, GPIO.OUT)
-GPIO.setup(Led_package_send, GPIO.OUT)
+GPIO.setup(button_sensor, GPIO.IN)
+GPIO.setup(button_start, GPIO.IN)
+GPIO.setup(led_door_closed, GPIO.OUT)
+GPIO.setup(led_door_open, GPIO.OUT)
+GPIO.setup(led_package_send, GPIO.OUT)
 
 
 def door_closed():
-    button_state = GPIO.input(Button_sensor)
+    button_state = GPIO.input(button_sensor)
     return button_state == 1
 
 
 def door_open():
-    button_state = GPIO.input(Button_sensor)
+    button_state = GPIO.input(button_sensor)
     return button_state == 0
 
 
 def start_1():
-    button_state = GPIO.input(Button_start)
+    button_state = GPIO.input(button_start)
     return button_state == 1
 
 
 def start_0():
-    button_state = GPIO.input(Button_start)
+    button_state = GPIO.input(button_start)
     return button_state == 0
 
 
@@ -62,41 +62,21 @@ def write_LCD(text):
     lcd.write_string(text)
 
 
-"""
-
-def write_ready():
-    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
-    lcd.write_string("Package is ready")
-    return True
-
-
-def write_not_ready():
-    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
-    lcd.write_string("Package isn't ready")
-    return True
-    
-def write_package_send_with_led():
-    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
-    lcd.write_string("Package is send")
-    return True
-"""
-
-
 def cleanAndExit():
     while True:
         lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
-        GPIO.output(Led_door_closed, GPIO.LOW)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        GPIO.output(Led_package_send, GPIO.LOW)
+        GPIO.output(led_door_closed, GPIO.LOW)
+        GPIO.output(led_door_open, GPIO.LOW)
+        GPIO.output(led_package_send, GPIO.LOW)
         lcd.close(clear=True)
         break
     sys.exit()
 
 
 def set_led_state(led1_state, led2_state, led3_state):
-    GPIO.output(Led_door_closed, led1_state)
-    GPIO.output(Led_door_open, led2_state)
-    GPIO.output(Led_package_send, led3_state)
+    GPIO.output(led_door_closed, led1_state)
+    GPIO.output(led_door_open, led2_state)
+    GPIO.output(led_package_send, led3_state)
 
 
 while True:
@@ -122,69 +102,3 @@ while True:
             print("fout in programma")
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
-
-"""
-# code die zou moeten werken zonder functies
-
-while True:
-    button_state_sensor = GPIO.input(Button_sensor)
-    button_state_start = GPIO.input(Button_start)
-
-    print(button_state_start)
-    sleep(1)
-    print(button_state_sensor)
-    sleep(1)
-    # deur dicht en startknop ingedrukt
-    if button_state_start == 0 and button_state_sensor == 0:
-        print("if statement, niks ingedrukt")
-        GPIO.output(Led_door_closed, GPIO.LOW)
-        GPIO.output(Led_door_open, GPIO.HIGH)
-        GPIO.output(Led_package_send, GPIO.LOW)
-        write_not_ready()
-
-    # deur dicht startknop niet ingedrukt
-    elif button_state_start == 0 and button_state_sensor == 1:
-        print("eerste elif statement, sensor ingedrukt")
-        GPIO.output(Led_door_closed, GPIO.HIGH)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        GPIO.output(Led_package_send, GPIO.LOW)
-        write_ready()
-
-    # deur open start ingedrukt
-    elif button_state_start == 1 and button_state_sensor == 0:
-        print("tweede elif statement, startknop ingedrukt")
-        GPIO.output(Led_door_closed, GPIO.LOW)
-        GPIO.output(Led_door_open, GPIO.HIGH)
-        GPIO.output(Led_package_send, GPIO.LOW)
-        write_not_ready()
-
-    # deur open start niet ingedrukt
-    elif button_state_sensor == 1 and button_state_start == 1:
-        print("derde elif statement, beide knoppen ingedrukt")
-        GPIO.output(Led_door_closed, GPIO.HIGH)
-        GPIO.output(Led_door_open, GPIO.LOW)
-        GPIO.output(Led_package_send, GPIO.HIGH)
-        write_not_ready()
-
-    else:
-        print("fout in programma")
-
-# code die zou moeten werken met functies + TODO uitzetten wit lampje niet vergeten
-
-while True:
-
-    try:
-        if door_closed() & start_1() == False:
-            write_ready()
-        elif door_open():
-            print(door_open())
-            write_not_ready()
-        else:
-            print("fout in programma")
-
-        if door_closed() == True & start_1() == True:
-            write_package_send_with_led()
-
-    except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
-"""
