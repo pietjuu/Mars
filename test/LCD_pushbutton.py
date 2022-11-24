@@ -61,6 +61,7 @@ def write_LCD(text):
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string(text)
 
+
 """
 
 def write_ready():
@@ -81,21 +82,14 @@ def write_package_send_with_led():
 """
 
 
-
-
-
-
 def cleanAndExit():
     while True:
-        button_state = GPIO.input(Button_sensor)
-        if button_state == 1:
-            GPIO.output(Led_door_closed, GPIO.LOW)
-            GPIO.output(Led_door_open, GPIO.LOW)
-            GPIO.output(Led_package_send, GPIO.LOW)
-        if button_state == 1:
-            lcd.close(clear=True)
-            break
-        sys.exit()
+        GPIO.output(Led_door_closed, GPIO.LOW)
+        GPIO.output(Led_door_open, GPIO.LOW)
+        GPIO.output(Led_package_send, GPIO.LOW)
+        lcd.close(clear=True)
+        break
+    sys.exit()
 
 
 def set_led_state(led1_state, led2_state, led3_state):
