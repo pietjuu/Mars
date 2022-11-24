@@ -27,13 +27,14 @@ import java.util.*;
 public class DefaultMarsController implements MarsController {
 
     public static final String USERID_BLACKLIST_DOESNT_EXIST = "User ID doesn't exist in user blacklists!";
+    public static final String AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED = "An empty argument is not allowed!";
     MarsRepositories repository = Repositories.getInMemoryRepository();
 
     @Override
     public User createUser(String firstname, String lastname, String subscription) {
 
         if (StringUtils.isBlank(firstname) || StringUtils.isBlank(lastname) || StringUtils.isBlank(subscription)){
-            throw new IllegalArgumentException("An empty argument is not allowed!");
+            throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
         }
 
         try {
@@ -143,6 +144,11 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public String createTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+
+        if (StringUtils.isBlank(name) || size == null || coordinates == null || StringUtils.isBlank(typeOfBuilding) || StringUtils.isBlank(ipAddress)){
+            throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
+        }
+
         if (repository.getBuildingFromCoordinates(coordinates) == null){
             addBuilding(typeOfBuilding, coordinates);
         }
@@ -160,6 +166,11 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Transporter getTransporter(String transporterID) {
+
+        if (StringUtils.isBlank(transporterID)){
+            throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
+        }
+
         if (repository.getTransporter(transporterID) == null){
             throw new NoSuchElementException("Transporter doesn't exists!");
         }
@@ -169,6 +180,11 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Transporter updateTransporter(String id, String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+
+        if (StringUtils.isBlank(id) || StringUtils.isBlank(name) || size == null || coordinates == null || StringUtils.isBlank(typeOfBuilding) || StringUtils.isBlank(ipAddress)){
+            throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
+        }
+
         Transporter transporter = getTransporter(id);
 
         transporter.setName(name);
@@ -189,6 +205,11 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteTransporter(String transporterID) {
+
+        if (StringUtils.isBlank(transporterID)){
+            throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
+        }
+
         Transporter transporter = getTransporter(transporterID);
         repository.deleteTransporter(transporter);
     }
