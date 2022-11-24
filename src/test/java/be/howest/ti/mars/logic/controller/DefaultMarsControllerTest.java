@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import org.junit.jupiter.api.Test;
@@ -193,5 +194,16 @@ class DefaultMarsControllerTest {
         assertEquals(1.2, size1.getLength());
         assertEquals(1.1, size1.getWidth());
         assertEquals(1.0, size1.getHeight());
+    }
+
+    @Test
+    void testCreateCoordinates(){
+        MarsController controller = new DefaultMarsController();
+
+        Float[] fl = new Float[]{1.2f, 1.1f};
+        Coordinates coordinates = controller.createCoordinates(fl);
+
+        assertEquals(1.2f, coordinates.getLongitude());
+        assertEquals(1.1f, coordinates.getLatitude());
     }
 }
