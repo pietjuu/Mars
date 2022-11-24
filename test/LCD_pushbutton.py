@@ -104,7 +104,7 @@ while True:
         print("fout in programma")
 
 # code die zou moeten werken zonder functies
-"""
+
 while True:
     button_state_sensor = GPIO.input(Button_sensor)
     button_state_start = GPIO.input(Button_start)
@@ -114,7 +114,7 @@ while True:
     print(button_state_sensor)
     sleep(1)
     # deur dicht en startknop ingedrukt
-    if button_state_start == 0 & button_state_sensor == 0:
+    if button_state_start == 0 and button_state_sensor == 0:
         print("if statement, niks ingedrukt")
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
@@ -122,7 +122,7 @@ while True:
         write_not_ready()
 
     # deur dicht startknop niet ingedrukt
-    elif button_state_start == 0 & button_state_sensor == 1:
+    elif button_state_start == 0 and button_state_sensor == 1:
         print("eerste elif statement, sensor ingedrukt")
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
@@ -130,7 +130,7 @@ while True:
         write_ready()
 
     # deur open start ingedrukt
-    elif button_state_start == 1 & button_state_sensor == 0:
+    elif button_state_start == 1 and button_state_sensor == 0:
         print("tweede elif statement, startknop ingedrukt")
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.HIGH)
@@ -138,7 +138,7 @@ while True:
         write_not_ready()
 
     # deur open start niet ingedrukt
-    elif button_state_sensor == 1 & button_state_start == 1:
+    elif button_state_sensor == 1 and button_state_start == 1:
         print("derde elif statement, beide knoppen ingedrukt")
         GPIO.output(Led_door_closed, GPIO.HIGH)
         GPIO.output(Led_door_open, GPIO.LOW)
@@ -148,7 +148,7 @@ while True:
     else:
         print("fout in programma")
 
-"""
+
 
 # code die zou moeten werken met functies + TODO uitzetten wit lampje niet vergeten
 """
