@@ -94,8 +94,7 @@ connection from RPI to buttons.
     - Pin 6 is the ground pin and is connected with the breadboard (see schema)
     - Pin 2 is the 5 Volt pin and is connected with the breadboard (see schema)
 
-    
-
+![afbeelding.png](./schemas/afbeelding.png)
 
 # 5) Hardware connection file test_weight_sensor.py + explanation
 The weight sensor is made from 2 pieces. We have the sensor itself (metal bar with wires) and we have the HX711 (chip).
