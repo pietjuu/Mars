@@ -59,4 +59,12 @@ class BuildingTest {
         assertEquals(2 , buildings.size());
     }
 
+    @Test
+    void testCoordsEqual(){
+        Set<Coordinates> coordinates = new HashSet<>();
+        coordinates.add(new Coordinates(1f, 1f));
+        coordinates.add(new Coordinates(1f, 1f));
+
+        assertEquals(1, coordinates.size());
+    }
 }
