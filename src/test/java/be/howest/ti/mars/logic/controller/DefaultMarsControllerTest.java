@@ -258,4 +258,31 @@ class DefaultMarsControllerTest {
 
         assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NOT_EXIST"));
     }
+
+    @Test
+    void testUpdateTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals("Kitchen", controller.getTransporter(id).getName());
+
+        controller.updateTransporter(id, "Bob", new Size(1.0,1.0,1.0), new Coordinates(9999.13f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals("Bob", controller.getTransporter(id).getName());
+    }
+
+    @Test
+    void testUpdateTransporterEmptyArgs(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter("","", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", ""));
+    }
 }
