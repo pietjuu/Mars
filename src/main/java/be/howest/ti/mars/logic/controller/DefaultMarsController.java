@@ -142,7 +142,7 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public String addTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+    public String createTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
         if (repository.getBuildingFromCoordinates(coordinates) == null){
             addBuilding(typeOfBuilding, coordinates);
         }

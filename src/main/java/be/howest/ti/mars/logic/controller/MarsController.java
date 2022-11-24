@@ -1,6 +1,5 @@
 package be.howest.ti.mars.logic.controller;
 
-import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
@@ -75,7 +74,7 @@ public interface MarsController {
 
     Coordinates createCoordinates(float longitude, float latitude);
 
-    String addTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
+    String createTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
 
     List<Transporter> getTransporters();
 
