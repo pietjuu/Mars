@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -180,5 +181,17 @@ class DefaultMarsControllerTest {
         String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
 
         assertThrows(IllegalArgumentException.class, () -> controller.deleteItemToUserBlacklist("Apple", id));
+    }
+
+    @Test
+    void testCreateSize(){
+        MarsController controller = new DefaultMarsController();
+
+        Double[] size = new Double[]{1.2, 1.1, 1.0};
+        Size size1 = controller.createSize(size);
+
+        assertEquals(1.2, size1.getLength());
+        assertEquals(1.1, size1.getWidth());
+        assertEquals(1.0, size1.getHeight());
     }
 }
