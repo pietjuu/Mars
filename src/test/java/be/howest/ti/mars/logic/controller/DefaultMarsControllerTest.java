@@ -191,9 +191,9 @@ class DefaultMarsControllerTest {
         Double[] size = new Double[]{1.2, 1.1, 1.0};
         Size size1 = controller.createSize(size);
 
-        assertEquals(1.2, size1.getLength());
-        assertEquals(1.1, size1.getWidth());
-        assertEquals(1.0, size1.getHeight());
+        assertEquals(1.1, size1.getLength());
+        assertEquals(1.0, size1.getWidth());
+        assertEquals(1.2, size1.getHeight());
     }
 
     @Test
