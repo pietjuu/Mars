@@ -6,6 +6,9 @@ import be.howest.ti.mars.logic.domain.location.Building;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Transporter class
+ */
 public class Transporter {
 
     private final String id;
@@ -14,6 +17,13 @@ public class Transporter {
     private Building building;
     private String ip;
 
+    /**
+     * Constructor
+     * @param name name of transporter
+     * @param size {@link Size}
+     * @param building {@link Building}
+     * @param ipAddress String
+     */
     public Transporter(String name, Size size, Building building, String ipAddress){
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -22,6 +32,14 @@ public class Transporter {
         this.ip = ipAddress;
     }
 
+    /**
+     * Constructor - should only used when importing
+     * @param id uuid
+     * @param name name of transporter
+     * @param size {@link Size}
+     * @param building {@link Building}
+     * @param ip String
+     */
     public Transporter(String id, String name, Size size, Building building, String ip) {
         this.id = id;
         this.name = name;
@@ -66,6 +84,11 @@ public class Transporter {
         this.ip = ip;
     }
 
+    /**
+     * Check if an items fits in the transporter
+     * @param item {@link Item}
+     * @return boolean
+     */
     public boolean itemFits(Item item){
         return this.size.getHeight() > item.getSize().getHeight() && this.size.getLength() > item.getSize().getLength() && this.size.getWidth() > item.getSize().getHeight();
     }
