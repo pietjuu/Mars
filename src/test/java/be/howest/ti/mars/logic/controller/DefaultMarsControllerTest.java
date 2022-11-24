@@ -226,7 +226,7 @@ class DefaultMarsControllerTest {
     }
 
     @Test
-    void getTransporters(){
+    void testGetTransporters(){
         MarsController controller = new DefaultMarsController();
 
         int oldSize = controller.getTransporters().size();
@@ -234,5 +234,28 @@ class DefaultMarsControllerTest {
         assertNotNull(controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips"));
 
         assertNotEquals(controller.getTransporters().size(), oldSize);
+    }
+
+    @Test
+    void testGetTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals(id, controller.getTransporter(id).getId());
+    }
+
+    @Test
+    void testGetTransporterBlankArgument(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.getTransporter(""));
+    }
+
+    @Test
+    void testGetTransporterNonExist(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NOT_EXIST"));
     }
 }
