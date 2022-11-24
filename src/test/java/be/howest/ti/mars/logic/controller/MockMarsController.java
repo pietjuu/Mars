@@ -97,7 +97,7 @@ public class MockMarsController implements MarsController {
 
     @Override
     public Transporter getTransporter(String transporterID) {
-        return new Transporter("TTT-1", "Kitchen", new Size(1,1,1), new Building(TypeOfLocation.valueOf("RESIDENCE"), new Coordinates(1f, 1f)), "192.168.0.1");
+        return new Transporter(transporterID, "Kitchen", new Size(1,1,1), new Building(TypeOfLocation.valueOf("RESIDENCE"), new Coordinates(1f, 1f)), "192.168.0.1");
     }
 
     @Override
