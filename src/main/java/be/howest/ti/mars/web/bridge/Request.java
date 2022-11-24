@@ -114,4 +114,16 @@ public class Request {
         }
     }
 
+    public String getTransporterID(){
+        try{
+            if (!params.pathParameter("transporterId").isNull()){
+                return params.pathParameter("transporterId").getString();
+            }
+            return null;
+        } catch (IllegalArgumentException ex){
+            LOGGER.log(Level.INFO, "Unable to decipher 'TransporterID' in the path of GET transporter", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
 }
