@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class Response {
 
+    public static final String APPLICATION_JSON = "application/json";
+
     private Response() { }
 
     private static void sendOkJsonResponse(RoutingContext ctx, JsonObject response) {
@@ -34,7 +36,7 @@ public class Response {
 
     public static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
         ctx.response()
-                .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(statusCode)
                 .end(Json.encodePrettily(response));
     }
@@ -46,27 +48,39 @@ public class Response {
     public static void sendTransporters(RoutingContext ctx, List<Transporter> list){
         JsonArray jsonArray = new JsonArray();
         for (Transporter transporter : list){
-            JsonObject transporterJson = new JsonObject();
-            transporterJson.put("id", transporter.getId());
-            transporterJson.put("name", transporter.getName());
-            transporterJson.put("size", transporter.getSize());
-
-            JsonObject locationJson = new JsonObject();
-            locationJson.put("coordinates", transporter.getBuilding().getCoordinates());
-
-            JsonObject buildingJson = new JsonObject();
-            buildingJson.put("typeOfBuilding", transporter.getBuilding().getTypeOfLocation());
-            buildingJson.put("id", transporter.getBuilding().getId());
-
-            locationJson.put("building", buildingJson);
-            transporterJson.put("location", locationJson);
-            jsonArray.add(transporterJson);
+            jsonArray.add(getTransporterInJsonObject(transporter));
         }
 
         ctx.response()
-                .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(200)
                 .end(Json.encodePrettily(jsonArray));
+    }
+
+    public static void sendTransporter(RoutingContext ctx, Transporter transporter){
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(200)
+                .end(Json.encodePrettily(getTransporterInJsonObject(transporter)));
+    }
+
+    private static JsonObject getTransporterInJsonObject(Transporter transporter){
+        JsonObject transporterJson = new JsonObject();
+        transporterJson.put("id", transporter.getId());
+        transporterJson.put("name", transporter.getName());
+        transporterJson.put("size", transporter.getSize());
+
+        JsonObject locationJson = new JsonObject();
+        locationJson.put("coordinates", transporter.getBuilding().getCoordinates());
+
+        JsonObject buildingJson = new JsonObject();
+        buildingJson.put("typeOfBuilding", transporter.getBuilding().getTypeOfLocation());
+        buildingJson.put("id", transporter.getBuilding().getId());
+
+        locationJson.put("building", buildingJson);
+        transporterJson.put("location", locationJson);
+
+        return transporterJson;
     }
 
     public static void sendFailure(RoutingContext ctx, int code, String quote) {
