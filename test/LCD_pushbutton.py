@@ -57,6 +57,12 @@ def start_0():
     return button_state == 0
 
 
+def write_LCD(text):
+    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+    lcd.write_string(text)
+
+"""
+
 def write_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is ready")
@@ -67,12 +73,16 @@ def write_not_ready():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package isn't ready")
     return True
-
-
+    
 def write_package_send_with_led():
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string("Package is send")
     return True
+"""
+
+
+
+
 
 
 def cleanAndExit():
@@ -92,19 +102,19 @@ while True:
         #  button_state_start == 0 and button_state_sensor == 0:
         if start_0() == True and door_open() == True:
             set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
-            write_not_ready()
+            write_LCD("Door is open")
         # button_state_start == 0 and button_state_sensor == 1:
         elif start_0() == True and door_closed() == True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
-            write_ready()
+            write_LCD("package is ready")
         # button_state_start == 1 and button_state_sensor == 0:
         elif start_1() == True and door_open() == True:
             set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
-            write_not_ready()
+            write_LCD("Door is open")
         # button_state_sensor == 1 and button_state_start == 1:
         elif start_1() == True and door_closed() == True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
-            write_package_send_with_led()
+            write_LCD("Package is send")
         # else statement
         else:
             print("fout in programma")
