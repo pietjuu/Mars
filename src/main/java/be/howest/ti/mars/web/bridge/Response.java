@@ -48,7 +48,7 @@ public class Response {
     public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){
         JsonArray jsonArray = new JsonArray();
         for (Transporter transporter : list){
-            jsonArray.add(getTransporterInJsonObject(transporter));
+            jsonArray.add(getTransporterInJsonObject(transporter, false));
         }
 
         ctx.response()
@@ -61,7 +61,7 @@ public class Response {
         ctx.response()
                 .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(statusCode)
-                .end(Json.encodePrettily(getTransporterInJsonObject(transporter)));
+                .end(Json.encodePrettily(getTransporterInJsonObject(transporter, true)));
     }
 
     public static void sendCreateTransporter(RoutingContext ctx, String id) {
@@ -74,7 +74,7 @@ public class Response {
                 .end(Json.encodePrettily(jsonObject));
     }
 
-    private static JsonObject getTransporterInJsonObject(Transporter transporter){
+    private static JsonObject getTransporterInJsonObject(Transporter transporter, boolean addIP){
         JsonObject transporterJson = new JsonObject();
         transporterJson.put("id", transporter.getId());
         transporterJson.put("name", transporter.getName());
@@ -89,6 +89,10 @@ public class Response {
 
         locationJson.put("building", buildingJson);
         transporterJson.put("location", locationJson);
+
+        if (addIP){
+            transporterJson.put("ipAddress", transporter.getIp());
+        }
 
         return transporterJson;
     }
