@@ -150,4 +150,14 @@ public class InMemoryRepository implements MarsRepositories{
     public Building getBuilding(String buildingID) {
         return buildings.get(buildingID);
     }
+
+    @Override
+    public boolean isBuildingOnLocation(Coordinates coordinates) {
+        for (Map.Entry<String, Building> entry : buildings.entrySet()){
+            if (entry.getValue().getCoordinates().equals(coordinates)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
