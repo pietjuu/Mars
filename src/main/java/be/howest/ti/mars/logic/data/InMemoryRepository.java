@@ -24,6 +24,8 @@ public class InMemoryRepository implements MarsRepositories{
     Blacklist shippertBlacklist = new Blacklist();
     Map<String, Transporter> transporters = new HashMap<>();
 
+    Map<String, Building> buildings = new HashMap<>();
+
     public InMemoryRepository(){
         addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
         addUser(new User("T-2", "Pieter", "Verheye", PricePlan.PREMIUM));
@@ -36,6 +38,9 @@ public class InMemoryRepository implements MarsRepositories{
         transporters.put("TT-1", new Transporter("TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.1"));
         transporters.put("TT-2", new Transporter("TT-2", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.2"));
         transporters.put("TT-3", new Transporter("TT-3", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "192.168.0.3"));
+        buildings.put("TB-1", new Building("TB-1", TypeOfLocation.RESIDENCE, new Coordinates(50.095983f, 5.357552f)));
+        buildings.put("TB-2", new Building("TB-2", TypeOfLocation.PICKUP, new Coordinates(50.175351f, 5.985122f)));
+        buildings.put("TB-3", new Building("TB-3", TypeOfLocation.PICKUP, new Coordinates(51.365621f, 3.341908f)));
     }
 
     @Override
@@ -129,5 +134,20 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public void deleteTransporter(Transporter transporter) {
         transporters.remove(transporter.getId());
+    }
+
+    @Override
+    public void addBuilding(Building building) {
+        buildings.put(building.getId(), building);
+    }
+
+    @Override
+    public void removeBuilding(Building building) {
+        buildings.remove(building.getId());
+    }
+
+    @Override
+    public Building getBuilding(String buildingID) {
+        return buildings.get(buildingID);
     }
 }
