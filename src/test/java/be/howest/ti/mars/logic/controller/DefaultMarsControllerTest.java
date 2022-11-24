@@ -309,4 +309,27 @@ class DefaultMarsControllerTest {
 
         assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NON_EXIST"));
     }
+
+    @Test
+    void testAddBuilding(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.addBuilding("RESIDENCE", new Coordinates(99999.6f, 99999.34f));
+    }
+
+    @Test
+    void testAddBuildingAlreadyExist(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.addBuilding("RESIDENCE", new Coordinates(99999.69f, 99999.69f));
+
+        assertThrows(IllegalArgumentException.class, () -> controller.addBuilding("RESIDENCE", new Coordinates(99999.69f, 99999.69f)));
+    }
+
+    @Test
+    void testAddBuildingWithNonExistingType(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.addBuilding("BLABLA",new Coordinates(99999.69f, 99999.69f)));
+    }
 }
