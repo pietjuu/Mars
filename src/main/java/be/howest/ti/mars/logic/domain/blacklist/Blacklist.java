@@ -28,15 +28,13 @@ public class Blacklist {
     }
 
     public boolean containsItem(String itemName){
-        boolean result = false;
         for (Item i : list){
             if (i.getName().equals(itemName)) {
-                result = true;
-                break;
+                return true;
             }
         }
 
-        return result;
+        return false;
     }
 
 }
