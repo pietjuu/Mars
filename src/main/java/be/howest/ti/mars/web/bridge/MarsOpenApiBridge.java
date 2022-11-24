@@ -80,6 +80,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for createTransporter");
         routerBuilder.operation("createTransporter").handler(this::createTransporter);
 
+        LOGGER.log(Level.INFO, "Installing handler for setTransporter");
+        routerBuilder.operation("setTransporter").handler(this::updateTransporter);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -161,13 +164,13 @@ public class MarsOpenApiBridge {
     }
 
     private void getTransporters(RoutingContext routingContext){
-        Response.sendTransporters(routingContext, controller.getTransporters());
+        Response.sendTransporters(routingContext, 200, controller.getTransporters());
     }
 
     private void getTransporter(RoutingContext routingContext){
         String id = Request.from(routingContext).getTransporterID();
 
-        Response.sendTransporter(routingContext, controller.getTransporter(id));
+        Response.sendTransporter(routingContext, 200, controller.getTransporter(id));
     }
 
     private void createTransporter(RoutingContext routingContext){
@@ -178,6 +181,25 @@ public class MarsOpenApiBridge {
         String ipAddress = Request.from(routingContext).getTransporterIpAddressBody();
 
         Response.sendJsonResponse(routingContext, 201, controller.createTransporter(
+                name,
+                controller.createSize(size),
+                controller.createCoordinates(coordinates),
+                typeOfBuilding,
+                ipAddress
+        ));
+    }
+
+    private void updateTransporter(RoutingContext routingContext){
+        String id = Request.from(routingContext).getTransporterID();
+        Float[] coordinates = Request.from(routingContext).getTransporterCoordinatesBody();
+        String typeOfBuilding = Request.from(routingContext).getTransporterTypeOfBuildingBody();
+        String ipAddress = Request.from(routingContext).getTransporterIpAddressBody();
+        String name = Request.from(routingContext).getTransporterNameBody();
+        Double[] size = Request.from(routingContext).getTransporterSizeBody();
+
+
+        Response.sendTransporter(routingContext, 201, controller.updateTransporter(
+                id,
                 name,
                 controller.createSize(size),
                 controller.createCoordinates(coordinates),
