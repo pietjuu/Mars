@@ -74,6 +74,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for getTransporters");
         routerBuilder.operation("getTransporters").handler(this::getTransporters);
 
+        LOGGER.log(Level.INFO, "Installing handler for getTransporter");
+        routerBuilder.operation("getTransporter").handler(this::getTransporter);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -156,6 +159,12 @@ public class MarsOpenApiBridge {
 
     private void getTransporters(RoutingContext routingContext){
         Response.sendTransporters(routingContext, controller.getTransporters());
+    }
+
+    private void getTransporter(RoutingContext routingContext){
+        String id = Request.from(routingContext).getTransporterID();
+
+        Response.sendJsonResponse(routingContext, 200, controller.getTransporter(id));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
