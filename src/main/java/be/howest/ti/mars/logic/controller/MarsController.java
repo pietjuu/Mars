@@ -86,6 +86,4 @@ public interface MarsController {
     void deleteTransporter(String transporterID);
 
     void addBuilding(String typeLocation, Coordinates coordinates);
-
-    Building getBuilding(String buildingID);
 }
