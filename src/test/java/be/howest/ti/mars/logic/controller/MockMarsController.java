@@ -3,7 +3,9 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -75,32 +77,32 @@ public class MockMarsController implements MarsController {
 
     @Override
     public Size createSize(double length, double width, double depth) {
-        return null;
+        return new Size(length, width, depth);
     }
 
     @Override
     public Coordinates createCoordinates(float longitude, float latitude) {
-        return null;
+        return new Coordinates(longitude, latitude);
     }
 
     @Override
     public String addTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
-        return null;
+        return new Transporter("TTT-1", name, size, new Building(TypeOfLocation.valueOf(typeOfBuilding), coordinates), ipAddress).toString();
     }
 
     @Override
     public List<Transporter> getTransporters() {
-        return null;
+        return List.of(new Transporter("TTT-1", "Kitchen", new Size(1,1,1), new Building(TypeOfLocation.valueOf("RESIDENCE"), new Coordinates(1f, 1f)), "192.168.0.1"));
     }
 
     @Override
     public Transporter getTransporter(String transporterID) {
-        return null;
+        return new Transporter("TTT-1", "Kitchen", new Size(1,1,1), new Building(TypeOfLocation.valueOf("RESIDENCE"), new Coordinates(1f, 1f)), "192.168.0.1");
     }
 
     @Override
     public Transporter updateTransporter(String id, String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
-        return null;
+        return new Transporter(id, name, size, new Building(TypeOfLocation.valueOf(typeOfBuilding), coordinates), ipAddress);
     }
 
     @Override
