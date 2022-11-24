@@ -285,4 +285,28 @@ class DefaultMarsControllerTest {
         assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "", ""));
         assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", ""));
     }
+
+    @Test
+    void testDeleteTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        controller.deleteTransporter(id);
+        assertThrows(NoSuchElementException.class, () -> controller.getTransporter(id));
+    }
+
+    @Test
+    void testDeleteTransporterEmptyArgs(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.getTransporter(""));
+    }
+
+    @Test
+    void testDeleteTransporterNonExist(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NON_EXIST"));
+    }
 }
