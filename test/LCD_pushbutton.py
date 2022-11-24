@@ -103,9 +103,8 @@ while True:
             write_not_ready()
         # button_state_sensor == 1 and button_state_start == 1:
         elif start_1() == True and door_closed() == True:
-            set_led_state(GPIO.LOW, GPIO.LOW, GPIO.HIGH)
-            write_package_send_with_led()
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
+            write_package_send_with_led()
         # else statement
         else:
             print("fout in programma")
