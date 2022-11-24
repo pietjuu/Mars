@@ -3,6 +3,9 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
@@ -68,5 +71,45 @@ public class MockMarsController implements MarsController {
         Item i = new Item(itemName);
         userBlacklist.addItem(i);
         userBlacklist.removeItem(i);
+    }
+
+    @Override
+    public Size createSize(double length, double width, double depth) {
+        return null;
+    }
+
+    @Override
+    public Coordinates createCoordinates(float longitude, float latitude) {
+        return null;
+    }
+
+    @Override
+    public String addTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+        return null;
+    }
+
+    @Override
+    public List<Transporter> getTransporters() {
+        return null;
+    }
+
+    @Override
+    public Transporter getTransporter(String transporterID) {
+        return null;
+    }
+
+    @Override
+    public Transporter updateTransporter(String id, String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+        return null;
+    }
+
+    @Override
+    public void deleteTransporter(String transporterID) {
+
+    }
+
+    @Override
+    public void addBuilding(String typeLocation, Coordinates coordinates) {
+
     }
 }
