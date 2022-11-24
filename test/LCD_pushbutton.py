@@ -84,6 +84,7 @@ def write_package_send_with_led():
 
 def cleanAndExit():
     while True:
+        lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
         GPIO.output(Led_door_closed, GPIO.LOW)
         GPIO.output(Led_door_open, GPIO.LOW)
         GPIO.output(Led_package_send, GPIO.LOW)
