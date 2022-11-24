@@ -189,6 +189,17 @@ class OpenAPITest {
     }
 
     @Test
+    void createTransporter(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/transporters").sendJsonObject(createTransporter())
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(201, response.statusCode());
+                    assertEquals("TTT-1", response.bodyAsJsonObject().getString("id"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
     void createUserErrors(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
                 .onFailure(testContext::failNow)
@@ -213,6 +224,28 @@ class OpenAPITest {
         jsonObject.put("firstname", "bob");
         jsonObject.put("lastname", "bob");
         jsonObject.put("subscription", "STANDARD");
+
+        return jsonObject;
+    }
+
+    private JsonObject createTransporter(){
+        JsonObject jsonObject = new JsonObject();
+        JsonObject size = new JsonObject();
+        JsonObject location = new JsonObject();
+        JsonObject coordinates = new JsonObject();
+        JsonObject building = new JsonObject();
+        jsonObject.put("name", "Banana");
+        size.put("length", 15);
+        size.put("width", 15);
+        size.put("depth", 15);
+        jsonObject.put("size", size);
+        coordinates.put("longitude", 4.455545f);
+        coordinates.put("latitude", 51.2111751f);
+        location.put("coordinates", coordinates);
+        building.put("typeOfBuilding", "RESIDENCE");
+        location.put("building", building);
+        jsonObject.put("location", location);
+        jsonObject.put("ipAddress", "https://local.sonar.wilt.geen.ip");
 
         return jsonObject;
     }
