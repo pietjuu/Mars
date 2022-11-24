@@ -75,7 +75,7 @@ def cleanAndExit():
 
 def set_led_state(led1_state, led2_state, led3_state):
     GPIO.output(led_door_closed, led1_state)
-    GPIO.output(led_door_open, led2_state)
+    GPIO.output (led_door_open, led2_state)
     GPIO.output(led_package_send, led3_state)
 
 
