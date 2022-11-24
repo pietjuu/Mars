@@ -87,7 +87,7 @@ public class MockMarsController implements MarsController {
 
     @Override
     public String createTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
-        return new Transporter("TTT-1", name, size, new Building(TypeOfLocation.valueOf(typeOfBuilding), coordinates), ipAddress).toString();
+        return new Transporter("TTT-1", name, size, new Building(TypeOfLocation.valueOf(typeOfBuilding), coordinates), ipAddress).getId();
     }
 
     @Override
