@@ -300,14 +300,14 @@ class DefaultMarsControllerTest {
     void testDeleteTransporterEmptyArgs(){
         MarsController controller = new DefaultMarsController();
 
-        assertThrows(IllegalArgumentException.class, () -> controller.getTransporter(""));
+        assertThrows(IllegalArgumentException.class, () -> controller.deleteTransporter(""));
     }
 
     @Test
     void testDeleteTransporterNonExist(){
         MarsController controller = new DefaultMarsController();
 
-        assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NON_EXIST"));
+        assertThrows(NoSuchElementException.class, () -> controller.deleteTransporter("NON_EXIST"));
     }
 
     @Test
@@ -330,6 +330,6 @@ class DefaultMarsControllerTest {
     void testAddBuildingWithNonExistingType(){
         MarsController controller = new DefaultMarsController();
 
-        assertThrows(IllegalArgumentException.class, () -> controller.addBuilding("BLABLA",new Coordinates(99999.69f, 99999.69f)));
+        assertThrows(NoSuchElementException.class, () -> controller.addBuilding("BLABLA",new Coordinates(99999.11f, 99999.69f)));
     }
 }
