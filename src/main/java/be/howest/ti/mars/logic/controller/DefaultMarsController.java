@@ -143,6 +143,14 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public String addTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+        if (repository.getBuildingFromCoordinates(coordinates) == null){
+            addBuilding(typeOfBuilding, coordinates);
+        }
+
+        Building building = repository.getBuildingFromCoordinates(coordinates);
+        Transporter transporter = new Transporter(name, size, building, ipAddress);
+        repository.addTransporter(transporter);
+        return transporter.getId();
     }
 
     @Override
@@ -156,7 +164,7 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Transporter updateTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String id, String ipAddress) {
+    public Transporter updateTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
         return null;
     }
 
@@ -167,7 +175,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void addBuilding(String typeLocation, Coordinates coordinates) {
-        if (repository.isBuildingOnLocation(coordinates)){
+        if (repository.getBuildingFromCoordinates(coordinates) != null){
             throw new IllegalArgumentException("You tried to add a building on a location where there is already a building!");
         }
         try {
@@ -175,15 +183,6 @@ public class DefaultMarsController implements MarsController {
             repository.addBuilding(new Building(typeOfLocation, coordinates));
         } catch (IllegalArgumentException e){
             throw new NoSuchElementException(String.format("No such element %s", typeLocation));
-        }
-    }
-
-    @Override
-    public Building getBuilding(String buildingID) {
-        if (repository.getBuilding(buildingID) == null){
-            throw new NoSuchElementException(String.format("No such building %s", buildingID));
-        } else {
-            return repository.getBuilding(buildingID);
         }
     }
 }
