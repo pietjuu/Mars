@@ -3,7 +3,9 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -162,5 +164,27 @@ public class DefaultMarsController implements MarsController {
     @Override
     public void deleteTransporter(String transporterID) {
 
+    }
+
+    @Override
+    public void addBuilding(String typeLocation, Coordinates coordinates) {
+        if (repository.isBuildingOnLocation(coordinates)){
+            throw new IllegalArgumentException("You tried to add a building on a location where there is already a building!");
+        }
+        try {
+            TypeOfLocation typeOfLocation = TypeOfLocation.valueOf(typeLocation);
+            repository.addBuilding(new Building(typeOfLocation, coordinates));
+        } catch (IllegalArgumentException e){
+            throw new NoSuchElementException(String.format("No such element %s", typeLocation));
+        }
+    }
+
+    @Override
+    public Building getBuilding(String buildingID) {
+        if (repository.getBuilding(buildingID) == null){
+            throw new NoSuchElementException(String.format("No such building %s", buildingID));
+        } else {
+            return repository.getBuilding(buildingID);
+        }
     }
 }
