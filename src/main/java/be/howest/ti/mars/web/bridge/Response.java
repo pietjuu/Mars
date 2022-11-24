@@ -45,7 +45,7 @@ public class Response {
         sendOkJsonResponse(ctx,  new JsonObject().put("items", response));
     }
 
-    public static void sendTransporters(RoutingContext ctx, List<Transporter> list){
+    public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){
         JsonArray jsonArray = new JsonArray();
         for (Transporter transporter : list){
             jsonArray.add(getTransporterInJsonObject(transporter));
@@ -53,14 +53,14 @@ public class Response {
 
         ctx.response()
                 .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
-                .setStatusCode(200)
+                .setStatusCode(statusCode)
                 .end(Json.encodePrettily(jsonArray));
     }
 
-    public static void sendTransporter(RoutingContext ctx, Transporter transporter){
+    public static void sendTransporter(RoutingContext ctx, int statusCode, Transporter transporter){
         ctx.response()
                 .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
-                .setStatusCode(200)
+                .setStatusCode(statusCode)
                 .end(Json.encodePrettily(getTransporterInJsonObject(transporter)));
     }
 
