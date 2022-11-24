@@ -189,7 +189,8 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteTransporter(String transporterID) {
-
+        Transporter transporter = getTransporter(transporterID);
+        repository.deleteTransporter(transporter);
     }
 
     @Override
