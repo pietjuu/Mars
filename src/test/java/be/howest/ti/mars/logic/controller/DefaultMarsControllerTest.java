@@ -225,4 +225,14 @@ class DefaultMarsControllerTest {
         assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", ""));
     }
 
+    @Test
+    void getTransporters(){
+        MarsController controller = new DefaultMarsController();
+
+        int oldSize = controller.getTransporters().size();
+
+        assertNotNull(controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips"));
+
+        assertNotEquals(controller.getTransporters().size(), oldSize);
+    }
 }
