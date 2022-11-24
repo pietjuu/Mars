@@ -81,7 +81,7 @@ public interface MarsController {
 
     Transporter getTransporter(String transporterID);
 
-    Transporter updateTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
+    Transporter updateTransporter(String id, String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
 
     void deleteTransporter(String transporterID);
 

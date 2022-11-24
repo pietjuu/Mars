@@ -160,12 +160,31 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Transporter getTransporter(String transporterID) {
+        if (repository.getTransporter(transporterID) == null){
+            throw new NoSuchElementException("Transporter doesn't exists!");
+        }
+
         return repository.getTransporter(transporterID);
     }
 
     @Override
-    public Transporter updateTransporter(String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
-        return null;
+    public Transporter updateTransporter(String id, String name, Size size, Coordinates coordinates, String typeOfBuilding, String ipAddress) {
+        Transporter transporter = getTransporter(id);
+
+        transporter.setName(name);
+        transporter.setSize(size);
+
+        if (repository.getBuildingFromCoordinates(coordinates) == null){
+            addBuilding(typeOfBuilding, coordinates);
+        }
+
+        Building building = repository.getBuildingFromCoordinates(coordinates);
+
+        transporter.setBuilding(building);
+        transporter.setIp(ipAddress);
+
+        repository.updateTransporter(transporter);
+        return transporter;
     }
 
     @Override
