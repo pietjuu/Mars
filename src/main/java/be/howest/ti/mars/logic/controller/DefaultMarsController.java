@@ -210,6 +210,10 @@ public class DefaultMarsController implements MarsController {
             throw new IllegalArgumentException(AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED);
         }
 
+        if (repository.getTransporter(transporterID) == null){
+            throw new NoSuchElementException("Transporter doesn't exists!");
+        }
+
         Transporter transporter = getTransporter(transporterID);
         repository.deleteTransporter(transporter);
     }
