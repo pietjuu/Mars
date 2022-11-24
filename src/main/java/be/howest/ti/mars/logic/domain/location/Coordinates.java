@@ -2,11 +2,19 @@ package be.howest.ti.mars.logic.domain.location;
 
 import java.util.Objects;
 
+/**
+ * Coordinates class
+ */
 public class Coordinates {
 
     private final float longitude;
     private final float latitude;
 
+    /**
+     * Constructor
+     * @param longitude float
+     * @param latitude float
+     */
     public Coordinates(float longitude, float latitude){
         this.longitude = longitude;
         this.latitude = latitude;
