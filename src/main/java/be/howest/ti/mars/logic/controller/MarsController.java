@@ -1,5 +1,8 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
 
@@ -17,20 +20,20 @@ public interface MarsController {
      * @param firstname firstname
      * @param lastname lastname
      * @param pricePlan Price plan enum
-     * @return the User object that is created.
+     * @return the {@link User} object that is created.
      */
     User createUser(String firstname, String lastname, String pricePlan);
 
     /**
      * Get a set of all users
-     * @return Set with all users in BaseUser format.
+     * @return Set with all users in {@link BaseUser} format.
      */
     Set<BaseUser> getUsers();
 
     /**
      * Get a specific user
      * @param userID uuid
-     * @return User object.
+     * @return {@link User} object.
      */
     User getUser(String userID);
 
@@ -67,4 +70,66 @@ public interface MarsController {
      */
     void deleteItemToUserBlacklist(String itemName, String userID);
 
+    /**
+     * Create a size object
+     * @param size array with doubles
+     * @return the {@link Size} object
+     */
+    Size createSize(Double[] size);
+
+    /**
+     * Create coordinates object
+     * @param coords array with floats
+     * @return the {@link Coordinates} object
+     */
+    Coordinates createCoordinates(Float[] coords);
+
+    /**
+     * Create transporter object
+     * @param name name of transporter
+     * @param size {@link Size} of transporter
+     * @param coordinates {@link Coordinates} of transporter
+     * @param typeOfBuilding String of type of building based on enum: {@link be.howest.ti.mars.logic.domain.location.TypeOfLocation}
+     * @param ipAddress String with the ip address of the transporter
+     * @return uuid of {@link Transporter} object
+     */
+    String createTransporter(String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
+
+    /**
+     * Returns all the transporters
+     * @return List of {@link Transporter}
+     */
+    List<Transporter> getTransporters();
+
+    /**
+     * Get a specific transporter
+     * @param transporterID uuid
+     * @return {@link Transporter} object
+     */
+    Transporter getTransporter(String transporterID);
+
+    /**
+     * Update transporter object
+     * @param id uuid
+     * @param name name of transporter
+     * @param size {@link Size} of transporter
+     * @param coordinates {@link Coordinates} of transporter
+     * @param typeOfBuilding String of type of building based on enum: {@link be.howest.ti.mars.logic.domain.location.TypeOfLocation}
+     * @param ipAddress String with the ip address of the transporter
+     * @return {@link Transporter} object
+     */
+    Transporter updateTransporter(String id, String name, Size size , Coordinates coordinates, String typeOfBuilding, String ipAddress);
+
+    /**
+     * Delete a transporter
+     * @param transporterID uuid
+     */
+    void deleteTransporter(String transporterID);
+
+    /**
+     * Add a building
+     * @param typeLocation String of typeLocation based on enum {{@link be.howest.ti.mars.logic.domain.location.TypeOfLocation}}
+     * @param coordinates {@link Coordinates}
+     */
+    void addBuilding(String typeLocation, Coordinates coordinates);
 }

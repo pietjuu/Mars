@@ -166,6 +166,61 @@ class OpenAPITest {
     }
 
     @Test
+    void getTransporters(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/transporters").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode());
+                    assertEquals(1, response.bodyAsJsonArray().size());
+                    assertEquals("TTT-1", response.bodyAsJsonArray().getJsonObject(0).getString("id"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void getTransporter(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/transporters/testingTransporter").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode());
+                    assertEquals("Kitchen", response.bodyAsJsonObject().getString("name"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void createTransporter(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/transporters").sendJsonObject(createTransporter())
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(201, response.statusCode());
+                    assertEquals("TTT-1", response.bodyAsJsonObject().getString("id"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void updateTransporter(final VertxTestContext testContext){
+        webClient.put(PORT, HOST, "/api/transporters/kitchen").bearerTokenAuthentication("te-1").sendJsonObject(createTransporter())
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(201, response.statusCode());
+                    assertEquals("Banana", response.bodyAsJsonObject().getString("name"));
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void deleteTransporter(final VertxTestContext testContext){
+        webClient.delete(PORT, HOST, "/api/transporters/kitchen").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(202, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
     void createUserErrors(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
                 .onFailure(testContext::failNow)
@@ -190,6 +245,28 @@ class OpenAPITest {
         jsonObject.put("firstname", "bob");
         jsonObject.put("lastname", "bob");
         jsonObject.put("subscription", "STANDARD");
+
+        return jsonObject;
+    }
+
+    private JsonObject createTransporter(){
+        JsonObject jsonObject = new JsonObject();
+        JsonObject size = new JsonObject();
+        JsonObject location = new JsonObject();
+        JsonObject coordinates = new JsonObject();
+        JsonObject building = new JsonObject();
+        jsonObject.put("name", "Banana");
+        size.put("length", 15);
+        size.put("width", 15);
+        size.put("depth", 15);
+        jsonObject.put("size", size);
+        coordinates.put("longitude", 4.455545f);
+        coordinates.put("latitude", 51.2111751f);
+        location.put("coordinates", coordinates);
+        building.put("typeOfBuilding", "RESIDENCE");
+        location.put("building", building);
+        jsonObject.put("location", location);
+        jsonObject.put("ipAddress", "https://local.sonar.wilt.geen.ip");
 
         return jsonObject;
     }

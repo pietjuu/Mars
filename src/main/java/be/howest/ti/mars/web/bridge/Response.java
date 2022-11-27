@@ -1,15 +1,21 @@
 package be.howest.ti.mars.web.bridge;
 
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
+
+import java.util.List;
 
 /**
  * The Response class is responsible for translating the result of the controller into
  * JSON responses with an appropriate HTTP code.
  */
 public class Response {
+
+    public static final String APPLICATION_JSON = "application/json";
 
     private Response() { }
 
@@ -30,13 +36,65 @@ public class Response {
 
     public static void sendJsonResponse(RoutingContext ctx, int statusCode, Object response) {
         ctx.response()
-                .putHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(statusCode)
                 .end(Json.encodePrettily(response));
     }
 
     public static void sendItems(RoutingContext ctx, Object response){
         sendOkJsonResponse(ctx,  new JsonObject().put("items", response));
+    }
+
+    public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){
+        JsonArray jsonArray = new JsonArray();
+        for (Transporter transporter : list){
+            jsonArray.add(getTransporterInJsonObject(transporter, false));
+        }
+
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(statusCode)
+                .end(Json.encodePrettily(jsonArray));
+    }
+
+    public static void sendTransporter(RoutingContext ctx, int statusCode, Transporter transporter){
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(statusCode)
+                .end(Json.encodePrettily(getTransporterInJsonObject(transporter, true)));
+    }
+
+    public static void sendCreateTransporter(RoutingContext ctx, String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("id", id);
+
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(201)
+                .end(Json.encodePrettily(jsonObject));
+    }
+
+    private static JsonObject getTransporterInJsonObject(Transporter transporter, boolean addIP){
+        JsonObject transporterJson = new JsonObject();
+        transporterJson.put("id", transporter.getId());
+        transporterJson.put("name", transporter.getName());
+        transporterJson.put("size", transporter.getSize());
+
+        JsonObject locationJson = new JsonObject();
+        locationJson.put("coordinates", transporter.getBuilding().getCoordinates());
+
+        JsonObject buildingJson = new JsonObject();
+        buildingJson.put("typeOfBuilding", transporter.getBuilding().getTypeOfLocation());
+        buildingJson.put("id", transporter.getBuilding().getId());
+
+        locationJson.put("building", buildingJson);
+        transporterJson.put("location", locationJson);
+
+        if (addIP){
+            transporterJson.put("ipAddress", transporter.getIp());
+        }
+
+        return transporterJson;
     }
 
     public static void sendFailure(RoutingContext ctx, int code, String quote) {

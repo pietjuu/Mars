@@ -1,6 +1,11 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Building;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.junit.jupiter.api.Test;
@@ -97,5 +102,77 @@ class InMemoryRepositoryTest {
         repo.removeItemToUserBlacklist(item, user.getId());
 
         assertEquals(0, repo.getUserBlacklist(user.getId()).getItems().size());
+    }
+
+    @Test
+    void getTransporters(){
+        InMemoryRepository repo = new InMemoryRepository();
+
+        assertEquals(3, repo.getTransporters().size());
+    }
+
+    @Test
+    void getTransporter(){
+        InMemoryRepository repo = new InMemoryRepository();
+
+        assertEquals("TT-1", repo.getTransporter("TT-1").getId());
+    }
+
+    @Test
+    void addTransporter(){
+        InMemoryRepository repo = new InMemoryRepository();
+        Transporter transport = new Transporter("TT-9", "TT-9", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://local.sonar.is.aan.het.zagen");
+
+        repo.addTransporter(transport);
+
+        assertEquals(4, repo.getTransporters().size());
+    }
+
+    @Test
+    void updateTransporter(){
+        InMemoryRepository repo = new InMemoryRepository();
+        Transporter transport = new Transporter("TT-1", "TT-HA", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://local.sonar.is.aan.het.zagen");
+        repo.addTransporter(transport);
+        transport.setName("BA");
+        repo.updateTransporter(transport);
+        assertEquals("BA", repo.getTransporter("TT-1").getName());
+    }
+
+    @Test
+    void deleteTransporter(){
+        InMemoryRepository repo = new InMemoryRepository();
+
+        repo.deleteTransporter(repo.getTransporter("TT-1"));
+
+        assertEquals(2, repo.getTransporters().size());
+    }
+
+    @Test
+    void addAndGetBuilding(){
+        InMemoryRepository repo = new InMemoryRepository();
+        Building building = new Building("TBT1", TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+
+        repo.addBuilding(building);
+        assertNotNull(repo.getBuilding("TBT1"));
+    }
+
+    @Test
+    void removeBuilding(){
+        InMemoryRepository repo = new InMemoryRepository();
+        repo.removeBuilding(repo.getBuilding("TB-1"));
+
+        assertNull(repo.getBuilding("TB-1"));
+    }
+
+    @Test
+    void getBuildingFromCoordinates(){
+        InMemoryRepository repo = new InMemoryRepository();
+        assertEquals("TB-2", repo.getBuildingFromCoordinates(new Coordinates(50.175351f, 5.985122f)).getId());
+    }
+
+    @Test
+    void getBuildingFromCoordinatesNull(){
+        InMemoryRepository repo = new InMemoryRepository();
+        assertNull(repo.getBuildingFromCoordinates(new Coordinates(99999999f, 999f)));
     }
 }

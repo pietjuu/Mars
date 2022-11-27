@@ -1,5 +1,7 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -180,5 +182,154 @@ class DefaultMarsControllerTest {
         String id = controller.createUser("Glenn", "Callens", "STANDARD").getId();
 
         assertThrows(IllegalArgumentException.class, () -> controller.deleteItemToUserBlacklist("Apple", id));
+    }
+
+    @Test
+    void testCreateSize(){
+        MarsController controller = new DefaultMarsController();
+
+        Double[] size = new Double[]{1.2, 1.1, 1.0};
+        Size size1 = controller.createSize(size);
+
+        assertEquals(1.1, size1.getLength());
+        assertEquals(1.0, size1.getWidth());
+        assertEquals(1.2, size1.getHeight());
+    }
+
+    @Test
+    void testCreateCoordinates(){
+        MarsController controller = new DefaultMarsController();
+
+        Float[] fl = new Float[]{1.2f, 1.1f};
+        Coordinates coordinates = controller.createCoordinates(fl);
+
+        assertEquals(1.2f, coordinates.getLongitude());
+        assertEquals(1.1f, coordinates.getLatitude());
+    }
+
+    @Test
+    void testCreateTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        assertNotNull(controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips"));
+    }
+
+    @Test
+    void testCreateTransporterEmptyArgs(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("Kitchen", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", ""));
+    }
+
+    @Test
+    void testGetTransporters(){
+        MarsController controller = new DefaultMarsController();
+
+        int oldSize = controller.getTransporters().size();
+
+        assertNotNull(controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips"));
+
+        assertNotEquals(controller.getTransporters().size(), oldSize);
+    }
+
+    @Test
+    void testGetTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals(id, controller.getTransporter(id).getId());
+    }
+
+    @Test
+    void testGetTransporterBlankArgument(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.getTransporter(""));
+    }
+
+    @Test
+    void testGetTransporterNonExist(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getTransporter("NOT_EXIST"));
+    }
+
+    @Test
+    void testUpdateTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals("Kitchen", controller.getTransporter(id).getName());
+
+        controller.updateTransporter(id, "Bob", new Size(1.0,1.0,1.0), new Coordinates(9999.13f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertEquals("Bob", controller.getTransporter(id).getName());
+    }
+
+    @Test
+    void testUpdateTransporterEmptyArgs(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter("","", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", null, null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), null, "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "", ""));
+        assertThrows(IllegalArgumentException.class, () -> controller.updateTransporter(id,"Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", ""));
+    }
+
+    @Test
+    void testDeleteTransporter(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.createTransporter("Kitchen", new Size(1.0,1.0,1.0), new Coordinates(9999.12f, 9999.12f), "RESIDENCE", "https://local.notexist.must.do.this.cause.sonar.even.is.shitting.about.test.ips");
+
+        controller.deleteTransporter(id);
+        assertThrows(NoSuchElementException.class, () -> controller.getTransporter(id));
+    }
+
+    @Test
+    void testDeleteTransporterEmptyArgs(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(IllegalArgumentException.class, () -> controller.deleteTransporter(""));
+    }
+
+    @Test
+    void testDeleteTransporterNonExist(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.deleteTransporter("NON_EXIST"));
+    }
+
+    @Test
+    void testAddBuilding(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.addBuilding("RESIDENCE", new Coordinates(99999.6f, 99999.34f));
+    }
+
+    @Test
+    void testAddBuildingAlreadyExist(){
+        MarsController controller = new DefaultMarsController();
+
+        controller.addBuilding("RESIDENCE", new Coordinates(99999.69f, 99999.69f));
+
+        assertThrows(IllegalArgumentException.class, () -> controller.addBuilding("RESIDENCE", new Coordinates(99999.69f, 99999.69f)));
+    }
+
+    @Test
+    void testAddBuildingWithNonExistingType(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.addBuilding("BLABLA",new Coordinates(99999.11f, 99999.69f)));
     }
 }
