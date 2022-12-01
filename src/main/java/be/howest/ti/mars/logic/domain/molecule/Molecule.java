@@ -1,4 +1,4 @@
-package be.howest.ti.mars.logic.domain.transporter;
+package be.howest.ti.mars.logic.domain.molecule;
 
 import java.util.Objects;
 
