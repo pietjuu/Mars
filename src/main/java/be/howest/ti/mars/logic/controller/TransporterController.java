@@ -8,7 +8,9 @@ import be.howest.ti.mars.web.external.TransporterAPI;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class TransporterController {
@@ -45,6 +47,17 @@ public class TransporterController {
         }
 
         return set;
+    }
+
+    private Map<String , Integer> getSummaryMolecules(JsonObject jsonObject){
+        Map<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < jsonObject.getJsonArray("summary").size(); i++){
+            JsonObject moleculeJSON = jsonObject.getJsonArray("summary").getJsonObject(i);
+            map.put(moleculeJSON.getString("molecule"), moleculeJSON.getInteger("count"));
+        }
+
+        return map;
     }
 
 }
