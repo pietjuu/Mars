@@ -2,6 +2,24 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from hx711 import HX711
+from RPLCD import i2c
+
+# constants to initialise the LCD
+lcdmode = 'i2c'
+cols = 15
+rows = 2
+charmap = 'A00'
+i2c_expander = 'PCF8574'
+
+# Generally 27 is the address;Find yours using: i2cdetect -y 1
+address = 0x3f
+# 0 on an older Raspberry Pi
+port = 1
+
+
+def write_LCD(text):
+    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+    lcd.write_string(text)
 
 # Set warnings off (optional)
 GPIO.setwarnings(False)
@@ -43,4 +61,4 @@ print("Now, I will read data in infinite loop. To exit press 'CTRL + C'")
 input('Press Enter to begin reading')
 print('Current weight on the scale in grams is: ')
 while True:
-    print(hx.get_weight_mean(20), 'g')
+    print(hx.get_weight_mean(20), write_LCD("grams"))
