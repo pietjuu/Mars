@@ -5,6 +5,7 @@ import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
+import be.howest.ti.mars.web.exceptions.TransporterAPIException;
 import be.howest.ti.mars.web.external.TransporterAPI;
 import io.vertx.core.json.JsonObject;
 
@@ -37,17 +38,27 @@ public class TransporterController {
     }
 
     public MoleculesSummary getTransporterScan(Transporter transporter){
-        TransporterAPI transporterAPI = new TransporterAPI(transporter);
-        JsonObject jsonObject = transporterAPI.getScan();
+        try{
+            TransporterAPI transporterAPI = new TransporterAPI(transporter);
+            JsonObject jsonObject = transporterAPI.getScan();
 
-        return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+        } catch (TransporterAPIException e){
+            throw new TransporterException(e.getMessage());
+        }
+
     }
 
     public MoleculesSummary sendItemInTransporter(Transporter transporter){
-        TransporterAPI transporterAPI = new TransporterAPI(transporter);
-        JsonObject jsonObject = transporterAPI.addSend();
+        try {
+            TransporterAPI transporterAPI = new TransporterAPI(transporter);
+            JsonObject jsonObject = transporterAPI.addSend();
 
-        return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+        } catch (TransporterAPIException e){
+            throw new TransporterException(e.getMessage());
+        }
+
     }
 
     private Set<Molecule> getAllMolecules(JsonObject jsonObject){
