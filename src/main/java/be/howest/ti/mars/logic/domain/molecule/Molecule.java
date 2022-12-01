@@ -16,7 +16,21 @@ public class Molecule {
         this.yPosition = yPosition;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getType() {
+        return type;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
 
     @Override
     public boolean equals(Object o) {
