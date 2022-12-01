@@ -22,4 +22,11 @@ public class TransporterController {
         return coordinatesDB;
     }
 
+    public boolean getTransporterStatus(Transporter transporter){
+        TransporterAPI transporterAPI = new TransporterAPI(transporter);
+        JsonObject jsonObject = transporterAPI.getStatus();
+
+        return jsonObject.getBoolean("ready");
+    }
+
 }
