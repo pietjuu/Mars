@@ -16,26 +16,23 @@ public class TransporterAPI {
     private final String ipAddress;
 
     public TransporterAPI(Transporter transporter){
-        InetAddress result;
+        String ip = transporter.getIp();
 
-        try {
-            if (transporter.getIp().contains("https") || transporter.getIp().contains("http")){
-                result = InetAddress.getByName(new URL(transporter.getIp()).getHost());
-            } else {
-                result = InetAddress.getByName(new URL("https://" + transporter.getIp()).getHost());
-            }
-
-            if (result.isReachable(1000)){
-                throw new TransporterAPIException("Transporter is unavailable!");
-            }
-
-            this.ipAddress = result.toString();
-        } catch (IOException e){
-            throw new TransporterAPIException("Transporter is unavailable!");
+        if (!ip.contains("https") && !ip.contains("http")){
+            ip = "https://" + ip;
         }
+
+        this.ipAddress = ip;
     }
 
-    private JsonObject sendGET(String params) throws IOException {
+    public boolean isTransporterReady(){
+        JsonObject result = sendGET("/api/status");
+
+        assert result != null;
+        return result.getBoolean("ready");
+    }
+
+    private JsonObject sendGET(String params){
         try {
             URL obj = new URL(ipAddress + params);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -55,6 +52,7 @@ public class TransporterAPI {
                 return new JsonObject(response.toString());
             }
         } catch (IOException e){
+            System.out.println(e);
             throw new TransporterAPIException("Transporter is unavailable!");
         }
         return null;
