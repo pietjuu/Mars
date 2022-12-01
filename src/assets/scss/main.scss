@@ -2,6 +2,7 @@
 @use "colors.scss";
 @use "constants.scss";
 @use "fonts.scss";
+@use "mixins.scss";
 
 html {
   min-height: 100%;
@@ -23,9 +24,10 @@ h1 {
   line-height: 140%;
 }
 
-h2 {
+h2, legend {
   color: var(--color-heading2);
   font-size: var(--h2-text-size);
+  margin-bottom: 1rem;
 }
 
 h3 {
@@ -61,8 +63,78 @@ button {
   font-family:var(--default-font-style);
 }
 
+label {
+  display: inline-block;
+  color: var(--color-heading3);
+  font-size: var(--h3-text-size);
+  margin-bottom: 0.5rem;
+
+  span {
+    font-weight: bold;
+    &:last-of-type {
+      color: var(--color-red);
+    }
+  }
+
+}
+
+input {
+  display: block;
+  min-height: 2rem;
+  width: calc(100% - 2rem);
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  border-radius: var(--box-radius);
+  border: var(--border);
+  border-color: var(--color-secondary-soft);
+  color: var(--color-text);
+}
+
 .hidden {
   display: none;
+}
+
+.no-text-decoration {
+  text-decoration: none;
+}
+
+.box {
+  background-color: var(--color-background);
+  border-radius: var(--box-radius);
+  border: var(--border);
+  padding: 0.5rem 1rem;
+}
+
+.important {
+  color: var(--color-secondary);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.flex-center-row {
+  @include mixins.flex(row, center, center);
+}
+
+.flex-center-col{
+  @include mixins.flex(column, center, center);
+}
+
+.flex-center-vertical {
+  display: flex;
+  align-items: center;
+}
+
+.flex-space-between-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-space-between-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media (hover: hover) {

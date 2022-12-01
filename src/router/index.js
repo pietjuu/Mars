@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-const CONFIG = require("@/config.json");
-
 import DashboardView from "@/views/DashboardView";
 import SendItemView from "@/views/SendItemView";
 import CalculatePriceView from "@/views/CalculatePriceView";
 import DestinationsView from "@/views/DestinationsView";
+import StatisticsView from "@/views/StatisticsView";
 import HistoryView from "@/views/HistoryView";
 import BlacklistView from "@/views/BlacklistView";
 
@@ -37,7 +36,7 @@ const routes = [
   {
     path: `/statistics`,
     name: 'Statistics',
-    component: DestinationsView
+    component: StatisticsView
   },
   {
     path: `/history`,
@@ -49,7 +48,7 @@ const routes = [
     name: 'Blacklist',
     component: BlacklistView
   }
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),

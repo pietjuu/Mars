@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: "EnterDestinationView"
-}
+  name: "StatisticsView"
+};
 </script>
 
 <style scoped lang="scss">

@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
-    <div class="logo-wrapper">
-      <a href="/dashboard">
+    <div class="logo-wrapper flex-center-row">
+      <router-link :to="`/dashboard`">
         <TransparentLogo :titleTxt="`Sidebar Logo Shippert`" :width="`70%`"/>
-      </a>
+      </router-link>
     </div>
     <div class="navigation-wrapper">
       <SideNavigation/>
@@ -21,12 +21,12 @@ export default {
     TransparentLogo,
     SideNavigation
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 
- div {
+ .sidebar {
    --logo-height: 4rem;
 
    border-right: var(--border);
@@ -34,9 +34,6 @@ export default {
 
 .sidebar > .logo-wrapper {
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: var(--logo-height);
   overflow: hidden;
 }

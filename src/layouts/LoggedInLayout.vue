@@ -8,7 +8,9 @@
     <div class="header-and-content-wrapper">
       <HeaderBar/>
       <NotificationBar v-show="notificationShow"/>
-      <MainContent/>
+      <section class="content-wrapper">
+        <router-view/>
+      </section>
     </div>
   </div>
 </template>
@@ -20,19 +22,17 @@ import LoadApp from "@/components/Load/LoadApp";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import HeaderBar from "@/components/Header/HeaderBar";
 import NotificationBar from "@/components/Notification/NotificationBar";
-import MainContent from "@/components/Main/MainContent";
 import Error from "@/components/Error/Error";
 
 
 export default {
-  name: "BaseLayout",
+  name: "LoggedInLayout",
   components: {
     Error,
     LoadApp,
     Sidebar,
     HeaderBar,
-    NotificationBar,
-    MainContent
+    NotificationBar
   },
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
         state: false,
         messages: []
       }
-    }
+    };
   },
   computed: {
     ...mapGetters(['notificationShow', 'user', 'userRequest'])
@@ -66,7 +66,7 @@ export default {
   methods: {
     ...mapActions(["fetchUser", "createNotification"])
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -77,23 +77,29 @@ export default {
 
   position: fixed;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   overflow: hidden;
 }
 
 .sidebar-wrapper {
-  position: fixed;
-  left: 0;
-  top: 0;
+  @include pos-fixed-top-left();
   overflow: hidden;
   height: 100vh;
   width: var(--sidebar-width);
 }
 
 .header-and-content-wrapper {
-  height: 100vh;
   position: relative;
+  height: 100vh;
   margin-left: var(--sidebar-width);
+}
+
+.content-wrapper {
+  /* 5rem from padding and 4rem is from header bar */
+  height: calc(100vh - 5rem - 4rem);
+  background-color: var(--color-background-mute);
+  padding: 2.5rem;
+  overflow: scroll;
 }
 
 </style>

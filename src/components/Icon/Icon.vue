@@ -10,7 +10,7 @@ export default {
   props: {
     icon: String
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -18,8 +18,8 @@ export default {
 .icon {
   display: inline-flex;
   align-items: center;
-  font-size: 18px;
   justify-content: center;
+  font-size: 18px;
   line-height: 1;
   position: relative;
 }

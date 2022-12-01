@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button type="button" class="flex-center-row">
     <span class="button-content">{{ content }}</span>
   </button>
 </template>
@@ -10,18 +10,14 @@ export default {
   props: {
     content: String
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 
 button {
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.5rem;
-  width: 2.5rem;
+  @include size(2.5rem);
   padding: 1rem;
 }
 

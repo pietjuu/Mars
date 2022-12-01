@@ -1,6 +1,6 @@
 <template>
  <div class="notification" :class="notificationType">
-   <div class="notification-content">
+   <div class="notification-content flex-center-row">
      <Icon :icon="icon()" :color="`var(--color-white)`"/>
      <p>{{ notificationContent }}</p>
    </div>
@@ -19,7 +19,7 @@ import Icon from "@/components/Icon/Icon";
 export default {
   name: "NotificationBar",
   created() {
-    setTimeout(this.close, 8000)
+    setTimeout(this.close, 8000);
   },
   components: {
     IconButton,
@@ -44,7 +44,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -53,17 +53,13 @@ export default {
   color: var(--color-white);
   height: 4rem;
   background-color: var(--color-secondary-soft);
-  justify-content: space-between;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
 }
 
 .notification-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
 
