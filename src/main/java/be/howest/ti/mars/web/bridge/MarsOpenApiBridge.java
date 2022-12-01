@@ -2,12 +2,14 @@ package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.logic.controller.DefaultMarsController;
 import be.howest.ti.mars.logic.controller.MarsController;
+import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.web.auth.BearerAuthHandler;
 import be.howest.ti.mars.web.auth.TokenManager;
 import be.howest.ti.mars.web.auth.Tokens;
 import be.howest.ti.mars.web.auth.UserToken;
 import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
+import be.howest.ti.mars.web.exceptions.TransporterAPIException;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -233,7 +235,11 @@ public class MarsOpenApiBridge {
             code = 404;
         } else if (cause instanceof ForbiddenAccessException) {
             code = 401;
-        } else {
+        } else if (cause instanceof TransporterException) {
+            code = 406;
+        }else if (cause instanceof TransporterAPIException) {
+            code = 503;
+        }else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
 
