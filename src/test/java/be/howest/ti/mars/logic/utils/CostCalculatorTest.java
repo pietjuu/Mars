@@ -9,6 +9,7 @@ class CostCalculatorTest {
     void exceptions() {
         assertThrows(NumberFormatException.class, () -> CostCalculator.calculateCostOfMol("20"));
         assertThrows(NumberFormatException.class, () -> CostCalculator.calculateCostOfMol("H"));
+        assertThrows(NumberFormatException.class, () -> CostCalculator.calculateCostOfMol("µ"));
     }
 
 }

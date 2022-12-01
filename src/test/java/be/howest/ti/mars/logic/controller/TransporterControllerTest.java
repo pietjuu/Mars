@@ -74,7 +74,7 @@ class TransporterControllerTest {
         Transporter t = new Transporter("TT-1", "TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter6.thibo.cloud/");
         TransporterController transporterController = new TransporterController();
 
-        assertThrows(TransporterException.class, () -> transporterController.getTransporterScan(t));
+        assertThrows(TransporterException.class, () -> transporterController.sendItemInTransporter(t));
     }
 
 }

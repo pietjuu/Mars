@@ -337,6 +337,6 @@ class DefaultMarsControllerTest {
     void testCalculatePrice(){
         MarsController controller = new DefaultMarsController();
 
-        assertNotNull(controller.getTransporter("TT-1"));
+        assertTrue(0 > controller.calculatePrice("TT-1"));
     }
 }
