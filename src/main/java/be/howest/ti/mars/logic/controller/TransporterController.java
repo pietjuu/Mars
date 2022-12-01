@@ -43,6 +43,13 @@ public class TransporterController {
         return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
     }
 
+    public MoleculesSummary sendItemInTransporter(Transporter transporter){
+        TransporterAPI transporterAPI = new TransporterAPI(transporter);
+        JsonObject jsonObject = transporterAPI.addSend();
+
+        return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+    }
+
     private Set<Molecule> getAllMolecules(JsonObject jsonObject){
         Set<Molecule> set = new HashSet<>();
 
