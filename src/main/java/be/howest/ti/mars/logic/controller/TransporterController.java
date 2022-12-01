@@ -1,10 +1,15 @@
 package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.transporter.Molecule;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.web.external.TransporterAPI;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class TransporterController {
 
@@ -27,6 +32,19 @@ public class TransporterController {
         JsonObject jsonObject = transporterAPI.getStatus();
 
         return jsonObject.getBoolean("ready");
+    }
+
+    private Set<Molecule> getAllMolecules(JsonObject jsonObject){
+        Set<Molecule> set = new HashSet<>();
+
+        for (int i = 0; i < jsonObject.getJsonArray("molecules").size(); i++){
+            JsonObject moleculeJSON = jsonObject.getJsonArray("molecules").getJsonObject(i);
+            JsonObject moleculeJSONPosition = moleculeJSON.getJsonObject("position");
+            Molecule molecule = new Molecule(moleculeJSON.getInteger("id"), moleculeJSON.getString("molecule"), moleculeJSONPosition.getInteger("x"), moleculeJSONPosition.getInteger("y"));
+            set.add(molecule);
+        }
+
+        return set;
     }
 
 }
