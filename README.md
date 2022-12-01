@@ -36,22 +36,23 @@ There are now 3 type of Transporter APIs configured.
 > Note: location of transporter is always random, number scanned molecules is always random
 
 ### Transporter API addresses:
-> **IMPORTANT:** addresses only work with **http** protocol
 1. Always Ready Transporter (aka door closed)
-    - http://t1.shippert.thiboverbeerst.com
-    - http://t2.shippert.thiboverbeerst.com
-    - http://t3.shippert.thiboverbeerst.com
-    - http://t4.shippert.thiboverbeerst.com
+    - https://transporter1.thibo.cloud
+    - https://transporter2.thibo.cloud
+    - https://transporter3.thibo.cloud
+    - https://transporter4.thibo.cloud
 
 2. Always Not Ready Transporter (aka door open)
-    - http://t5.shippert.thiboverbeerst.com
-    - http://t6.shippert.thiboverbeerst.com
+    - https://transporter5.thibo.cloud
+    - https://transporter6.thibo.cloud
 
 3. Status of Transporter is random
-    - http://t7.shippert.thiboverbeerst.com
-    - http://t8.shippert.thiboverbeerst.com
-    - http://t9.shippert.thiboverbeerst.com
-    - http://t10.shippert.thiboverbeerst.com
+    - https://transporter7.thibo.cloud
+    - https://transporter8.thibo.cloud
+    - https://transporter9.thibo.cloud
+    - https://transporter10.thibo.cloud
+
+> Quick test: https://transporter7.thibo.cloud/api/scan
 
 ### Thibo's Server Schedule
 These addresses / the server is online on:
