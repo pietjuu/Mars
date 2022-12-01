@@ -29,7 +29,7 @@ public class TransporterAPI {
     }
 
     public JsonObject getStatus(){
-        return callAPI("/api/location", "GET");
+        return callAPI("/api/status", "GET");
     }
 
     public JsonObject getScan(){
