@@ -19,7 +19,7 @@ function requestSuccess(commit, user) {
 function requestFailed(commit, error) {
     commit('setUserRequest', {
         error: true,
-        message: error.statusText
+        message: "Unable to identify user..."
     });
 }
 
