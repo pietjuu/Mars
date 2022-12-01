@@ -17,7 +17,7 @@ address = 0x3f
 port = 1
 
 
-def write_LCD(inut, text):
+def write_LCD(text):
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string(text)
 
@@ -61,4 +61,4 @@ print("Now, I will read data in infinite loop. To exit press 'CTRL + C'")
 input('Press Enter to begin reading')
 print('Current weight on the scale in grams is: ')
 while True:
-    write_LCD(hx.get_data_mean(20), "grams")
+    write_LCD(str(hx.get_weight_mean(5)) + "g")
