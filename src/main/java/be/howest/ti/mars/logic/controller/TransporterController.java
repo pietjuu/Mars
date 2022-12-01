@@ -21,13 +21,8 @@ public class TransporterController {
         JsonObject jsonObject = transporterAPI.getLocation();
 
         Coordinates coordinatesAPI = new Coordinates(jsonObject.getFloat("latitude"), jsonObject.getFloat("longitude"));
-        Coordinates coordinatesDB = transporter.getBuilding().getCoordinates();
 
-        if (!coordinatesDB.equals(coordinatesAPI)){
-            throw new TransporterException("Transporter location not the same!");
-        }
-
-        return coordinatesDB;
+        return coordinatesAPI;
     }
 
     public boolean getTransporterStatus(Transporter transporter){
