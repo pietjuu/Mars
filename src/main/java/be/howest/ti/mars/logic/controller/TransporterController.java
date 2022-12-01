@@ -44,6 +44,9 @@ public class TransporterController {
 
             return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
         } catch (TransporterAPIException e){
+            if (e.getStatusCode() == 404){
+                throw new TransporterAPIException(404, "Transporter unavailable!");
+            }
             throw new TransporterException(e.getMessage());
         }
 
@@ -56,6 +59,9 @@ public class TransporterController {
 
             return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
         } catch (TransporterAPIException e){
+            if (e.getStatusCode() == 404){
+                throw new TransporterAPIException(404, "Transporter unavailable!");
+            }
             throw new TransporterException(e.getMessage());
         }
 
