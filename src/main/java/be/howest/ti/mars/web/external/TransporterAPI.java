@@ -1,5 +1,6 @@
 package be.howest.ti.mars.web.external;
 
+import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.web.exceptions.TransporterAPIException;
 import io.vertx.core.json.JsonObject;
@@ -30,6 +31,13 @@ public class TransporterAPI {
 
         assert result != null;
         return result.getBoolean("ready");
+    }
+
+    public Coordinates getTransporterCoordinates(){
+        JsonObject result = sendGET("/api/location");
+
+        assert result != null;
+        return new Coordinates(result.getFloat("longitude"), result.getFloat("latitude"));
     }
 
     private JsonObject sendGET(String params){
