@@ -114,4 +114,9 @@ public class MockMarsController implements MarsController {
     public void addBuilding(String typeLocation, Coordinates coordinates) {
 
     }
+
+    @Override
+    public double calculatePrice(String transporterID) {
+        return 1f;
+    }
 }
