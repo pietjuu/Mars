@@ -19,6 +19,7 @@ GPIO.setup(Button, GPIO.IN)
 GPIO.setup(Led_door_closed, GPIO.OUT)
 GPIO.setup(Led_door_open, GPIO.OUT)
 GPIO.setup(Led_package_send, GPIO.OUT)
+
 # constants to initialise the LCD
 lcdmode = 'i2c'
 cols = 15
