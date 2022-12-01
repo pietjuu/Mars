@@ -88,6 +88,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for deleteTransporter");
         routerBuilder.operation("deleteTransporter").handler(this::deleteTransporter);
 
+        LOGGER.log(Level.INFO, "Installing handler for getCalculatedPrice");
+        routerBuilder.operation("getCalculatedPrice").handler(this::getCalculatedPrice);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -176,6 +179,12 @@ public class MarsOpenApiBridge {
         String id = Request.from(routingContext).getTransporterID();
 
         Response.sendTransporter(routingContext, 200, controller.getTransporter(id));
+    }
+
+    private void getCalculatedPrice(RoutingContext routingContext) {
+        String id = Request.from(routingContext).getTransporterID();
+
+        Response.sendJsonResponse(routingContext, 200, controller.calculatePrice(id));
     }
 
     private void createTransporter(RoutingContext routingContext){
