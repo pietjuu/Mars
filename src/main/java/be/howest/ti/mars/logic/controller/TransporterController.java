@@ -1,11 +1,11 @@
 package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.domain.location.Coordinates;
-import be.howest.ti.mars.logic.domain.transporter.Molecule;
+import be.howest.ti.mars.logic.domain.molecule.Molecule;
+import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.web.external.TransporterAPI;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 import java.util.HashMap;
@@ -34,6 +34,13 @@ public class TransporterController {
         JsonObject jsonObject = transporterAPI.getStatus();
 
         return jsonObject.getBoolean("ready");
+    }
+
+    public MoleculesSummary getTransporterScan(Transporter transporter){
+        TransporterAPI transporterAPI = new TransporterAPI(transporter);
+        JsonObject jsonObject = transporterAPI.getScan();
+
+        return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
     }
 
     private Set<Molecule> getAllMolecules(JsonObject jsonObject){
