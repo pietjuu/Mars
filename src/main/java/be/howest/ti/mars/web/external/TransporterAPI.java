@@ -3,6 +3,7 @@ package be.howest.ti.mars.web.external;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.web.exceptions.TransporterAPIException;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 import java.io.BufferedReader;
@@ -11,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TransporterAPI {
 
@@ -38,6 +41,20 @@ public class TransporterAPI {
 
         assert result != null;
         return new Coordinates(result.getFloat("longitude"), result.getFloat("latitude"));
+    }
+
+    public Map<String, Integer> getScanSummary(){
+        JsonObject result = sendGET("/api/scan");
+
+        assert result != null;
+        Map<String, Integer> re = new HashMap<>();
+
+        for (int i = 0; i < result.getJsonArray("summary").size(); i++){
+            JsonObject jsonObject = result.getJsonArray("summary").getJsonObject(i);
+            re.put(jsonObject.getString("molecule"), jsonObject.getInteger("count"));
+        }
+
+        return re;
     }
 
     private JsonObject sendGET(String params){
