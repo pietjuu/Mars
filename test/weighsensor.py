@@ -1,4 +1,10 @@
 # Libraries
+# TODO: fix error with i2c
+# TODO: fix error with RPi.GPIO
+# TODO: fix library for hx711
+# TODO: cleanup code
+# TODO: delete print and input statements
+# TODO: round weight to 2 decimal places
 import RPi.GPIO as GPIO
 from time import sleep
 from hx711 import HX711
@@ -20,6 +26,7 @@ port = 1
 def write_LCD(text):
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string(text)
+
 
 # Set warnings off (optional)
 GPIO.setwarnings(False)
@@ -46,11 +53,11 @@ if reading:
 else:
     print('invalid data', reading)
 
-#input('Put known weight on the scale and then press Enter')
+# input('Put known weight on the scale and then press Enter')
 reading = hx.get_data_mean()
 if reading:
     print('Mean value from HX711 subtracted by offset:', reading)
-    known_weight_grams = 100 #input('Write how many grams it was and press Enter: ')
+    known_weight_grams = 100  # input('Write how many grams it was and press Enter: ')
     try:
         value = float(known_weight_grams)
         print(value, 'grams')
