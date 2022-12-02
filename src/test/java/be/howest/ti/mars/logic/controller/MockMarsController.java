@@ -117,6 +117,6 @@ public class MockMarsController implements MarsController {
 
     @Override
     public double calculatePrice(String transporterID) {
-        return 1f;
+        return 1;
     }
 }
