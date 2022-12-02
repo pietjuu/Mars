@@ -10,10 +10,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class to make connection with a transporter API
+ */
 public class TransporterAPI {
 
     private final String ipAddress;
 
+    /**
+     * Constructor
+     * @param transporter {@link Transporter}
+     */
     public TransporterAPI(Transporter transporter){
         String ip = transporter.getIp();
 
@@ -40,6 +47,12 @@ public class TransporterAPI {
         return callAPI("/api/send", "POST");
     }
 
+    /**
+     * Actually call the api
+     * @param params params to add to the url ex. /api/location
+     * @param method GET, POST, ...
+     * @return JsonObject
+     */
     private JsonObject callAPI(String params, String method){
         try {
             URL obj = new URL(ipAddress + params);
@@ -48,6 +61,7 @@ public class TransporterAPI {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
+                // 200 code.
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String inputLine;
                 StringBuilder response = new StringBuilder();
@@ -59,6 +73,7 @@ public class TransporterAPI {
 
                 return new JsonObject(response.toString());
             } else {
+                // Something other than 200, add errorStream to inputStreamReader
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
                 String inputLine;
                 StringBuilder response = new StringBuilder();
