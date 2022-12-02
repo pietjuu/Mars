@@ -14,15 +14,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Transport Controller
+ * Used for communication between web (transporters api) and logic
+ */
 public class TransporterController {
 
     public Coordinates getTransporterLocation(Transporter transporter){
         TransporterAPI transporterAPI = new TransporterAPI(transporter);
         JsonObject jsonObject = transporterAPI.getLocation();
 
-        Coordinates coordinatesAPI = new Coordinates(jsonObject.getFloat("latitude"), jsonObject.getFloat("longitude"));
-
-        return coordinatesAPI;
+        return new Coordinates(jsonObject.getFloat("latitude"), jsonObject.getFloat("longitude"));
     }
 
     public boolean getTransporterStatus(Transporter transporter){

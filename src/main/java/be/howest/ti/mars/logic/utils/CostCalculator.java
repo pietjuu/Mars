@@ -22,6 +22,11 @@ public class CostCalculator {
 
     private CostCalculator(){}
 
+    /**
+     * Calculate the total cost
+     * @param map Map with String (name of molecule ex. H20) and Integer (amount of molecule)
+     * @return double
+     */
     public static double calculateTotalCost(Map<String, Integer> map){
         double result = 0;
 
@@ -32,6 +37,11 @@ public class CostCalculator {
         return result;
     }
 
+    /**
+     * Calculate one molecule of a specific type
+     * @param molecule name of molecule ex. H20
+     * @return double
+     */
     public static double calculateCostOfMol(String molecule){
         int x = molecule.length();
         int y = positionInAlphabet(getFirstLetter(molecule));

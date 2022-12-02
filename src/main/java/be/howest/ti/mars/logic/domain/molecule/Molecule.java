@@ -2,6 +2,9 @@ package be.howest.ti.mars.logic.domain.molecule;
 
 import java.util.Objects;
 
+/**
+ * Molecule class.
+ */
 public class Molecule {
 
     private final int id;
@@ -9,6 +12,13 @@ public class Molecule {
     private final int xPosition;
     private final int yPosition;
 
+    /**
+     * Constructor
+     * @param id ID in item
+     * @param type Name of molecule
+     * @param xPosition x pos in Item
+     * @param yPosition y pos in Item
+     */
     public Molecule(int id, String type, int xPosition, int yPosition) {
         this.id = id;
         this.type = type;

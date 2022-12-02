@@ -5,6 +5,9 @@ import be.howest.ti.mars.logic.utils.CostCalculator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Molecules Summary
+ */
 public class MoleculesSummary {
 
     private final Map<String, Integer> summary;
@@ -12,6 +15,11 @@ public class MoleculesSummary {
 
     private final double cost;
 
+    /**
+     * Constructor
+     * @param summary Map with String (name of molecule ex. H20) and Integer (amount of molecule)
+     * @param molecules Set of unique molecules.
+     */
     public MoleculesSummary(Map<String, Integer> summary, Set<Molecule> molecules) {
         this.summary = summary;
         this.molecules = molecules;
