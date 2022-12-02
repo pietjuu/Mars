@@ -1,14 +1,19 @@
+#!/usr/bin/env python3
 # Libraries
-# TODO: fix error with i2c
-# TODO: fix error with RPi.GPIO
-# TODO: fix library for hx711
 # TODO: cleanup code
 # TODO: delete print and input statements
 # TODO: round weight to 2 decimal places
+# TODO: nested while True loop for only running when button is pressed
+
 import RPi.GPIO as GPIO
 from time import sleep
 from hx711 import HX711
 from RPLCD import i2c
+import sys
+
+# set warnings off
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
 
 # constants to initialise the LCD
 lcdmode = 'i2c'
@@ -22,50 +27,106 @@ address = 0x3f
 # 0 on an older Raspberry Pi
 port = 1
 
+# Set pins to button
+button_sensor = 23
+button_start = 16
+
+# Set pins to LED
+led_door_closed = 24
+led_door_open = 12
+led_package_send = 17
+
+# Set pins for weight sensor
+hx = HX711(dout_pin=5, pd_sck_pin=6)
+
+# Setup button and start state LED
+GPIO.setup(button_sensor, GPIO.IN)
+GPIO.setup(button_start, GPIO.IN)
+GPIO.setup(led_door_closed, GPIO.OUT)
+GPIO.setup(led_door_open, GPIO.OUT)
+GPIO.setup(led_package_send, GPIO.OUT)
+
+
+def door_open():
+    button_state = GPIO.input(button_sensor)
+    return button_state == 0
+
+
+def start_1():
+    button_state = GPIO.input(button_start)
+    return button_state == 1
+
+
+def start_0():
+    button_state = GPIO.input(button_start)
+    return button_state == 0
+
 
 def write_LCD(text):
     lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string(text)
 
 
-# Set warnings off (optional)
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
+def set_led_state(led1_state, led2_state, led3_state):
+    GPIO.output(led_door_closed, led1_state)
+    GPIO.output(led_door_open, led2_state)
+    GPIO.output(led_package_send, led3_state)
 
-# Set Sensor pins
-hx = HX711(dout_pin=5, pd_sck_pin=6)
 
-# Reset HX711
-print("dit is de hx", hx)
-err = hx.reset()
-print("dit is de reset", err)
-if not err == False:
-    print("something went wrong")
-    print("if statement werkt, tot hiertoe werkt alles")
-else:
-    print("klaar om te gebruiken")
-    print("else statement werkt, tot hiertoe werkt alles")
+def cleanAndExit():
+    while True:
+        lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+        GPIO.output(led_door_closed, GPIO.LOW)
+        GPIO.output(led_door_open, GPIO.LOW)
+        GPIO.output(led_package_send, GPIO.LOW)
+        lcd.close(clear=True)
+        break
+    sys.exit()
 
-reading = hx.get_raw_data_mean()
-print(reading)
-if reading:
-    print('Data subtracted by offset but still not converted to units:', reading)
-else:
-    print('invalid data', reading)
 
-# input('Put known weight on the scale and then press Enter')
-reading = hx.get_data_mean()
-if reading:
-    print('Mean value from HX711 subtracted by offset:', reading)
-    known_weight_grams = 100  # input('Write how many grams it was and press Enter: ')
+# weight sensor
+def checkErrorWeightsensor():
     try:
-        value = float(known_weight_grams)
-        print(value, 'grams')
-    except ValueError:
-        print('Expected integer or float and I have got:', known_weight_grams)
+        err = hx.zero()
+        if err:
+            ValueError("Tare is unsuccessful.")
+        else:
+            return True
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
 
-print("Now, I will read data in infinite loop. To exit press 'CTRL + C'")
-input('Press Enter to begin reading')
-print('Current weight on the scale in grams is: ')
-while True:
-    write_LCD(str(hx.get_weight_mean(5)) + "g")
+
+def checkStartValueInBits():
+    try:
+        reading = hx.get_raw_data_mean()
+        if reading:
+            return True
+        else:
+            return False
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
+
+
+def calculateWeight():
+    global value
+    offsetOneKg = 0  # check in weegschaal hoeveel bits het is
+    oneKg = 1000
+    try:
+        reading = offsetOneKg
+        if reading:
+            knownWeightGrams = oneKg
+            try:
+                value = float(knownWeightGrams)
+            except ValueError:
+                print("Expected integer or float and I have got:", knownWeightGrams)
+
+            ratio = reading / value
+            hx.set_scale_ratio(ratio)
+        else:
+            raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+    except (KeyboardInterrupt, SystemExit):
+        cleanAndExit()
+
+
+
+
