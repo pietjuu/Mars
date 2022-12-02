@@ -230,4 +230,12 @@ public class DefaultMarsController implements MarsController {
             throw new NoSuchElementException(String.format("No such element %s", typeLocation));
         }
     }
+
+    @Override
+    public double calculatePrice(String transporterID) {
+        Transporter transporter = this.getTransporter(transporterID);
+
+        TransporterController transporterController = new TransporterController();
+        return transporterController.getTransporterScan(transporter).getCost();
+    }
 }

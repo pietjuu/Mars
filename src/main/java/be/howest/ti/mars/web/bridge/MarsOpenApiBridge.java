@@ -2,12 +2,14 @@ package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.logic.controller.DefaultMarsController;
 import be.howest.ti.mars.logic.controller.MarsController;
+import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.web.auth.BearerAuthHandler;
 import be.howest.ti.mars.web.auth.TokenManager;
 import be.howest.ti.mars.web.auth.Tokens;
 import be.howest.ti.mars.web.auth.UserToken;
 import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.mars.web.exceptions.MalformedRequestException;
+import be.howest.ti.mars.web.exceptions.TransporterAPIException;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -85,6 +87,9 @@ public class MarsOpenApiBridge {
 
         LOGGER.log(Level.INFO, "Installing handler for deleteTransporter");
         routerBuilder.operation("deleteTransporter").handler(this::deleteTransporter);
+
+        LOGGER.log(Level.INFO, "Installing handler for getCalculatedPrice");
+        routerBuilder.operation("getCalculatedPrice").handler(this::getCalculatedPrice);
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -176,6 +181,12 @@ public class MarsOpenApiBridge {
         Response.sendTransporter(routingContext, 200, controller.getTransporter(id));
     }
 
+    private void getCalculatedPrice(RoutingContext routingContext) {
+        String id = Request.from(routingContext).getTransporterID();
+
+        Response.sendJsonResponse(routingContext, 200, controller.calculatePrice(id));
+    }
+
     private void createTransporter(RoutingContext routingContext){
         String name = Request.from(routingContext).getTransporterNameBody();
         Double[] size = Request.from(routingContext).getTransporterSizeBody();
@@ -233,7 +244,11 @@ public class MarsOpenApiBridge {
             code = 404;
         } else if (cause instanceof ForbiddenAccessException) {
             code = 401;
-        } else {
+        } else if (cause instanceof TransporterException) {
+            code = 406;
+        }else if (cause instanceof TransporterAPIException) {
+            code = 503;
+        }else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
 

@@ -332,4 +332,11 @@ class DefaultMarsControllerTest {
 
         assertThrows(NoSuchElementException.class, () -> controller.addBuilding("BLABLA",new Coordinates(99999.11f, 99999.69f)));
     }
+
+    @Test
+    void testCalculatePrice(){
+        MarsController controller = new DefaultMarsController();
+
+        assertTrue(0 < controller.calculatePrice("TT-1"));
+    }
 }
