@@ -4,6 +4,7 @@
 # TODO: delete print and input statements
 # TODO: round weight to 2 decimal places
 # TODO: nested while True loop for only running when button is pressed
+# TODO: find out how calculation is done
 
 import RPi.GPIO as GPIO
 from time import sleep
@@ -100,7 +101,7 @@ def checkStartValueInBits():
     try:
         reading = hx.get_raw_data_mean()
         if reading:
-            return True
+            return reading
         else:
             return False
     except (KeyboardInterrupt, SystemExit):
@@ -109,6 +110,7 @@ def checkStartValueInBits():
 
 def calculateWeight():
     global value
+    offsetZeroKg = checkStartValueInBits()
     offsetOneKg = 0  # check in weegschaal hoeveel bits het is
     oneKg = 1000
     try:
