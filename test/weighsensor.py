@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-# Libraries
+
 # TODO: cleanup code
 # TODO: delete print and input statements
 # TODO: round weight to 2 decimal places
 # TODO: nested while True loop for only running when button is pressed
 # TODO: find out how calculation is done
 
+# Libraries
 import RPi.GPIO as GPIO
 from time import sleep
 from hx711 import HX711
@@ -114,6 +115,7 @@ def calculateWeight():
     offsetOneKg = 0  # check in weegschaal hoeveel bits het is
     oneKg = 1000
     try:
+        # TODO: make functions of this if else bits2effectivefloat
         reading = offsetOneKg
         if reading:
             knownWeightGrams = oneKg
