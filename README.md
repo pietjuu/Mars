@@ -33,7 +33,7 @@ There are now 3 type of Transporter APIs configured.
 2. Always Not Ready Transporter (aka door open)
 3. Status of Transporter is random
 
-> Note: location of transporter is always random, number scanned molecules is always random
+> Note: location of transporter is always random, number of scanned molecules is always random and size of item is always random
 
 ### Transporter API addresses:
 1. Always Ready Transporter (aka door closed)
