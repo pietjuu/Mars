@@ -2,7 +2,6 @@
 
 # TODO: cleanup code
 # TODO: delete print and input statements
-# TODO: round weight to 2 decimal places
 # TODO: nested while True loop for only running when button is pressed
 # TODO: find out how calculation is done
 
@@ -100,7 +99,7 @@ def checkErrorWeightsensor():
 
 def checkStartValueInBits():
     try:
-        reading = hx.get_raw_data_mean()
+        reading = hx.get_raw_data_mean(30)
         if reading:
             return reading
         else:
@@ -111,11 +110,10 @@ def checkStartValueInBits():
 
 def calculateWeight():
     global value
-    offsetZeroKg = checkStartValueInBits()
+    offsetZeroKg = checkStartValueInBits()  # TODO: check if this is necessary
     offsetOneKg = 0  # check in weegschaal hoeveel bits het is
     oneKg = 1000
     try:
-        # TODO: make functions of this if else bits2effectivefloat
         reading = offsetOneKg
         if reading:
             knownWeightGrams = oneKg
@@ -124,9 +122,22 @@ def calculateWeight():
             except ValueError:
                 print("Expected integer or float and I have got:", knownWeightGrams)
 
-            ratio = reading / value
+            ratio = reading / value  # offset // 1000
             hx.set_scale_ratio(ratio)
         else:
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
+
+
+"""
+TODO: round weight to 0 decimal places
+x = round(5.76543)
+print(x)
+"""
+
+
+def getWeight():
+    weight = hx.get_weight_mean(30, "grams")
+    rounded_weight = round(weight)
+    return rounded_weight
