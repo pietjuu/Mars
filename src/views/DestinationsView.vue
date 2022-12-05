@@ -1,6 +1,6 @@
 <template>
   <HeaderContent :title="`Destinations`"/>
-  <main>
+  <main class="main-content">
     <div class="map-box box">
       <DestinationMap/>
     </div>
@@ -101,10 +101,6 @@ export default {
 <style scoped lang="scss">
 
 main {
-  /* 5rem is height from content header */
-  height: calc(100% - 5.1rem); /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
-  min-height: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
-  min-width: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
   display: flex;
   flex-direction: row;
   gap: 1rem;

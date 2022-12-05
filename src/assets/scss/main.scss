@@ -112,6 +112,13 @@ input {
   font-size: 2rem;
 }
 
+.main-content {
+  /* 5rem is height from content header */
+  height: calc(100% - 5.1rem); /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
+  min-height: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
+  min-width: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
+}
+
 .flex-center-row {
   @include mixins.flex(row, center, center);
 }
