@@ -2,7 +2,7 @@
 import sys
 import RPi.GPIO as GPIO
 from RPLCD import i2c
-from time import sleep
+
 
 # set warnings off
 GPIO.setwarnings(False)

@@ -7,10 +7,10 @@
 
 # Libraries
 import RPi.GPIO as GPIO
-from time import sleep
 from hx711 import HX711
 from RPLCD import i2c
 import sys
+from time import sleep
 
 # set warnings off
 GPIO.setwarnings(False)
@@ -23,7 +23,7 @@ rows = 2
 charmap = 'A00'
 i2c_expander = 'PCF8574'
 
-# Generally 27 is the address;Find yours using: i2cdetect -y 1
+# Generally 27 is the address. Find yours using: i2cdetect -y 1
 address = 0x3f
 # 0 on an older Raspberry Pi
 port = 1
@@ -53,6 +53,11 @@ def door_open():
     return button_state == 0
 
 
+def door_closed():
+    button_state = GPIO.input(button_sensor)
+    return button_state == 1
+
+
 def start_1():
     button_state = GPIO.input(button_start)
     return button_state == 1
@@ -68,13 +73,18 @@ def write_LCD(text):
     lcd.write_string(text)
 
 
+def clear_lcd():
+    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+    lcd.clear()
+
+
 def set_led_state(led1_state, led2_state, led3_state):
     GPIO.output(led_door_closed, led1_state)
     GPIO.output(led_door_open, led2_state)
     GPIO.output(led_package_send, led3_state)
 
 
-def cleanAndExit():
+def clean_and_exit():
     while True:
         lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
         GPIO.output(led_door_closed, GPIO.LOW)
@@ -86,7 +96,7 @@ def cleanAndExit():
 
 
 # weight sensor
-def checkErrorWeightsensor():
+def check_error_weightsensor():
     try:
         err = hx.zero()
         if err:
@@ -94,10 +104,10 @@ def checkErrorWeightsensor():
         else:
             return True
     except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+        clean_and_exit()
 
 
-def checkStartValueInBits():
+def check_start_value_in_bits():
     try:
         reading = hx.get_raw_data_mean(30)
         if reading:
@@ -105,39 +115,66 @@ def checkStartValueInBits():
         else:
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+        clean_and_exit()
 
 
-def calculateWeight():
+def calculate_weight():
     global value
-    offsetZeroKg = checkStartValueInBits()  # TODO: check if this is necessary
-    offsetOneKg = 0  # check in weegschaal hoeveel bits het is
-    oneKg = 1000
+    offset_zero_kg = check_start_value_in_bits()  # TODO: check if this is necessary
+    offset_one_kg = 0  # check in weegschaal hoeveel bits het is
+    one_kg = 1000
     try:
-        reading = offsetOneKg
+        reading = offset_one_kg
         if reading:
-            knownWeightGrams = oneKg
+            knownWeightGrams = one_kg
             try:
                 value = float(knownWeightGrams)
             except ValueError:
                 print("Expected integer or float and I have got:", knownWeightGrams)
 
-            ratio = reading / value  # offset // 1000
+            ratio = reading / value  # offsetOneKg // 1000
             hx.set_scale_ratio(ratio)
         else:
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+        clean_and_exit()
 
 
-"""
-TODO: round weight to 0 decimal places
-x = round(5.76543)
-print(x)
-"""
-
-
-def getWeight():
+def get_weight():
     weight = hx.get_weight_mean(30, "grams")
     rounded_weight = round(weight)
-    return rounded_weight
+    string_weight = str(rounded_weight)
+    print(rounded_weight, "grams")
+    return string_weight
+
+
+while True:
+    try:
+        #  button_state_start == 0 and button_state_sensor == 0:
+        if start_0() == True and door_open() == True:
+            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+            write_LCD("Door is open")
+
+        # button_state_start == 0 and button_state_sensor == 1:
+        elif start_0() == True and door_closed() == True:
+            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
+            write_LCD("package is ready")
+            sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
+            clear_lcd()
+            write_LCD(get_weight() + " grams")
+
+        # button_state_start == 1 and button_state_sensor == 0:
+        elif start_1() == True and door_open() == True:
+            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+            write_LCD("Door is open")
+
+        # button_state_sensor == 1 and button_state_start == 1:
+        elif start_1() == True and door_closed() == True:
+            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
+            write_LCD("Package is send")
+
+        # else statement
+        else:
+            raise ValueError('Something went wrong')
+    except (KeyboardInterrupt, SystemExit):
+        clean_and_exit()
