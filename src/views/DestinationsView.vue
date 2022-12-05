@@ -15,27 +15,27 @@
       </div>
       <div class="location-details box">
         <h2>Location Details</h2>
-        <ul v-if="Object.keys(this.selectedTransporterOnMap).length > 0">
+        <ul  v-if="this.clickedLocation">
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`badge`"/>
               <p class="flex-center-vertical">ID: </p>
             </div>
-            <span class="location-id location-value flex-center-vertical">{{ this.selectedTransporterOnMap["id"] }}</span>
+            <span class="location-id location-value flex-center-vertical">{{ this.clickedLocation["id"] }}</span>
           </li>
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`description`"/>
               <p class="flex-center-vertical">Name: </p>
             </div>
-            <span class="location-name location-value flex-center-vertical">{{ this.selectedTransporterOnMap["name"] }}</span>
+            <span class="location-name location-value flex-center-vertical">{{ this.clickedLocation["name"] }}</span>
           </li>
           <li>
             <div class="icon-text-wrapper">
               <Icon :icon="`category`"/>
               <p class="flex-center-vertical">Type: </p>
             </div>
-            <span class="location-type location-value flex-center-vertical"> {{ this.selectedTransporterOnMap["typeOfBuilding"] }} </span>
+            <span class="location-type location-value flex-center-vertical"> {{ this.clickedLocation["location"]["building"]["typeOfBuilding"] }} </span>
           </li>
           <li>
             <div class="icon-text-wrapper">
@@ -43,12 +43,12 @@
               <p class="flex-center-vertical">Size: </p>
             </div>
             <span class="location-size location-value flex-center-vertical">
-              <span class="location-size-length">{{ this.selectedTransporterOnMap["size"]["length"] }}cm</span>
-              x
-              <span class="location-size-width">{{ this.selectedTransporterOnMap["size"]["width"] }}cm</span>
-              x
-              <span class="location-size-depth">{{ this.selectedTransporterOnMap["size"]["depth"] }}cm</span>
-            </span>
+            <span class="location-size-length">{{ this.clickedLocation["size"]["length"] }}cm</span>
+            x
+            <span class="location-size-width">{{ this.clickedLocation["size"]["width"] }}cm</span>
+            x
+            <span class="location-size-depth">{{ this.clickedLocation["size"]["depth"] }}cm</span>
+          </span>
           </li>
           <li>
             <div class="icon-text-wrapper">
@@ -56,7 +56,7 @@
               <p class="flex-center-vertical">Longitude: </p>
             </div>
             <span class="location-longitude location-value flex-center-vertical">{{
-                this.selectedTransporterOnMap["location"]["longitude"]
+                this.clickedLocation["location"]["coordinates"]["longitude"]
               }}</span>
           </li>
           <li>
@@ -65,7 +65,7 @@
               <p class="flex-center-vertical">Latitude: </p>
             </div>
             <span class="location-latitude location-value flex-center-vertical">{{
-                this.selectedTransporterOnMap["location"]["latitude"]
+                this.clickedLocation["location"]["coordinates"]["latitude"]
               }}</span>
           </li>
         </ul>
@@ -93,7 +93,7 @@ export default {
     ...mapActions(["fetchTransporters"])
   },
   computed: {
-    ...mapGetters(["selectedTransporterOnMap"])
+    ...mapGetters(["clickedLocation"])
   }
 };
 </script>

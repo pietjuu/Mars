@@ -5,7 +5,7 @@ import user from "@/store/modules/user";
 import notification from "@/store/modules/notification";
 import sendItem from "@/store/modules/send-item";
 import transporters from "@/store/modules/transporters";
-import mapDestinations from "@/store/modules/map-destinations";
+import map from "@/store/modules/map";
 
 
 const store = createStore({
@@ -14,7 +14,7 @@ const store = createStore({
         notification,
         sendItem,
         transporters,
-        mapDestinations
+        map
     }
 });
 

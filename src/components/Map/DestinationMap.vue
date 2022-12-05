@@ -22,7 +22,7 @@ const purpleMarker = require(`@/assets/media/purple_marker.png`);
 export default {
   name: "DestinationMap",
   methods: {
-    ...mapActions(["fetchTransporters", "setSelectedTransporterOnMap"]),
+    ...mapActions(["fetchTransporters", "setClickedLocation"]),
     createMarkerLayer(vectors) {
       return new layerVector({
         source: vectors
@@ -56,7 +56,7 @@ export default {
       if (!feature) {
         return;
       }
-      this.setSelectedTransporterOnMap({ ...feature.values_ });
+      this.setClickedLocation({ ...feature.values_ });
     }
   },
   computed: {
@@ -65,7 +65,6 @@ export default {
   async mounted() {
     const map = this.createMap("destination-map");
     await this.fetchTransporters();
-    this.setSelectedTransporterOnMap();
 
     const blueMarkerStyle = new Style({
       image: new Icon({
@@ -90,7 +89,7 @@ export default {
     const markers = [];
     this.transporters.forEach(transporter => {
       let style;
-      switch (transporter.building.typeOfBuilding) {
+      switch (transporter.location.building.typeOfBuilding) {
         case "PICKUP":
           style = orangeMarkerStyle;
           break;
@@ -102,8 +101,8 @@ export default {
           break;
       }
 
-      const location = transporter["location"];
-      const feature = this.createFeature([location.longitude, location.latitude]);
+      const coordinates = transporter["location"]["coordinates"];
+      const feature = this.createFeature([coordinates.longitude, coordinates.latitude]);
       feature.setId(transporter.id);
       feature.setProperties(transporter);
       feature.setStyle(style);
