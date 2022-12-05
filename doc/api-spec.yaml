@@ -127,7 +127,15 @@ components:
                     type: integer
                   y:
                     type: integer
-
+        size:
+          type: object
+          properties:
+            length:
+              type: integer
+            width:
+              type: integer
+            depth:
+              type: integer
         summary:
           type: array
           items:
@@ -156,6 +164,11 @@ components:
                 }
             }
         ],
+        "size": {
+           "length": 22,
+           "width": 34,
+           "depth": 10
+        },
         "summary": [
             {
                 "count": 3,
