@@ -4,8 +4,12 @@ info:
   description: 'Transporter OpenAPI Project II Howest'
   version: 0.0.1
 servers:
+  - url: https://transporter1.thibo.cloud
+    description: 'Docker Transporter API (Always Ready)'
+  - url: https://transporter5.thibo.cloud
+    description: 'Docker Transporter API (Always Not Ready)'
   - url: https://transporter7.thibo.cloud
-    description: 'Docker Transporter API'
+    description: 'Docker Transporter API (Random)'
   - url: http://localhost:5000
     description: 'Local Transporter API'
 paths:
