@@ -1,10 +1,16 @@
 <template>
-
+  <HeaderContent :title="`Blacklist`"/>
 </template>
 
 <script>
+import HeaderContent from "@/components/Header/HeaderContent";
+
 export default {
-  name: "BlacklistView"
+  name: "BlacklistView",
+  components: {
+    HeaderContent
+  }
+
 }
 </script>
 
