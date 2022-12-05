@@ -24,7 +24,12 @@ class Scan:
                     "count": round(weight * (2/7))
                 }
             ],
-            "molecules": mock_molecules_scan
+            "molecules": mock_molecules_scan,
+            "size": {
+                "length": randint(10, 40),
+                "width": randint(5, 30),
+                "depth": randint(10, 20)
+            }
         }
 
         return data
