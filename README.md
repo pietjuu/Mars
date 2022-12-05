@@ -2,7 +2,7 @@
 Every Transporter device runs a small API.  
 With this API the Shippert API can control the device or request data from it.  
 
-## Deploy
+## Deploy on RPI
 > Note: python3 and pip must already be installed on the RPI  
 
 Create the following directory on the RPI: 
