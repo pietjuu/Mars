@@ -1,5 +1,5 @@
 {
-    "host": "https://project-ii.ti.howest.be",
+    "host": "http://localhost:3000",
     "folder": "",
     "group": "mars-05"
 }
