@@ -2,7 +2,6 @@
 
 # TODO: cleanup code
 # TODO: delete print and input statements
-# TODO: nested while True loop for only running when button is pressed
 # TODO: find out how calculation is done
 
 # Libraries
