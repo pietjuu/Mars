@@ -44,12 +44,14 @@
         "depth": 70
       },
       "location": {
-        "longitude": 4.242362690474167,
-        "latitude": 51.21175585969615
-      },
-      "building": {
-        "typeOfBuilding": "RESIDENCE",
-        "id": "135b2235"
+        "coordinates": {
+          "longitude": 4.242362690474167,
+          "latitude": 51.21175585969615
+        },
+        "building": {
+          "typeOfBuilding": "RESIDENCE",
+          "id": "135b2235"
+        }
       },
       "ipAddress": "192.168.9.1"
     },
@@ -62,12 +64,14 @@
         "depth": 70
       },
       "location": {
-        "longitude": 5.512043247664388,
-        "latitude": 50.86603005962442
-      },
-      "building": {
-        "typeOfBuilding": "RESIDENCE",
-        "id": "135b2235"
+        "coordinates": {
+          "longitude": 5.512043247664388,
+          "latitude": 50.86603005962442
+        },
+        "building": {
+          "typeOfBuilding": "RESIDENCE",
+          "id": "135b2235"
+        }
       },
       "ipAddress": "192.168.9.1"
     },
@@ -80,12 +84,14 @@
         "depth": 70
       },
       "location": {
-        "longitude": 5.388078883197738,
-        "latitude": 50.78748919533741
-      },
-      "building": {
-        "typeOfBuilding": "GARBAGE",
-        "id": "135b2235"
+        "coordinates": {
+          "longitude": 5.388078883197738,
+          "latitude": 50.78748919533741
+        },
+        "building": {
+          "typeOfBuilding": "GARBAGE",
+          "id": "135b2235"
+        }
       },
       "ipAddress": "192.168.9.1"
     },
@@ -98,12 +104,14 @@
         "depth": 70
       },
       "location": {
-        "longitude": 6.388078883197738,
-        "latitude": 50.88748919533741
-      },
-      "building": {
-        "typeOfBuilding": "PICKUP",
-        "id": "135b2235"
+        "coordinates": {
+          "longitude": 6.388078883197738,
+          "latitude": 50.88748919533741
+        },
+        "building": {
+          "typeOfBuilding": "PICKUP",
+          "id": "135b2235"
+        }
       },
       "ipAddress": "192.168.9.1"
     },
@@ -116,12 +124,14 @@
         "depth": 70
       },
       "location": {
-        "longitude": 5.388078883197738,
-        "latitude": 51.78748919533741
-      },
-      "building": {
-        "typeOfBuilding": "GARBAGE",
-        "id": "135b2235"
+        "coordinates": {
+          "longitude": 5.388078883197738,
+          "latitude": 51.78748919533741
+        },
+        "building": {
+          "typeOfBuilding": "GARBAGE",
+          "id": "135b2235"
+        }
       },
       "ipAddress": "192.168.9.1"
     }

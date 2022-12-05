@@ -35,7 +35,7 @@
               <Icon :icon="`category`"/>
               <p class="flex-center-vertical">Type: </p>
             </div>
-            <span class="location-type location-value flex-center-vertical"> {{ this.clickedLocation["building"]["typeOfBuilding"] }} </span>
+            <span class="location-type location-value flex-center-vertical"> {{ this.clickedLocation["location"]["building"]["typeOfBuilding"] }} </span>
           </li>
           <li>
             <div class="icon-text-wrapper">
@@ -56,7 +56,7 @@
               <p class="flex-center-vertical">Longitude: </p>
             </div>
             <span class="location-longitude location-value flex-center-vertical">{{
-                this.clickedLocation["location"]["longitude"]
+                this.clickedLocation["location"]["coordinates"]["longitude"]
               }}</span>
           </li>
           <li>
@@ -65,7 +65,7 @@
               <p class="flex-center-vertical">Latitude: </p>
             </div>
             <span class="location-latitude location-value flex-center-vertical">{{
-                this.clickedLocation["location"]["latitude"]
+                this.clickedLocation["location"]["coordinates"]["latitude"]
               }}</span>
           </li>
         </ul>
