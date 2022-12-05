@@ -104,7 +104,7 @@ def checkStartValueInBits():
         if reading:
             return reading
         else:
-            return False
+            raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
 
@@ -130,7 +130,3 @@ def calculateWeight():
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
-
-
-
-
