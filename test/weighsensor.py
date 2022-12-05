@@ -25,7 +25,7 @@ i2c_expander = 'PCF8574'
 
 # Generally 27 is the address. Find yours using: i2cdetect -y 1
 address = 0x3f
-# 0 on an older Raspberry Pi
+# 0 on an older Raspberry Pi (older than RPI 4)
 port = 1
 
 # Set pins to button
@@ -58,12 +58,12 @@ def door_closed():
     return button_state == 1
 
 
-def start_1():
+def button_start_pressed():
     button_state = GPIO.input(button_start)
     return button_state == 1
 
 
-def start_0():
+def button_start_released():
     button_state = GPIO.input(button_start)
     return button_state == 0
 
@@ -151,12 +151,12 @@ def get_weight():
 while True:
     try:
         #  button_state_start == 0 and button_state_sensor == 0:
-        if start_0() == True and door_open() == True:
+        if button_start_released() and door_open():
             set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
             write_LCD("Door is open")
 
         # button_state_start == 0 and button_state_sensor == 1:
-        elif start_0() == True and door_closed() == True:
+        elif button_start_released() == True and door_closed() == True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
             write_LCD("package is ready")
             sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
@@ -164,12 +164,12 @@ while True:
             write_LCD(get_weight() + " grams")
 
         # button_state_start == 1 and button_state_sensor == 0:
-        elif start_1() == True and door_open() == True:
+        elif button_start_pressed() == True and door_open() == True:
             set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
             write_LCD("Door is open")
 
         # button_state_sensor == 1 and button_state_start == 1:
-        elif start_1() == True and door_closed() == True:
+        elif button_start_pressed() == True and door_closed() == True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
             write_LCD("Package is send")
 
