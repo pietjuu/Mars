@@ -3,7 +3,7 @@
 # TODO: cleanup code
 # TODO: delete print and input statements
 # TODO: find out how calculation is done
-# TODO: make if else statement for checking if weight is below 0 (maybe make error rate of 1 or 2 grams)
+# TODO: (maybe make error rate of 1 or 2 grams)
 
 # Libraries
 import RPi.GPIO as GPIO
