@@ -181,7 +181,6 @@ while True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
             write_LCD("Package is send")
 
-        # else statement
         else:
             raise ValueError('Something went wrong')
     except (KeyboardInterrupt, SystemExit):
