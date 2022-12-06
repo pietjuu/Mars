@@ -3,6 +3,7 @@
 # TODO: cleanup code
 # TODO: delete print and input statements
 # TODO: find out how calculation is done
+# TODO: make if else statement for checking if weight is below 0 (maybe make error rate of 1 or 2 grams)
 
 # Libraries
 import RPi.GPIO as GPIO
@@ -147,6 +148,14 @@ def get_weight():
     return string_weight
 
 
+def display_weight():
+    weight = int(get_weight())
+    if weight < 0:
+        write_LCD("0 grams")
+    else:
+        write_LCD(get_weight() + " grams")
+
+
 while True:
     try:
         #  button_state_start == 0 and button_state_sensor == 0:
@@ -160,7 +169,7 @@ while True:
             write_LCD("package is ready")
             sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
             clear_lcd()
-            write_LCD(get_weight() + " grams")
+            display_weight()
 
         # button_state_start == 1 and button_state_sensor == 0:
         elif button_start_pressed() == True and door_open() == True:
