@@ -14,7 +14,7 @@ public class Item {
 
     private final String id;
     private final String name;
-    private final Size size;
+    private Size size;
     private ItemStatus status;
     private LocalDateTime sendTime;
     private LocalDateTime receivedTime;
@@ -34,13 +34,13 @@ public class Item {
     /**
      * Constructor
      * @param name name of item
-     * @param size size of item
+     * @param molecules {@link MoleculesSummary}
      */
-    public Item(String name, Size size, MoleculesSummary molecules) {
+    public Item(String name, MoleculesSummary molecules) {
         this.id = UUID.randomUUID().toString();
         this.status = ItemStatus.UNDEFINED;
         this.name = name;
-        this.size = size;
+        this.size = molecules.getSize();
         this.molecules = molecules;
     }
 
@@ -48,13 +48,13 @@ public class Item {
      * Constructor - this should only be used when importing.
      * @param id uuid
      * @param name name of item
-     * @param size size of item
+     * @param molecules {@link MoleculesSummary}
      */
-    public Item(String id, String name, Size size, MoleculesSummary molecules){
+    public Item(String id, String name, MoleculesSummary molecules){
         this.id = id;
         this.status = ItemStatus.UNDEFINED;
         this.name = name;
-        this.size = size;
+        this.size = molecules.getSize();
         this.molecules = molecules;
     }
 
@@ -76,6 +76,10 @@ public class Item {
 
     public void setMolecules(MoleculesSummary molecules) {
         this.molecules = molecules;
+    }
+
+    public void setSize(Size size){
+        this.size = size;
     }
 
     public String getId() {
