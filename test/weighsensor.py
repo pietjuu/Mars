@@ -165,12 +165,15 @@ def init_weight():
 
 
 def display_weight():
-    weight = int(get_weight())
-    lcd.clear()
-    if weight < 0:
-        write_LCD("0 grams")
-    else:
-        write_LCD(str(weight) + " grams")
+    try:
+        weight = int(get_weight())
+        lcd.clear()
+        if weight < 0:
+            write_LCD("0 grams")
+        else:
+            write_LCD(str(weight) + " grams")
+    except (KeyboardInterrupt, SystemExit):
+        clean_and_exit()
 
 
 init_weight()
