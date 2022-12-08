@@ -134,4 +134,6 @@ public interface MarsController {
     void addBuilding(String typeLocation, Coordinates coordinates);
 
     double calculatePrice(String transporterID);
+
+    double initConnection(String transporterID);
 }

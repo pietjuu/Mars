@@ -238,4 +238,10 @@ public class DefaultMarsController implements MarsController {
         TransporterController transporterController = new TransporterController();
         return transporterController.getTransporterScan(transporter).getCost();
     }
+
+    @Override
+    public double initConnection(String transporterID) {
+
+        return this.calculatePrice(transporterID);
+    }
 }
