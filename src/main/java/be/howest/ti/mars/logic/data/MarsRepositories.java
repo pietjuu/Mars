@@ -140,4 +140,6 @@ public interface MarsRepositories {
     Link getLink(String linkID);
 
     void addLink(Link link);
+
+    void deleteLink(Link link);
 }

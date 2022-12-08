@@ -182,4 +182,9 @@ public class InMemoryRepository implements MarsRepositories{
     public void addLink(Link link){
         links.put(link.getId(), link);
     }
+
+    @Override
+    public void deleteLink(Link link) {
+        links.remove(link.getId());
+    }
 }
