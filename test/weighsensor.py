@@ -23,10 +23,17 @@ rows = 2
 charmap = 'A00'
 i2c_expander = 'PCF8574'
 
+
 # Generally 27 is the address. Find yours using: i2cdetect -y 1
 address = 0x3f
 # 0 on an older Raspberry Pi (older than RPI 4)
 port = 1
+
+# Initialise the LCD
+lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
+
+#Switch off backlight
+lcd.backlight_enabled = True
 
 # Set pins to button
 button_sensor = 23
@@ -46,6 +53,8 @@ GPIO.setup(button_start, GPIO.IN)
 GPIO.setup(led_door_closed, GPIO.OUT)
 GPIO.setup(led_door_open, GPIO.OUT)
 GPIO.setup(led_package_send, GPIO.OUT)
+
+
 
 
 def door_open():
@@ -69,13 +78,7 @@ def button_start_released():
 
 
 def write_LCD(text):
-    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
     lcd.write_string(text)
-
-
-def clear_lcd():
-    lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
-    lcd.clear()
 
 
 def set_led_state(led1_state, led2_state, led3_state):
@@ -86,7 +89,6 @@ def set_led_state(led1_state, led2_state, led3_state):
 
 def clean_and_exit():
     while True:
-        lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
         GPIO.output(led_door_closed, GPIO.LOW)
         GPIO.output(led_door_open, GPIO.LOW)
         GPIO.output(led_package_send, GPIO.LOW)
@@ -141,19 +143,20 @@ def calculate_weight():
 
 
 def get_weight():
-    weight = hx.get_weight_mean(30, "grams")
+    weight = hx.get_weight_mean(30)
     rounded_weight = round(weight)
     string_weight = str(rounded_weight)
-    print(rounded_weight, "grams")
-    return string_weight
+    print(string_weight, "grams")
+    return rounded_weight
 
 
 def display_weight():
     weight = int(get_weight())
+    lcd.clear()
     if weight < 0:
         write_LCD("0 grams")
     else:
-        write_LCD(get_weight() + " grams")
+        write_LCD(str(weight) + " grams")
 
 
 while True:
@@ -167,8 +170,7 @@ while True:
         elif button_start_released() == True and door_closed() == True:
             set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
             write_LCD("package is ready")
-            sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
-            clear_lcd()
+            # sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
             display_weight()
 
         # button_state_start == 1 and button_state_sensor == 0:
