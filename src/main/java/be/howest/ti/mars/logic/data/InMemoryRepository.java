@@ -8,6 +8,7 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -36,8 +37,8 @@ public class InMemoryRepository implements MarsRepositories{
         addUser(new User("T-3", "Delia", "Vervaeke", PricePlan.STANDARD));
         addUser(new User("T-4", "Wiebe", "Desmadryl", PricePlan.STANDARD));
         addUser(new User("T-5", "Glenn", "Callens", PricePlan.PREMIUM));
-        shippertBlacklist.addItem(new Item("AK-47", new Size(0.3f, 0.8f, 0.2f)));
-        shippertBlacklist.addItem(new Item("Coke", new Size(0.1f, 0.1f, 0.1f)));
+        shippertBlacklist.addItem(new Item("AK-47",  new MoleculesSummary(new HashMap<>(), new HashSet<>(), new Size(0.3f, 0.8f, 0.2f))));
+        shippertBlacklist.addItem(new Item("Coke",new MoleculesSummary(new HashMap<>(), new HashSet<>(), new Size(0.1f, 0.1f, 0.1f))));
         usersBlacklists.get("T-1").addItem(new Item("Apple"));
         transporters.put("TT-1", new Transporter("TT-1", "TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter1.thibo.cloud/"));
         transporters.put("TT-2", new Transporter("TT-2","TT-2", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter5.thibo.cloud/"));
