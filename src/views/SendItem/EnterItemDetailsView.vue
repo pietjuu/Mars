@@ -1,5 +1,5 @@
 <template>
-  <div class="item-details-wrapper">
+  <div class="item-details-wrapper flex-gap">
     <div class="item-price box">
       <div class="item-price-title flex-space-between-row">
         <h2>Calculated Price to Send Item</h2>
@@ -53,8 +53,6 @@ h2 {
 }
 
 .item-details-wrapper {
-  display: flex;
-  gap: 1rem;
   min-height: 16rem;
 
   .item-price {

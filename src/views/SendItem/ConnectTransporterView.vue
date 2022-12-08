@@ -3,7 +3,7 @@
 
     <InfoBox :text="infoText"/>
 
-    <div class="form-and-message-wrapper flex-space-between-row">
+    <div class="form-and-message-wrapper flex-gap flex-space-between-row">
 
       <div class="info-message box flex-center-col">
         <img src="@/assets/media/transporter.png" alt="">
@@ -58,7 +58,6 @@ export default {
 <style scoped lang="scss">
 
 .form-and-message-wrapper {
-  gap: 1rem;
 
   > .box {
     min-height: 10rem;

@@ -4,7 +4,7 @@
     <div class="map-box box">
       <DestinationMap/>
     </div>
-    <div class="map-information flex-space-between-col">
+    <div class="map-information flex-gap flex-space-between-col">
       <div class="legend box">
         <h2>Legend</h2>
         <ul>
@@ -112,7 +112,6 @@ main {
 
 .map-information {
   flex: 1 1 25%;
-  gap: 1rem;
 
   h2 {
     text-transform: uppercase;

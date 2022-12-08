@@ -1,5 +1,5 @@
 <template>
-  <div class="info-box box flex-center-vertical">
+  <div class="info-box box flex-center-vertical flex-gap">
     <div class="info-icon flex-center-row">
       <Icon :icon="`info`"/>
     </div>
@@ -27,7 +27,6 @@ export default {
 
 .info-box {
   background-color: rgba(255, 255, 255, 30%);
-  gap: 1rem;
   margin-bottom: 1rem;
   min-height: 2rem;
 
