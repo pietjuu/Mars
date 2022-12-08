@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # TODO: cleanup code
-# TODO: delete print and input statements
-# TODO: find out how calculation is done
-# TODO: (maybe make error rate of 1 or 2 grams)
-# TODO: offset cant be negative
-# TODO: getstatusDoor, getWeight
 
 # Libraries
 import RPi.GPIO as GPIO
@@ -55,12 +50,12 @@ GPIO.setup(led_door_open, GPIO.OUT)
 GPIO.setup(led_package_send, GPIO.OUT)
 
 
-def door_open():
+def is_door_open():
     button_state = GPIO.input(button_sensor)
     return button_state == 0
 
 
-def door_closed():
+def is_door_closed():
     button_state = GPIO.input(button_sensor)
     return button_state == 1
 
@@ -96,28 +91,6 @@ def clean_and_exit():
 
 
 # weight sensor
-def check_error_weightsensor():
-    try:
-        err = hx.zero()
-        if err:
-            ValueError("Tare is unsuccessful.")
-        else:
-            return True
-    except (KeyboardInterrupt, SystemExit):
-        clean_and_exit()
-
-
-def check_start_value_in_bits():
-    try:
-        reading = hx.get_raw_data_mean(30)  # return mean value of reading without weight on scale
-        if reading:
-            return reading
-        else:
-            raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
-    except (KeyboardInterrupt, SystemExit):
-        clean_and_exit()
-
-
 def calculate_weight():
     global value
     try:
@@ -168,7 +141,7 @@ def display_weight():
     try:
         weight = int(get_weight())
         lcd.clear()
-        if weight < 0:
+        if weight < 1:
             write_LCD("0 grams")
         else:
             write_LCD(str(weight) + " grams")
