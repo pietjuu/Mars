@@ -91,6 +91,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for getCalculatedPrice");
         routerBuilder.operation("getCalculatedPrice").handler(this::getCalculatedPrice);
 
+        LOGGER.log(Level.INFO, "Installing handler for initConnection");
+        routerBuilder.operation("initConnection").handler(this::initConnection);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -227,6 +230,12 @@ public class MarsOpenApiBridge {
 
         controller.deleteTransporter(id);
         Response.sendEmptyResponse(routingContext, 202);
+    }
+
+    private void initConnection(RoutingContext routingContext){
+        String id = Request.from(routingContext).getTransporterID();
+
+        Response.sendJsonResponse(routingContext, 200, controller.getTransporter(id));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
