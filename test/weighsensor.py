@@ -109,7 +109,7 @@ def check_error_weightsensor():
 
 def check_start_value_in_bits():
     try:
-        reading = hx.get_raw_data_mean(30)
+        reading = hx.get_raw_data_mean(30)  # return mean value of reading without weight on scale
         if reading:
             return reading
         else:
