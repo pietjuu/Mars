@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
+import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.web.exceptions.TransporterAPIException;
@@ -39,7 +40,7 @@ public class TransporterController {
             TransporterAPI transporterAPI = new TransporterAPI(transporter);
             JsonObject jsonObject = transporterAPI.getScan();
 
-            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject), getSize(jsonObject));
         } catch (TransporterAPIException e){
             if (e.getStatusCode() == 404){
                 throw new TransporterAPIException(404, "Transporter unavailable!");
@@ -54,7 +55,7 @@ public class TransporterController {
             TransporterAPI transporterAPI = new TransporterAPI(transporter);
             JsonObject jsonObject = transporterAPI.addSend();
 
-            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject));
+            return new MoleculesSummary(getSummaryMolecules(jsonObject), getAllMolecules(jsonObject), getSize(jsonObject));
         } catch (TransporterAPIException e){
             if (e.getStatusCode() == 404){
                 throw new TransporterAPIException(404, "Transporter unavailable!");
@@ -86,6 +87,12 @@ public class TransporterController {
         }
 
         return map;
+    }
+
+    private Size getSize(JsonObject jsonObject){
+        JsonObject object = jsonObject.getJsonObject("size");
+
+        return new Size(object.getDouble("depth"), object.getDouble("length"), object.getDouble("size"));
     }
 
 }
