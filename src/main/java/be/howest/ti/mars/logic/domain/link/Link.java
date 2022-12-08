@@ -11,6 +11,7 @@ public class Link {
 
     private final String id;
     private User senderUser;
+    private User receiverUser;
     private Transporter sender;
     private Transporter receiver;
     private LinkStatus linkStatus;
@@ -31,8 +32,9 @@ public class Link {
         this.item = item;
     }
 
-    public void connectLink(User senderUser, Transporter sender,  Transporter receiver, String itemName){
+    public void connectLink(User senderUser, Transporter sender,  User receiverUser, Transporter receiver, String itemName){
         this.senderUser = senderUser;
+        this.receiverUser = receiverUser;
         this.sender = sender;
         this.receiver = receiver;
         this.item = new Item(itemName);
