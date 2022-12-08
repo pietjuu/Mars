@@ -94,6 +94,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for initConnection");
         routerBuilder.operation("initConnection").handler(this::initConnection);
 
+        LOGGER.log(Level.INFO, "Installing handler for setLink");
+        routerBuilder.operation("setLink").handler(this::setLink);
+
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
     }
@@ -236,6 +239,18 @@ public class MarsOpenApiBridge {
         String id = Request.from(routingContext).getTransporterID();
 
         Response.sendJsonResponse(routingContext, 200, controller.initConnection(id));
+    }
+
+    private void setLink(RoutingContext routingContext){
+        String senderTransporterID = Request.from(routingContext).getTransporterID();
+        String userID = Request.from(routingContext).getUserIDFromAuth();
+        String linkID = Request.from(routingContext).getLinkIDFromPath();
+        String receiverTransporterID = Request.from(routingContext).getDestination();
+        String receiverUserID = Request.from(routingContext).getReceiver();
+        String itemName = Request.from(routingContext).getItemName();
+
+        controller.setLink(linkID, userID, senderTransporterID, receiverUserID, receiverTransporterID, itemName);
+        Response.sendEmptyResponse(routingContext, 202);
     }
 
     private void onFailedRequest(RoutingContext ctx) {
