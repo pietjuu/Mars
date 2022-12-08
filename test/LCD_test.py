@@ -21,6 +21,7 @@ lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, 
 # Write a string on first line and move to next line
 lcd.write_string('Hello world')
 sleep(5)
+
 #Switch off backlight
 lcd.backlight_enabled = False 
 #Clear the LCD screen
