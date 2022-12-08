@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 # TODO: cleanup code
 # TODO: delete print and input statements
 # TODO: find out how calculation is done
@@ -34,7 +33,7 @@ port = 1
 lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
 
 # Switch off backlight
-lcd.backlight_enabled = True
+lcd.backlight_enabled = False
 
 # Set pins to button
 button_sensor = 23
@@ -119,44 +118,51 @@ def check_start_value_in_bits():
         clean_and_exit()
 
 
-# TODO change this with the library from Gandalf
-def get_data_minus_offset():
+def calculate_weight():
+    global value
     try:
+        err = hx.zero()
+        # check if successful
+        if err:
+            raise ValueError('Tare is unsuccessful.')
         reading = hx.get_raw_data_mean()
         if reading:  # always check if you get correct value or only False
             # now the value is close to 0
             print('Data subtracted by offset but still not converted to units:',
                   reading)
         else:
-            ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+            print('invalid data', reading)
+
+        input('Put known weight on the scale and then press Enter')
+        reading = hx.get_data_mean()
+        if reading:
+            print('Mean value from HX711 subtracted by offset:', reading)
+            known_weight_grams = input(
+                'Write how many grams it was and press Enter: ')
+            try:
+                value = float(known_weight_grams)
+                print(value, 'grams')
+            except ValueError:
+                print('Expected integer or float and I have got:',
+                      known_weight_grams)
+
+            ratio = reading / value  # calculate the ratio for channel A and gain 128
+            hx.set_scale_ratio(ratio)  # set ratio for current channel
+            print('Ratio is set.')
+        else:
+            raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+
     except (KeyboardInterrupt, SystemExit):
-        clean_and_exit()
-
-
-def calculate_weight():
-    global value
-    input('Put known weight on the scale and then press Enter')
-    reading = hx.get_data_mean()
-    if reading:
-        print('Mean value from HX711 subtracted by offset:', reading)
-        known_weight_grams = input(
-            'Write how many grams it was and press Enter: ')
-        try:
-            value = float(known_weight_grams)
-            print(value, 'grams')
-        except ValueError:
-            print('Expected integer or float and I have got:',
-                  known_weight_grams)
-        ratio = reading / value
-        hx.set_scale_ratio(ratio)
-        print('Ratio is set.')
-    else:
-        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+        print('Bye :)')
 
 
 def get_weight():
-    print(hx.get_weight_mean(30), "g")
     return hx.get_weight_mean(30)
+
+
+def init_weight():
+    calculate_weight()
+
 
 def display_weight():
     weight = int(get_weight())
@@ -167,34 +173,38 @@ def display_weight():
         write_LCD(str(weight) + " grams")
 
 
-display_weight()
-"""
+init_weight()
+
 while True:
-    try:
-        #  button_state_start == 0 and button_state_sensor == 0:
-        if button_start_released() and door_open():
-            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
-            write_LCD("Door is open")
+    display_weight()
 
-        # button_state_start == 0 and button_state_sensor == 1:
-        elif button_start_released() == True and door_closed() == True:
-            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
-            write_LCD("package is ready")
-            # sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
-            display_weight()
-
-        # button_state_start == 1 and button_state_sensor == 0:
-        elif button_start_pressed() == True and door_open() == True:
-            set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
-            write_LCD("Door is open")
-
-        # button_state_sensor == 1 and button_state_start == 1:
-        elif button_start_pressed() == True and door_closed() == True:
-            set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
-            write_LCD("Package is send")
-
-        else:
-            raise ValueError('Something went wrong')
-    except (KeyboardInterrupt, SystemExit):
-        clean_and_exit()
 """
+    while True:
+        try:
+            #  button_state_start == 0 and button_state_sensor == 0:
+            if button_start_released() and door_open():
+                set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+                write_LCD("Door is open")
+    
+            # button_state_start == 0 and button_state_sensor == 1:
+            elif button_start_released() == True and door_closed() == True:
+                set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.LOW)
+                write_LCD("package is ready")
+                # sleep(5)  # this is for testing purposes TODO: remove sleep if necessary
+                display_weight()
+    
+            # button_state_start == 1 and button_state_sensor == 0:
+            elif button_start_pressed() == True and door_open() == True:
+                set_led_state(GPIO.LOW, GPIO.HIGH, GPIO.LOW)
+                write_LCD("Door is open")
+    
+            # button_state_sensor == 1 and button_state_start == 1:
+            elif button_start_pressed() == True and door_closed() == True:
+                set_led_state(GPIO.HIGH, GPIO.LOW, GPIO.HIGH)
+                write_LCD("Package is send")
+    
+            else:
+                raise ValueError('Something went wrong')
+        except (KeyboardInterrupt, SystemExit):
+            clean_and_exit()
+    """
