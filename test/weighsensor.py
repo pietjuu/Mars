@@ -4,6 +4,8 @@
 # TODO: delete print and input statements
 # TODO: find out how calculation is done
 # TODO: (maybe make error rate of 1 or 2 grams)
+# TODO: offset cant be negative
+# TODO: getstatusDoor, getWeight
 
 # Libraries
 import RPi.GPIO as GPIO
@@ -119,10 +121,10 @@ def check_start_value_in_bits():
 
 def calculate_weight():
     global value
-    offset_without_weight = check_start_value_in_bits()  # bits zonder gewicht # TODO: check if this is necessary
-    offset = hx.get_raw_data_mean(30)  # bits als er gewicht op ligt
-    get_data_mean = offset - offset_without_weight
-    known_weight = 204
+    # offset_without_weight = check_start_value_in_bits()  # bits zonder gewicht # TODO: check if this is necessary
+    offset = hx.get_data_mean(30)  # bits als er gewicht op ligt
+    # get_data_mean = offset - offset_without_weight
+    known_weight = 0.1
     try:
         reading = offset
         if reading:
@@ -132,7 +134,7 @@ def calculate_weight():
             except ValueError:
                 print("Expected integer or float and I have got:", known_weight)
 
-            ratio = get_data_mean / value  # offsetOneKg // 1000
+            ratio = reading / value  # offsetOneKg // 1000
             hx.set_scale_ratio(ratio)
         else:
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
@@ -143,9 +145,10 @@ def calculate_weight():
 def get_weight():
     calculate_weight()
     weight = hx.get_weight_mean(30)
+    #print(weight)
     rounded_weight = round(weight)
     string_weight = str(rounded_weight)
-    print(string_weight, "grams")
+    # print(string_weight, "grams")
     return rounded_weight
 
 
@@ -158,9 +161,7 @@ def display_weight():
         write_LCD(str(weight) + " grams")
 
 
-print("test")
 display_weight()
-print("test na functie")
 """
 while True:
     try:
