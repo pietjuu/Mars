@@ -91,8 +91,7 @@ public class TransporterController {
 
     private Size getSize(JsonObject jsonObject){
         JsonObject object = jsonObject.getJsonObject("size");
-
-        return new Size(object.getDouble("depth"), object.getDouble("length"), object.getDouble("size"));
+        return new Size(object.getDouble("depth"), object.getDouble("length"), object.getDouble("width"));
     }
 
 }
