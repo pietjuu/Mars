@@ -119,38 +119,44 @@ def check_start_value_in_bits():
         clean_and_exit()
 
 
-def calculate_weight():
-    global value
-    # offset_without_weight = check_start_value_in_bits()  # bits zonder gewicht # TODO: check if this is necessary
-    offset = hx.get_data_mean(30)  # bits als er gewicht op ligt
-    # get_data_mean = offset - offset_without_weight
-    known_weight = 0.1
+# TODO change this with the library from Gandalf
+def get_data_minus_offset():
     try:
-        reading = offset
-        if reading:
-            # knownWeightGrams = known_weight
-            try:
-                value = float(known_weight)
-            except ValueError:
-                print("Expected integer or float and I have got:", known_weight)
-
-            ratio = reading / value  # offsetOneKg // 1000
-            hx.set_scale_ratio(ratio)
+        reading = hx.get_raw_data_mean()
+        if reading:  # always check if you get correct value or only False
+            # now the value is close to 0
+            print('Data subtracted by offset but still not converted to units:',
+                  reading)
         else:
-            raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
+            ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
     except (KeyboardInterrupt, SystemExit):
         clean_and_exit()
 
 
-def get_weight():
-    calculate_weight()
-    weight = hx.get_weight_mean(30)
-    #print(weight)
-    rounded_weight = round(weight)
-    string_weight = str(rounded_weight)
-    # print(string_weight, "grams")
-    return rounded_weight
+def calculate_weight():
+    global value
+    input('Put known weight on the scale and then press Enter')
+    reading = hx.get_data_mean()
+    if reading:
+        print('Mean value from HX711 subtracted by offset:', reading)
+        known_weight_grams = input(
+            'Write how many grams it was and press Enter: ')
+        try:
+            value = float(known_weight_grams)
+            print(value, 'grams')
+        except ValueError:
+            print('Expected integer or float and I have got:',
+                  known_weight_grams)
+        ratio = reading / value
+        hx.set_scale_ratio(ratio)
+        print('Ratio is set.')
+    else:
+        raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
 
+
+def get_weight():
+    print(hx.get_weight_mean(30), "g")
+    return hx.get_weight_mean(30)
 
 def display_weight():
     weight = int(get_weight())
