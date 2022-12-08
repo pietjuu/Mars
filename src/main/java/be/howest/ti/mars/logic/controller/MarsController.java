@@ -139,4 +139,6 @@ public interface MarsController {
     Map<String, String> initConnection(String transporterID);
 
     void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName);
+
+    void deleteLink(String linkID);
 }

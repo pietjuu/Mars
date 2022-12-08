@@ -263,4 +263,11 @@ public class DefaultMarsController implements MarsController {
 
         link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName);
     }
+
+    @Override
+    public void deleteLink(String linkID) {
+        Link link = repository.getLink(linkID);
+
+        repository.deleteLink(link);
+    }
 }
