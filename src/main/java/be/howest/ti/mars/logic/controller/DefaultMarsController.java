@@ -12,6 +12,7 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
+import io.vertx.core.net.impl.transport.Transport;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -251,5 +252,15 @@ public class DefaultMarsController implements MarsController {
         result.put("price", String.valueOf(this.calculatePrice(transporterID)));
 
         return result;
+    }
+
+    @Override
+    public void setLink(String linkID, String senderUser, String senderTransporterID, String receiverTransporterID, String itemName) {
+        Link link = repository.getLink(linkID);
+        User sendUser = repository.getUser(senderUser);
+        Transporter sendTransporter = repository.getTransporter(senderTransporterID);
+        Transporter receiverTransporter = repository.getTransporter(receiverTransporterID);
+
+        link.connectLink(sendUser, sendTransporter, receiverTransporter, itemName);
     }
 }

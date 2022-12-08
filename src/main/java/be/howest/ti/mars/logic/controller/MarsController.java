@@ -137,4 +137,6 @@ public interface MarsController {
     double calculatePrice(String transporterID);
 
     Map<String, String> initConnection(String transporterID);
+
+    void setLink(String linkID, String senderUser, String senderTransporterID, String receiverTransporterID, String itemName);
 }
