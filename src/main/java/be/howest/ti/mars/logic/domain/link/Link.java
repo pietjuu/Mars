@@ -1,21 +1,26 @@
 package be.howest.ti.mars.logic.domain.link;
 
+import be.howest.ti.mars.logic.controller.TransporterController;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
+import be.howest.ti.mars.logic.domain.users.User;
 
 import java.util.UUID;
 
 public class Link {
 
     private final String id;
+    private User senderUser;
     private Transporter sender;
     private Transporter receiver;
     private LinkStatus linkStatus;
+    private final TransporterController transporterController = new TransporterController();
     private Item item;
 
     public Link(Transporter sender) {
         this.id = UUID.randomUUID().toString();
         this.sender = sender;
+        this.linkStatus = LinkStatus.INITIALIZED;
     }
 
     public Link(String uuid, Transporter sender, Transporter receiver, LinkStatus linkStatus, Item item){
@@ -24,6 +29,18 @@ public class Link {
         this.receiver = receiver;
         this.linkStatus = linkStatus;
         this.item = item;
+    }
+
+    public void connectLink(User senderUser, Transporter sender,  Transporter receiver, String itemName){
+        this.senderUser = senderUser;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.item = new Item(itemName);
+
+        // Get scan from transporter
+        this.item.setMolecules(transporterController.getTransporterScan(sender));
+
+        this.linkStatus = LinkStatus.LINKED;
     }
 
     public Transporter getSender() {
