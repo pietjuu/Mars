@@ -7,6 +7,7 @@ import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -135,5 +136,5 @@ public interface MarsController {
 
     double calculatePrice(String transporterID);
 
-    double initConnection(String transporterID);
+    Map<String, String> initConnection(String transporterID);
 }

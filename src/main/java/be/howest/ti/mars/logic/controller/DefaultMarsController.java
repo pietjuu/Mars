@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -240,8 +241,15 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public double initConnection(String transporterID) {
+    public Map<String, String> initConnection(String transporterID) {
+        Link link = new Link(this.getTransporter(transporterID));
 
-        return this.calculatePrice(transporterID);
+        repository.addLink(link);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("linkID", link.getId());
+        result.put("price", String.valueOf(this.calculatePrice(transporterID)));
+
+        return result;
     }
 }
