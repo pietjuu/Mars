@@ -270,4 +270,11 @@ public class DefaultMarsController implements MarsController {
 
         repository.deleteLink(link);
     }
+
+    @Override
+    public void sendPackage(String linkID) {
+        Link link = repository.getLink(linkID);
+
+        link.sendLink();
+    }
 }

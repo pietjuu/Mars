@@ -4,6 +4,7 @@ import be.howest.ti.mars.logic.controller.TransporterController;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
+import be.howest.ti.mars.logic.exceptions.TransporterException;
 
 import java.util.UUID;
 
@@ -45,28 +46,17 @@ public class Link {
         this.linkStatus = LinkStatus.LINKED;
     }
 
-    public Transporter getSender() {
-        return sender;
-    }
-
-    public void setSender(Transporter sender) {
-        this.sender = sender;
-    }
-
-    public Transporter getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Transporter receiver) {
-        this.receiver = receiver;
-    }
-
-    public LinkStatus getLinkStatus() {
-        return linkStatus;
-    }
-
-    public void setLinkStatus(LinkStatus linkStatus) {
-        this.linkStatus = linkStatus;
+    public void sendLink(){
+        if (itemsSet()){
+            if (transporterController.getTransporterStatus(this.receiver)){
+                transporterController.sendItemInTransporter(this.sender);
+                this.linkStatus = LinkStatus.SENT;
+            } else {
+                throw new TransporterException("Destination unavailable!");
+            }
+        } else {
+            throw new TransporterException("Destination unavailable!");
+        }
     }
 
     public String getId(){
@@ -79,5 +69,9 @@ public class Link {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    private boolean itemsSet(){
+        return this.senderUser != null || this.receiverUser != null || this.sender != null || this.receiver != null || this.linkStatus != LinkStatus.INITIALIZED || item != null;
     }
 }
