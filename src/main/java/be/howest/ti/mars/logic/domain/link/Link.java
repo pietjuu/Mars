@@ -50,6 +50,10 @@ public class Link {
         this.linkStatus = linkStatus;
     }
 
+    public String getId(){
+        return this.id;
+    }
+
     public Item getItem() {
         return item;
     }
