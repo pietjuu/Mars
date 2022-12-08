@@ -98,7 +98,10 @@ public class MarsOpenApiBridge {
         routerBuilder.operation("setLink").handler(this::setLink);
 
         LOGGER.log(Level.INFO, "Installing handler for deleteLink");
-        routerBuilder.operation("setLink").handler(this::deleteLink);
+        routerBuilder.operation("deleteLink").handler(this::deleteLink);
+
+        LOGGER.log(Level.INFO, "Installing handler for createSend");
+        routerBuilder.operation("createSend").handler(this::createSend);
 
         LOGGER.log(Level.INFO, "All handlers are installed, creating router.");
         return routerBuilder.createRouter();
@@ -261,6 +264,13 @@ public class MarsOpenApiBridge {
 
         controller.deleteLink(linkID);
         Response.sendEmptyResponse(routingContext, 202);
+    }
+
+    private void createSend(RoutingContext routingContext){
+        String linkID = Request.from(routingContext).getLinkIDFromPath();
+
+        controller.sendPackage(linkID);
+        Response.sendEmptyResponse(routingContext, 200);
     }
 
     private void onFailedRequest(RoutingContext ctx) {
