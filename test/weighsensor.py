@@ -23,7 +23,6 @@ rows = 2
 charmap = 'A00'
 i2c_expander = 'PCF8574'
 
-
 # Generally 27 is the address. Find yours using: i2cdetect -y 1
 address = 0x3f
 # 0 on an older Raspberry Pi (older than RPI 4)
@@ -32,7 +31,7 @@ port = 1
 # Initialise the LCD
 lcd = i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
 
-#Switch off backlight
+# Switch off backlight
 lcd.backlight_enabled = True
 
 # Set pins to button
@@ -53,8 +52,6 @@ GPIO.setup(button_start, GPIO.IN)
 GPIO.setup(led_door_closed, GPIO.OUT)
 GPIO.setup(led_door_open, GPIO.OUT)
 GPIO.setup(led_package_send, GPIO.OUT)
-
-
 
 
 def door_open():
@@ -122,19 +119,20 @@ def check_start_value_in_bits():
 
 def calculate_weight():
     global value
-    offset_zero_kg = check_start_value_in_bits()  # TODO: check if this is necessary
-    offset_one_kg = 0  # check in weegschaal hoeveel bits het is
-    one_kg = 1000
+    offset_without_weight = check_start_value_in_bits()  # bits zonder gewicht # TODO: check if this is necessary
+    offset = hx.get_raw_data_mean(30)  # bits als er gewicht op ligt
+    get_data_mean = offset - offset_without_weight
+    known_weight = 204
     try:
-        reading = offset_one_kg
+        reading = offset
         if reading:
-            knownWeightGrams = one_kg
+            # knownWeightGrams = known_weight
             try:
-                value = float(knownWeightGrams)
+                value = float(known_weight)
             except ValueError:
-                print("Expected integer or float and I have got:", knownWeightGrams)
+                print("Expected integer or float and I have got:", known_weight)
 
-            ratio = reading / value  # offsetOneKg // 1000
+            ratio = get_data_mean / value  # offsetOneKg // 1000
             hx.set_scale_ratio(ratio)
         else:
             raise ValueError('Cannot calculate mean value. Try debug mode. Variable reading:', reading)
@@ -143,6 +141,7 @@ def calculate_weight():
 
 
 def get_weight():
+    calculate_weight()
     weight = hx.get_weight_mean(30)
     rounded_weight = round(weight)
     string_weight = str(rounded_weight)
@@ -159,6 +158,10 @@ def display_weight():
         write_LCD(str(weight) + " grams")
 
 
+print("test")
+display_weight()
+print("test na functie")
+"""
 while True:
     try:
         #  button_state_start == 0 and button_state_sensor == 0:
@@ -187,3 +190,4 @@ while True:
             raise ValueError('Something went wrong')
     except (KeyboardInterrupt, SystemExit):
         clean_and_exit()
+"""
