@@ -235,7 +235,7 @@ public class MarsOpenApiBridge {
     private void initConnection(RoutingContext routingContext){
         String id = Request.from(routingContext).getTransporterID();
 
-        Response.sendJsonResponse(routingContext, 200, controller.getTransporter(id));
+        Response.sendJsonResponse(routingContext, 200, controller.initConnection(id));
     }
 
     private void onFailedRequest(RoutingContext ctx) {
