@@ -76,6 +76,7 @@ public class Item {
 
     public void setMolecules(MoleculesSummary molecules) {
         this.molecules = molecules;
+        setSize(molecules.getSize());
     }
 
     public void setSize(Size size){
