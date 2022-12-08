@@ -189,4 +189,55 @@ public class Request {
             throw new MalformedRequestException(ERROR_BODY);
         }
     }
+
+    public String getReceiver(){
+        try {
+            if (params.body().isJsonObject()){
+                return params.body().getJsonObject().getString("receiver");
+            }
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'receiver' in the body of PUT Send", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getDestination(){
+        try {
+            if (params.body().isJsonObject()){
+                return params.body().getJsonObject().getString("destination");
+            }
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'destination' in the body of PUT Send", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getItemName(){
+        try {
+            if (params.body().isJsonObject()){
+                return params.body().getJsonObject().getString(ITEM_NAME);
+            }
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'itemName' in the body of PUT Send", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getLinkIDFromPath(){
+        try {
+            if (!params.pathParameter("linkId").isNull())
+                return params.pathParameter("linkId").toString();
+            return params.body().get().toString();
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.INFO, "Unable to decipher 'linkId' in the path of PUT Send", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
+    public String getUserIDFromAuth(){
+        return userToken.getId();
+    }
 }
