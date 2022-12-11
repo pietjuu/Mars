@@ -32,7 +32,6 @@ export default {
 
 .active {
   color: #A612DA;
-  font-weight: bold;
 }
 
 </style>

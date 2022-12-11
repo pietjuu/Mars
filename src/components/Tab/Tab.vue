@@ -17,7 +17,8 @@ export default {
 <style scoped lang="scss">
 
 p {
-  font-size: var(--large-text-size);
+  font-size: var(--medium-text-size);
+  text-transform: uppercase;
 }
 
 </style>
