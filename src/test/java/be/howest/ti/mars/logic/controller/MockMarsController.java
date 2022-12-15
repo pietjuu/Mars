@@ -119,4 +119,28 @@ public class MockMarsController implements MarsController {
     public double calculatePrice(String transporterID) {
         return 1;
     }
+
+    @Override
+    public Map<String, String> initConnection(String transporterID) {
+        Map<String, String> result = new HashMap<>();
+        result.put("linkID", "IDK-1");
+        result.put("price", "151");
+
+        return result;
+    }
+
+    @Override
+    public void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName) {
+
+    }
+
+    @Override
+    public void deleteLink(String linkID) {
+
+    }
+
+    @Override
+    public void sendPackage(String linkID) {
+
+    }
 }
