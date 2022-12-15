@@ -131,7 +131,6 @@ public class Item {
                 "size: " + size + " \n" +
                 "status: " + status + " \n" +
                 "SendTime: " + sendTime + " \n" +
-                "ReceivedTime: " + receivedTime + " \n" +
-                "Atoms: " + molecules;
+                "ReceivedTime: " + receivedTime + " \n";
     }
 }

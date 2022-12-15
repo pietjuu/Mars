@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.domain.molecule;
 
+import be.howest.ti.mars.logic.utils.MockInformation;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,10 +20,11 @@ class MoleculesSummaryTest {
         summary.put("H20", 900);
         summary.put("O2", 500);
 
-        MoleculesSummary moleculesSummary = new MoleculesSummary(summary, molecules);
+        MoleculesSummary moleculesSummary = new MoleculesSummary(summary, molecules, MockInformation.getSize());
 
         assertEquals(2, moleculesSummary.getSummary().size());
         assertEquals(0, moleculesSummary.getMolecules().size());
+        assertEquals(1f, moleculesSummary.getSize().getHeight());
 
     }
 
@@ -34,7 +36,7 @@ class MoleculesSummaryTest {
         summary.put("H20", 900);
         summary.put("O2", 500);
 
-        MoleculesSummary moleculesSummary = new MoleculesSummary(summary, molecules);
+        MoleculesSummary moleculesSummary = new MoleculesSummary(summary, molecules, MockInformation.getSize());
 
         assertEquals(1.9571325783276617E-5, moleculesSummary.getCost());
     }
