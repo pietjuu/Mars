@@ -1,7 +1,7 @@
 <template>
-  <div class="blacklist-tab">
-    <p>{{ text }}</p>
-  </div>
+  <button class="box">
+    {{ text }}
+  </button>
 </template>
 
 <script>
@@ -16,9 +16,11 @@ export default {
 
 <style scoped lang="scss">
 
-p {
-  font-size: var(--medium-text-size);
-  text-transform: uppercase;
+button {
+  background-color: transparent;
+  font-size: var(--small-text-size);
+  height: fit-content;
+  color: var(--color-primary-soft);
 }
 
 </style>
