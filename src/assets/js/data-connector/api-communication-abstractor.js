@@ -1,4 +1,5 @@
-import { API, TOKEN } from '@/main.js'
+import { API, TOKEN } from '@/main.js';
+import store from '@/store/index.js';
 
 function get(uri, successHandler = logJson, failureHandler = logError) {
     const options = constructOptions('get');
@@ -56,6 +57,7 @@ function call(request, successHandler, errorHandler) {
     return fetch(request)
         .then(response => {
             if (!response.ok) {
+                store.dispatch('createNotification', {content: response.statusText, type: `error`});
                 throw response;
             }
             return response.json();
