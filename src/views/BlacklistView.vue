@@ -5,12 +5,12 @@
     <div class="tab-content" v-if="currentTab === `My Blacklist`">
       <div class="add-blacklist-item box flex-space-between-row flex-gap flex-center-vertical">
         <input type="text" id="new-blacklist-item" name="new-blacklist-item" required autocomplete="off" placeholder="Add new blacklist item"/>
-        <IconButton :icon="`add_circle`" :color="`var(--color-primary-soft)`"/>
+        <IconButton :icon="`add_circle`" :color="`var(--color-primary-soft)`" @click="createItem"/>
       </div>
       <div class="blacklist-items" v-if="this.userBlacklist !== undefined">
-        <div v-for="item in this.userBlacklist.items" :id="item" class="box flex-space-between-row flex-center-vertical">
+        <div v-for="item in this.userBlacklist.items" :data-item="item" :id="item + `-item`" class="blacklist-item box flex-space-between-row flex-center-vertical">
           <p>{{ item }}</p>
-          <IconButton :icon="`delete`" :color="`var(--color-primary-soft)`"/>
+          <IconButton :icon="`delete`" :color="`var(--color-primary-soft)`" @click="deleteItem"/>
         </div>
       </div>
     </div>
@@ -47,10 +47,19 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['fetchAllBlacklists']),
-    setCurrentTab(tab) {
-      if(!tab.target.closest('button')) { return; }
-      this.currentTab = tab.target.dataset.tab;
+    ...mapActions(['fetchAllBlacklists', 'deleteUserBlacklistItem', 'createUserBlacklistItem']),
+    setCurrentTab(event) {
+      if(!event.target.closest('button')) { return; }
+      this.currentTab = event.target.dataset.tab;
+    },
+    deleteItem(event) {
+      this.deleteUserBlacklistItem(event.target.closest('.blacklist-item').dataset.item);
+    },
+    createItem(event) {
+      const input = event.target.closest('.add-blacklist-item').querySelector('#new-blacklist-item');
+      const newItem = input.value;
+      this.createUserBlacklistItem(newItem);
+      input.value = "";
     }
   },
   computed: {
