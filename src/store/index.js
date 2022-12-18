@@ -6,6 +6,7 @@ import notification from "@/store/modules/notification";
 import sendItem from "@/store/modules/send-item";
 import transporters from "@/store/modules/transporters";
 import map from "@/store/modules/map";
+import blacklist from "@/store/modules/blacklist";
 
 
 const store = createStore({
@@ -14,7 +15,8 @@ const store = createStore({
         notification,
         sendItem,
         transporters,
-        map
+        map,
+        blacklist
     }
 });
 

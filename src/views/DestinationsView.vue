@@ -1,10 +1,10 @@
 <template>
   <HeaderContent :title="`Destinations`"/>
-  <main>
+  <main class="main-content">
     <div class="map-box box">
       <DestinationMap/>
     </div>
-    <div class="map-information flex-space-between-col">
+    <div class="map-information flex-gap flex-space-between-col">
       <div class="legend box">
         <h2>Legend</h2>
         <ul>
@@ -89,9 +89,6 @@ export default {
     DestinationMap,
     Icon
   },
-  methods: {
-    ...mapActions(["fetchTransporters"])
-  },
   computed: {
     ...mapGetters(["clickedLocation"])
   }
@@ -101,10 +98,6 @@ export default {
 <style scoped lang="scss">
 
 main {
-  /* 5rem is height from content header */
-  height: calc(100% - 5.1rem); /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
-  min-height: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
-  min-width: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -116,7 +109,6 @@ main {
 
 .map-information {
   flex: 1 1 25%;
-  gap: 1rem;
 
   h2 {
     text-transform: uppercase;

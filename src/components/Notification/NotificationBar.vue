@@ -1,6 +1,6 @@
 <template>
  <div class="notification" :class="notificationType">
-   <div class="notification-content flex-center-row">
+   <div class="notification-content flex-center-row flex-gap">
      <Icon :icon="icon()" :color="`var(--color-white)`"/>
      <p>{{ notificationContent }}</p>
    </div>
