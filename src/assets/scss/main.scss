@@ -137,6 +137,11 @@ input {
   align-items: center;
 }
 
+.flex-align-top {
+  display: flex;
+  align-items: start;
+}
+
 .flex-space-between-row {
   display: flex;
   flex-direction: row;
