@@ -1,6 +1,6 @@
 <template>
   <div class="tab-nav flex-gap">
-      <Tab v-for="tab in tabs" :id="tab" :text="tab" @click="currentTab = tab" :class="{active: currentTab === tab}"/>
+      <Tab v-for="tab in tabs" :data-tab="tab.name" :id="tab.name" :text="tab.name" @click="currentTab = tab" :class="{active: currentTab.index === tab.index}"/>
   </div>
 </template>
 
@@ -31,7 +31,8 @@ export default {
 }
 
 .active {
-  color: #A612DA;
+  color: var(--color-text-button);
+  background: var(--color-secondary-soft);
 }
 
 </style>
