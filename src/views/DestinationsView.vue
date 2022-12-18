@@ -89,9 +89,6 @@ export default {
     DestinationMap,
     Icon
   },
-  methods: {
-    ...mapActions(["fetchTransporters"])
-  },
   computed: {
     ...mapGetters(["clickedLocation"])
   }
