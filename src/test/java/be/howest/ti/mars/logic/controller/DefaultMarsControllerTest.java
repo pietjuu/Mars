@@ -370,7 +370,7 @@ class DefaultMarsControllerTest {
         Item item = new Item("Peer", MockInformation.getMoleculesSummary());
 
         String id = controller.initConnection("TT-1").get("linkID");
-        controller.getLink("TT-1").setItem(item);
+        controller.getLink(id).setItem(item);
 
         assertEquals("Peer", controller.getLink(id).getItem().getName());
     }
@@ -398,12 +398,11 @@ class DefaultMarsControllerTest {
     void testSendPackage(){
         MarsController controller = new DefaultMarsController();
 
-        Item item = new Item("Peer", MockInformation.getMoleculesSummary());
 
-        String id = controller.initConnection("TT-1").get("linkID");
-        controller.getLink("TT-1").setItem(item);
+        String id = controller.initConnection("TT-5").get("linkID");
+        controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
-        controller.sendPackage("TT-1", id);
+        controller.sendPackage("TT-5", id);
         assertEquals(LinkStatus.SENT, controller.getLink(id).getLinkStatus());
     }
 }
