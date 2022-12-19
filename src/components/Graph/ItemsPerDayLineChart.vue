@@ -10,7 +10,7 @@ import { ItemsProcessor } from "@/assets/js/data-processor/items-processor";
 ChartJS.register(Title, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale);
 
 export default {
-  name: "SentItemsGraph",
+  name: "ItemsPerDayLineChart",
   components: {
     Line
   },
