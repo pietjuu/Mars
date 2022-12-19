@@ -45,7 +45,7 @@ public class Link {
         // Get scan from transporter
         this.item.setMolecules(transporterController.getTransporterScan(sender));
 
-        if (!this.receiver.itemFits(this.item)){
+        if (!this.receiver.itemFits(this.item) && !this.sender.itemFits(this.item)){
             throw new TransporterException("Item doesn't fit in transporter!!");
         }
 
@@ -89,6 +89,6 @@ public class Link {
     }
 
     private boolean itemsSet(){
-        return Stream.of( this.senderUser, this.receiverUser, this.sender, this.receiver, this.linkStatus, this.item).allMatch(Objects::isNull);
+        return !Stream.of( this.senderUser, this.receiverUser, this.sender, this.receiver, this.linkStatus, this.item).allMatch(Objects::isNull);
     }
 }
