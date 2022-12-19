@@ -2,9 +2,9 @@
   <HeaderContent :title="`Dashboard`"/>
   <main class="main-content">
     <TextTile v-if="this.user.limit !== undefined" :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max}`"/>
-    <TextTile v-if="this.user.totalSent !== undefined" :title="`Total number of sent items`" :icon="`unarchive`" :text="this.user.totalSent"/>
-    <TextTile v-if="this.user.totalReceived !== undefined" :title="`Total number of received items`" :icon="`archive`" :text="this.user.totalReceived"/>
-    <TextTile v-if="this.user.totalSent !== undefined && this.user.totalReceived !== undefined" :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="this.user.totalSent +  this.user.totalReceived"/>
+    <TextTile v-if="this.user.totalSent !== undefined" :title="`Total number of sent items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
+    <TextTile v-if="this.user.totalReceived !== undefined" :title="`Total number of received items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
+    <TextTile v-if="this.user.totalSent !== undefined && this.user.totalReceived !== undefined" :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
 
     <ShortcutTile :title="`Send Item`" :icon="`send`" @click="navToSendItem"/>
     <ShortcutTile :title="`Calculate Price`" :icon="`payments`" @click="navToCalculatePrice"/>
