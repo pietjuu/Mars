@@ -6,7 +6,9 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
 
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class Link {
 
@@ -84,6 +86,6 @@ public class Link {
     }
 
     private boolean itemsSet(){
-        return this.senderUser != null || this.receiverUser != null || this.sender != null || this.receiver != null || this.linkStatus != LinkStatus.INITIALIZED || item != null;
+        return Stream.of( this.senderUser, this.receiverUser, this.sender, this.receiver, this.linkStatus, this.item).allMatch(Objects::isNull);
     }
 }
