@@ -119,6 +119,24 @@ input {
   min-width: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
 }
 
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  > header h2 {
+    flex: 1 1 10%;
+    font-size: var(--medium-text-size);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+  }
+
+  > main {
+    flex: 1 1 90%;
+  }
+}
+
 .flex-gap {
   display: flex;
   gap: 1rem;
@@ -135,6 +153,11 @@ input {
 .flex-center-vertical {
   display: flex;
   align-items: center;
+}
+
+.flex-align-top {
+  display: flex;
+  align-items: start;
 }
 
 .flex-space-between-row {
