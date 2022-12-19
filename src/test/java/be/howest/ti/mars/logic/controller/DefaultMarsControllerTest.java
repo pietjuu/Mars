@@ -383,4 +383,13 @@ class DefaultMarsControllerTest {
 
         assertThrows(NoSuchElementException.class, () -> controller.getLink(id));
     }
+
+    @Test
+    void testWrongTransporterIdDeleteLink(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.initConnection("TT-1").get("linkID");
+
+        assertThrows(NoSuchElementException.class, () -> controller.deleteLink("TT-5", id));
+    }
 }
