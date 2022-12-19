@@ -351,5 +351,12 @@ class DefaultMarsControllerTest {
         assertNotNull(result.get("linkID"));
     }
 
+    @Test
+    void testGetLink(){
+        MarsController controller = new DefaultMarsController();
 
+        String id = controller.initConnection("TT-1").get("linkID");
+
+        assertEquals("TT-1", controller.getLink(id).getSender().getId());
+    }
 }
