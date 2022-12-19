@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -339,4 +340,16 @@ class DefaultMarsControllerTest {
 
         assertTrue(0 < controller.calculatePrice("TT-1"));
     }
+
+    @Test
+    void testInitConnection(){
+        MarsController controller = new DefaultMarsController();
+
+        Map<String, String> result = controller.initConnection("TT-1");
+
+        assertNotNull(result.get("price"));
+        assertNotNull(result.get("linkID"));
+    }
+
+
 }
