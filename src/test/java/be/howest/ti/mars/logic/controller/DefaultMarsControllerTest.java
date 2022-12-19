@@ -405,4 +405,15 @@ class DefaultMarsControllerTest {
         controller.sendPackage("TT-5", id);
         assertEquals(LinkStatus.SENT, controller.getLink(id).getLinkStatus());
     }
+
+    @Test
+    void testWrongTransporterIdSendPackage(){
+        MarsController controller = new DefaultMarsController();
+
+
+        String id = controller.initConnection("TT-5").get("linkID");
+        controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
+
+        assertThrows(NoSuchElementException.class, () -> controller.sendPackage("TT-0", id));
+    }
 }
