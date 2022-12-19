@@ -150,4 +150,9 @@ public class MockMarsController implements MarsController {
     public void sendPackage(String transporterID, String linkID) {
 
     }
+
+    @Override
+    public List<Link> getLinksSent(String userID) {
+        return null;
+    }
 }
