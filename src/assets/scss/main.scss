@@ -142,6 +142,12 @@ input {
   gap: 1rem;
 }
 
+.flex-gap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .flex-center-row {
   @include mixins.flex(row, center, center);
 }
