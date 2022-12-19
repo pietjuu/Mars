@@ -135,5 +135,12 @@
       },
       "ipAddress": "192.168.9.1"
     }
-  ]
+  ],
+  "blacklist": {
+    "items": [
+      "gun",
+      "drug",
+      "human"
+    ]
+  }
 }
