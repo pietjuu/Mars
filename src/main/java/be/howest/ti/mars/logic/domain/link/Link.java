@@ -79,6 +79,10 @@ public class Link {
         return sender;
     }
 
+    public LinkStatus getLinkStatus() {
+        return linkStatus;
+    }
+
     private boolean itemsSet(){
         return this.senderUser != null || this.receiverUser != null || this.sender != null || this.receiver != null || this.linkStatus != LinkStatus.INITIALIZED || item != null;
     }
