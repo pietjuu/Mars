@@ -53,6 +53,9 @@ public class Link {
     }
 
     public void sendLink(){
+        if (this.sender.equals(this.receiver)){
+            throw new TransporterException("Receiver and sender can't be the same!");
+        }
         if (itemsSet()){
             if (transporterController.getTransporterStatus(this.receiver)){
                 transporterController.sendItemInTransporter(this.sender);
