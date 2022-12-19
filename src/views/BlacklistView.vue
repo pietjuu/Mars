@@ -3,7 +3,7 @@
   <main class="main-content">
     <TabBar :tabs="tabs" @click="setCurrentTab"/>
     <div class="tab-content" v-if="currentTab === `My Blacklist`">
-      <div class="add-blacklist-item box flex-space-between-row flex-gap flex-center-vertical">
+      <div class="add-blacklist-item box flex-space-between-row flex-gap-row flex-center-vertical">
         <input type="text" id="new-blacklist-item" name="new-blacklist-item" required autocomplete="off" placeholder="Add new blacklist item"/>
         <IconButton :icon="`add_circle`" :color="`var(--color-primary-soft)`" @click="createItem"/>
       </div>

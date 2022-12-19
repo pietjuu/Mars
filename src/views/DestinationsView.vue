@@ -4,7 +4,7 @@
     <div class="map-box box">
       <DestinationMap/>
     </div>
-    <div class="map-information flex-gap flex-space-between-col">
+    <div class="map-information flex-gap-row flex-space-between-col">
       <div class="legend box">
         <h2>Legend</h2>
         <ul>

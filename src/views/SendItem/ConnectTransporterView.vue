@@ -3,7 +3,7 @@
 
     <InfoBox :text="infoText"/>
 
-    <div class="form-and-message-wrapper flex-gap flex-space-between-row">
+    <div class="form-and-message-wrapper flex-gap-row flex-space-between-row">
 
       <div class="info-message box flex-center-col">
         <img src="@/assets/media/transporter.png" alt="">

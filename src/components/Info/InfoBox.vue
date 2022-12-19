@@ -1,5 +1,5 @@
 <template>
-  <div class="info-box box flex-center-vertical flex-gap">
+  <div class="info-box box flex-center-vertical flex-gap-row">
     <div class="info-icon flex-center-row">
       <Icon :icon="`info`"/>
     </div>
