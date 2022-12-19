@@ -43,6 +43,10 @@ public class Link {
         // Get scan from transporter
         this.item.setMolecules(transporterController.getTransporterScan(sender));
 
+        if (!this.receiver.itemFits(this.item)){
+            throw new TransporterException("Item doesn't fit in transporter!!");
+        }
+
         this.linkStatus = LinkStatus.LINKED;
     }
 
