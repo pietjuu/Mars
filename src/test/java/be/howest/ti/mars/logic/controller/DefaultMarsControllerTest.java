@@ -1,8 +1,10 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
+import be.howest.ti.mars.logic.utils.MockInformation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -358,5 +360,17 @@ class DefaultMarsControllerTest {
         String id = controller.initConnection("TT-1").get("linkID");
 
         assertEquals("TT-1", controller.getLink(id).getSender().getId());
+    }
+
+    @Test
+    void testSetLink(){
+        MarsController controller = new DefaultMarsController();
+
+        Item item = new Item("Peer", MockInformation.getMoleculesSummary());
+
+        String id = controller.initConnection("TT-1").get("linkID");
+        controller.getLink("TT-1").setItem(item);
+
+        assertEquals("Peer", controller.getLink(id).getItem().getName());
     }
 }
