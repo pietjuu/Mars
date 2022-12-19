@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
@@ -136,11 +137,13 @@ public interface MarsController {
 
     double calculatePrice(String transporterID);
 
+    Link getLink(String linkID);
+
     Map<String, String> initConnection(String transporterID);
 
     void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName);
 
-    void deleteLink(String linkID);
+    void deleteLink(String transporterID, String linkID);
 
-    void sendPackage(String linkID);
+    void sendPackage(String transporterID, String linkID);
 }

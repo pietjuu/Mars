@@ -241,6 +241,17 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
+    public Link getLink(String linkID){
+        Link link = repository.getLink(linkID);
+
+        if (link == null){
+            throw new NoSuchElementException("LinkID doesn't exists!");
+        }
+
+        return link;
+    }
+
+    @Override
     public Map<String, String> initConnection(String transporterID) {
         Link link = new Link(this.getTransporter(transporterID));
 
@@ -255,25 +266,35 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName) {
-        Link link = repository.getLink(linkID);
-        User sendUser = repository.getUser(senderUser);
-        User receiverUser = repository.getUser(receiverUserID);
-        Transporter sendTransporter = repository.getTransporter(senderTransporterID);
-        Transporter receiverTransporter = repository.getTransporter(receiverTransporterID);
+        Link link = this.getLink(linkID);
+        User sendUser = this.getUser(senderUser);
+        User receiverUser = this.getUser(receiverUserID);
+        Transporter sendTransporter = this.getTransporter(senderTransporterID);
+        Transporter receiverTransporter = this.getTransporter(receiverTransporterID);
 
         link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName);
     }
 
     @Override
-    public void deleteLink(String linkID) {
-        Link link = repository.getLink(linkID);
+    public void deleteLink(String transporterID, String linkID) {
+        Link link = this.getLink(linkID);
+        Transporter transporter =  this.getTransporter(transporterID);
+
+        if (!link.getSender().equals(transporter)){
+            throw new NoSuchElementException("Can't find a link on that transporter!");
+        }
 
         repository.deleteLink(link);
     }
 
     @Override
-    public void sendPackage(String linkID) {
-        Link link = repository.getLink(linkID);
+    public void sendPackage(String transporterID, String linkID) {
+        Link link = this.getLink(linkID);
+        Transporter transporter = this.getTransporter(transporterID);
+
+        if (!link.getSender().equals(transporter)){
+            throw new NoSuchElementException("Can't find a link on that transporter!");
+        }
 
         link.sendLink();
     }

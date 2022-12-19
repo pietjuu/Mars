@@ -71,6 +71,10 @@ public class Link {
         this.item = item;
     }
 
+    public Transporter getSender() {
+        return sender;
+    }
+
     private boolean itemsSet(){
         return this.senderUser != null || this.receiverUser != null || this.sender != null || this.receiver != null || this.linkStatus != LinkStatus.INITIALIZED || item != null;
     }
