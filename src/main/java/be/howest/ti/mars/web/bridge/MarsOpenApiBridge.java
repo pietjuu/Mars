@@ -261,15 +261,17 @@ public class MarsOpenApiBridge {
 
     private void deleteLink(RoutingContext routingContext){
         String linkID = Request.from(routingContext).getLinkIDFromPath();
+        String transporterID = Request.from(routingContext).getTransporterID();
 
-        controller.deleteLink(linkID);
+        controller.deleteLink(transporterID, linkID);
         Response.sendEmptyResponse(routingContext, 202);
     }
 
     private void createSend(RoutingContext routingContext){
         String linkID = Request.from(routingContext).getLinkIDFromPath();
+        String transporterID = Request.from(routingContext).getTransporterID();
 
-        controller.sendPackage(linkID);
+        controller.sendPackage(transporterID, linkID);
         Response.sendEmptyResponse(routingContext, 200);
     }
 
