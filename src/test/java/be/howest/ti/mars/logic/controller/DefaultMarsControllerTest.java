@@ -1,6 +1,7 @@
 package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -391,5 +392,18 @@ class DefaultMarsControllerTest {
         String id = controller.initConnection("TT-1").get("linkID");
 
         assertThrows(NoSuchElementException.class, () -> controller.deleteLink("TT-5", id));
+    }
+
+    @Test
+    void testSendPackage(){
+        MarsController controller = new DefaultMarsController();
+
+        Item item = new Item("Peer", MockInformation.getMoleculesSummary());
+
+        String id = controller.initConnection("TT-1").get("linkID");
+        controller.getLink("TT-1").setItem(item);
+
+        controller.sendPackage("TT-1", id);
+        assertEquals(LinkStatus.SENT, controller.getLink(id).getLinkStatus());
     }
 }
