@@ -122,9 +122,10 @@ input {
 .tile {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 
   > header h2 {
-    flex: 1 1 20%;
+    flex: 1 1 10%;
     font-size: var(--medium-text-size);
     color: var(--color-text);
     margin: 0;
@@ -132,7 +133,7 @@ input {
   }
 
   > main {
-    flex: 1 1 80%;
+    flex: 1 1 90%;
   }
 }
 
