@@ -15,7 +15,8 @@
         <Icon :icon="`notifications`"/>
       </header>
       <main>
-
+        <NotificationItem :notification="this.user.notifications.at(-1)"/>
+        <NotificationItem :notification="this.user.notifications.at(-2)"/>
       </main>
     </article>
   </main>
@@ -28,10 +29,11 @@ import {mapGetters} from "vuex";
 import router from "@/router";
 import TextTile from "@/components/Tile/TextTile.vue";
 import ShortcutTile from "@/components/Tile/ShortcutTile.vue";
+import NotificationItem from "@/components/Notification/NotificationItem.vue";
 
 export default {
   name: "DashboardView",
-  components: {ShortcutTile, TextTile, Icon, HeaderContent},
+  components: {NotificationItem, ShortcutTile, TextTile, Icon, HeaderContent},
   computed: {
     ...mapGetters(['user'])
   },
@@ -62,6 +64,14 @@ export default {
 
 .recent-notifications {
   grid-area: notif;
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: scroll;
+  }
+
 }
 
 </style>
