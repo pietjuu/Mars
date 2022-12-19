@@ -373,4 +373,14 @@ class DefaultMarsControllerTest {
 
         assertEquals("Peer", controller.getLink(id).getItem().getName());
     }
+
+    @Test
+    void testDeleteLink(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.initConnection("TT-1").get("linkID");
+        controller.deleteLink("TT-1", id);
+
+        assertThrows(NoSuchElementException.class, () -> controller.getLink(id));
+    }
 }
