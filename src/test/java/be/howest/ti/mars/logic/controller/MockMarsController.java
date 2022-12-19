@@ -3,6 +3,8 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -121,6 +123,11 @@ public class MockMarsController implements MarsController {
     }
 
     @Override
+    public Link getLink(String linkID) {
+        return new Link(linkID, null, null, LinkStatus.ERROR, null);
+    }
+
+    @Override
     public Map<String, String> initConnection(String transporterID) {
         Map<String, String> result = new HashMap<>();
         result.put("linkID", "IDK-1");
@@ -135,12 +142,12 @@ public class MockMarsController implements MarsController {
     }
 
     @Override
-    public void deleteLink(String linkID) {
+    public void deleteLink(String transporterID, String linkID) {
 
     }
 
     @Override
-    public void sendPackage(String linkID) {
+    public void sendPackage(String transporterID, String linkID) {
 
     }
 }
