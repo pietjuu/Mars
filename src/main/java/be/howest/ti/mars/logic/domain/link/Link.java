@@ -35,7 +35,7 @@ public class Link {
         this.item = item;
     }
 
-    public void connectLink(User senderUser, Transporter sender,  User receiverUser, Transporter receiver, String itemName){
+    public void connectLink(User senderUser, Transporter sender,  User receiverUser, Transporter receiver, String itemName, int linksSent){
         this.senderUser = senderUser;
         this.receiverUser = receiverUser;
         this.sender = sender;
@@ -44,6 +44,10 @@ public class Link {
 
         // Get scan from transporter
         this.item.setMolecules(transporterController.getTransporterScan(sender));
+
+        if (linksSent >= senderUser.getPricePlan().getMaxItems()){
+            throw new TransporterException("Sender max items / day is reached! Please upgrade...");
+        }
 
         if (!this.receiver.itemFits(this.item) && !this.sender.itemFits(this.item)){
             throw new TransporterException("Item doesn't fit in transporter!!");
@@ -86,6 +90,10 @@ public class Link {
 
     public LinkStatus getLinkStatus() {
         return linkStatus;
+    }
+
+    public User getSenderUser() {
+        return senderUser;
     }
 
     private boolean itemsSet(){

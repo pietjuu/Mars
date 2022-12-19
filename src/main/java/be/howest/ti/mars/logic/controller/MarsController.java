@@ -146,4 +146,6 @@ public interface MarsController {
     void deleteLink(String transporterID, String linkID);
 
     void sendPackage(String transporterID, String linkID);
+
+    List<Link> getLinksSent(String userID);
 }

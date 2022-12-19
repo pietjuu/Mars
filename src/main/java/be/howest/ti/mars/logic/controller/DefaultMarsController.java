@@ -4,6 +4,7 @@ import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -272,7 +273,7 @@ public class DefaultMarsController implements MarsController {
         Transporter sendTransporter = this.getTransporter(senderTransporterID);
         Transporter receiverTransporter = this.getTransporter(receiverTransporterID);
 
-        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName);
+        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSent(senderUser).size());
     }
 
     @Override
@@ -297,5 +298,21 @@ public class DefaultMarsController implements MarsController {
         }
 
         link.sendLink();
+    }
+
+    @Override
+    public List<Link> getLinksSent(String userID) {
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+                result.add(link);
+            }
+        }
+
+        return result;
     }
 }
