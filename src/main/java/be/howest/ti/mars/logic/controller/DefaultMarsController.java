@@ -308,7 +308,7 @@ public class DefaultMarsController implements MarsController {
         Set<Link> links = repository.getAllLinks();
 
         for(Link link : links){
-            if (link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
                 result.add(link);
             }
         }

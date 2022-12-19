@@ -45,7 +45,7 @@ public class Link {
         // Get scan from transporter
         this.item.setMolecules(transporterController.getTransporterScan(sender));
 
-        if (linksSent >= senderUser.getPricePlan().getMaxItems()){
+        if (linksSent >= senderUser.getPricePlan().getMaxItems() && senderUser.getPricePlan().getMaxItems() != -1){
             throw new TransporterException("Sender max items / day is reached! Please upgrade...");
         }
 
