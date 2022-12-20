@@ -48,8 +48,8 @@ public class InMemoryRepository implements MarsRepositories{
         buildings.put("TB-1", new Building("TB-1", TypeOfLocation.RESIDENCE, new Coordinates(50.095983f, 5.357552f)));
         buildings.put("TB-2", new Building("TB-2", TypeOfLocation.PICKUP, new Coordinates(50.175351f, 5.985122f)));
         buildings.put("TB-3", new Building("TB-3", TypeOfLocation.PICKUP, new Coordinates(51.365621f, 3.341908f)));
-        links.put("TL-1", new Link("TL-1", this.getUser("TT-1"), this.getUser("TT-2") ,transporters.get("TT-1"), transporters.get("TT-2"), LinkStatus.SENT, new Item("Apple")));
-        links.put("TL-2", new Link("TL-2", this.getUser("TT-3"), this.getUser("TT-4") ,transporters.get("TT-3"), transporters.get("TT-1"), LinkStatus.SENT, new Item("Beer")));
+        links.put("TL-1", new Link("TL-1", this.getUser("T-1"), this.getUser("T-2") ,transporters.get("TT-1"), transporters.get("TT-2"), LinkStatus.SENT, new Item("Apple")));
+        links.put("TL-2", new Link("TL-2", this.getUser("T-3"), this.getUser("T-4") ,transporters.get("TT-3"), transporters.get("TT-1"), LinkStatus.SENT, new Item("Beer")));
     }
 
     @Override
