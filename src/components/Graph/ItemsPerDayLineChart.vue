@@ -1,5 +1,5 @@
 <template>
-  <Line id="sent-items-chart" :options="chartOptions" :data="chartData"/>
+  <Line id="items-per-day-line-chart" :options="chartOptions" :data="chartData"/>
 </template>
 
 <script>
@@ -60,7 +60,7 @@ export default {
         }
       },
       chartData: {
-        labels: this.getAllDays(),
+        labels: this.getLabels(),
         datasets: [
           {
             data: this.getSentItemsPerDay(),
@@ -83,7 +83,7 @@ export default {
     };
   },
   methods: {
-    getAllDays() {
+    getLabels() {
       return new ItemsProcessor(this.items).getAllDays();
     },
     getSentItemsPerDay() {
