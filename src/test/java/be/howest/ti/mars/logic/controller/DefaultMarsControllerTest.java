@@ -414,7 +414,7 @@ class DefaultMarsControllerTest {
         String id = controller.initConnection("TT-5").get("linkID");
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
-        assertThrows(NoSuchElementException.class, () -> controller.sendPackage("TT-0", id));
+        assertThrows(NoSuchElementException.class, () -> controller.sendPackage("TT-3", id));
     }
 
     @Test
@@ -426,6 +426,6 @@ class DefaultMarsControllerTest {
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
         controller.sendPackage("TT-5", id);
-        assertEquals(1, controller.getLinksSent("T-1").size());
+        assertEquals(2, controller.getLinksSent("T-1").size());
     }
 }
