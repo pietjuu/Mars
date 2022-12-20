@@ -15,7 +15,7 @@ class ItemsProcessor {
 
 
     constructor(items) {
-        this.items = this.convertTimeToIsoStandard(items);
+        this.items = this.convertDates(items);
 
         // eslint-disable-next-line no-restricted-syntax
         Array.prototype.rreduce = function rreduce(fct, initial) {
@@ -101,7 +101,7 @@ class ItemsProcessor {
         return total;
     }
 
-    convertTimeToIsoStandard(items){
+    convertDates(items){
         return items.map( item => {
             const container = {...item};
 
@@ -138,7 +138,7 @@ class ItemsProcessor {
         const date = new Date(startDate.getTime());
         const dates = [];
         while (date <= endDate) {
-            dates.push(new Date(date));
+            dates.push(new Date(date).toISOString());
             date.setDate(date.getDate() + 1);
         }
         return dates;
@@ -151,22 +151,14 @@ class ItemsProcessor {
         return this.getDatesInRange(this.getStartDate(allDates), this.getEndDate(allDates));
     }
 
-    convertFilteredDataToChartReadableData(labels, filtered) {
-        return labels.map(label => {
-            if(filtered[label] !== undefined) {
-                return { x:label, y:filtered[label] };
+    completeDataWithAllLabels(dateLabels, data) {
+        const result = {...data};
+        dateLabels.forEach(label => {
+            if(data[label] === undefined) {
+                result[label] = 0;
             }
-            return { x:label, y:0 };
         });
-    }
-
-    convertFilteredDataToChartReadableDataWithDates(dateLabels, filtered) {
-        return dateLabels.map(label => {
-            if(filtered[label.toISOString()] !== undefined) {
-                return { x:label, y:filtered[label.toISOString()] };
-            }
-            return { x:label, y:0 };
-        });
+        return result;
     }
 
     getSentItemsPerDay() {
@@ -175,7 +167,7 @@ class ItemsProcessor {
         };
 
         const sentItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
-        return this.convertFilteredDataToChartReadableDataWithDates(this.getAllDays(), sentItemsPerDay);
+        return this.completeDataWithAllLabels(this.getAllDays(), sentItemsPerDay);
     }
 
     getReceivedItemsPerDay() {
@@ -184,7 +176,12 @@ class ItemsProcessor {
         };
 
         const receivedItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateReceived, this.countItems);
-        return this.convertFilteredDataToChartReadableDataWithDates(this.getAllDays(), receivedItemsPerDay);
+        return this.completeDataWithAllLabels(this.getAllDays(), receivedItemsPerDay);
+    }
+
+    getMostUsedDestinations() {
+        const usagesPerDestination = this.items.splitBy(this.COLUMN_NAMES.destination, this.countItems);
+        return usagesPerDestination;
     }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <Line id="items-per-day-line-chart" :options="chartOptions" :data="chartData"/>
+  <Line :id="chartId" :options="chartOptions" :data="chartData"/>
 </template>
 
 <script>
@@ -20,7 +20,9 @@ export default {
   },
   data() {
     return {
+      chartId: "items-per-day-line-chart",
       chartOptions: {
+        responsive: true,
         plugins: {
           title: {
             display: true,
@@ -63,7 +65,7 @@ export default {
         labels: this.getLabels(),
         datasets: [
           {
-            data: this.getSentItemsPerDay(),
+            data: Object.values(this.getSentItemsPerDay()),
             label: "Sent Items", // label of dataset aka line
             backgroundColor: '#335eea',
             borderColor: '#335eea',
@@ -71,7 +73,7 @@ export default {
             tension: 0.1,
           },
           {
-            data: this.getReceivedItemsPerDay(),
+            data: Object.values(this.getReceivedItemsPerDay()),
             label: "Received Items", // label of dataset aka line
             backgroundColor: "#170040",
             borderColor: "#170040",
