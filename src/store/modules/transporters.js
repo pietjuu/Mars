@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
     async fetchTransporters({ commit }) {
-        await get(`transporters`).then(transporters => commit('setTransporters', transporters));
+        await get(`transporters`, transporters => commit('setTransporters', transporters));
     }
 };
 
