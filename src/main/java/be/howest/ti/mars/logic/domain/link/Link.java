@@ -27,10 +27,12 @@ public class Link {
         this.linkStatus = LinkStatus.INITIALIZED;
     }
 
-    public Link(String uuid, Transporter sender, Transporter receiver, LinkStatus linkStatus, Item item){
+    public Link(String uuid, User senderUser, User receiverUser, Transporter sender, Transporter receiver, LinkStatus linkStatus, Item item){
         this.id = uuid;
         this.sender = sender;
         this.receiver = receiver;
+        this.senderUser = senderUser;
+        this.receiverUser = receiverUser;
         this.linkStatus = linkStatus;
         this.item = item;
     }
