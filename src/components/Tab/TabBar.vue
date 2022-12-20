@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-nav flex-gap">
+  <div class="tab-nav flex-gap-row">
       <Tab v-for="tab in tabs" :data-tab="tab.name" :id="tab.name" :text="tab.name" @click="currentTab = tab" :class="{active: currentTab.index === tab.index}"/>
   </div>
 </template>

@@ -137,8 +137,14 @@ input {
   }
 }
 
-.flex-gap {
+.flex-gap-row {
   display: flex;
+  gap: 1rem;
+}
+
+.flex-gap-col {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 

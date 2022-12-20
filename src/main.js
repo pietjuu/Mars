@@ -12,7 +12,8 @@ const API = `${CONFIG.host ? CONFIG.host + '/': ''}${CONFIG.group ? CONFIG.group
 import { saveToStorage, loadFromStorage } from "@/assets/js/data-connector/local-storage-abstractor";
 saveToStorage('userId', "T-1");
 
-const TOKEN = loadFromStorage('userId');
+const USER_ID = loadFromStorage('userId');
+const TOKEN = USER_ID;
 
 
 // Create and setup app
@@ -21,4 +22,4 @@ app.use(router);
 app.use(store);
 app.mount("#app");
 
-export { API, TOKEN };
+export { API, TOKEN, USER_ID };

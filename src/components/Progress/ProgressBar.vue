@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-bar flex-space-between-row flex-gap">
+  <div class="progress-bar flex-space-between-row flex-gap-row">
     <ProgressItem v-for="step in steps" :id="step.number" :text="step.text" :inProgress="step.inProgress"/>
   </div>
 </template>
