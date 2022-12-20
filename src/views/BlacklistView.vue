@@ -47,7 +47,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['fetchAllBlacklists', 'deleteUserBlacklistItem', 'createUserBlacklistItem']),
+    ...mapActions(['fetchUserBlacklist', 'fetchShippertBlacklist', 'deleteUserBlacklistItem', 'createUserBlacklistItem']),
     setCurrentTab(event) {
       if(!event.target.closest('button')) { return; }
       this.currentTab = event.target.dataset.tab;
@@ -66,7 +66,8 @@ export default {
     ...mapGetters(['userBlacklist', 'shippertBlacklist'])
   },
   async created() {
-    await this.fetchAllBlacklists();
+    await this.fetchUserBlacklist();
+    await this.fetchShippertBlacklist();
   }
 };
 

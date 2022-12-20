@@ -1,4 +1,4 @@
-import { TOKEN } from "@/main";
+import { USER_ID } from "@/main";
 import { get } from "@/assets/js/data-connector/api-communication-abstractor";
 
 function requestStarted(commit) {
@@ -24,7 +24,7 @@ function requestFailed(commit, error) {
 }
 
 const state = {
-    user: { },
+    user: undefined,
     request: {
         error: false,
         message: ""
@@ -38,10 +38,8 @@ const getters = {
 
 const actions = {
     async fetchUser({ commit }) {
-
         requestStarted(commit);
-
-        await get(`users/${TOKEN}`,(user) => requestSuccess(commit, user),(error) => requestFailed(commit, error));
+        await get(`users/${USER_ID}`,(user) => requestSuccess(commit, user),(error) => requestFailed(commit, error));
     }
 };
 
