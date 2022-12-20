@@ -1,12 +1,5 @@
 import { get } from "@/assets/js/data-connector/api-communication-abstractor";
 
-function requestFailed(commit, error) {
-    commit('setTransportersRequest', {
-        error: true,
-        message: error.statusText
-    });
-}
-
 const state = {
     transporters: []
 };
