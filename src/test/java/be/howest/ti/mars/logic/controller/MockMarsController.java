@@ -124,7 +124,7 @@ public class MockMarsController implements MarsController {
 
     @Override
     public Link getLink(String linkID) {
-        return new Link(linkID, null, null, LinkStatus.ERROR, null);
+        return new Link(linkID, null, null, null, null, LinkStatus.ERROR, null);
     }
 
     @Override
