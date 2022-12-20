@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     getMostUsedDestinations() {
-      console.log(new ItemsProcessor(this.items).getMostUsedDestinations());
       return new ItemsProcessor(this.items).getMostUsedDestinations();
     }
   }
