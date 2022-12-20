@@ -13,22 +13,14 @@ const getters = {
 
 const actions = {
     async fetchUserBlacklist({ commit }) {
-        await get(`users/${TOKEN}/blacklist`,(blacklist) => {
-            commit('setUserBlacklist', blacklist);
-        });
+        await get(`users/${TOKEN}/blacklist`,(blacklist) => commit('setUserBlacklist', blacklist));
     },
     async fetchShippertBlacklist({ commit }) {
-        await get(`blacklist`,(blacklist) => {
-            commit('setShippertBlacklist', blacklist);
-        });
+        await get(`blacklist`,(blacklist) => commit('setShippertBlacklist', blacklist));
     },
     async fetchAllBlacklists({ commit }) {
-        await get(`users/${TOKEN}/blacklist`,(blacklist) => {
-            commit('setUserBlacklist', blacklist);
-        });
-        await get(`blacklist`,(blacklist) => {
-            commit('setShippertBlacklist', blacklist);
-        });
+        await get(`users/${TOKEN}/blacklist`,(blacklist) => commit('setUserBlacklist', blacklist));
+        await get(`blacklist`,(blacklist) => commit('setShippertBlacklist', blacklist));
     },
     async createUserBlacklistItem({ commit }, item) {
         post(`users/${TOKEN}/blacklist`, { itemName: item }).then(commit('createItemInUserBlacklist', item));
