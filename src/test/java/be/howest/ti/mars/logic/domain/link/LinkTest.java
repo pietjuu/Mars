@@ -8,6 +8,7 @@ import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
+import be.howest.ti.mars.logic.exceptions.TransporterException;
 import be.howest.ti.mars.logic.utils.MockInformation;
 import org.jcodings.exception.TranscoderException;
 import org.junit.jupiter.api.Test;
@@ -89,5 +90,90 @@ class LinkTest {
         Link link = new Link(sender);
         assertThrows(TranscoderException.class, () -> link.connectLink(senderUser, sender, receiverUser, receiver, "Apple", 1));
 
+    }
+
+    @Test
+    void sendLink(){
+        InMemoryRepository inMemoryRepository = new InMemoryRepository();
+        User senderUser = inMemoryRepository.getUser("T-1");
+        User receiverUser = inMemoryRepository.getUser("T-2");
+
+        Transporter sender = inMemoryRepository.getTransporter("TT-4");
+        Transporter receiver = inMemoryRepository.getTransporter("TT-5");
+
+        Link link = new Link(sender);
+        link.connectLink(senderUser, sender, receiverUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
+
+        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
+
+        link.sendLink();
+    }
+
+    @Test
+    void sendLinkErrorSame(){
+        InMemoryRepository inMemoryRepository = new InMemoryRepository();
+        User senderUser = inMemoryRepository.getUser("T-1");
+
+        Transporter sender = inMemoryRepository.getTransporter("TT-4");
+        Transporter receiver = inMemoryRepository.getTransporter("TT-5");
+
+        Link link = new Link(sender);
+        link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
+
+        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
+
+        assertThrows(TransporterException.class, link::sendLink);
+    }
+
+    @Test
+    void sendLinkErrorDestinationUnavailable(){
+        InMemoryRepository inMemoryRepository = new InMemoryRepository();
+        User senderUser = inMemoryRepository.getUser("T-1");
+
+        Transporter sender = inMemoryRepository.getTransporter("TT-4");
+        Transporter receiver = inMemoryRepository.getTransporter("TT-5");
+
+        Link link = new Link(sender);
+        link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
+
+        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
+
+        link.setItem(null);
+
+        assertThrows(TransporterException.class, link::sendLink);
+    }
+
+    @Test
+    void sendLinkErrorDestinationUnavailable2(){
+        InMemoryRepository inMemoryRepository = new InMemoryRepository();
+        User senderUser = inMemoryRepository.getUser("T-1");
+
+        Transporter sender = inMemoryRepository.getTransporter("TT-2");
+        Transporter receiver = inMemoryRepository.getTransporter("TT-5");
+
+        Link link = new Link(sender);
+        link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
+
+        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
+
+
+        assertThrows(TransporterException.class, link::sendLink);
+    }
+
+    @Test
+    void sendLinkErrorDestinationUnavailable3(){
+        InMemoryRepository inMemoryRepository = new InMemoryRepository();
+        User senderUser = inMemoryRepository.getUser("T-1");
+
+        Transporter sender = inMemoryRepository.getTransporter("TT-4");
+        Transporter receiver = inMemoryRepository.getTransporter("TT-2");
+
+        Link link = new Link(sender);
+        link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
+
+        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
+
+
+        assertThrows(TransporterException.class, link::sendLink);
     }
 }
