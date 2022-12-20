@@ -180,7 +180,27 @@ class ItemsProcessor {
     }
 
     getMostUsedDestinations() {
-        const usagesPerDestination = this.items.splitBy(this.COLUMN_NAMES.destination, this.countItems);
+        const matchParameters = {
+            action: ["sent"]
+        };
+
+        let usagesPerDestination = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.destination, this.countItems);
+
+        // if more than 5 destinations add "other"
+        if (Object.keys(usagesPerDestination).length > 5) {
+
+            const entries = Object.entries(usagesPerDestination);
+            const sortedEntries = entries.sort((a, b) => b[1] - a[1]);
+            const topFour = sortedEntries.slice(0, 4);
+
+            usagesPerDestination = {
+                other: sortedEntries.slice(4).reduce((acc, entry) => acc + entry[1], 0)
+            };
+
+            topFour.forEach(entry => {
+                usagesPerDestination[entry[0]] = entry[1];
+            });
+        }
         return usagesPerDestination;
     }
 }
