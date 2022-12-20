@@ -1,20 +1,5 @@
 import { get } from "@/assets/js/data-connector/api-communication-abstractor";
 
-function requestStarted(commit) {
-    commit('setTransportersRequest', {
-        error: false,
-        message: "Loading transporters..."
-    });
-}
-
-function requestSuccess(commit, transporters) {
-    commit('setTransporters', transporters);
-    commit('setTransportersRequest', {
-        error: false,
-        message: "Transporters received"
-    });
-}
-
 function requestFailed(commit, error) {
     commit('setTransportersRequest', {
         error: true,
@@ -23,28 +8,21 @@ function requestFailed(commit, error) {
 }
 
 const state = {
-    transporters: [],
-    request: {
-        error: false,
-        message: ""
-    }
+    transporters: []
 };
 
 const getters = {
-    transporters: (state) => state.transporters,
-    transportersRequest: (state) => state.request
+    transporters: (state) => state.transporters
 };
 
 const actions = {
     async fetchTransporters({ commit }) {
-        requestStarted(commit);
-        await get(`transporters`,(transporters) => requestSuccess(commit, transporters),(error) => requestFailed(commit, error));
+        await get(`transporters`).then(transporters => commit('setTransporters', transporters));
     }
 };
 
 const mutations = {
-    setTransporters: (state, transporters) => (state.transporters = transporters),
-    setTransportersRequest: (state, request) => (state.request = request)
+    setTransporters: (state, transporters) => (state.transporters = transporters)
 };
 
 export default {
