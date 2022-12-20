@@ -91,6 +91,11 @@ input {
   color: var(--color-text);
 }
 
+select {
+  color: var(--color-text);
+  height: min-content;
+}
+
 .hidden {
   display: none;
 }
