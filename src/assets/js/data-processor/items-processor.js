@@ -151,12 +151,21 @@ class ItemsProcessor {
         return this.getDatesInRange(this.getStartDate(allDates), this.getEndDate(allDates));
     }
 
-    convertDaysToChartReadableData(days) {
-        return this.getAllDays().map(day => {
-            if(days[day.toISOString()] !== undefined) {
-                return { x:day, y:days[day.toISOString()] };
+    convertFilteredDataToChartReadableData(labels, filtered) {
+        return labels.map(label => {
+            if(filtered[label] !== undefined) {
+                return { x:label, y:filtered[label] };
             }
-            return { x:day, y:0 };
+            return { x:label, y:0 };
+        });
+    }
+
+    convertFilteredDataToChartReadableDataWithDates(dateLabels, filtered) {
+        return dateLabels.map(label => {
+            if(filtered[label.toISOString()] !== undefined) {
+                return { x:label, y:filtered[label.toISOString()] };
+            }
+            return { x:label, y:0 };
         });
     }
 
@@ -166,7 +175,7 @@ class ItemsProcessor {
         };
 
         const sentItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
-        return this.convertDaysToChartReadableData(sentItemsPerDay);
+        return this.convertFilteredDataToChartReadableDataWithDates(this.getAllDays(), sentItemsPerDay);
     }
 
     getReceivedItemsPerDay() {
@@ -175,7 +184,7 @@ class ItemsProcessor {
         };
 
         const receivedItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateReceived, this.countItems);
-        return this.convertDaysToChartReadableData(receivedItemsPerDay);
+        return this.convertFilteredDataToChartReadableDataWithDates(this.getAllDays(), receivedItemsPerDay);
     }
 }
 
