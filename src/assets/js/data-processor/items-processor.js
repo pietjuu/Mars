@@ -6,9 +6,7 @@ class ItemsProcessor {
         name: "name",
         action: "action",
         dateSent: "dateSent",
-        timeSent: "timeSent",
         dateReceived: "dateReceived",
-        timeReceived: "timeReceived",
         receiver: "receiver",
         origin: "origin",
         sender: "sender",
@@ -17,7 +15,7 @@ class ItemsProcessor {
 
 
     constructor(items) {
-        this.items = this.getItemsDateTimeSeperated(items);
+        this.items = this.convertTimeToIsoStandard(items);
 
         // eslint-disable-next-line no-restricted-syntax
         Array.prototype.rreduce = function rreduce(fct, initial) {
@@ -103,25 +101,63 @@ class ItemsProcessor {
         return total;
     }
 
-    getItemsDateTimeSeperated(items){
+    convertTimeToIsoStandard(items){
         return items.map( item => {
             const container = {...item};
-            const dateTimeSent = item.timeSent.split(" ");
-            const dateTimeReceived = item.timeReceived.split(" ");
 
-            container.dateSent = dateTimeSent[0];
-            container.timeSent = dateTimeSent[1];
-            container.dateReceived = dateTimeReceived[0];
-            container.timeReceived = dateTimeReceived[1];
+            container.dateSent = new Date(item.timeSent.split(" ")[0]).toISOString();
+            container.dateReceived = new Date(item.timeReceived.split(" ")[0]).toISOString();
 
             return container;
         });
     }
 
+    getStartDate(dates) {
+        let startDate;
+        dates.forEach(elem => {
+            const date = new Date(elem);
+            if(startDate === undefined || date < startDate) {
+                startDate = date;
+            }
+        });
+        return startDate;
+    }
+
+    getEndDate(dates) {
+        let endDate;
+        dates.forEach(elem => {
+            const date = new Date(elem);
+            if(endDate === undefined || date > endDate) {
+                endDate = date;
+            }
+        });
+        return endDate;
+    }
+
+    getDatesInRange(startDate, endDate) {
+        const date = new Date(startDate.getTime());
+        const dates = [];
+        while (date <= endDate) {
+            dates.push(new Date(date));
+            date.setDate(date.getDate() + 1);
+        }
+        return dates;
+    }
+
     getAllDays() {
         const allSentDates = Array.from(new Set(this.items.map((item) => item.dateSent)));
         const allReceivedDates = Array.from(new Set(this.items.map((item) => item.dateReceived)));
-        return allSentDates.concat(allReceivedDates).unique(); // distinct merge both arrays
+        const allDates = allSentDates.concat(allReceivedDates).unique(); // distinct merge both arrays
+        return this.getDatesInRange(this.getStartDate(allDates), this.getEndDate(allDates));
+    }
+
+    convertDaysToChartReadableData(days) {
+        return this.getAllDays().map(day => {
+            if(days[day.toISOString()] !== undefined) {
+                return { x:day, y:days[day.toISOString()] };
+            }
+            return { x:day, y:0 };
+        });
     }
 
     getSentItemsPerDay() {
@@ -129,7 +165,8 @@ class ItemsProcessor {
             action: ["sent"]
         };
 
-        return this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
+        const sentItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
+        return this.convertDaysToChartReadableData(sentItemsPerDay);
     }
 
     getReceivedItemsPerDay() {
@@ -137,30 +174,8 @@ class ItemsProcessor {
             action: ["received"]
         };
 
-        return this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateReceived, this.countItems);
-    }
-
-    getAllItemsPerDay() {
-        const matchParameters = {
-            action: ["sent", "received"]
-        };
-
-        return this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
-    }
-
-    getSentItemsOvertime() {
-        const sentItemsPerDay = this.getSentItemsPerDay();
-        return this.cumulDays(sentItemsPerDay);
-    }
-
-    getReceivedItemsOvertime() {
-        const receivedItemsPerDay = this.getReceivedItemsPerDay();
-        return this.cumulDays(receivedItemsPerDay);
-    }
-
-    getAllItemsOvertime() {
-        const allItemsPerDay = this.getAllItemsPerDay();
-        return this.cumulDays(allItemsPerDay);
+        const receivedItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateReceived, this.countItems);
+        return this.convertDaysToChartReadableData(receivedItemsPerDay);
     }
 }
 

@@ -4,10 +4,11 @@
 
 <script>
 import { Line } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
+import { Chart as ChartJS, LineController, LineElement, PointElement, LinearScale, Title, TimeScale, Legend } from 'chart.js';
+import 'chartjs-adapter-moment';
 import { ItemsProcessor } from "@/assets/js/data-processor/items-processor";
 
-ChartJS.register(Title, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale);
+ChartJS.register(LineController, LineElement, PointElement, LinearScale, Title, TimeScale, Legend);
 
 export default {
   name: "ItemsPerDayLineChart",
@@ -34,29 +35,27 @@ export default {
           },
           legend: {
             display: true,
+            position: "top",
+            align: "start",
             labels: {
               boxHeight: 1
             }
           }
         },
         scales: {
+          x: {
+            type: 'time',
+            display: true,
+            bounds: 'ticks',
+            time: {
+              unit: 'day'
+            }
+          },
           y: {
-            title: {
-              display: true,
-              align: "center",
-              text: "Amount of Items",
-            },
             ticks: {
               stepSize: 1
             },
             min: 0
-          },
-          x: {
-            title: {
-              display: true,
-              align: "center",
-              text: "Date"
-            }
           }
         }
       },
@@ -66,12 +65,18 @@ export default {
           {
             data: this.getSentItemsPerDay(),
             label: "Sent Items", // label of dataset aka line
-            backgroundColor: "#9C27B0"
+            backgroundColor: '#335eea',
+            borderColor: '#335eea',
+            fill: false,
+            tension: 0.1,
           },
           {
             data: this.getReceivedItemsPerDay(),
             label: "Received Items", // label of dataset aka line
-            backgroundColor: "#FFA500"
+            backgroundColor: "#170040",
+            borderColor: "#170040",
+            fill: false,
+            tension: 0.1
           }
         ]
       }
