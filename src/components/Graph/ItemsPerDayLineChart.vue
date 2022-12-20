@@ -26,7 +26,7 @@ export default {
         plugins: {
           title: {
             display: true,
-            text: "Sent/Received items Per Day",
+            text: "Items Per Day",
             position: "top",
             align: "start",
             color: "#76787a",
