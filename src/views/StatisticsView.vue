@@ -8,11 +8,11 @@
       <TextTile class="tile-item" :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
     </div>
     <div class="flex-gap-row charts">
-      <div class="box chart-1">
-        <ItemsPerDayLineChart :items="items"/>
+      <div class="box chart-1" v-if="this.userItems !== undefined">
+        <ItemsPerDayLineChart :items="this.userItems"/>
       </div>
-      <div class="box chart-2">
-        <DestinationsPieChart :items="items"/>
+      <div class="box chart-2" v-if="this.userItems !== undefined">
+        <DestinationsPieChart :items="this.userItems"/>
       </div>
     </div>
   </main>
@@ -20,7 +20,7 @@
 
 <script>
 import HeaderContent from "@/components/Header/HeaderContent.vue";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import TextTile from "@/components/Tile/TextTile.vue";
 import ItemsPerDayLineChart from "@/components/Graph/ItemsPerDayLineChart.vue";
 import DestinationsPieChart from "@/components/Graph/DestinationsPieChart.vue";
@@ -30,191 +30,10 @@ export default {
   name: "StatisticsView",
   components: {DestinationsPieChart, ItemsPerDayLineChart, TextTile, HeaderContent},
   computed: {
-    ...mapGetters(['user'])
-  },
-  data() {
-    return {
-      items: [
-        {
-          "id": "1211",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-3"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-2"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-1"
-        },
-        {
-          "id": "1211",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-1"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-25 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-2"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-27 09:47",
-          "timeReceived": "2053-12-29 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-2"
-        },
-        {
-          "id": "1211",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-3"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-5"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-4"
-        },
-        {
-          "id": "1211",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-5"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-25 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-5"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "received",
-          "timeSent": "2053-12-27 09:47",
-          "timeReceived": "2053-12-29 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-6"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-4"
-        },
-        {
-          "id": "1211",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-24 09:47",
-          "timeReceived": "2053-12-24 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-5"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-25 09:47",
-          "timeReceived": "2053-12-25 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-5"
-        },
-        {
-          "id": "1212",
-          "name": "Alarm Clock",
-          "action": "sent",
-          "timeSent": "2053-12-27 09:47",
-          "timeReceived": "2053-12-29 09:48",
-          "receiver": "133",
-          "origin": "232",
-          "sender": "34",
-          "destination": "TT-6"
-        }
-      ]
-    };
+    ...mapGetters(['user', 'userItems'])
   },
   methods: {
+    ...mapActions(['fetchUserItems']),
     resizeCharts() {
       for (const id in ChartJS.instances) {
         ChartJS.instances[id].resize();
@@ -223,6 +42,7 @@ export default {
     }
   },
   mounted() {
+    this.fetchUserItems();
     this.resizeCharts();
   },
   unmounted() {
