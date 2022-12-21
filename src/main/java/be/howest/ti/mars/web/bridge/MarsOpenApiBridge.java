@@ -272,7 +272,7 @@ public class MarsOpenApiBridge {
         String transporterID = Request.from(routingContext).getTransporterID();
 
         controller.sendPackage(transporterID, linkID);
-        Response.sendEmptyResponse(routingContext, 200);
+        Response.sendEmptyResponse(routingContext, 202);
     }
 
     private void onFailedRequest(RoutingContext ctx) {
