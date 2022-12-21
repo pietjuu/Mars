@@ -373,6 +373,6 @@ public class DefaultMarsController implements MarsController {
             }
         }
 
-        return null;
+        throw new NoSuchElementException("Can't find that item!");
     }
 }
