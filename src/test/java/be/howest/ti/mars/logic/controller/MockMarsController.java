@@ -8,6 +8,8 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.Notification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -187,5 +189,15 @@ public class MockMarsController implements MarsController {
         Link link = new Link("TL-1", user, user2 ,t, t2, LinkStatus.SENT, new Item("Apple"));
         link.setSendTime(LocalDateTime.now());
         return link;
+    }
+
+    @Override
+    public List<Notification> getNotifications(String userID) {
+        return List.of(new SystemNotification("test", LocalDateTime.of(2010, 11 , 12 , 10, 15),"niets", LocalDateTime.of(2010, 11 , 11 , 10, 15)));
+    }
+
+    @Override
+    public void reloadUserWebsocket(String userID) {
+
     }
 }
