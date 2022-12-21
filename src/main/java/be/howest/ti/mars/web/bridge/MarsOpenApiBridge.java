@@ -73,6 +73,9 @@ public class MarsOpenApiBridge {
         LOGGER.log(Level.INFO, "Installing handler for deleteItemFromUserBlacklist");
         routerBuilder.operation("deleteItemFromUserBlacklist").handler(this::deleteItemFromUserBlacklist);
 
+        LOGGER.log(Level.INFO, "Installing handler for getItems");
+        routerBuilder.operation("getItems").handler(this::getItems);
+
         LOGGER.log(Level.INFO, "Installing handler for getTransporters");
         routerBuilder.operation("getTransporters").handler(this::getTransporters);
 
@@ -181,6 +184,12 @@ public class MarsOpenApiBridge {
 
         controller.deleteItemToUserBlacklist(itemName, id);
         Response.sendEmptyResponse(routingContext, 202);
+    }
+
+    private void getItems(RoutingContext routingContext){
+        String uid = Request.from(routingContext).getUserID();
+
+        Response.sendItemsHistory(routingContext, controller.getItems(uid));
     }
 
     private void getTransporters(RoutingContext routingContext){
