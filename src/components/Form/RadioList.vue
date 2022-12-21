@@ -3,7 +3,7 @@
 
     <div v-for="item in items" class="flex-space-between-row flex-center-vertical radio-container">
       <label :for="valueToId(item.value)">{{ item.label }}</label>
-      <input type="radio" :id="valueToId(item.value)" :name="name" :value="item.value">
+      <input type="radio" :id="valueToId(item.value)" :name="name" :value="item.value" :data-label="item.label">
     </div>
 
   </div>
