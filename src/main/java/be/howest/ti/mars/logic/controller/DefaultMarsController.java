@@ -404,6 +404,16 @@ public class DefaultMarsController implements MarsController {
         MarsRtcBridge.loadEventBusUser(userID);
     }
 
+    @Override
+    public void addShipNotification(ShipNotification notification) {
+        repository.addShipNotification(notification);
+    }
+
+    @Override
+    public void addSystemNotification(SystemNotification notification) {
+        repository.addSystemNotification(notification);
+    }
+
     /**
      * Check if the users inside a link are empty
      * @param link {@link Link}
