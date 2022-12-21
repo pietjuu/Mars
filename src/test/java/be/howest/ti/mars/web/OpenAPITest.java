@@ -251,6 +251,16 @@ class OpenAPITest {
     }
 
     @Test
+    void deleteLink(final VertxTestContext testContext){
+        webClient.delete(PORT, HOST, "/api/transporters/testingTransporter/link/testLink").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(202, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
     void createUserErrors(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users").sendJsonObject(new JsonObject().put("a", 1))
                 .onFailure(testContext::failNow)
