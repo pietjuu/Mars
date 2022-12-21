@@ -32,3 +32,7 @@ export function removeClassFromElements(selector, clss){
         $element.classList.remove(clss);
     });
 }
+
+export function containsQuery(array, query) {
+    return array.indexOf(query) !== -1;
+}
