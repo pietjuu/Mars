@@ -16,10 +16,10 @@ const actions = {
         await get(`users/${USER_ID}/blacklist`,(blacklist) => commit('setUserBlacklist', blacklist));
     },
     async createUserBlacklistItem({ commit }, item) {
-        post(`users/${USER_ID}/blacklist`, {itemName: item}).then(commit('createItemInUserBlacklist', item));
+        post(`users/${USER_ID}/blacklist`, {itemName: item}, () => commit('createItemInUserBlacklist', item));
     },
     async deleteUserBlacklistItem({ commit }, item) {
-        remove(`users/${USER_ID}/blacklist/${item}`).then(commit('deleteItemFromUserBlacklist', item));
+        remove(`users/${USER_ID}/blacklist/${item}`, () => commit('deleteItemFromUserBlacklist', item));
     }
 };
 
