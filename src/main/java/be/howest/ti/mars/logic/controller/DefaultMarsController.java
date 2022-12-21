@@ -304,6 +304,10 @@ public class DefaultMarsController implements MarsController {
         }
 
         link.sendLink();
+        ShipNotification notification = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem());
+        repository.addShipNotification(notification);
+        this.reloadUserWebsocket(link.getSenderUser().getId());
+        this.reloadUserWebsocket(link.getReceiverUser().getId());
     }
 
     @Override
@@ -402,16 +406,6 @@ public class DefaultMarsController implements MarsController {
 
     public void reloadUserWebsocket(String userID){
         MarsRtcBridge.loadEventBusUser(userID);
-    }
-
-    @Override
-    public void addShipNotification(ShipNotification notification) {
-        repository.addShipNotification(notification);
-    }
-
-    @Override
-    public void addSystemNotification(SystemNotification notification) {
-        repository.addSystemNotification(notification);
     }
 
     /**
