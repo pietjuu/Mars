@@ -8,8 +8,8 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.Notification;
 import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
-import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -378,13 +378,17 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public List<ShipNotification> getShipNotifications() {
-        return null;
-    }
+    public List<Notification> getNotifications(String userID) {
 
-    @Override
-    public List<SystemNotification> getSystemNotifications() {
-        return null;
+        List<Notification> result = new ArrayList<>(repository.getSystemNotifications());
+
+        for (ShipNotification shipNotification : repository.getShipNotifications()){
+            if (shipNotification.getReceiver().getId().equals(userID)){
+                result.add(shipNotification);
+            }
+        }
+
+        return result;
     }
 
     /**
