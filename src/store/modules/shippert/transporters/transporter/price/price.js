@@ -18,7 +18,8 @@ const state = {
             inProgress: false,
             info: undefined
         }
-    ]
+    ],
+    transporter: undefined
 };
 
 const getters = {
@@ -27,8 +28,16 @@ const getters = {
 };
 
 const actions = {
-    async fetchTransporterCalculatePrice({ commit }, transporterId) {
-        await get(`transporters/${transporterId}/price`, calculatedPrice => commit('setCalculatedPrice', calculatedPrice));
+    async calculatePrice({ commit }, transporterId) {
+        commit('setCalculatedPrice', undefined);
+        await get(`transporters/${transporterId}/price`, calculatedPrice => {
+            commit('setCalculatedPrice', calculatedPrice);
+        });
+    },
+    continueToStep({ commit }, number) {
+        state.stepsToCalculatePrice.forEach(step => {
+           step.inProgress = step.number === number;
+        });
     }
 };
 
