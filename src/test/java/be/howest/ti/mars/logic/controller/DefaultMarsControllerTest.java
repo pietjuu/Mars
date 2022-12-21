@@ -441,4 +441,11 @@ class DefaultMarsControllerTest {
 
         assertTrue(controller.getLinksReceived("T-2") >= 1);
     }
+
+    @Test
+    void getItems(){
+        MarsController controller = new DefaultMarsController();
+
+        assertEquals("TL-1", controller.getItems("T-1").get(0).getId());
+    }
 }
