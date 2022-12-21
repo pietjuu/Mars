@@ -14,6 +14,8 @@ import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryRepositoryTest {
@@ -237,8 +239,7 @@ class InMemoryRepositoryTest {
         InMemoryRepository repository = new InMemoryRepository();
         int oldSize = repository.getShipNotifications().size();
 
-        repository.addShipNotification(new ShipNotification(null, null, null, null));
-
+        repository.addShipNotification(new ShipNotification("Alarm Clock from Thibo Verbeerst Sent to Glenn Callens", LocalDateTime.now().plusDays(1), "Status: DELIVERED \\nSent to Farm Dome 230 for Glenn Callens\\n Sent from Sleep Dome 8473 by Thibo Verbeerst", LocalDateTime.now(), repository.getUser("T-2")));
         assertEquals(oldSize+1, repository.getShipNotifications().size());
     }
 
