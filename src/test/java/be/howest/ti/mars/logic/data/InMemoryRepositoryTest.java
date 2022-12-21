@@ -6,6 +6,8 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -214,5 +216,39 @@ class InMemoryRepositoryTest {
         repo.deleteLink(link);
 
         assertEquals(oldSize, repo.getAllLinks().size());
+    }
+
+    @Test
+    void getShipNotifications(){
+        InMemoryRepository repository = new InMemoryRepository();
+
+        assertTrue(1 >= repository.getShipNotifications().size());
+    }
+
+    @Test
+    void getSystemNotifications(){
+        InMemoryRepository repository = new InMemoryRepository();
+
+        assertTrue(1 >= repository.getSystemNotifications().size());
+    }
+
+    @Test
+    void addShipNotification(){
+        InMemoryRepository repository = new InMemoryRepository();
+        int oldSize = repository.getShipNotifications().size();
+
+        repository.addShipNotification(new ShipNotification(null, null, null, null));
+
+        assertEquals(oldSize+1, repository.getShipNotifications().size());
+    }
+
+    @Test
+    void addSystemNotification(){
+        InMemoryRepository repository = new InMemoryRepository();
+        int oldSize = repository.getSystemNotifications().size();
+
+        repository.addSystemNotification(new SystemNotification(null, null, null, null));
+
+        assertEquals(oldSize+1, repository.getSystemNotifications().size());
     }
 }
