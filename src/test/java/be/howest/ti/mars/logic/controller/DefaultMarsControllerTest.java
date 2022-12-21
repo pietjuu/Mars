@@ -446,14 +446,21 @@ class DefaultMarsControllerTest {
     void getItems(){
         MarsController controller = new DefaultMarsController();
 
-        assertEquals("TL-1", controller.getItems("T-1").get(0).getId());
+        assertTrue(controller.getItems("T-1").size() >= 1);
     }
 
     @Test
     void getItem(){
         MarsController controller = new DefaultMarsController();
 
-        String id = controller.getItems("T-1").get(0).getId();
-        assertEquals("Apple", controller.getItem("T-1", id).getItem().getName());
+        String id = controller.getItems("T-1").get(0).getItem().getId();
+        assertNotNull(controller.getItem("T-1", id).getItem().getName());
+    }
+
+    @Test
+    void getNonExistingItem(){
+        MarsController controller = new DefaultMarsController();
+
+        assertThrows(NoSuchElementException.class, () -> controller.getItem("T-1", "nonExist"));
     }
 }
