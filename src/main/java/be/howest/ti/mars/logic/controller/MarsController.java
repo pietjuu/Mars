@@ -223,7 +223,4 @@ public interface MarsController {
     List<Notification> getNotifications(String userID);
 
     void reloadUserWebsocket(String userID);
-
-    void addShipNotification(ShipNotification notification);
-    void addSystemNotification(SystemNotification notification);
 }
