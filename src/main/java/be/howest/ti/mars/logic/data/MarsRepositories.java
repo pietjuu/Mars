@@ -6,9 +6,12 @@ import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface MarsRepositories {
@@ -159,4 +162,8 @@ public interface MarsRepositories {
      * @param link {@link Link}
      */
     void deleteLink(Link link);
+
+    List<ShipNotification> getShipNotifications();
+
+    List<SystemNotification> getSystemNotifications();
 }
