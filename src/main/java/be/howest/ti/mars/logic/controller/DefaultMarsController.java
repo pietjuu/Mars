@@ -274,7 +274,7 @@ public class DefaultMarsController implements MarsController {
         Transporter sendTransporter = this.getTransporter(senderTransporterID);
         Transporter receiverTransporter = this.getTransporter(receiverTransporterID);
 
-        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSent(senderUser).size());
+        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSentToday(senderUser).size());
     }
 
     @Override
@@ -302,7 +302,7 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public List<Link> getLinksSent(String userID) {
+    public List<Link> getLinksSentToday(String userID) {
         User user = this.getUser(userID);
 
         List<Link> result = new ArrayList<>();

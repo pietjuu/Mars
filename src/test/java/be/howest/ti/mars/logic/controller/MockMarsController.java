@@ -152,7 +152,7 @@ public class MockMarsController implements MarsController {
     }
 
     @Override
-    public List<Link> getLinksSent(String userID) {
+    public List<Link> getLinksSentToday(String userID) {
         return null;
     }
 }

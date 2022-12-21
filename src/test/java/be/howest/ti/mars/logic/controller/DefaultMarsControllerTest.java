@@ -420,11 +420,11 @@ class DefaultMarsControllerTest {
     @Test
     void testGetLinks(){
         MarsController controller = new DefaultMarsController();
-        int oldValue = controller.getLinksSent("T-1").size();
+        int oldValue = controller.getLinksSentToday("T-1").size();
         String id = controller.initConnection("TT-5").get("linkID");
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
         controller.sendPackage("TT-5", id);
-        assertEquals(oldValue+1, controller.getLinksSent("T-1").size());
+        assertEquals(oldValue+1, controller.getLinksSentToday("T-1").size());
     }
 }
