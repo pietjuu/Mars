@@ -4,9 +4,12 @@ import be.howest.ti.mars.logic.controller.DefaultMarsController;
 import be.howest.ti.mars.logic.controller.MarsController;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.eventbus.Message;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+
+import java.util.NoSuchElementException;
 
 /**
  * The RTC bridge is one of the class taught topics.
@@ -25,12 +28,28 @@ public class MarsRtcBridge {
     private static EventBus eb;
 
     private MarsRtcBridge(){
-        throw new IllegalStateException("MarsRTCBridge is static!");
+        // Private constructor
     }
 
     public static void loadEventBusUser(String id){
         eb.publish("events."+id, Response.getDetailedUserInJsonObject(controller.getUser(id), controller.getLinksSent(id), controller.getLinksReceived(id), controller.getLinksSentToday(id), controller.getNotifications(id)));
     }
+
+    public static void eventListenerUser(){
+        eb.consumer("events.login", MarsRtcBridge::handlerStartEventBusUser);
+    }
+
+    private static void handlerStartEventBusUser(Message<String> tMessage) {
+        try {
+            // Just contact the controller to be sure the id is correct.
+            controller.getUser(tMessage.body());
+            loadEventBusUser(tMessage.body());
+        } catch (NoSuchElementException e){
+            eb.publish("events.login", "Send the wrong ID!");
+        }
+
+    }
+
     private static void createSockJSHandler() {
         final PermittedOptions permittedOptions = new PermittedOptions().setAddressRegex("events\\..+");
         final SockJSBridgeOptions options = new SockJSBridgeOptions()
@@ -43,6 +62,7 @@ public class MarsRtcBridge {
         sockJSHandler = SockJSHandler.create(vertx);
         eb = vertx.eventBus();
         createSockJSHandler();
+        eventListenerUser();
 
         return sockJSHandler;
     }
