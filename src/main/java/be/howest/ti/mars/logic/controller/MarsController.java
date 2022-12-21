@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
@@ -7,6 +8,7 @@ import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -133,5 +135,56 @@ public interface MarsController {
      */
     void addBuilding(String typeLocation, Coordinates coordinates);
 
+    /**
+     * Get the calculated price
+     * @param transporterID The id of the transporter
+     * @return the price Double
+     */
     double calculatePrice(String transporterID);
+
+    /**
+     * Get a specific link
+     * @param linkID linkID
+     * @return {@link Link}
+     */
+    Link getLink(String linkID);
+
+    /**
+     * Init the connection
+     * @param transporterID the id of the sender transporter
+     * @return Map with follow entries: <linkID: String, price: Double>
+     */
+    Map<String, String> initConnection(String transporterID);
+
+    /**
+     * Set the link
+     * @param linkID id of the link
+     * @param senderUser {@link User} ID - Sender
+     * @param senderTransporterID {@link Transporter} ID - sender
+     * @param receiverUserID {@link User} ID - receiver
+     * @param receiverTransporterID {@link Transporter} ID - receiver
+     * @param itemName {@link be.howest.ti.mars.logic.domain.items.Item} item name
+     */
+    void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName);
+
+    /**
+     * Delete a link
+     * @param transporterID {@link Transporter} ID - transporter
+     * @param linkID {@link Link} ID - link
+     */
+    void deleteLink(String transporterID, String linkID);
+
+    /**
+     * Send a package
+     * @param transporterID {@link Transporter} ID - transporter}
+     * @param linkID {@link Link} ID - link
+     */
+    void sendPackage(String transporterID, String linkID);
+
+    /**
+     * Get all the links a user has sent
+     * @param userID {@link User} user ID
+     * @return List of {@link Link}
+     */
+    List<Link> getLinksSent(String userID);
 }

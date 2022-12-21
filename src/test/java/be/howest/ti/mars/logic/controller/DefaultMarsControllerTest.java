@@ -1,13 +1,17 @@
 package be.howest.ti.mars.logic.controller;
 
+import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
+import be.howest.ti.mars.logic.utils.MockInformation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -338,5 +342,89 @@ class DefaultMarsControllerTest {
         MarsController controller = new DefaultMarsController();
 
         assertTrue(0 < controller.calculatePrice("TT-1"));
+    }
+
+    @Test
+    void testInitConnection(){
+        MarsController controller = new DefaultMarsController();
+
+        Map<String, String> result = controller.initConnection("TT-1");
+
+        assertNotNull(result.get("price"));
+        assertNotNull(result.get("linkID"));
+    }
+
+    @Test
+    void testGetLink(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.initConnection("TT-1").get("linkID");
+
+        assertEquals("TT-1", controller.getLink(id).getSender().getId());
+    }
+
+    @Test
+    void testSetLink(){
+        MarsController controller = new DefaultMarsController();
+
+        Item item = new Item("Peer", MockInformation.getMoleculesSummary());
+
+        String id = controller.initConnection("TT-1").get("linkID");
+        controller.getLink(id).setItem(item);
+
+        assertEquals("Peer", controller.getLink(id).getItem().getName());
+    }
+
+    @Test
+    void testDeleteLink(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.initConnection("TT-1").get("linkID");
+        controller.deleteLink("TT-1", id);
+
+        assertThrows(NoSuchElementException.class, () -> controller.getLink(id));
+    }
+
+    @Test
+    void testWrongTransporterIdDeleteLink(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.initConnection("TT-1").get("linkID");
+
+        assertThrows(NoSuchElementException.class, () -> controller.deleteLink("TT-5", id));
+    }
+
+    @Test
+    void testSendPackage(){
+        MarsController controller = new DefaultMarsController();
+
+
+        String id = controller.initConnection("TT-5").get("linkID");
+        controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
+
+        controller.sendPackage("TT-5", id);
+        assertEquals(LinkStatus.SENT, controller.getLink(id).getLinkStatus());
+    }
+
+    @Test
+    void testWrongTransporterIdSendPackage(){
+        MarsController controller = new DefaultMarsController();
+
+
+        String id = controller.initConnection("TT-5").get("linkID");
+        controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
+
+        assertThrows(NoSuchElementException.class, () -> controller.sendPackage("TT-3", id));
+    }
+
+    @Test
+    void testGetLinks(){
+        MarsController controller = new DefaultMarsController();
+        int oldValue = controller.getLinksSent("T-1").size();
+        String id = controller.initConnection("TT-5").get("linkID");
+        controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
+
+        controller.sendPackage("TT-5", id);
+        assertEquals(oldValue+1, controller.getLinksSent("T-1").size());
     }
 }

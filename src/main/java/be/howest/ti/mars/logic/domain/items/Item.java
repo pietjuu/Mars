@@ -1,5 +1,6 @@
 package be.howest.ti.mars.logic.domain.items;
 
+import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 
 import java.time.LocalDateTime;
@@ -13,11 +14,11 @@ public class Item {
 
     private final String id;
     private final String name;
-    private final Size size;
+    private Size size;
     private ItemStatus status;
     private LocalDateTime sendTime;
     private LocalDateTime receivedTime;
-    private int atoms = 0;
+    private MoleculesSummary molecules;
 
     /**
      * Constructor
@@ -33,26 +34,28 @@ public class Item {
     /**
      * Constructor
      * @param name name of item
-     * @param size size of item
+     * @param molecules {@link MoleculesSummary}
      */
-    public Item(String name, Size size) {
+    public Item(String name, MoleculesSummary molecules) {
         this.id = UUID.randomUUID().toString();
         this.status = ItemStatus.UNDEFINED;
         this.name = name;
-        this.size = size;
+        this.size = molecules.getSize();
+        this.molecules = molecules;
     }
 
     /**
      * Constructor - this should only be used when importing.
      * @param id uuid
      * @param name name of item
-     * @param size size of item
+     * @param molecules {@link MoleculesSummary}
      */
-    public Item(String id, String name, Size size){
+    public Item(String id, String name, MoleculesSummary molecules){
         this.id = id;
         this.status = ItemStatus.UNDEFINED;
         this.name = name;
-        this.size = size;
+        this.size = molecules.getSize();
+        this.molecules = molecules;
     }
 
     public void setStatus(ItemStatus status) {
@@ -71,8 +74,13 @@ public class Item {
         this.receivedTime = receivedTime;
     }
 
-    public void setAtoms(int atoms) {
-        this.atoms = atoms;
+    public void setMolecules(MoleculesSummary molecules) {
+        this.molecules = molecules;
+        setSize(molecules.getSize());
+    }
+
+    public void setSize(Size size){
+        this.size = size;
     }
 
     public String getId() {
@@ -99,8 +107,8 @@ public class Item {
         return receivedTime;
     }
 
-    public int getAtoms() {
-        return atoms;
+    public MoleculesSummary getMolecules() {
+        return this.molecules;
     }
 
     @Override
@@ -123,7 +131,6 @@ public class Item {
                 "size: " + size + " \n" +
                 "status: " + status + " \n" +
                 "SendTime: " + sendTime + " \n" +
-                "ReceivedTime: " + receivedTime + " \n" +
-                "Atoms: " + atoms;
+                "ReceivedTime: " + receivedTime + " \n";
     }
 }

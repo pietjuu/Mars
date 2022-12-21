@@ -3,6 +3,8 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -118,5 +120,39 @@ public class MockMarsController implements MarsController {
     @Override
     public double calculatePrice(String transporterID) {
         return 1;
+    }
+
+    @Override
+    public Link getLink(String linkID) {
+        return new Link(linkID, null, null, null, null, LinkStatus.ERROR, null);
+    }
+
+    @Override
+    public Map<String, String> initConnection(String transporterID) {
+        Map<String, String> result = new HashMap<>();
+        result.put("linkID", "IDK-1");
+        result.put("price", "151");
+
+        return result;
+    }
+
+    @Override
+    public void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName) {
+
+    }
+
+    @Override
+    public void deleteLink(String transporterID, String linkID) {
+
+    }
+
+    @Override
+    public void sendPackage(String transporterID, String linkID) {
+
+    }
+
+    @Override
+    public List<Link> getLinksSent(String userID) {
+        return null;
     }
 }

@@ -225,7 +225,47 @@ class OpenAPITest {
         webClient.get(PORT, HOST, "/api/transporters/testingTransporter/price").bearerTokenAuthentication("te-1").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(201, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void initConnection(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/transporters/testingTransporter/init").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
                     assertEquals(200, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void setLink(final VertxTestContext testContext){
+        webClient.put(PORT, HOST, "/api/transporters/testingTransporter/link/link").bearerTokenAuthentication("te-1").sendJsonObject(this.createPutSend())
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(202, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void deleteLink(final VertxTestContext testContext){
+        webClient.delete(PORT, HOST, "/api/transporters/testingTransporter/link/testLink").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(202, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void sendLink(final VertxTestContext testContext){
+        webClient.post(PORT, HOST, "/api/transporters/testingTransporter/link/testLink/send").bearerTokenAuthentication("te-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(202, response.statusCode());
                     testContext.completeNow();
                 }));
     }
@@ -255,6 +295,15 @@ class OpenAPITest {
         jsonObject.put("firstname", "bob");
         jsonObject.put("lastname", "bob");
         jsonObject.put("subscription", "STANDARD");
+
+        return jsonObject;
+    }
+
+    private JsonObject createPutSend(){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("destination", "receiveTransporter");
+        jsonObject.put("receiver", "receiveUser");
+        jsonObject.put("itemName", "itemName");
 
         return jsonObject;
     }

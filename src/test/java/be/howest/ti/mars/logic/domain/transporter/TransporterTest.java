@@ -4,6 +4,8 @@ import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
+import be.howest.ti.mars.logic.utils.MockInformation;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -62,7 +64,8 @@ class TransporterTest {
 
     @Test
     void itemFits(){
-        Item item = new Item("TV", new Size(25, 100, 1));
+        MoleculesSummary moleculesSummary = new MoleculesSummary(MockInformation.getSummary(), MockInformation.getMolecules(), new Size(25, 100, 1));
+        Item item = new Item("TV", moleculesSummary);
         Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
         Transporter t = new Transporter("TE-1", "Kitchen", new Size(5, 5,5), building, "192.168.0.1");
 

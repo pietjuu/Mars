@@ -1,6 +1,8 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -73,7 +75,7 @@ class InMemoryRepositoryTest {
 
         repo.createUserBlacklist("T-5");
 
-        assertTrue(repo.isUserBlackListExist("T-5"));
+        assertFalse(repo.isUserBlackListExist("T-5"));
     }
 
     @Test
@@ -108,7 +110,7 @@ class InMemoryRepositoryTest {
     void getTransporters(){
         InMemoryRepository repo = new InMemoryRepository();
 
-        assertEquals(3, repo.getTransporters().size());
+        assertEquals(5, repo.getTransporters().size());
     }
 
     @Test
@@ -125,7 +127,7 @@ class InMemoryRepositoryTest {
 
         repo.addTransporter(transport);
 
-        assertEquals(4, repo.getTransporters().size());
+        assertEquals(6, repo.getTransporters().size());
     }
 
     @Test
@@ -144,7 +146,7 @@ class InMemoryRepositoryTest {
 
         repo.deleteTransporter(repo.getTransporter("TT-1"));
 
-        assertEquals(2, repo.getTransporters().size());
+        assertEquals(4, repo.getTransporters().size());
     }
 
     @Test
@@ -174,5 +176,43 @@ class InMemoryRepositoryTest {
     void getBuildingFromCoordinatesNull(){
         InMemoryRepository repo = new InMemoryRepository();
         assertNull(repo.getBuildingFromCoordinates(new Coordinates(99999999f, 999f)));
+    }
+
+    @Test
+    void getAllLinks(){
+        InMemoryRepository repo = new InMemoryRepository();
+        assertEquals(2, repo.getAllLinks().size());
+    }
+
+    @Test
+    void getLink(){
+        InMemoryRepository repo = new InMemoryRepository();
+        assertEquals(LinkStatus.SENT, repo.getLink("TL-1").getLinkStatus());
+    }
+
+    @Test
+    void addLink(){
+        InMemoryRepository repo = new InMemoryRepository();
+        int oldSize = repo.getAllLinks().size();
+
+        Link link = new Link(repo.getTransporter("TT-1"));
+        repo.addLink(link);
+
+        assertEquals(oldSize+1, repo.getAllLinks().size());
+    }
+
+    @Test
+    void deleteLink(){
+        InMemoryRepository repo = new InMemoryRepository();
+        int oldSize = repo.getAllLinks().size();
+
+        Link link = new Link(repo.getTransporter("TT-1"));
+        repo.addLink(link);
+
+        assertEquals(oldSize+1, repo.getAllLinks().size());
+
+        repo.deleteLink(link);
+
+        assertEquals(oldSize, repo.getAllLinks().size());
     }
 }

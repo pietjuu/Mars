@@ -1,6 +1,6 @@
 package be.howest.ti.mars.logic.domain.items;
 
-import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.utils.MockInformation;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -13,21 +13,21 @@ class ItemTest {
 
     @Test
     void testConstructorWithoutID(){
-        Item i = new Item("Apple", new Size(1,1,1));
+        Item i = new Item("Apple");
 
         assertNotNull(i.getId());
     }
 
     @Test
     void testConstructorWithID(){
-        Item i = new Item("Test", "Apple", new Size(1,1,1));
+        Item i = new Item("Test", "Apple", MockInformation.getMoleculesSummary());
 
         assertEquals("Test", i.getId());
     }
 
     @Test
     void testStatus(){
-        Item i = new Item("Apple", new Size(1,1,1));
+        Item i = new Item("Apple", MockInformation.getMoleculesSummary());
 
         assertEquals(ItemStatus.UNDEFINED, i.getStatus());
 
@@ -38,7 +38,7 @@ class ItemTest {
 
     @Test
     void testErrorStatus(){
-        Item i = new Item("Apple", new Size(1,1,1));
+        Item i = new Item("Apple", MockInformation.getMoleculesSummary());
 
         assertEquals(ItemStatus.UNDEFINED, i.getStatus());
 
@@ -47,7 +47,7 @@ class ItemTest {
 
     @Test
     void testSendTime(){
-        Item i = new Item("Apple", new Size(1,1,1));
+        Item i = new Item("Apple", MockInformation.getMoleculesSummary());
 
         assertNull(i.getSendTime());
 
@@ -58,7 +58,7 @@ class ItemTest {
 
     @Test
     void testReceivedTime(){
-        Item i = new Item("Apple", new Size(1,1,1));
+        Item i = new Item("Apple", MockInformation.getMoleculesSummary());
 
         assertNull(i.getReceivedTime());
 
@@ -68,31 +68,10 @@ class ItemTest {
     }
 
     @Test
-    void testAtoms(){
-        Item i = new Item("Apple", new Size(1,1,1));
-
-        assertEquals(0, i.getAtoms());
-
-        i.setAtoms(10);
-
-        assertEquals(10, i.getAtoms());
-    }
-
-    @Test
-    void testSize(){
-        Item i = new Item("Apple", new Size(1,1,1));
-
-        assertEquals(1, i.getSize().getHeight());
-        assertEquals(1, i.getSize().getWidth());
-        assertEquals(1, i.getSize().getLength());
-    }
-
-    @Test
     void testToString(){
-        Item i = new Item("1", "Apple", new Size(1,1,1));
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
         i.setReceivedTime(LocalDateTime.of(2053, 12, 31, 11, 15));
         i.setSendTime(LocalDateTime.of(2053, 12, 31, 11, 15));
-        i.setAtoms(10);
 
         String sizeCheck = "Height: " + 1f + " \n" +
                 "Width: " + 1f + " \n" +
@@ -103,16 +82,15 @@ class ItemTest {
                 "size: " + sizeCheck + " \n" +
                 "status: " + ItemStatus.UNDEFINED + " \n" +
                 "SendTime: " + LocalDateTime.of(2053, 12, 31, 11, 15) + " \n" +
-                "ReceivedTime: " + LocalDateTime.of(2053, 12, 31, 11, 15) + " \n" +
-                "Atoms: " + 10;
+                "ReceivedTime: " + LocalDateTime.of(2053, 12, 31, 11, 15) + " \n";
 
         assertEquals(check, i.toString());
     }
 
     @Test
     void testEquals(){
-        Item i = new Item("1", "Apple", new Size(1,1,1));
-        Item i2 = new Item("1", "Apple", new Size(1,1,1));
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
+        Item i2 = new Item("1", "Apple", MockInformation.getMoleculesSummary());
         Set<Item> items = new HashSet<>();
         items.add(i);
         items.add(i2);
@@ -122,13 +100,20 @@ class ItemTest {
 
     @Test
     void testNotEqual(){
-        Item i = new Item("1", "Apple", new Size(1,1,1));
-        Item i2 = new Item("2", "Banana", new Size(1,1,1));
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
+        Item i2 = new Item("2", "Banana", MockInformation.getMoleculesSummary());
         Set<Item> items = new HashSet<>();
         items.add(i);
         items.add(i2);
 
         assertNotEquals(i, i2);
         assertEquals(2, items.size());
+    }
+
+    @Test
+    void testMolecules(){
+        Item i = new Item("Apple", MockInformation.getMoleculesSummary());
+
+        assertEquals(2, i.getMolecules().getMolecules().size());
     }
 }

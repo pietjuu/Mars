@@ -45,6 +45,10 @@ public class Response {
         sendOkJsonResponse(ctx,  new JsonObject().put("items", response));
     }
 
+    public static void sendPrice(RoutingContext ctx, double price){
+        sendJsonResponse(ctx, 201, new JsonObject().put("price", price));
+    }
+
     public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){
         JsonArray jsonArray = new JsonArray();
         for (Transporter transporter : list){

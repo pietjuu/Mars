@@ -3,6 +3,8 @@ package be.howest.ti.mars.logic.controller;
 import be.howest.ti.mars.logic.data.MarsRepositories;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
@@ -90,7 +92,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public List<String> getUserBlacklist(String userID) {
-       if (!repository.isUserBlackListExist(userID)){
+       if (repository.isUserBlackListExist(userID)){
            throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
        }
 
@@ -104,7 +106,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
-        if (!repository.isUserBlackListExist(userID)){
+        if (repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
@@ -119,7 +121,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteItemToUserBlacklist(String itemName, String userID) {
-        if (!repository.isUserBlackListExist(userID)){
+        if (repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
@@ -237,5 +239,80 @@ public class DefaultMarsController implements MarsController {
 
         TransporterController transporterController = new TransporterController();
         return transporterController.getTransporterScan(transporter).getCost();
+    }
+
+    @Override
+    public Link getLink(String linkID){
+        Link link = repository.getLink(linkID);
+
+        if (link == null){
+            throw new NoSuchElementException("LinkID doesn't exists!");
+        }
+
+        return link;
+    }
+
+    @Override
+    public Map<String, String> initConnection(String transporterID) {
+        Link link = new Link(this.getTransporter(transporterID));
+
+        repository.addLink(link);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("linkID", link.getId());
+        result.put("price", String.valueOf(this.calculatePrice(transporterID)));
+
+        return result;
+    }
+
+    @Override
+    public void setLink(String linkID, String senderUser, String senderTransporterID, String receiverUserID, String receiverTransporterID, String itemName) {
+        Link link = this.getLink(linkID);
+        User sendUser = this.getUser(senderUser);
+        User receiverUser = this.getUser(receiverUserID);
+        Transporter sendTransporter = this.getTransporter(senderTransporterID);
+        Transporter receiverTransporter = this.getTransporter(receiverTransporterID);
+
+        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSent(senderUser).size());
+    }
+
+    @Override
+    public void deleteLink(String transporterID, String linkID) {
+        Link link = this.getLink(linkID);
+        Transporter transporter =  this.getTransporter(transporterID);
+
+        if (!link.getSender().equals(transporter)){
+            throw new NoSuchElementException("Can't find a link on that transporter!");
+        }
+
+        repository.deleteLink(link);
+    }
+
+    @Override
+    public void sendPackage(String transporterID, String linkID) {
+        Link link = this.getLink(linkID);
+        Transporter transporter = this.getTransporter(transporterID);
+
+        if (!link.getSender().equals(transporter)){
+            throw new NoSuchElementException("Can't find a link on that transporter!");
+        }
+
+        link.sendLink();
+    }
+
+    @Override
+    public List<Link> getLinksSent(String userID) {
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+                result.add(link);
+            }
+        }
+
+        return result;
     }
 }

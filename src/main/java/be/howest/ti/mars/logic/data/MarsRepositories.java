@@ -3,6 +3,7 @@ package be.howest.ti.mars.logic.data;
 import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
 import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
@@ -133,4 +134,29 @@ public interface MarsRepositories {
      * @return {@link Building}
      */
     Building getBuildingFromCoordinates(Coordinates coordinates);
+
+    /**
+     * Get all links
+     * @return Set of {@link Link}
+     */
+    Set<Link> getAllLinks();
+
+    /**
+     * Get a link
+     * @param linkID {@link Link} ID
+     * @return {@link Link}
+     */
+    Link getLink(String linkID);
+
+    /**
+     * Add a link
+     * @param link {@link Link}
+     */
+    void addLink(Link link);
+
+    /**
+     * Delete a link
+     * @param link {@link Link}
+     */
+    void deleteLink(Link link);
 }
