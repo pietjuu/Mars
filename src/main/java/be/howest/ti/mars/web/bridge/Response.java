@@ -1,5 +1,6 @@
 package be.howest.ti.mars.web.bridge;
 
+import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import io.vertx.core.http.HttpHeaders;
@@ -91,6 +92,35 @@ public class Response {
                 .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(201)
                 .end(Json.encodePrettily(jsonObject));
+    }
+    public static void sendItemsHistory(RoutingContext ctx, List<Link> object){
+        JsonArray result = new JsonArray();
+        for (Link link : object){
+            result.add(getItemInJsonObject(link));
+        }
+
+        ctx.response()
+                .putHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
+                .setStatusCode(200)
+                .end(Json.encodePrettily(result));
+    }
+
+    public static void sendItemHistory(RoutingContext ctx, Link object){
+        sendOkJsonResponse(ctx, getItemInJsonObject(object));
+    }
+
+    private static JsonObject getItemInJsonObject(Link object){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("id", object.getItem().getId());
+        jsonObject.put("name", object.getItem().getName());
+        jsonObject.put("action", object.getItem().getStatus());
+        jsonObject.put("timeSent", object.getItem().getSendTime());
+        jsonObject.put("timeReceived", object.getItem().getReceivedTime());
+        jsonObject.put("receiver", object.getReceiverUser().getId());
+        jsonObject.put("origin", object.getSender().getId());
+        jsonObject.put("sender", object.getReceiver().getId());
+
+        return jsonObject;
     }
 
     private static JsonObject getTransporterInJsonObject(Transporter transporter, boolean addIP){
