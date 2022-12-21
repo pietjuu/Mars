@@ -188,7 +188,17 @@ public interface MarsController {
      */
     int getLinksSentToday(String userID);
 
+    /**
+     * Get all the links a user has sent
+     * @param userID {@link User} user ID
+     * @return int
+     */
     int getLinksSent(String userID);
 
+    /**
+     * Get all the links a user has received
+     * @param userID {@link User} user ID
+     * @return int
+     */
     int getLinksReceived(String userID);
 }
