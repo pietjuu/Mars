@@ -50,7 +50,10 @@ export default {
             display: true,
             bounds: 'ticks',
             time: {
-              unit: 'day'
+              unit: 'day',
+              displayFormats: {
+                day: 'DD MMM YYYY'
+              }
             }
           },
           y: {
