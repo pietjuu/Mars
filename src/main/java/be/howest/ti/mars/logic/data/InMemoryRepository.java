@@ -9,6 +9,8 @@ import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -32,6 +34,10 @@ public class InMemoryRepository implements MarsRepositories{
 
     Map<String, Link> links = new HashMap<>();
 
+    List<ShipNotification> shipNotifications = new ArrayList<>();
+
+    List<SystemNotification> systemNotifications = new ArrayList<>();
+
     public InMemoryRepository(){
         LocalDateTime exTime = LocalDateTime.of(2010, 12, 1, 10, 15);
         addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
@@ -54,6 +60,8 @@ public class InMemoryRepository implements MarsRepositories{
         links.get("TL-1").setSendTime(exTime);
         links.put("TL-2", new Link("TL-2", this.getUser("T-3"), this.getUser("T-4") ,transporters.get("TT-3"), transporters.get("TT-1"), LinkStatus.SENT, new Item("Beer")));
         links.get("TL-2").setSendTime(exTime);
+        shipNotifications.add(new ShipNotification("Alarm Clock from Thibo Verbeerst Sent to Glenn Callens", LocalDateTime.now().plusDays(1), "Status: DELIVERED \\nSent to Farm Dome 230 for Glenn Callens\\n Sent from Sleep Dome 8473 by Thibo Verbeerst", LocalDateTime.now(), this.getUser("T-2")));
+        systemNotifications.add(new SystemNotification("Test", LocalDateTime.now().plusDays(1), "This is a test.", LocalDateTime.now()));
     }
 
     @Override
@@ -192,5 +200,15 @@ public class InMemoryRepository implements MarsRepositories{
     @Override
     public void deleteLink(Link link) {
         links.remove(link.getId());
+    }
+
+    @Override
+    public List<ShipNotification> getShipNotifications(){
+        return shipNotifications;
+    }
+
+    @Override
+    public List<SystemNotification> getSystemNotifications(){
+        return systemNotifications;
     }
 }
