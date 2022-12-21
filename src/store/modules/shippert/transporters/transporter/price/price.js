@@ -35,6 +35,9 @@ const actions = {
     },
     continueToCalculatedPriceStep({ commit }, number) {
         commit('setContinueToCalculatedPriceStep', number);
+    },
+    resetCalculatedPrice({ commit }) {
+        commit('setCalculatedPrice', undefined);
     }
 };
 
