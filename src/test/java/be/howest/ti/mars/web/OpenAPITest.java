@@ -3,7 +3,6 @@ package be.howest.ti.mars.web;
 import be.howest.ti.mars.logic.controller.MockMarsController;
 import be.howest.ti.mars.logic.data.Repositories;
 import be.howest.ti.mars.web.bridge.MarsOpenApiBridge;
-import be.howest.ti.mars.web.bridge.MarsRtcBridge;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
@@ -39,7 +38,7 @@ class OpenAPITest {
         Repositories.shutdown();
         vertx = Vertx.vertx();
 
-        WebServer webServer = new WebServer(new MarsOpenApiBridge(new MockMarsController()), new MarsRtcBridge());
+        WebServer webServer = new WebServer(new MarsOpenApiBridge(new MockMarsController()));
         vertx.deployVerticle(
                 webServer,
                 testContext.succeedingThenComplete()
@@ -57,7 +56,7 @@ class OpenAPITest {
     @Test
     void getInformation(final VertxTestContext testContext){
         // Using of standard controller for testing that constructor
-        WebServer webServer = new WebServer(new MarsOpenApiBridge(), new MarsRtcBridge());
+        WebServer webServer = new WebServer(new MarsOpenApiBridge());
         vertx.deployVerticle(
                 webServer,
                 testContext.succeedingThenComplete()

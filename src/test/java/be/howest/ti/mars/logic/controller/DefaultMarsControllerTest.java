@@ -6,6 +6,8 @@ import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.utils.MockInformation;
+import be.howest.ti.mars.web.bridge.MarsRtcBridge;
+import io.vertx.core.Vertx;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DefaultMarsControllerTest {
@@ -402,6 +405,7 @@ class DefaultMarsControllerTest {
         String id = controller.initConnection("TT-5").get("linkID");
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
+        MarsRtcBridge.getSockJSHandler(Vertx.vertx());
         controller.sendPackage("TT-5", id);
         assertEquals(LinkStatus.SENT, controller.getLink(id).getLinkStatus());
     }
@@ -424,6 +428,7 @@ class DefaultMarsControllerTest {
         String id = controller.initConnection("TT-5").get("linkID");
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
+        MarsRtcBridge.getSockJSHandler(Vertx.vertx());
         controller.sendPackage("TT-5", id);
         assertEquals(oldValue+1, controller.getLinksSentToday("T-1"));
     }
