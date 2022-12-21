@@ -364,7 +364,15 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Item getItem() {
+    public Item getItem(String userID, String itemID) {
+        User user = this.getUser(userID);
+
+        for (Link link : repository.getAllLinks()){
+            if ((link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getId().equals(itemID)){
+                return link.getItem();
+            }
+        }
+
         return null;
     }
 }

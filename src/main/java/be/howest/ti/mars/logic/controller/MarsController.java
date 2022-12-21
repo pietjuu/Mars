@@ -205,5 +205,5 @@ public interface MarsController {
 
     Map<Link, Item> getItems(String userID);
 
-    Item getItem();
+    Item getItem(String userID, String itemID);
 }
