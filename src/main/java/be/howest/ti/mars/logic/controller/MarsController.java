@@ -1,6 +1,5 @@
 package be.howest.ti.mars.logic.controller;
 
-import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.transporter.Size;
@@ -203,7 +202,7 @@ public interface MarsController {
      */
     int getLinksReceived(String userID);
 
-    Map<Link, Item> getItems(String userID);
+    List<Link> getItems(String userID);
 
-    Item getItem(String userID, String itemID);
+    Link getItem(String userID, String itemID);
 }

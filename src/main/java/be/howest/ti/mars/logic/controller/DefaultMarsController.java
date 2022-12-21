@@ -350,13 +350,13 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Map<Link, Item> getItems(String userID) {
+    public List<Link> getItems(String userID) {
         User user = this.getUser(userID);
-        Map<Link, Item> result = new HashMap<>();
+        List<Link> result = new ArrayList<>();
 
         for (Link link : repository.getAllLinks()){
             if (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)){
-                result.put(link, link.getItem());
+                result.add(link);
             }
         }
 
@@ -364,12 +364,12 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public Item getItem(String userID, String itemID) {
+    public Link getItem(String userID, String itemID) {
         User user = this.getUser(userID);
 
         for (Link link : repository.getAllLinks()){
             if ((link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getId().equals(itemID)){
-                return link.getItem();
+                return link;
             }
         }
 
