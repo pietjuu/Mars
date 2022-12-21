@@ -36,7 +36,7 @@ export default {
             }
           }
         },
-        cutout: 150
+        cutout: 75
       },
       chartData: {
         labels: Object.keys(this.getMostUsedDestinations()),
