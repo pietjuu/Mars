@@ -32,12 +32,6 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
-  methods: {
-    ...mapActions(['setStepToInProgress'])
-  },
-  created() {
-    this.setStepToInProgress(2);
-  },
   components: {
     Icon
   }

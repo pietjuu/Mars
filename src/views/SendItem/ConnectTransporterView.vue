@@ -42,15 +42,9 @@ export default {
       infoText: `To send your item, we need to know which Transporter you’re sending from. To connect to your transporter, whom you’re sending from, you must enter the Transporter ID. Afterwards you can click “Link”.`
     };
   },
-  methods: {
-    ...mapActions(['setStepToInProgress'])
-  },
   components: {
     InfoBox,
     TextIconButton
-  },
-  created() {
-    this.setStepToInProgress(1);
   }
 };
 </script>

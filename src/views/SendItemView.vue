@@ -3,7 +3,7 @@
     <HeaderContent :title="`Send Item`"/>
     <main>
       <div class="progress-bar-wrapper">
-        <ProgressBar :steps="steps"/>
+        <ProgressBar :steps="sendSteps"/>
       </div>
       <div class="send-item-views">
         <!-- <ConnectTransporterView/> -->
@@ -26,7 +26,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "SendItemView",
   computed: {
-    ...mapGetters([`steps`])
+    ...mapGetters([`sendSteps`])
   },
   components: {
     HeaderContent,
@@ -34,7 +34,7 @@ export default {
     ConnectTransporterView,
     EnterItemDetailsView
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

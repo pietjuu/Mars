@@ -24,25 +24,21 @@ const state = {
             number: 5,
             text: `STEP 5: Confirm`,
             inProgress: false
-        },
+        }
 
     ]
 };
 
 const getters = {
-    steps: (state) => state.steps
+    sendSteps: (state) => state.steps
 };
 
 const actions = {
-    setStepToInProgress({ commit }, number) {
-        commit('setStepToInProgress', number);
-    }
+
 };
 
 const mutations = {
-    setStepToInProgress: (state, number) => {
-        state.steps.forEach(step => step.inProgress = step.number === number);
-    }
+
 };
 
 export default {
