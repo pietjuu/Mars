@@ -8,6 +8,8 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -373,6 +375,16 @@ public class DefaultMarsController implements MarsController {
         }
 
         throw new NoSuchElementException("Can't find that item!");
+    }
+
+    @Override
+    public List<ShipNotification> getShipNotifications() {
+        return null;
+    }
+
+    @Override
+    public List<SystemNotification> getSystemNotifications() {
+        return null;
     }
 
     /**
