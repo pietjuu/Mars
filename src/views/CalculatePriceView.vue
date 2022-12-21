@@ -4,6 +4,7 @@
     <ProgressBar :steps="stepsToCalculatePrice"/>
     <div class="step-views">
       <ConnectTransporterView v-if="stepsToCalculatePrice[0].inProgress" :info="stepsToCalculatePrice[0].info"/>
+      <ShowPriceView v-if="stepsToCalculatePrice[1].inProgress"/>
     </div>
   </main>
 </template>
@@ -13,10 +14,11 @@ import HeaderContent from "@/components/Header/HeaderContent.vue";
 import ProgressBar from "@/components/Progress/ProgressBar.vue";
 import {mapGetters} from "vuex";
 import ConnectTransporterView from "@/views/Transporter/ConnectTransporterView.vue";
+import ShowPriceView from "@/views/Transporter/CalculatePrice/ShowPriceView.vue";
 
 export default {
   name: "CalculatePriceView",
-  components: {ConnectTransporterView, ProgressBar, HeaderContent},
+  components: {ShowPriceView, ConnectTransporterView, ProgressBar, HeaderContent},
   computed: {
     ...mapGetters(['stepsToCalculatePrice'])
   }
