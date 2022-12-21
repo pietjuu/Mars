@@ -62,7 +62,15 @@ export default {
   methods: {
     ...mapActions(['fetchTransporters', 'createNotification', 'calculatePrice', 'continueToCalculatedPriceStep']),
     link(e) {
-
+      if(!this.transporterId) {
+        this.createNotification({content: "Please select a transporter", type: `warning`});
+        return;
+      }
+      this.calculatePrice(this.transporterId).then(() => {
+        if(this.calculatedPrice) {
+          this.continueToCalculatedPriceStep(2);
+        }
+      });
     },
     getTransporterRadioListItems() {
       return this.transporters.map(transporter => {
