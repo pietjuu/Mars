@@ -17,7 +17,7 @@
             <div>
               <label for="search-transporter-name">Select Transporter <span>*</span></label>
               <div class="flex-gap-col">
-                <input type="text" id="search-transporter-name" name="search-transporter-name" autocomplete="off" placeholder="Search name of transporter"/>
+                <input v-model="search" type="text" id="search-transporter-name" name="search-transporter-name" autocomplete="off" placeholder="Search name of transporter"/>
                 <RadioList :name="`transporter-names`" :items="this.getTransporterRadioListItems()" :maxHeight="`15rem`" @input="onSelectTransporter"/>
                 <p v-if="transporterName" class="selected-value box">Selected: <span>{{ transporterName }}</span></p>
               </div>
@@ -39,6 +39,7 @@ import InfoBox from "@/components/Info/InfoBox.vue";
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import RadioList from "@/components/Form/RadioList.vue";
+import {containsQuery} from "@/assets/js/helper";
 
 export default {
   name: "ConnectTransporterView",
@@ -53,7 +54,8 @@ export default {
   data() {
     return {
       transporterId: undefined,
-      transporterName: undefined
+      transporterName: undefined,
+      search: ''
     };
   },
   computed: {
@@ -73,7 +75,10 @@ export default {
       });
     },
     getTransporterRadioListItems() {
-      return this.transporters.map(transporter => {
+      const filtered = this.transporters.filter(transporter => {
+        return containsQuery(transporter.name.toLowerCase(), this.search.toLowerCase());
+      });
+      return filtered.map(transporter => {
         return { value: transporter.id, label: transporter.name };
       });
     },
