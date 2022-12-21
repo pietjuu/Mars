@@ -30,18 +30,21 @@ const actions = {
     async calculatePrice({ commit }, transporterId) {
         commit('setCalculatedPrice', undefined);
         await get(`transporters/${transporterId}/price`, calculatedPrice => {
-            commit('setCalculatedPrice', calculatedPrice);
+            commit('setCalculatedPrice', calculatedPrice.price);
         });
     },
     continueToCalculatedPriceStep({ commit }, number) {
-        state.stepsToCalculatePrice.forEach(step => {
-           step.inProgress = step.number === number;
-        });
+        commit('setContinueToCalculatedPriceStep', number);
     }
 };
 
 const mutations = {
-    setCalculatedPrice: (state, calculatedPrice) => (state.calculatedPrice = calculatedPrice)
+    setCalculatedPrice: (state, calculatedPrice) => (state.calculatedPrice = calculatedPrice),
+    setContinueToCalculatedPriceStep: (state, number) => {
+        state.stepsToCalculatePrice.forEach(step => {
+           step.inProgress = step.number === number;
+        });
+    }
 };
 
 export default {
