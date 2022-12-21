@@ -33,7 +33,7 @@ const actions = {
             commit('setCalculatedPrice', calculatedPrice);
         });
     },
-    continueToStepCalculatePrice({ commit }, number) {
+    continueToCalculatedPriceStep({ commit }, number) {
         state.stepsToCalculatePrice.forEach(step => {
            step.inProgress = step.number === number;
         });
