@@ -165,4 +165,14 @@ public class MockMarsController implements MarsController {
     public int getLinksReceived(String userID) {
         return 0;
     }
+
+    @Override
+    public List<Link> getItems(String userID) {
+        return null;
+    }
+
+    @Override
+    public Link getItem(String userID, String itemID) {
+        return null;
+    }
 }
