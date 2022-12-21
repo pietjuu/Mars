@@ -196,7 +196,7 @@ public class MarsOpenApiBridge {
     private void getCalculatedPrice(RoutingContext routingContext) {
         String id = Request.from(routingContext).getTransporterID();
 
-        Response.sendJsonResponse(routingContext, 200, controller.calculatePrice(id));
+        Response.sendPrice(routingContext, controller.calculatePrice(id));
     }
 
     private void createTransporter(RoutingContext routingContext){
