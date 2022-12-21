@@ -146,6 +146,26 @@ class OpenAPITest {
     }
 
     @Test
+    void getItems(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/t-1/items").bearerTokenAuthentication("t-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
+    void getItem(final VertxTestContext testContext){
+        webClient.get(PORT, HOST, "/api/users/t-1/items/aa").bearerTokenAuthentication("t-1").send()
+                .onFailure(testContext::failNow)
+                .onSuccess(response -> testContext.verify(() -> {
+                    assertEquals(200, response.statusCode());
+                    testContext.completeNow();
+                }));
+    }
+
+    @Test
     void addItemToUserBlacklist(final VertxTestContext testContext){
         webClient.post(PORT, HOST, "/api/users/te-1/blacklist").bearerTokenAuthentication("te-1").sendJsonObject(new JsonObject().put("itemName", "cheese"))
                 .onFailure(testContext::failNow)
