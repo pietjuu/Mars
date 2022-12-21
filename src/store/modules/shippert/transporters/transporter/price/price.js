@@ -18,8 +18,7 @@ const state = {
             inProgress: false,
             info: undefined
         }
-    ],
-    transporter: undefined
+    ]
 };
 
 const getters = {
@@ -34,7 +33,7 @@ const actions = {
             commit('setCalculatedPrice', calculatedPrice);
         });
     },
-    continueToStep({ commit }, number) {
+    continueToStepCalculatePrice({ commit }, number) {
         state.stepsToCalculatePrice.forEach(step => {
            step.inProgress = step.number === number;
         });
