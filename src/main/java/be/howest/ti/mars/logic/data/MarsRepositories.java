@@ -135,11 +135,28 @@ public interface MarsRepositories {
      */
     Building getBuildingFromCoordinates(Coordinates coordinates);
 
+    /**
+     * Get all links
+     * @return Set of {@link Link}
+     */
     Set<Link> getAllLinks();
 
+    /**
+     * Get a link
+     * @param linkID {@link Link} ID
+     * @return {@link Link}
+     */
     Link getLink(String linkID);
 
+    /**
+     * Add a link
+     * @param link {@link Link}
+     */
     void addLink(Link link);
 
+    /**
+     * Delete a link
+     * @param link {@link Link}
+     */
     void deleteLink(Link link);
 }
