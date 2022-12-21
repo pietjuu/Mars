@@ -6,6 +6,7 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -96,6 +97,9 @@ public class Link {
         if (!itemsSet()){
             if (transporterController.getTransporterStatus(this.receiver)){
                 transporterController.sendItemInTransporter(this.sender);
+
+                this.setSendTime(LocalDateTime.now());
+
                 this.linkStatus = LinkStatus.SENT;
             } else {
                 throw new TransporterException("Destination unavailable!");
@@ -127,6 +131,16 @@ public class Link {
 
     public User getSenderUser() {
         return senderUser;
+    }
+
+    public User getReceiverUser() {
+        return receiverUser;
+    }
+
+    public void setSendTime(LocalDateTime localDateTime){
+        // Send and received time is the same because IOT Device doesn't provide a reception time, because it's out of scope.
+        this.item.setSendTime(localDateTime);
+        this.item.setReceivedTime(localDateTime);
     }
 
     /**

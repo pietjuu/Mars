@@ -1,6 +1,7 @@
 package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
+import be.howest.ti.mars.logic.domain.users.User;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
@@ -47,6 +48,20 @@ public class Response {
 
     public static void sendPrice(RoutingContext ctx, double price){
         sendJsonResponse(ctx, 201, new JsonObject().put("price", price));
+    }
+
+    public static void sendDetailUser(RoutingContext ctx, User user, int totalSent, int totalReceived, int reached){
+        JsonObject jsonObject = JsonObject.mapFrom(user);
+        jsonObject.put("totalSent", totalSent);
+        jsonObject.put("totalReceived", totalReceived);
+
+        JsonObject limit = new JsonObject();
+        limit.put("reached", reached);
+        limit.put("max", user.getPricePlan().getMaxItems());
+
+        jsonObject.put("limit", limit);
+
+        sendJsonResponse(ctx, 200, jsonObject);
     }
 
     public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){

@@ -15,6 +15,7 @@ import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -273,7 +274,7 @@ public class DefaultMarsController implements MarsController {
         Transporter sendTransporter = this.getTransporter(senderTransporterID);
         Transporter receiverTransporter = this.getTransporter(receiverTransporterID);
 
-        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSent(senderUser).size());
+        link.connectLink(sendUser, sendTransporter, receiverUser, receiverTransporter, itemName, this.getLinksSentToday(senderUser));
     }
 
     @Override
@@ -301,7 +302,23 @@ public class DefaultMarsController implements MarsController {
     }
 
     @Override
-    public List<Link> getLinksSent(String userID) {
+    public int getLinksSentToday(String userID) {
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT && !Objects.isNull(link.getItem().getSendTime()) && LocalDate.from(link.getItem().getSendTime()).equals(LocalDate.now())){
+                result.add(link);
+            }
+        }
+
+        return result.size();
+    }
+
+    @Override
+    public int getLinksSent(String userID){
         User user = this.getUser(userID);
 
         List<Link> result = new ArrayList<>();
@@ -313,6 +330,22 @@ public class DefaultMarsController implements MarsController {
             }
         }
 
-        return result;
+        return result.size();
+    }
+
+    @Override
+    public int getLinksReceived(String userID){
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getReceiverUser() != null && link.getReceiverUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+                result.add(link);
+            }
+        }
+
+        return result.size();
     }
 }

@@ -418,13 +418,27 @@ class DefaultMarsControllerTest {
     }
 
     @Test
-    void testGetLinks(){
+    void getLinksSentToday(){
         MarsController controller = new DefaultMarsController();
-        int oldValue = controller.getLinksSent("T-1").size();
+        int oldValue = controller.getLinksSentToday("T-1");
         String id = controller.initConnection("TT-5").get("linkID");
         controller.setLink(id, "T-1", "TT-5", "T-2", "TT-4", "Peer");
 
         controller.sendPackage("TT-5", id);
-        assertEquals(oldValue+1, controller.getLinksSent("T-1").size());
+        assertEquals(oldValue+1, controller.getLinksSentToday("T-1"));
+    }
+
+    @Test
+    void getLinksSent(){
+        MarsController controller = new DefaultMarsController();
+
+        assertTrue(controller.getLinksSent("T-1") >= 1);
+    }
+
+    @Test
+    void getLinksReceived(){
+        MarsController controller = new DefaultMarsController();
+
+        assertTrue(controller.getLinksReceived("T-2") >= 1);
     }
 }

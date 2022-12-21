@@ -14,6 +14,7 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -32,6 +33,7 @@ public class InMemoryRepository implements MarsRepositories{
     Map<String, Link> links = new HashMap<>();
 
     public InMemoryRepository(){
+        LocalDateTime exTime = LocalDateTime.of(2010, 12, 1, 10, 15);
         addUser(new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS));
         addUser(new User("T-2", "Pieter", "Verheye", PricePlan.PREMIUM));
         addUser(new User("T-3", "Delia", "Vervaeke", PricePlan.STANDARD));
@@ -49,7 +51,9 @@ public class InMemoryRepository implements MarsRepositories{
         buildings.put("TB-2", new Building("TB-2", TypeOfLocation.PICKUP, new Coordinates(50.175351f, 5.985122f)));
         buildings.put("TB-3", new Building("TB-3", TypeOfLocation.PICKUP, new Coordinates(51.365621f, 3.341908f)));
         links.put("TL-1", new Link("TL-1", this.getUser("T-1"), this.getUser("T-2") ,transporters.get("TT-1"), transporters.get("TT-2"), LinkStatus.SENT, new Item("Apple")));
+        links.get("TL-1").setSendTime(exTime);
         links.put("TL-2", new Link("TL-2", this.getUser("T-3"), this.getUser("T-4") ,transporters.get("TT-3"), transporters.get("TT-1"), LinkStatus.SENT, new Item("Beer")));
+        links.get("TL-2").setSendTime(exTime);
     }
 
     @Override
