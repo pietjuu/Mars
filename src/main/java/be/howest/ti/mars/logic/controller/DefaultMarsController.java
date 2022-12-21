@@ -348,4 +348,23 @@ public class DefaultMarsController implements MarsController {
 
         return result.size();
     }
+
+    @Override
+    public Map<Link, Item> getItems(String userID) {
+        User user = this.getUser(userID);
+        Map<Link, Item> result = new HashMap<>();
+
+        for (Link link : repository.getAllLinks()){
+            if (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)){
+                result.put(link, link.getItem());
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Item getItem() {
+        return null;
+    }
 }

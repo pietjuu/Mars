@@ -203,7 +203,7 @@ public interface MarsController {
      */
     int getLinksReceived(String userID);
 
-    List<Item> getItems(String userID);
+    Map<Link, Item> getItems(String userID);
 
     Item getItem();
 }
