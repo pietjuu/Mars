@@ -225,7 +225,7 @@ class OpenAPITest {
         webClient.get(PORT, HOST, "/api/transporters/testingTransporter/price").bearerTokenAuthentication("te-1").send()
                 .onFailure(testContext::failNow)
                 .onSuccess(response -> testContext.verify(() -> {
-                    assertEquals(200, response.statusCode());
+                    assertEquals(201, response.statusCode());
                     testContext.completeNow();
                 }));
     }
