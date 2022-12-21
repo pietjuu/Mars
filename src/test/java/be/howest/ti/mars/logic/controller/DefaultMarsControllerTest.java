@@ -418,7 +418,7 @@ class DefaultMarsControllerTest {
     }
 
     @Test
-    void testGetLinks(){
+    void getLinksSentToday(){
         MarsController controller = new DefaultMarsController();
         int oldValue = controller.getLinksSentToday("T-1");
         String id = controller.initConnection("TT-5").get("linkID");
@@ -426,5 +426,19 @@ class DefaultMarsControllerTest {
 
         controller.sendPackage("TT-5", id);
         assertEquals(oldValue+1, controller.getLinksSentToday("T-1"));
+    }
+
+    @Test
+    void getLinksSent(){
+        MarsController controller = new DefaultMarsController();
+
+        assertEquals(1, controller.getLinksSent("T-1"));
+    }
+
+    @Test
+    void getLinksReceived(){
+        MarsController controller = new DefaultMarsController();
+
+        assertEquals(1, controller.getLinksSent("T-2"));
     }
 }
