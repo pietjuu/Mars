@@ -316,4 +316,36 @@ public class DefaultMarsController implements MarsController {
 
         return result.size();
     }
+
+    @Override
+    public int getLinksSent(String userID){
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+                result.add(link);
+            }
+        }
+
+        return result.size();
+    }
+
+    @Override
+    public int getLinksReceived(String userID){
+        User user = this.getUser(userID);
+
+        List<Link> result = new ArrayList<>();
+        Set<Link> links = repository.getAllLinks();
+
+        for(Link link : links){
+            if (link.getReceiverUser() != null && link.getReceiverUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+                result.add(link);
+            }
+        }
+
+        return result.size();
+    }
 }

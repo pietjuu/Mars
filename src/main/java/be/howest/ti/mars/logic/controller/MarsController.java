@@ -187,4 +187,8 @@ public interface MarsController {
      * @return int
      */
     int getLinksSentToday(String userID);
+
+    int getLinksSent(String userID);
+
+    int getLinksReceived(String userID);
 }
