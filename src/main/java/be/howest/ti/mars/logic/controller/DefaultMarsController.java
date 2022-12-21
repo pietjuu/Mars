@@ -10,6 +10,7 @@ import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.notifications.Notification;
 import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -19,6 +20,7 @@ import be.howest.ti.mars.web.bridge.MarsRtcBridge;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -381,10 +383,16 @@ public class DefaultMarsController implements MarsController {
     @Override
     public List<Notification> getNotifications(String userID) {
 
-        List<Notification> result = new ArrayList<>(repository.getSystemNotifications());
+        List<Notification> result = new ArrayList<>();
+
+        for (SystemNotification systemNotification : repository.getSystemNotifications()){
+            if (LocalDateTime.now().isBefore(systemNotification.getExpireTime())){
+                result.add(systemNotification);
+            }
+        }
 
         for (ShipNotification shipNotification : repository.getShipNotifications()){
-            if (shipNotification.getReceiver().getId().equals(userID)){
+            if (shipNotification.getReceiver().getId().equals(userID) && LocalDateTime.now().isBefore(shipNotification.getExpireTime())){
                 result.add(shipNotification);
             }
         }
