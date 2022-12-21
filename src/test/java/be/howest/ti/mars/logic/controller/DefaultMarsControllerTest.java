@@ -448,4 +448,12 @@ class DefaultMarsControllerTest {
 
         assertEquals("TL-1", controller.getItems("T-1").get(0).getId());
     }
+
+    @Test
+    void getItem(){
+        MarsController controller = new DefaultMarsController();
+
+        String id = controller.getItems("T-1").get(0).getId();
+        assertEquals("Apple", controller.getItem("T-1", id).getItem().getName());
+    }
 }
