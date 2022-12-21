@@ -9,6 +9,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -114,8 +115,8 @@ public class Response {
         jsonObject.put("id", object.getItem().getId());
         jsonObject.put("name", object.getItem().getName());
         jsonObject.put("action", object.getItem().getStatus());
-        jsonObject.put("timeSent", object.getItem().getSendTime());
-        jsonObject.put("timeReceived", object.getItem().getReceivedTime());
+        jsonObject.put("timeSent", object.getItem().getSendTime().format(DateTimeFormatter.ofPattern("yyy-MM-dd H:m")));
+        jsonObject.put("timeReceived", object.getItem().getReceivedTime().format(DateTimeFormatter.ofPattern("yyy-MM-dd H:m")));
         jsonObject.put("receiver", object.getReceiverUser().getId());
         jsonObject.put("origin", object.getSender().getId());
         jsonObject.put("sender", object.getReceiver().getId());
