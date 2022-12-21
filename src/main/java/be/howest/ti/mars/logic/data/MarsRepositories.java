@@ -166,4 +166,7 @@ public interface MarsRepositories {
     List<ShipNotification> getShipNotifications();
 
     List<SystemNotification> getSystemNotifications();
+
+    void addShipNotification(ShipNotification notification);
+    void addSystemNotification(SystemNotification notification);
 }

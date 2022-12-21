@@ -211,4 +211,14 @@ public class InMemoryRepository implements MarsRepositories{
     public List<SystemNotification> getSystemNotifications(){
         return systemNotifications;
     }
+
+    @Override
+    public void addShipNotification(ShipNotification notification) {
+        shipNotifications.add(notification);
+    }
+
+    @Override
+    public void addSystemNotification(SystemNotification notification) {
+        systemNotifications.add(notification);
+    }
 }
