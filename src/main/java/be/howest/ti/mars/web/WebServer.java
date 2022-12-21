@@ -24,6 +24,10 @@ public class WebServer extends AbstractVerticle {
         this.openApiBridge = bridge;
     }
 
+    public WebServer() {
+        this(new MarsOpenApiBridge());
+    }
+
     @Override
     public void start(Promise<Void> startPromise) {
         this.startPromise = startPromise;
