@@ -4,15 +4,23 @@ import java.time.LocalDateTime;
 
 public class Notification {
 
-    private final String title;
+    private String title;
     private final LocalDateTime time;
     private final LocalDateTime expireTime;
-    private final String message;
+    private String message;
 
-    public Notification(String title, int daysActive, String message) {
+    protected Notification(String title, int daysActive, String message) {
         this.title = title;
         this.time = LocalDateTime.now();
         this.expireTime = this.time.plusDays(daysActive);
+        this.message = message;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 
