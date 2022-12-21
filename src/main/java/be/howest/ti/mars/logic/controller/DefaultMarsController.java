@@ -367,7 +367,7 @@ public class DefaultMarsController implements MarsController {
         User user = this.getUser(userID);
 
         for (Link link : repository.getAllLinks()){
-            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getId().equals(itemID)){
+            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getItem().getId().equals(itemID)){
                 return link;
             }
         }
