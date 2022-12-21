@@ -37,7 +37,9 @@ export default {
   methods: {
     ...mapActions(['fetchUserItems']),
     setCurrentTab(event) {
-      if(!event.target.closest('button')) { return; }
+      if(!event.target.closest('button')) {
+        return;
+      }
       this.currentTab = event.target.dataset.tab;
     },
     compareNewestDateFirst(a, b) {
@@ -95,9 +97,6 @@ export default {
   },
   created() {
     this.fetchUserItems();
-  },
-  watch: {
-
   }
 };
 </script>
