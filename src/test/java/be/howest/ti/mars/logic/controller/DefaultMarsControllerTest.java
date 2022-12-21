@@ -432,13 +432,13 @@ class DefaultMarsControllerTest {
     void getLinksSent(){
         MarsController controller = new DefaultMarsController();
 
-        assertEquals(1, controller.getLinksSent("T-1"));
+        assertTrue(controller.getLinksSent("T-1") >= 1);
     }
 
     @Test
     void getLinksReceived(){
         MarsController controller = new DefaultMarsController();
 
-        assertEquals(1, controller.getLinksSent("T-2"));
+        assertTrue(controller.getLinksReceived("T-2") >= 1);
     }
 }
