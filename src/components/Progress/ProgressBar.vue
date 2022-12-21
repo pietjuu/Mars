@@ -24,7 +24,6 @@ export default {
   background-image: url("@/assets/media/line.png");
   background-position: center center;
   background-repeat: no-repeat;
-  margin-bottom: 1rem;
 }
 
 </style>
