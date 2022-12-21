@@ -182,9 +182,9 @@ public interface MarsController {
     void sendPackage(String transporterID, String linkID);
 
     /**
-     * Get all the links a user has sent
+     * Get all the links a user has sent today
      * @param userID {@link User} user ID
-     * @return List of {@link Link}
+     * @return int
      */
-    List<Link> getLinksSentToday(String userID);
+    int getLinksSentToday(String userID);
 }
