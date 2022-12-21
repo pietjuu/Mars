@@ -219,4 +219,6 @@ public interface MarsController {
     Link getItem(String userID, String itemID);
 
     List<Notification> getNotifications(String userID);
+
+    void reloadUserWebsocket(String userID);
 }

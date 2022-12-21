@@ -15,6 +15,7 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
+import be.howest.ti.mars.web.bridge.MarsRtcBridge;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
@@ -389,6 +390,10 @@ public class DefaultMarsController implements MarsController {
         }
 
         return result;
+    }
+
+    public void reloadUserWebsocket(String userID){
+        MarsRtcBridge.loadEventBusUser(userID);
     }
 
     /**
