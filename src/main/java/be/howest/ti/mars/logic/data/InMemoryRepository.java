@@ -117,7 +117,7 @@ public class InMemoryRepository implements MarsRepositories{
 
     @Override
     public boolean isUserBlackListExist(String userID){
-       return usersBlacklists.containsKey(userID);
+       return !usersBlacklists.containsKey(userID);
     }
 
     @Override

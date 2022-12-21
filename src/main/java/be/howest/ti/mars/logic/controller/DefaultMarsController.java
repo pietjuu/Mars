@@ -92,7 +92,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public List<String> getUserBlacklist(String userID) {
-       if (!repository.isUserBlackListExist(userID)){
+       if (repository.isUserBlackListExist(userID)){
            throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
        }
 
@@ -106,7 +106,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
-        if (!repository.isUserBlackListExist(userID)){
+        if (repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
@@ -121,7 +121,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteItemToUserBlacklist(String itemName, String userID) {
-        if (!repository.isUserBlackListExist(userID)){
+        if (repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 

@@ -75,7 +75,7 @@ class InMemoryRepositoryTest {
 
         repo.createUserBlacklist("T-5");
 
-        assertTrue(repo.isUserBlackListExist("T-5"));
+        assertFalse(repo.isUserBlackListExist("T-5"));
     }
 
     @Test
