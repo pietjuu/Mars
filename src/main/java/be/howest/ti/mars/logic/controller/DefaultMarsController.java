@@ -15,6 +15,7 @@ import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -308,7 +309,7 @@ public class DefaultMarsController implements MarsController {
         Set<Link> links = repository.getAllLinks();
 
         for(Link link : links){
-            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT){
+            if (link.getSenderUser() != null && link.getSenderUser().equals(user) && link.getLinkStatus() == LinkStatus.SENT && !Objects.isNull(link.getItem().getSendTime()) && LocalDate.from(link.getItem().getSendTime()).equals(LocalDate.now())){
                 result.add(link);
             }
         }
