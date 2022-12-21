@@ -348,4 +348,39 @@ public class DefaultMarsController implements MarsController {
 
         return result.size();
     }
+
+    @Override
+    public List<Link> getItems(String userID) {
+        User user = this.getUser(userID);
+        List<Link> result = new ArrayList<>();
+        for (Link link : repository.getAllLinks()){
+            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getLinkStatus().equals(LinkStatus.SENT)){
+                result.add(link);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Link getItem(String userID, String itemID) {
+        User user = this.getUser(userID);
+
+        for (Link link : repository.getAllLinks()){
+            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getItem().getId().equals(itemID) && link.getLinkStatus().equals(LinkStatus.SENT)){
+                return link;
+            }
+        }
+
+        throw new NoSuchElementException("Can't find that item!");
+    }
+
+    /**
+     * Check if the users inside a link are empty
+     * @param link {@link Link}
+     * @return boolean
+     */
+    private boolean checkIfEmptyUser(Link link){
+        return !Objects.isNull(link.getSenderUser()) && !Objects.isNull(link.getReceiverUser());
+    }
 }

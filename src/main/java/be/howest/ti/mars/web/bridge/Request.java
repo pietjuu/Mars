@@ -127,6 +127,18 @@ public class Request {
         }
     }
 
+    public String getItemID(){
+        try{
+            if (!params.pathParameter("itemId").isNull()){
+                return params.pathParameter("itemId").getString();
+            }
+            return null;
+        } catch (IllegalArgumentException ex){
+            LOGGER.log(Level.INFO, "Unable to decipher 'ItemId' in the path of GET Item", ex);
+            throw new MalformedRequestException(ERROR_BODY);
+        }
+    }
+
     public String getTransporterNameBody(){
         try {
             if (params.body().isJsonObject())

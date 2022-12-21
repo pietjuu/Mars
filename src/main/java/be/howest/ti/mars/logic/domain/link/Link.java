@@ -133,6 +133,10 @@ public class Link {
         return senderUser;
     }
 
+    public Transporter getReceiver() {
+        return receiver;
+    }
+
     public User getReceiverUser() {
         return receiverUser;
     }
