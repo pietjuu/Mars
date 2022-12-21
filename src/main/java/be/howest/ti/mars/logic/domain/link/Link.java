@@ -133,6 +133,10 @@ public class Link {
         return senderUser;
     }
 
+    public User getReceiverUser() {
+        return receiverUser;
+    }
+
     public void setSendTime(LocalDateTime localDateTime){
         // Send and received time is the same because IOT Device doesn't provide a reception time, because it's out of scope.
         this.item.setSendTime(localDateTime);
