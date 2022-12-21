@@ -1,7 +1,7 @@
 <template>
   <HeaderContent :title="`Dashboard`"/>
   <main class="main-content">
-    <TextTile :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max}`"/>
+    <TextTile :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
     <TextTile :title="`Total number of sent items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
     <TextTile :title="`Total number of received items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
     <TextTile :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
