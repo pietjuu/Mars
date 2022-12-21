@@ -202,7 +202,18 @@ public interface MarsController {
      */
     int getLinksReceived(String userID);
 
+    /**
+     * Get all items a user has sent.
+     * @param userID {@link User} ID
+     * @return List of {@link Link}
+     */
     List<Link> getItems(String userID);
 
+    /**
+     * Get a specific itemID
+     * @param userID {@link User} ID
+     * @param itemID {@link be.howest.ti.mars.logic.domain.items.Item} ID
+     * @return {@link be.howest.ti.mars.logic.domain.items.Item} item
+     */
     Link getItem(String userID, String itemID);
 }
