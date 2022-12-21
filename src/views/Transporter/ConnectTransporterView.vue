@@ -97,6 +97,7 @@ export default {
 
 .connect-transporter-wrapper {
   height: 100%; /* REQUIRED FOR BUTTONS TO BE AT THE BOTTOM */
+  /* CONTAINER HAS TO BE FLEX TOO */
 }
 
 .form-and-message-wrapper {
