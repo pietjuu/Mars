@@ -111,6 +111,12 @@ select {
   padding: 0.5rem 1rem;
 }
 
+.bottom-buttons {
+  @include mixins.flex(row-reverse, space-between);
+  margin-top: auto;
+}
+
+
 .important {
   color: var(--color-secondary);
   font-weight: bold;
