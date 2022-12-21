@@ -354,7 +354,7 @@ public class DefaultMarsController implements MarsController {
         User user = this.getUser(userID);
         List<Link> result = new ArrayList<>();
         for (Link link : repository.getAllLinks()){
-            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user))){
+            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getLinkStatus().equals(LinkStatus.SENT)){
                 result.add(link);
             }
         }
@@ -367,7 +367,7 @@ public class DefaultMarsController implements MarsController {
         User user = this.getUser(userID);
 
         for (Link link : repository.getAllLinks()){
-            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getItem().getId().equals(itemID)){
+            if (checkIfEmptyUser(link) && (link.getSenderUser().equals(user) || link.getReceiverUser().equals(user)) && link.getItem().getId().equals(itemID) && link.getLinkStatus().equals(LinkStatus.SENT)){
                 return link;
             }
         }
