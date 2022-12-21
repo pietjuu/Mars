@@ -1,11 +1,11 @@
 <template>
-<div class="connect-transporter-wrapper">
+<div class="connect-transporter-wrapper flex-gap-col">
 
-    <InfoBox :text="infoText"/>
+    <InfoBox :text="info"/>
 
     <div class="form-and-message-wrapper flex-gap-row flex-space-between-row">
 
-      <div class="info-message box flex-center-col">
+      <div class="important box flex-center-col">
         <img src="@/assets/media/transporter.png" alt="">
         <p>Place item in the Transporter and close the door!</p>
       </div>
@@ -14,33 +14,29 @@
         <form action="#" id="connect-transporter">
           <fieldset>
             <legend>Connect  Your Transporter</legend>
-
             <label for="transporter-id">Enter ID of The Transporter You want to Send <span>from</span> <span>*</span></label>
-            <div class="flex-center-vertical">
-              <input type="text" id="transporter-id" name="transporter-id" required autocomplete="off" placeholder="Enter the ID here"/>
-              <TextIconButton :content="`Link`" :icon="`link`" :width="`6.5rem`" :height="`2.3rem`"/>
-            </div>
-
+            <input type="text" id="transporter-id" name="transporter-id" required autocomplete="off" placeholder="Enter the ID here"/>
           </fieldset>
         </form>
       </div>
-
-
     </div>
+
+    <div class="bottom-buttons">
+      <TextIconButton :content="`Link`" :icon="`link`" :width="`6.5rem`" :height="`2.3rem`"/>
+    </div>
+
 </div>
 </template>
 
 <script>
-import InfoBox from "@/components/Info/InfoBox";
-import TextIconButton from "@/components/Button/TextIconButton";
+import InfoBox from "@/components/Info/InfoBox.vue";
+import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions} from "vuex";
 
 export default {
   name: "ConnectTransporterView",
-  data() {
-    return {
-      infoText: `To send your item, we need to know which Transporter you’re sending from. To connect to your transporter, whom you’re sending from, you must enter the Transporter ID. Afterwards you can click “Link”.`
-    };
+  props: {
+    info: String
   },
   components: {
     InfoBox,
@@ -51,6 +47,10 @@ export default {
 
 <style scoped lang="scss">
 
+.connect-transporter-wrapper {
+  height: 100%; /* REQUIRED FOR BUTTONS TO BE AT THE BOTTOM */
+}
+
 .form-and-message-wrapper {
 
   > .box {
@@ -58,18 +58,10 @@ export default {
     flex: 1 1 100%;
   }
 
-  .info-message {
-    color: var(--color-heading2);
+  .important {
     font-size: var(--h2-text-size);
-    font-weight: bold;
     padding-bottom: 2rem;
   }
-
-  fieldset .flex-center-vertical {
-    gap: 0.5rem;
-  }
-
-
 }
 
 </style>

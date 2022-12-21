@@ -20,7 +20,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import Icon from "@/components/Icon/Icon";
+import Icon from "@/components/Icon/Icon.vue";
 
 export default {
   name: "EnterItemDetailsView",
