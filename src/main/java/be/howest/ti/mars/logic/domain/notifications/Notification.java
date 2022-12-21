@@ -16,6 +16,13 @@ public class Notification {
         this.message = message;
     }
 
+    protected Notification(String title, LocalDateTime expireTime, String message, LocalDateTime created){
+        this.title = title;
+        this.time = created;
+        this.expireTime = expireTime;
+        this.message = message;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
