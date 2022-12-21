@@ -14,6 +14,7 @@ import be.howest.ti.mars.logic.domain.users.BaseUser;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MockMarsController implements MarsController {
@@ -168,11 +169,23 @@ public class MockMarsController implements MarsController {
 
     @Override
     public List<Link> getItems(String userID) {
-        return null;
+        Transporter t =  new Transporter("TT-1", "TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter1.thibo.cloud/");
+        Transporter t2 = new Transporter("TT-4", "TT-4", new Size(100f, 100f, 100f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter2.thibo.cloud/");
+        User user = new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS);
+        User user2 = new User("T-2", "Pieter", "Verheye", PricePlan.PREMIUM);
+        Link link = new Link("TL-1", user, user2 ,t, t2, LinkStatus.SENT, new Item("Apple"));
+        link.setSendTime(LocalDateTime.now());
+        return List.of();
     }
 
     @Override
     public Link getItem(String userID, String itemID) {
-        return null;
+        Transporter t =  new Transporter("TT-1", "TT-1", new Size(10f, 10f, 10f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter1.thibo.cloud/");
+        Transporter t2 = new Transporter("TT-4", "TT-4", new Size(100f, 100f, 100f), new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f)), "https://transporter2.thibo.cloud/");
+        User user = new User("T-1", "Thibo", "Verbeerst", PricePlan.BUSINESS);
+        User user2 = new User("T-2", "Pieter", "Verheye", PricePlan.PREMIUM);
+        Link link = new Link("TL-1", user, user2 ,t, t2, LinkStatus.SENT, new Item("Apple"));
+        link.setSendTime(LocalDateTime.now());
+        return link;
     }
 }
