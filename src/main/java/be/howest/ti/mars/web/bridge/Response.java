@@ -1,6 +1,7 @@
 package be.howest.ti.mars.web.bridge;
 
 import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.notifications.Notification;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import io.vertx.core.http.HttpHeaders;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Response {
 
     public static final String APPLICATION_JSON = "application/json";
+    public static final String DATE_CONSTANT = "yyy-MM-dd H:m";
 
     private Response() { }
 
@@ -52,18 +54,8 @@ public class Response {
         sendJsonResponse(ctx, 201, new JsonObject().put("price", price));
     }
 
-    public static void sendDetailUser(RoutingContext ctx, User user, int totalSent, int totalReceived, int reached){
-        JsonObject jsonObject = JsonObject.mapFrom(user);
-        jsonObject.put("totalSent", totalSent);
-        jsonObject.put("totalReceived", totalReceived);
-
-        JsonObject limit = new JsonObject();
-        limit.put("reached", reached);
-        limit.put("max", user.getPricePlan().getMaxItems());
-
-        jsonObject.put("limit", limit);
-
-        sendJsonResponse(ctx, 200, jsonObject);
+    public static void sendDetailUser(RoutingContext ctx, User user, int totalSent, int totalReceived, int reached, List<Notification> notifications){
+        sendJsonResponse(ctx, 200, getDetailedUserInJsonObject(user, totalSent, totalReceived, reached, notifications));
     }
 
     public static void sendTransporters(RoutingContext ctx, int statusCode, List<Transporter> list){
@@ -110,13 +102,38 @@ public class Response {
         sendOkJsonResponse(ctx, getItemInJsonObject(object));
     }
 
+    public static JsonObject getDetailedUserInJsonObject(User user, int totalSent, int totalReceived, int reached, List<Notification> notifications){
+        JsonObject jsonObject = JsonObject.mapFrom(user);
+        jsonObject.put("totalSent", totalSent);
+        jsonObject.put("totalReceived", totalReceived);
+
+        JsonObject limit = new JsonObject();
+        limit.put("reached", reached);
+        limit.put("max", user.getPricePlan().getMaxItems());
+
+        jsonObject.put("limit", limit);
+
+        JsonArray jsonArray = new JsonArray();
+        for (Notification notification : notifications){
+            JsonObject objNot = new JsonObject();
+            objNot.put("title", notification.getTitle());
+            objNot.put("time", notification.getTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
+            objNot.put("message", notification.getMessage());
+            jsonArray.add(objNot);
+        }
+
+        jsonObject.put("notifications", jsonArray);
+
+        return jsonObject;
+    }
+
     private static JsonObject getItemInJsonObject(Link object){
         JsonObject jsonObject = new JsonObject();
         jsonObject.put("id", object.getItem().getId());
         jsonObject.put("name", object.getItem().getName());
         jsonObject.put("action", object.getItem().getStatus());
-        jsonObject.put("timeSent", object.getItem().getSendTime().format(DateTimeFormatter.ofPattern("yyy-MM-dd H:m")));
-        jsonObject.put("timeReceived", object.getItem().getReceivedTime().format(DateTimeFormatter.ofPattern("yyy-MM-dd H:m")));
+        jsonObject.put("timeSent", object.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
+        jsonObject.put("timeReceived", object.getItem().getReceivedTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
         jsonObject.put("receiver", object.getReceiverUser().getId());
         jsonObject.put("origin", object.getSender().getId());
         jsonObject.put("sender", object.getReceiver().getId());
