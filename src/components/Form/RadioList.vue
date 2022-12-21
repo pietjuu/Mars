@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-list" :style="{'height':height}">
+  <div class="radio-list" :style="{'max-height':maxHeight}">
 
     <div v-for="item in items" class="flex-space-between-row flex-center-vertical radio-container">
       <label :for="valueToId(item.value)">{{ item.label }}</label>
@@ -17,7 +17,7 @@ export default {
   props: {
     name: String,
     items: Array,
-    height: String
+    maxHeight: String
   },
   methods: {
     valueToId(value) {
