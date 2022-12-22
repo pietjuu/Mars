@@ -91,6 +91,18 @@ class MarsH2RepositoryTest {
 
     @Test
     void removeItemToUserBlacklist() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        Item item = new Item("Thibo");
+        User user = new User( "Henk", "De Steen", PricePlan.PREMIUM);
+
+        marsH2Repository.addUser(user);
+
+        marsH2Repository.addItemToUserBlacklist(item, user.getId());
+        int oldSize = marsH2Repository.getUserBlacklist(user.getId()).getItems().size();
+        marsH2Repository.removeItemToUserBlacklist(item, user.getId());
+
+        assertEquals(oldSize-1, marsH2Repository.getUserBlacklist(user.getId()).getItems().size());
     }
 
     @Test
