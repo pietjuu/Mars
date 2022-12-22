@@ -23,7 +23,7 @@ public class Repositories {
     }
 
     public static MarsH2Repository getH2Repo(){
-        if (h2Repo == null){
+        if (h2Repo == null) {
             try {
                 Path config = Paths.get("././././././././conf/config.json");
                 String jsonStr = Files.readString(config.toAbsolutePath());
