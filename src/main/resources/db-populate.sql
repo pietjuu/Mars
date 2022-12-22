@@ -14,3 +14,11 @@ INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('9dc5d03e-62
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('b2bd5851-b29e-40f9-9d53-31eca7211cca', 'LunaExel', 'NV', 'BUSINESS');
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('eed9c42b-7b2e-4195-b5da-719e1fba5e2d', 'Zenni', 'BV', 'BUSINESS');
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('9fa53a93-61fb-4bbc-923d-fe9c5858c56c', 'GIAA', 'INC', 'BUSINESS');
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('a194216d-9b76-4442-a3b9-413b02a883e0', 'PICKUP', 3.165367, 51.295283);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('e0a90ef7-c481-4e15-9b61-a51fbddb07f1', 'RESIDENCE', 4.113754, 50.938392);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('f3e4fc8b-5230-47b7-8f68-907826817d6e', 'RESIDENCE', 3.772950, 50.624066);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('a7ac16dc-92f5-4754-957b-cbe73942f635', 'PICKUP', 4.366608, 50.848305);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('8b2086f7-7cef-4533-a4e1-61e121b9e4fb', 'PICKUP', 3.717947, 51.047303);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('40b247a1-5552-43d6-9301-6da8320dfc40', 'RESIDENCE', 3.168264, 50.953966);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('45fdc53b-8121-4e2a-a693-4690b41847d7', 'RESIDENCE', 4.344415, 51.095626);
+INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('1631ba92-3136-4d41-b786-1ef6461c1b33', 'RESIDENCE', 5.603190, 51.030032);
