@@ -1,7 +1,7 @@
 import { get } from "@/assets/js/data-connector/api-communication-abstractor";
 
 const state = {
-    users: undefined
+    users: []
 };
 
 const getters = {
