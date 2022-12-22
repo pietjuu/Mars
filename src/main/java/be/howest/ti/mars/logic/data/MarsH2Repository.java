@@ -115,6 +115,7 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
+            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addUser()");
             throw new RepositoryException("There went something wrong with the DB! - addUser()");
         }
@@ -185,6 +186,7 @@ public class MarsH2Repository implements MarsRepositories{
     public UserBlacklist getUserBlacklist(String userID) {
         try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Blacklist where userID=?")){
             UserBlacklist userBlacklist = new UserBlacklist(userID);
+            preparedStatement.setString(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
@@ -193,6 +195,7 @@ public class MarsH2Repository implements MarsRepositories{
 
             return userBlacklist;
         } catch (SQLException e){
+            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - getUserBlacklist()");
         }
@@ -206,7 +209,19 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addItemToUserBlacklist(Item item, String userID) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Blacklist (itemID, userID) VALUES (?,?)")){
 
+            this.addItem(item);
+
+            preparedStatement.setString(1, item.getId());
+            preparedStatement.setString(2, userID);
+
+            preparedStatement.execute();
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addItemToUserBlacklist()");
+            throw new RepositoryException("There went something wrong with the DB! - addItemToUserBlacklist()");
+        }
     }
 
     @Override
@@ -309,16 +324,24 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.setString(1, item.getId());
             preparedStatement.setString(2, item.getName());
-            preparedStatement.setString(3, Json.encode(item.getMolecules()));
-            preparedStatement.setString(4, Json.encode(item.getMolecules().getMolecules()));
+            if (item.getMolecules() == null){
+                preparedStatement.setString(3, null);
+                preparedStatement.setString(4, null);
+                preparedStatement.setTimestamp(8, null);
+            } else {
+                preparedStatement.setString(3, Json.encode(item.getMolecules()));
+                preparedStatement.setString(4, Json.encode(item.getMolecules().getMolecules()));
+                preparedStatement.setTimestamp(8,  java.sql.Timestamp.valueOf(item.getSendTime()));
+            }
             preparedStatement.setDouble(5, item.getSize().getHeight());
             preparedStatement.setDouble(6, item.getSize().getLength());
             preparedStatement.setDouble(7, item.getSize().getWidth());
-            preparedStatement.setTimestamp(8,  java.sql.Timestamp.valueOf(item.getSendTime()));
+
 
             preparedStatement.execute();
         } catch (SQLException e){
-            LOGGER.log(Level.SEVERE, "DB error - addUser()");
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addItem()");
             throw new RepositoryException("There went something wrong with the DB! - addUser()");
         }
     }
