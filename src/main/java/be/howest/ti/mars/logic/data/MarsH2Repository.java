@@ -183,12 +183,25 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public UserBlacklist getUserBlacklist(String userID) {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Blacklist where userID=?")){
+            UserBlacklist userBlacklist = new UserBlacklist(userID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                userBlacklist.addItem(this.getItem(resultSet.getString("itemID")));
+            }
+
+            return userBlacklist;
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - getUserBlacklist()");
+            throw new RepositoryException("There went something wrong with the DB! - getUserBlacklist()");
+        }
     }
 
     @Override
     public void createUserBlacklist(String userID) {
-
+        LOGGER.log(Level.FINEST, "creating userBlacklist.");
+        LOGGER.log(Level.FINEST, userID);
     }
 
     @Override
