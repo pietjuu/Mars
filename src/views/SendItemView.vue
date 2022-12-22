@@ -1,12 +1,9 @@
 <template>
   <HeaderContent :title="`Send Item`"/>
-  <main class="main-content">
-    <div class="progress-bar-wrapper">
-      <ProgressBar :steps="sendSteps"/>
-    </div>
-    <div class="send-item-views">
-      <!-- <ConnectTransporterView/> -->
-      <EnterItemDetailsView/>
+  <main class="main-content flex-gap-col">
+    <ProgressBar :steps="stepsToSendItem"/>
+    <div class="step-views">
+      <ConnectTransporterView v-if="stepsToSendItem[0].inProgress" :info="stepsToSendItem[0].info"/>
     </div>
   </main>
 </template>
@@ -15,26 +12,36 @@
 import HeaderContent from "@/components/Header/HeaderContent";
 import ProgressBar from "@/components/Progress/ProgressBar";
 
-import ConnectTransporterView from "@/views/CalculatePrice/ConnectTransporterView.vue";
+import ConnectTransporterView from "@/views/SendItem/ConnectTransporterView.vue";
 import EnterItemDetailsView from "@/views/SendItem/EnterItemDetailsView";
 
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 
 export default {
   name: "SendItemView",
-  computed: {
-    ...mapGetters([`sendSteps`])
-  },
   components: {
     HeaderContent,
     ProgressBar,
     ConnectTransporterView,
     EnterItemDetailsView
+  },
+  computed: {
+    ...mapGetters([`stepsToSendItem`])
+  },
+  methods: {
+    ...mapActions(['continueToSendItemStep'])
+  },
+  created() {
+    this.continueToSendItemStep(1);
   }
 };
 </script>
 
 <style scoped lang="scss">
+
+.step-views {
+  height: 100%; /* REQUIRED FOR BUTTONS TO BE AT THE BOTTOM */
+}
 
 </style>
