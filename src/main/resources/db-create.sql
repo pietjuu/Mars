@@ -36,12 +36,12 @@ CREATE TABLE Notifications(
 CREATE TABLE Items(
                       uid varchar(256) primary key not null ,
                       name varchar(256) not null ,
-                      mapSummary varchar(256) not null ,
-                      molecules varchar(256) not null ,
+                      mapSummary varchar(256),
+                      molecules varchar(256),
                       height double not null ,
                       length double not null ,
                       width double not null ,
-                      sendTime timestamp not null
+                      sendTime timestamp
 );
 
 CREATE TABLE Blacklist(
