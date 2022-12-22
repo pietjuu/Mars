@@ -2,7 +2,7 @@
   <HeaderContent :title="`Statistics`"/>
   <main class="main-content flex-gap-col">
     <div class="flex-space-between-row flex-gap-row">
-      <TextTile class="tile-item" :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max}`"/>
+      <TextTile class="tile-item" :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
       <TextTile class="tile-item" :title="`Total number of sent items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
       <TextTile class="tile-item" :title="`Total number of received items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
       <TextTile class="tile-item" :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
