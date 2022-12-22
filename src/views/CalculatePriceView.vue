@@ -13,8 +13,8 @@
 import HeaderContent from "@/components/Header/HeaderContent.vue";
 import ProgressBar from "@/components/Progress/ProgressBar.vue";
 import {mapActions, mapGetters} from "vuex";
-import ConnectTransporterView from "@/views/Transporter/ConnectTransporterView.vue";
-import ShowPriceView from "@/views/Transporter/CalculatePrice/ShowPriceView.vue";
+import ConnectTransporterView from "@/views/CalculatePrice/ConnectTransporterView.vue";
+import ShowPriceView from "@/views/CalculatePrice/ShowPriceView.vue";
 
 export default {
   name: "CalculatePriceView",
