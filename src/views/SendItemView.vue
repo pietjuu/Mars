@@ -4,6 +4,7 @@
     <ProgressBar :steps="this.stepsToSendItem"/>
     <div class="step-views">
       <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(transporterId) => { this.initSend(transporterId); }"/>
+      <EnterItemDetailsView v-if="this.stepsToSendItem[1].inProgress"/>
     </div>
   </main>
 </template>
