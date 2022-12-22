@@ -104,7 +104,18 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addUser(User user) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES (?,?,?,?)")){
 
+            preparedStatement.setString(1, user.getId());
+            preparedStatement.setString(2, user.getFirstname());
+            preparedStatement.setString(3, user.getLastname());
+            preparedStatement.setString(4, user.getPricePlan().toString());
+
+            preparedStatement.execute();
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - addUser()");
+            throw new RepositoryException("There went something wrong with the DB! - addUser()");
+        }
     }
 
     @Override
@@ -119,7 +130,7 @@ public class MarsH2Repository implements MarsRepositories{
 
             return users;
         } catch (SQLException e){
-            LOGGER.log(Level.SEVERE, "DB error");
+            LOGGER.log(Level.SEVERE, "DB error - getUsers()");
             throw new RepositoryException("There went something wrong with the DB! - getUsers()");
         }
     }
