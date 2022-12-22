@@ -12,6 +12,7 @@ import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.RepositoryException;
+import be.howest.ti.mars.web.exceptions.ForbiddenAccessException;
 import io.vertx.core.json.Json;
 import org.h2.tools.Server;
 
@@ -38,6 +39,7 @@ To make this class useful, please complete it with the topics seen in the module
 
 public class MarsH2Repository implements MarsRepositories{
     private static final Logger LOGGER = Logger.getLogger(MarsH2Repository.class.getName());
+    public static final String NO_DATA_IS_AVAILABLE = "No data is available";
     private final Server dbWebConsole;
     private final String username;
     private final String password;
@@ -149,7 +151,7 @@ public class MarsH2Repository implements MarsRepositories{
             return convertorSQL.sqlToUser(resultSet);
 
         } catch (SQLException e){
-            if (e.toString().contains("No data is available")){
+            if (e.toString().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             } else {
                 LOGGER.log(Level.SEVERE, "DB error - getUser()");
@@ -165,6 +167,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
+            if (e.getMessage().contains("Referential integrity constraint violation:")){
+                throw new  ForbiddenAccessException("Can't delete this user because an other class depends of this user.");
+            }
             LOGGER.log(Level.SEVERE, "DB error - deleteUsers()");
             throw new RepositoryException("There went something wrong with the DB! - deleteUsers()");
         }
@@ -200,6 +205,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             return userBlacklist;
         } catch (SQLException e){
+            if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
+                return null;
+            }
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - getUserBlacklist()");
@@ -294,6 +302,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             return convertorSQL.sqlToTransporter(resultSet, getBuilding(resultSet.getString("buildingID")));
         } catch (SQLException e){
+            if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
+                return null;
+            }
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getTransporter()");
             throw new RepositoryException("There went something wrong with the DB! - getTransporter()");
@@ -358,6 +369,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             return new Building(resultSet.getString("uid"), TypeOfLocation.valueOf(resultSet.getString("typeOfLocation")), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
         } catch (SQLException e){
+            if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
+                return null;
+            }
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
             throw new RepositoryException("There went something wrong with the DB! - getTransporters()");
@@ -374,6 +388,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             return new Building(resultSet.getString("uid"), TypeOfLocation.valueOf(resultSet.getString("typeOfLocation")), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
         } catch (SQLException e){
+            if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
+                return null;
+            }
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getBuildingFromCoordinates()");
             throw new RepositoryException("There went something wrong with the DB! - getBuildingFromCoordinates()");
@@ -387,6 +404,7 @@ public class MarsH2Repository implements MarsRepositories{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
+                System.out.println(this.getItem(resultSet.getString("item")).getSendTime());
                 links.add(convertorSQL.sqlToLink(resultSet,
                                 this.getTransporter(resultSet.getString("senderTransporter")),
                                 this.getTransporter(resultSet.getString("receiverTransporter")),
@@ -419,6 +437,9 @@ public class MarsH2Repository implements MarsRepositories{
                     this.getItem(resultSet.getString("item")));
 
         } catch (SQLException e){
+            if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
+                return null;
+            }
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getLink()");
             throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
