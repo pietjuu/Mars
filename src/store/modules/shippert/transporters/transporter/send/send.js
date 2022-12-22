@@ -44,7 +44,11 @@ const state = {
 };
 
 const getters = {
-    stepsToSendItem: (state) => state.stepsToSendItem
+    stepsToSendItem: (state) => state.stepsToSendItem,
+    origin: (state) => state.origin,
+    itemName: (state) => state.itemName,
+    destination: (state) => state.destination,
+    receiver: (state) => state.receiver
 };
 
 const actions = {
@@ -60,8 +64,13 @@ const actions = {
         });
     },
     saveItemName({ commit }, name) {
-      commit('setItemName', name);
-      commit('setContinueToSendItemStep', 3);
+        commit('setItemName', name);
+    },
+    saveReceiver({ commit }, id) {
+        commit('setReceiver', id);
+    },
+    saveDestination({ commit }, id) {
+        commit('setDestination', id);
     },
     continueToSendItemStep({ commit }, number) {
         commit('setContinueToSendItemStep', number);
