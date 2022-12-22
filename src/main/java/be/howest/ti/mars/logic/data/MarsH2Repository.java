@@ -149,8 +149,12 @@ public class MarsH2Repository implements MarsRepositories{
             return convertorSQL.sqlToUser(resultSet);
 
         } catch (SQLException e){
-            LOGGER.log(Level.SEVERE, "DB error - getUsers()");
-            throw new RepositoryException("There went something wrong with the DB! - getUsers()");
+            if (e.toString().contains("No data is available")){
+                return null;
+            } else {
+                LOGGER.log(Level.SEVERE, "DB error - getUser()");
+                throw new RepositoryException("There went something wrong with the DB! - getUser()");
+            }
         }
     }
 
