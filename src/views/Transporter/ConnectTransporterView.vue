@@ -14,14 +14,9 @@
         <form action="#" id="connect-transporter">
           <fieldset>
             <legend>Connect  Your Transporter</legend>
-            <div>
-              <label for="search-transporter-name">Select Transporter <span>*</span></label>
-              <div class="flex-gap-col">
-                <input v-model="search" type="text" id="search-transporter-name" name="search-transporter-name" autocomplete="off" placeholder="Search name of transporter"/>
-                <RadioList :name="`transporter-names`" :items="this.getTransporterRadioListItems()" :maxHeight="`15rem`" @input="onSelectTransporter"/>
-                <p v-if="transporterName" class="selected-value box">Selected: <span>{{ transporterName }}</span></p>
-              </div>
-            </div>
+            <RadioListWithSearch
+                :placeholderSearchBox="`Search name of transporter`" :name="`transporter-names`"
+                :items="this.transporterRadioListItems()" :radioListMaxHeight="`15rem`" @select="onSelectTransporter"/>
           </fieldset>
         </form>
       </div>
@@ -40,6 +35,7 @@ import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import RadioList from "@/components/Form/RadioList.vue";
 import {containsQuery} from "@/assets/js/helper";
+import RadioListWithSearch from "@/components/Form/RadioListWithSearch.vue";
 
 export default {
   name: "ConnectTransporterView",
@@ -47,6 +43,7 @@ export default {
     info: String
   },
   components: {
+    RadioListWithSearch,
     RadioList,
     InfoBox,
     TextIconButton
@@ -74,17 +71,14 @@ export default {
         }
       });
     },
-    getTransporterRadioListItems() {
-      const filtered = this.transporters.filter(transporter => {
-        return containsQuery(transporter.name.toLowerCase(), this.search.toLowerCase());
-      });
-      return filtered.map(transporter => {
+    transporterRadioListItems() {
+      return this.transporters.map(transporter => {
         return { value: transporter.id, label: transporter.name };
       });
     },
-    onSelectTransporter(e) {
-      this.transporterId = e.target.value;
-      this.transporterName = e.target.dataset.label;
+    onSelectTransporter(picked) {
+      this.transporterId = picked.value;
+      this.transporterName = picked.label;
     }
   },
   created() {
@@ -111,28 +105,6 @@ export default {
     padding-bottom: 2rem;
     text-align: center;
   }
-}
-
-form {
-
-  input {
-    border-color: var(--color-primary-soft);
-    min-height: 1.25rem;
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
-    }
-  }
-
-  .selected-value {
-    line-height: 0.5rem;
-    background-color: var(--color-secondary-soft);
-    color: var(--color-white);
-    border: none;
-    border-radius: 0.5rem;
-  }
-
 }
 
 @media (max-width: 1600px) {
