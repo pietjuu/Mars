@@ -460,7 +460,6 @@ public class MarsH2Repository implements MarsRepositories{
             List<ShipNotification> shipNotifications = new ArrayList<>();
             preparedStatement.setString(1, "SHIP");
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
 
             while (resultSet.next()){
                  shipNotifications.add(convertorSQL.sqlToShipNotification(resultSet, this.getUser(resultSet.getString("receiver"))));
@@ -476,7 +475,21 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public List<SystemNotification> getSystemNotifications() {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Notifications WHERE type = ?")){
+            List<SystemNotification> systemNotifications = new ArrayList<>();
+            preparedStatement.setString(1, "SYSTEM");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                systemNotifications.add(convertorSQL.sqlToSystemNotification(resultSet));
+            }
+
+            return systemNotifications;
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getShipNotifications()");
+            throw new RepositoryException("There went something wrong with the DB! - getShipNotifications()");
+        }
     }
 
     @Override
