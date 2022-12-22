@@ -1,10 +1,12 @@
 <template>
   <HeaderContent :title="`Calculate Price`"/>
   <main class="main-content flex-gap-col">
-    <ProgressBar :steps="stepsToCalculatePrice"/>
+    <ProgressBar :steps="this.stepsToCalculatePrice"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="stepsToCalculatePrice[0].inProgress" :info="stepsToCalculatePrice[0].info" @link="(transporterId) => { this.calculatePrice(transporterId); }"/>
-      <ShowPriceView v-if="stepsToCalculatePrice[1].inProgress"/>
+      <ConnectTransporterView v-if="this.stepsToCalculatePrice[0].inProgress"
+                              :info="this.stepsToCalculatePrice[0].info"
+                              @link="(transporterId) => { this.calculatePrice(transporterId); }"/>
+      <ShowPriceView v-if="this.stepsToCalculatePrice[1].inProgress"/>
     </div>
   </main>
 </template>

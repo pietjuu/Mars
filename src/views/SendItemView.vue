@@ -1,9 +1,9 @@
 <template>
   <HeaderContent :title="`Send Item`"/>
   <main class="main-content flex-gap-col">
-    <ProgressBar :steps="stepsToSendItem"/>
+    <ProgressBar :steps="this.stepsToSendItem"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="stepsToSendItem[0].inProgress" :info="stepsToSendItem[0].info" @link="(transporterId) => { this.initSend(transporterId); }"/>
+      <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(transporterId) => { this.initSend(transporterId); }"/>
     </div>
   </main>
 </template>
