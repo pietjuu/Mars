@@ -1,5 +1,15 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.blacklist.Blacklist;
+import be.howest.ti.mars.logic.domain.blacklist.UserBlacklist;
+import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.location.Building;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
+import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.RepositoryException;
 import org.h2.tools.Server;
 
@@ -9,6 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +32,7 @@ Please always use interfaces when needed.
 To make this class useful, please complete it with the topics seen in the module OOA & SD
  */
 
-public class MarsH2Repository {
+public class MarsH2Repository implements MarsRepositories{
     private static final Logger LOGGER = Logger.getLogger(MarsH2Repository.class.getName());
     private final Server dbWebConsole;
     private final String username;
@@ -85,5 +97,140 @@ public class MarsH2Repository {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
+    }
+
+    @Override
+    public void addUser(User user) {
+
+    }
+
+    @Override
+    public Set<User> getUsers() {
+        return null;
+    }
+
+    @Override
+    public User getUser(String userID) {
+        return null;
+    }
+
+    @Override
+    public void deleteUser(String userID) {
+
+    }
+
+    @Override
+    public Blacklist getShippertBlacklist() {
+        return null;
+    }
+
+    @Override
+    public UserBlacklist getUserBlacklist(String userID) {
+        return null;
+    }
+
+    @Override
+    public void createUserBlacklist(String userID) {
+
+    }
+
+    @Override
+    public void addItemToUserBlacklist(Item item, String userID) {
+
+    }
+
+    @Override
+    public void removeItemToUserBlacklist(Item item, String userID) {
+
+    }
+
+    @Override
+    public boolean isUserBlackListExist(String userID) {
+        return false;
+    }
+
+    @Override
+    public Set<Transporter> getTransporters() {
+        return null;
+    }
+
+    @Override
+    public void addTransporter(Transporter transporter) {
+
+    }
+
+    @Override
+    public Transporter getTransporter(String transporterID) {
+        return null;
+    }
+
+    @Override
+    public void updateTransporter(Transporter transporter) {
+
+    }
+
+    @Override
+    public void deleteTransporter(Transporter transporter) {
+
+    }
+
+    @Override
+    public void addBuilding(Building building) {
+
+    }
+
+    @Override
+    public void removeBuilding(Building building) {
+
+    }
+
+    @Override
+    public Building getBuilding(String buildingID) {
+        return null;
+    }
+
+    @Override
+    public Building getBuildingFromCoordinates(Coordinates coordinates) {
+        return null;
+    }
+
+    @Override
+    public Set<Link> getAllLinks() {
+        return null;
+    }
+
+    @Override
+    public Link getLink(String linkID) {
+        return null;
+    }
+
+    @Override
+    public void addLink(Link link) {
+
+    }
+
+    @Override
+    public void deleteLink(Link link) {
+
+    }
+
+    @Override
+    public List<ShipNotification> getShipNotifications() {
+        return null;
+    }
+
+    @Override
+    public List<SystemNotification> getSystemNotifications() {
+        return null;
+    }
+
+    @Override
+    public void addShipNotification(ShipNotification notification) {
+
+    }
+
+    @Override
+    public void addSystemNotification(SystemNotification notification) {
+
     }
 }
