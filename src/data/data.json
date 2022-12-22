@@ -134,6 +134,106 @@
         }
       },
       "ipAddress": "192.168.9.1"
+    },
+        {
+      "id": "T-6",
+      "name": "Transporter of Huts",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "coordinates": {
+          "longitude": 6.342362690474167,
+          "latitude": 51.21175585969615
+        },
+        "building": {
+          "typeOfBuilding": "RESIDENCE",
+          "id": "135b2235"
+        }
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-7",
+      "name": "Farm 200 D22",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "coordinates": {
+          "longitude": 5.565043247664388,
+          "latitude": 50.87603005962442
+        },
+        "building": {
+          "typeOfBuilding": "RESIDENCE",
+          "id": "135b2235"
+        }
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-8",
+      "name": "Medic Dome 1",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "coordinates": {
+          "longitude": 5.355078883197738,
+          "latitude": 37.78748919533741
+        },
+        "building": {
+          "typeOfBuilding": "GARBAGE",
+          "id": "135b2235"
+        }
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-9",
+      "name": "Government Area-51",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "coordinates": {
+          "longitude": 6.888078883197738,
+          "latitude": 50.88848919533741
+        },
+        "building": {
+          "typeOfBuilding": "PICKUP",
+          "id": "135b2235"
+        }
+      },
+      "ipAddress": "192.168.9.1"
+    },
+    {
+      "id": "T-10",
+      "name": "Warehouse Clearance",
+      "size": {
+        "length": 50,
+        "width": 60,
+        "depth": 70
+      },
+      "location": {
+        "coordinates": {
+          "longitude": 9.388078883197738,
+          "latitude": 51.79748919533741
+        },
+        "building": {
+          "typeOfBuilding": "GARBAGE",
+          "id": "135b2235"
+        }
+      },
+      "ipAddress": "192.168.9.1"
     }
   ],
   "blacklist": {

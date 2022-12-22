@@ -36,7 +36,9 @@ export default {
     ...mapActions(['fetchUserItems']),
     resizeCharts() {
       for (const id in ChartJS.instances) {
-        ChartJS.instances[id].resize();
+        if(ChartJS.instances.hasOwnProperty(id)) {
+          ChartJS.instances[id].resize();
+        }
       }
       this.timeout = setTimeout(this.resizeCharts, 500);
     }
@@ -65,7 +67,7 @@ export default {
   flex: 1 1 30%;
 }
 
-@media (max-width: 2048px) {
+@media (max-width: 1600px) {
   .charts {
     flex-direction: column;
   }

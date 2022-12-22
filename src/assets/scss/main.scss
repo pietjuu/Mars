@@ -111,6 +111,12 @@ select {
   padding: 0.5rem 1rem;
 }
 
+.bottom-buttons {
+  @include mixins.flex(row-reverse, space-between);
+  margin-top: auto;
+}
+
+
 .important {
   color: var(--color-secondary);
   font-weight: bold;
@@ -122,6 +128,13 @@ select {
   height: calc(100% - 5.1rem); /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
   min-height: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
   min-width: 40rem; /* IMPORTANT FOR SCROLL ON OVERFLOW!!! */
+
+  &:after {
+    content: ".";
+    color: transparent;
+    margin-bottom: 2rem;
+  }
+
 }
 
 .tile {

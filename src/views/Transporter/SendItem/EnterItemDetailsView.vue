@@ -20,7 +20,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import Icon from "@/components/Icon/Icon";
+import Icon from "@/components/Icon/Icon.vue";
 
 export default {
   name: "EnterItemDetailsView",
@@ -31,12 +31,6 @@ export default {
   },
   computed: {
     ...mapGetters(['user'])
-  },
-  methods: {
-    ...mapActions(['setStepToInProgress'])
-  },
-  created() {
-    this.setStepToInProgress(2);
   },
   components: {
     Icon

@@ -1,28 +1,28 @@
 import { API, TOKEN } from '@/main.js';
 import store from '@/store/index.js';
 
-function get(uri, successHandler = logJson, failureHandler = logError) {
+function get(uri, successHandler = logJson, failureHandler = errorNotification) {
     const options = constructOptions('get');
     const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
-function post(uri, body, successHandler = logJson, failureHandler = logError) {
+function post(uri, body, successHandler = logJson, failureHandler = errorNotification) {
     const options = constructOptions('POST', body);
     const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
-function put(uri, body, successHandler = logJson, failureHandler = logError) {
+function put(uri, body, successHandler = logJson, failureHandler = errorNotification) {
     const options = constructOptions('PUT', body);
     const request = new Request(API + uri, options);
 
     return call(request, successHandler, failureHandler);
 }
 
-function remove(uri, successHandler = logJson, failureHandler = logError) {
+function remove(uri, successHandler = logJson, failureHandler = errorNotification) {
     const options = constructOptions('DELETE');
     const request = new Request(API + uri, options);
 
@@ -49,15 +49,16 @@ function logJson(response) {
     response.json().then(console.log);
 }
 
-function logError(error) {
-    console.log(error);
+function errorNotification(response) {
+    response.json().then(error => {
+        store.dispatch('createNotification', {content: error.cause, type: `error`});
+    });
 }
 
 function call(request, successHandler, errorHandler) {
     return fetch(request)
         .then(response => {
             if (!response.ok) {
-                store.dispatch('createNotification', {content: response.statusText, type: `error`});
                 throw response;
             }
             return response.json();

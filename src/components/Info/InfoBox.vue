@@ -27,8 +27,6 @@ export default {
 
 .info-box {
   background-color: rgba(255, 255, 255, 30%);
-  margin-bottom: 1rem;
-  min-height: 2rem;
 
   .info-icon {
     width: 2rem;

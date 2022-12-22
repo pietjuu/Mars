@@ -39,6 +39,8 @@ export default {
           return `error`;
         case "success":
           return `check_circle`;
+        case "warning":
+          return `warning`;
         default:
           return `info`;
       }
@@ -73,6 +75,10 @@ export default {
 
 .error {
   background-color: var(--color-red);
+}
+
+.warning {
+  background-color: var(--color-orange);
 }
 
 </style>
