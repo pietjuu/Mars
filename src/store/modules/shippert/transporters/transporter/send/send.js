@@ -2,6 +2,10 @@ import { post } from "@/assets/js/data-connector/api-communication-abstractor";
 
 const state = {
     linkId: undefined,
+    origin: undefined,
+    destination: undefined,
+    receiver: undefined,
+    itemName: undefined,
     stepsToSendItem: [
         {
             number: 1,
@@ -40,19 +44,23 @@ const state = {
 };
 
 const getters = {
-    stepsToSendItem: (state) => state.stepsToSendItem,
-    linkId: (state) => state.linkId
+    stepsToSendItem: (state) => state.stepsToSendItem
 };
 
 const actions = {
     async initSend({ commit }, transporterId) {
         commit('setCalculatedPrice', undefined);
-        commit('setLinkId', undefined);
+        commit('setAllSendItemState', undefined);
+
         await post(`transporters/${transporterId}/init`, {}, json => {
+            commit('setOrigin', transporterId);
             commit('setCalculatedPrice', json.price);
             commit('setLinkId', json.linkID);
             commit('setContinueToSendItemStep', 2);
         });
+    },
+    saveItemName({ commit }, name) {
+      commit('setItemName', name);
     },
     continueToSendItemStep({ commit }, number) {
         commit('setContinueToSendItemStep', number);
@@ -60,7 +68,18 @@ const actions = {
 };
 
 const mutations = {
+    setAllSendItemState: (state, value) => {
+      state.linkId = value;
+      state.itemName = value;
+      state.origin = value;
+      state.destination = value;
+      state.receiver = value;
+    },
     setLinkId: (state, linkId) => (state.linkId = linkId),
+    setOrigin: (state, transporterId) => (state.origin = transporterId),
+    setItemName: (state, name) => (state.itemName = name),
+    setDestination: (state, transporterId) => (state.destination = transporterId),
+    setReceiver: (state, userId) => (state.receiver = userId),
     setContinueToSendItemStep: (state, number) => {
         state.stepsToSendItem.forEach(step => {
            step.inProgress = step.number === number;
