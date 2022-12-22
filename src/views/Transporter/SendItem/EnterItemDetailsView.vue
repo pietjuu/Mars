@@ -56,6 +56,7 @@ export default {
         return;
       }
       this.saveItemName(this.name);
+      this.continueToSendItemStep(3);
     },
     onPreviousStep(e) {
       this.continueToSendItemStep(1);
