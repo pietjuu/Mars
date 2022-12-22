@@ -65,6 +65,9 @@ class MarsH2RepositoryTest {
 
     @Test
     void getShippertBlacklist() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        assertTrue(1 >= marsH2Repository.getShippertBlacklist().getItems().size());
     }
 
     @Test
