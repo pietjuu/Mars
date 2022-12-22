@@ -276,14 +276,24 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
         } catch (SQLException e){
             System.out.println(e);
-            LOGGER.log(Level.SEVERE, "DB error - addItemToUserBlacklist()");
-            throw new RepositoryException("There went something wrong with the DB! - addItemToUserBlacklist()");
+            LOGGER.log(Level.SEVERE, "DB error - addTransporter()");
+            throw new RepositoryException("There went something wrong with the DB! - addTransporter()");
         }
     }
 
     @Override
     public Transporter getTransporter(String transporterID) {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Transporters WHERE uid = ?")){
+            preparedStatement.setString(1, transporterID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return convertorSQL.sqlToTransporter(resultSet, getBuilding(resultSet.getString("buildingID")));
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getTransporter()");
+            throw new RepositoryException("There went something wrong with the DB! - getTransporter()");
+        }
     }
 
     @Override
@@ -293,7 +303,15 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void deleteTransporter(Transporter transporter) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Transporters WHERE uid = ?")){
+            preparedStatement.setString(1, transporter.getId());
+            preparedStatement.execute();
 
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - deleteTransporter()");
+            throw new RepositoryException("There went something wrong with the DB! - deleteTransporter()");
+        }
     }
 
     @Override
