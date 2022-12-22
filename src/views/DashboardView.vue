@@ -69,7 +69,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    overflow: scroll;
   }
 
 }
