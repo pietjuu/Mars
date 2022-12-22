@@ -1,2 +1,2 @@
-INSERT INTO quotes VALUES (0, 'You must accept that you might fail.');
-INSERT INTO quotes VALUES (1, 'Everyone enjoys doing the kind of work for which he is best suited.');
+INSERT INTO Users (uid, firstname, lastname, pricePlan) VALUES ('T-2', 'Thibo', 'Verbeerst', 'PREMIUM');
+INSERT INTO Users (uid, firstname, lastname, pricePlan) VALUES ('T-1', 'Glenn', 'Callens', 'STANDARD');
