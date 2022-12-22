@@ -152,7 +152,8 @@ public class MarsOpenApiBridge {
     private void getUser(RoutingContext routingContext){
         String id = Request.from(routingContext).getUserID();
 
-        Response.sendDetailUser(routingContext, controller.getUser(id), controller.getLinksSent(id), controller.getLinksReceived(id), controller.getLinksSentToday(id));
+        controller.reloadUserWebsocket(id);
+        Response.sendDetailUser(routingContext, controller.getUser(id), controller.getLinksSent(id), controller.getLinksReceived(id), controller.getLinksSentToday(id), controller.getNotifications(id));
 
     }
 

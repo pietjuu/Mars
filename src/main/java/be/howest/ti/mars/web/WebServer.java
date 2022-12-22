@@ -19,15 +19,13 @@ public class WebServer extends AbstractVerticle {
     private static final Logger LOGGER = Logger.getLogger(WebServer.class.getName());
     private Promise<Void> startPromise;
     private final MarsOpenApiBridge openApiBridge;
-    private final MarsRtcBridge rtcBridge;
 
-    public WebServer(MarsOpenApiBridge bridge, MarsRtcBridge rtcBridge) {
+    public WebServer(MarsOpenApiBridge bridge) {
         this.openApiBridge = bridge;
-        this.rtcBridge = rtcBridge;
     }
 
     public WebServer() {
-        this(new MarsOpenApiBridge(), new MarsRtcBridge());
+        this(new MarsOpenApiBridge());
     }
 
     @Override
@@ -50,7 +48,7 @@ public class WebServer extends AbstractVerticle {
 
                                 Router mainRouter = Router.router(vertx);
                                 mainRouter.route().handler(createCorsHandler());
-                                mainRouter.route(REALTIME_COMM_URI).handler(rtcBridge.getSockJSHandler(vertx));
+                                mainRouter.route(REALTIME_COMM_URI).handler(MarsRtcBridge.getSockJSHandler(vertx));
 
                                 Router openApiRouter = openApiBridge.buildRouter(routerBuilder);
                                 mainRouter.mountSubRouter("/", openApiRouter);

@@ -2,6 +2,9 @@ package be.howest.ti.mars.logic.controller;
 
 import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.notifications.Notification;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.BaseUser;
@@ -216,4 +219,8 @@ public interface MarsController {
      * @return {@link be.howest.ti.mars.logic.domain.items.Item} item
      */
     Link getItem(String userID, String itemID);
+
+    List<Notification> getNotifications(String userID);
+
+    void reloadUserWebsocket(String userID);
 }

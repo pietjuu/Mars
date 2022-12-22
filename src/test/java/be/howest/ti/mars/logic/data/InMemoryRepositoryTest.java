@@ -6,11 +6,15 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -214,5 +218,38 @@ class InMemoryRepositoryTest {
         repo.deleteLink(link);
 
         assertEquals(oldSize, repo.getAllLinks().size());
+    }
+
+    @Test
+    void getShipNotifications(){
+        InMemoryRepository repository = new InMemoryRepository();
+
+        assertTrue(1 >= repository.getShipNotifications().size());
+    }
+
+    @Test
+    void getSystemNotifications(){
+        InMemoryRepository repository = new InMemoryRepository();
+
+        assertTrue(1 >= repository.getSystemNotifications().size());
+    }
+
+    @Test
+    void addShipNotification(){
+        InMemoryRepository repository = new InMemoryRepository();
+        int oldSize = repository.getShipNotifications().size();
+
+        repository.addShipNotification(new ShipNotification("Alarm Clock from Thibo Verbeerst Sent to Glenn Callens", LocalDateTime.now().plusDays(1), "Status: DELIVERED \\nSent to Farm Dome 230 for Glenn Callens\\n Sent from Sleep Dome 8473 by Thibo Verbeerst", LocalDateTime.now(), repository.getUser("T-2")));
+        assertEquals(oldSize+1, repository.getShipNotifications().size());
+    }
+
+    @Test
+    void addSystemNotification(){
+        InMemoryRepository repository = new InMemoryRepository();
+        int oldSize = repository.getSystemNotifications().size();
+
+        repository.addSystemNotification(new SystemNotification(null, null, null, null));
+
+        assertEquals(oldSize+1, repository.getSystemNotifications().size());
     }
 }
