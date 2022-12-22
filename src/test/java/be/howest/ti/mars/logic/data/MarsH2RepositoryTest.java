@@ -120,10 +120,8 @@ class MarsH2RepositoryTest {
 
     @Test
     void getTransporters() {
-    }
-
-    @Test
-    void getTransporter() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        assertTrue(1 <= marsH2Repository.getTransporters().size());
     }
 
     @Test
