@@ -264,7 +264,21 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addTransporter(Transporter transporter) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Transporters (uid, name, height, length, width, buildingID, ip) VALUES (?,?,?,?,?,?,?)")){
+            preparedStatement.setString(1, transporter.getId());
+            preparedStatement.setString(2, transporter.getName());
+            preparedStatement.setDouble(3, transporter.getSize().getHeight());
+            preparedStatement.setDouble(4, transporter.getSize().getLength());
+            preparedStatement.setDouble(5, transporter.getSize().getWidth());
+            preparedStatement.setString(6, transporter.getBuilding().getId());
+            preparedStatement.setString(7, transporter.getIp());
 
+            preparedStatement.execute();
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addItemToUserBlacklist()");
+            throw new RepositoryException("There went something wrong with the DB! - addItemToUserBlacklist()");
+        }
     }
 
     @Override
