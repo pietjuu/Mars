@@ -23,6 +23,9 @@ public class ConvertorSQL {
     }
 
     protected Item sqlToItem(ResultSet rs) throws SQLException{
+        if (rs.getString("mapSummary") == null){
+            return new Item(rs.getString("uid"), rs.getString("name"));
+        }
         return new Item(rs.getString("uid"), rs.getString("name"), getMoleculesSummary(rs));
     }
 
