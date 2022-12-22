@@ -3,7 +3,7 @@
 
     <div v-for="item in items" class="flex-space-between-row flex-center-vertical radio-container">
       <label :for="valueToId(item.value)">{{ item.label }}</label>
-      <input :checked="item.value === selected" type="radio" :id="valueToId(item.value)" :name="name" :value="item.value" :data-label="item.label">
+      <input :checked="selected ? item.value === selected.value : false" type="radio" :id="valueToId(item.value)" :name="name" :value="item.value" :data-label="item.label">
     </div>
 
   </div>
@@ -28,7 +28,7 @@ export default {
       required: false
     },
     selected: {
-      type: String,
+      type: Object,
       required: false
     }
   },

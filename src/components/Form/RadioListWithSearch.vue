@@ -38,7 +38,8 @@ export default {
       required: true
     },
     selected: {
-      type: String,
+      type: Object,
+      default: undefined,
       required: false
     }
   },
@@ -62,6 +63,11 @@ export default {
       this.picked.value = e.target.value;
       this.picked.label = e.target.dataset.label;
       this.$emit('select', this.picked);
+    }
+  },
+  created() {
+    if(this.selected) {
+      this.picked = this.selected;
     }
   }
 };
