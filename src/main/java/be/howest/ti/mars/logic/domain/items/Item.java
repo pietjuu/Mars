@@ -58,6 +58,13 @@ public class Item {
         this.molecules = molecules;
     }
 
+    public Item(String id, String name){
+        this.id = id;
+        this.status = ItemStatus.UNDEFINED;
+        this.size = new Size(0,0,0);
+        this.name = name;
+    }
+
     public void setStatus(ItemStatus status) {
 
         if (status.equals(ItemStatus.COMPLETED) && (Objects.isNull(this.receivedTime) || Objects.isNull(this.sendTime))){
