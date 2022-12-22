@@ -1,8 +1,16 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
+import be.howest.ti.mars.logic.utils.MockInformation;
+import io.vertx.core.json.Json;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,6 +60,7 @@ class MarsH2RepositoryTest {
 
     @Test
     void deleteUser() {
+
     }
 
     @Test
@@ -144,5 +153,17 @@ class MarsH2RepositoryTest {
 
     @Test
     void addSystemNotification() {
+    }
+
+    @Test
+    void addAndSetItem(){
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        Item item = new Item("Gun", MockInformation.getMoleculesSummary());
+        item.setSendTime(LocalDateTime.now());
+        marsH2Repository.addItem(item);
+
+        assertEquals("Gun", marsH2Repository.getItem(item.getId()).getName());
+        assertEquals(item.getMolecules().getMolecules().toString(), marsH2Repository.getItem(item.getId()).getMolecules().getMolecules().toString());
     }
 }
