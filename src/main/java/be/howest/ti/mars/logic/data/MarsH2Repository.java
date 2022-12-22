@@ -226,7 +226,16 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void removeItemToUserBlacklist(Item item, String userID) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Blacklist WHERE userID = ? AND itemID = ?")){
+            preparedStatement.setString(1, userID);
+            preparedStatement.setString(2, item.getId());
 
+            preparedStatement.execute();
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - removeItemToUserBlacklist()");
+            throw new RepositoryException("There went something wrong with the DB! - removeItemToUserBlacklist()");
+        }
     }
 
     @Override
