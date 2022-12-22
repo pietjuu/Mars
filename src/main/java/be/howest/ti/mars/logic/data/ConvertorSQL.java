@@ -30,9 +30,9 @@ public class ConvertorSQL {
 
     protected Item sqlToItem(ResultSet rs) throws SQLException{
         if (rs.getString("mapSummary") == null){
-            return new Item(rs.getString("uid"), rs.getString("name"));
+            return new Item(rs.getString("uid"), rs.getString("name"), rs.getTimestamp("sendTime").toLocalDateTime());
         }
-        return new Item(rs.getString("uid"), rs.getString("name"), getMoleculesSummary(rs));
+        return new Item(rs.getString("uid"), rs.getString("name"), getMoleculesSummary(rs), rs.getTimestamp("sendTime").toLocalDateTime());
     }
 
     protected Transporter sqlToTransporter(ResultSet rs, Building building) throws SQLException{
