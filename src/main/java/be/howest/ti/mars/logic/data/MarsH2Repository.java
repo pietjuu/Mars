@@ -361,7 +361,18 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Building getBuildingFromCoordinates(Coordinates coordinates) {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Buildings WHERE longitude = ? AND latitude = ?")){
+            preparedStatement.setFloat(1, coordinates.getLongitude());
+            preparedStatement.setFloat(2, coordinates.getLatitude());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return new Building(resultSet.getString("uid"), TypeOfLocation.valueOf(resultSet.getString("typeOfLocation")), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getBuildingFromCoordinates()");
+            throw new RepositoryException("There went something wrong with the DB! - getBuildingFromCoordinates()");
+        }
     }
 
     @Override
