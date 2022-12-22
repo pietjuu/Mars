@@ -1,9 +1,11 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import io.vertx.core.json.JsonArray;
@@ -27,6 +29,10 @@ public class ConvertorSQL {
             return new Item(rs.getString("uid"), rs.getString("name"));
         }
         return new Item(rs.getString("uid"), rs.getString("name"), getMoleculesSummary(rs));
+    }
+
+    protected Transporter sqlToTransporter(ResultSet rs, Building building) throws SQLException{
+        return new Transporter(rs.getString("uid"), rs.getString("name"), new Size(rs.getDouble("height"), rs.getDouble("length"), rs.getDouble("width")), building, rs.getString("ip"));
     }
 
     private MoleculesSummary getMoleculesSummary(ResultSet rs) throws SQLException{
