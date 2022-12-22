@@ -118,7 +118,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addUser()");
             throw new RepositoryException("There went something wrong with the DB! - addUser()");
         }
@@ -208,7 +207,6 @@ public class MarsH2Repository implements MarsRepositories{
             if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             }
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - getUserBlacklist()");
         }
@@ -231,7 +229,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addItemToUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - addItemToUserBlacklist()");
         }
@@ -245,7 +242,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - removeItemToUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - removeItemToUserBlacklist()");
         }
@@ -268,7 +264,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             return transporters;
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
             throw new RepositoryException("There went something wrong with the DB! - getTransporters()");
         }
@@ -287,7 +282,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addTransporter()");
             throw new RepositoryException("There went something wrong with the DB! - addTransporter()");
         }
@@ -305,7 +299,6 @@ public class MarsH2Repository implements MarsRepositories{
             if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             }
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getTransporter()");
             throw new RepositoryException("There went something wrong with the DB! - getTransporter()");
         }
@@ -324,7 +317,6 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - deleteTransporter()");
             throw new RepositoryException("There went something wrong with the DB! - deleteTransporter()");
         }
@@ -340,7 +332,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addBuilding()");
             throw new RepositoryException("There went something wrong with the DB! - addBuilding()");
         }
@@ -354,9 +345,8 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - removeBuilding()");
-            throw new RepositoryException("There went something wrong with the DB! - deleteTransporter()");
+            throw new RepositoryException("There went something wrong with the DB! - removeBuilding()");
         }
     }
 
@@ -372,9 +362,8 @@ public class MarsH2Repository implements MarsRepositories{
             if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             }
-            System.out.println(e);
-            LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
-            throw new RepositoryException("There went something wrong with the DB! - getTransporters()");
+            LOGGER.log(Level.SEVERE, "DB error - getBuilding()");
+            throw new RepositoryException("There went something wrong with the DB! - getBuilding()");
         }
     }
 
@@ -391,7 +380,6 @@ public class MarsH2Repository implements MarsRepositories{
             if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             }
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getBuildingFromCoordinates()");
             throw new RepositoryException("There went something wrong with the DB! - getBuildingFromCoordinates()");
         }
@@ -404,7 +392,6 @@ public class MarsH2Repository implements MarsRepositories{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                System.out.println(this.getItem(resultSet.getString("item")).getSendTime());
                 links.add(convertorSQL.sqlToLink(resultSet,
                                 this.getTransporter(resultSet.getString("senderTransporter")),
                                 this.getTransporter(resultSet.getString("receiverTransporter")),
@@ -416,7 +403,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             return links;
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getAllLinks()");
             throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
         }
@@ -440,29 +426,28 @@ public class MarsH2Repository implements MarsRepositories{
             if (e.getMessage().contains(NO_DATA_IS_AVAILABLE)){
                 return null;
             }
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getLink()");
-            throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
+            throw new RepositoryException("There went something wrong with the DB! - getLink()");
         }
     }
 
     @Override
     public void addLink(Link link) {
-        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Links (uid, senderTransporter, receiverTransporter, senderUser, receiverUser , linkStatus, item) VALUES (?,?,?,?,?,?,?")){
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Links (uid, senderTransporter, receiverTransporter, senderUser, receiverUser , linkStatus, item) VALUES (?,?,?,?,?,?,?)")){
             preparedStatement.setString(1, link.getId());
             preparedStatement.setString(2, link.getSender().getId());
             preparedStatement.setString(3, link.getSender().getId());
             preparedStatement.setString(4, link.getSenderUser().getId());
             preparedStatement.setString(5, link.getReceiverUser().getId());
             preparedStatement.setString(6, link.getLinkStatus().toString());
+            this.addItem(link.getItem());
             preparedStatement.setString(7, link.getItem().getId());
 
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
-            LOGGER.log(Level.SEVERE, "DB error - getLink()");
-            throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
+            LOGGER.log(Level.SEVERE, "DB error - addLink()");
+            throw new RepositoryException("There went something wrong with the DB! - addLink()");
         }
     }
 
@@ -473,7 +458,6 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - deleteLink()");
             throw new RepositoryException("There went something wrong with the DB! - deleteLink()");
         }
@@ -492,7 +476,6 @@ public class MarsH2Repository implements MarsRepositories{
 
             return shipNotifications;
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getShipNotifications()");
             throw new RepositoryException("There went something wrong with the DB! - getShipNotifications()");
         }
@@ -511,15 +494,14 @@ public class MarsH2Repository implements MarsRepositories{
 
             return systemNotifications;
         } catch (SQLException e){
-            System.out.println(e);
-            LOGGER.log(Level.SEVERE, "DB error - getShipNotifications()");
-            throw new RepositoryException("There went something wrong with the DB! - getShipNotifications()");
+            LOGGER.log(Level.SEVERE, "DB error - getSystemNotifications()");
+            throw new RepositoryException("There went something wrong with the DB! - getSystemNotifications()");
         }
     }
 
     @Override
     public void addShipNotification(ShipNotification notification) {
-        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?")){
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?)")){
             preparedStatement.setString(1, "SHIP");
             preparedStatement.setString(2, notification.getTitle());
             preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(notification.getExpireTime()));
@@ -530,7 +512,6 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addShipNotification()");
             throw new RepositoryException("There went something wrong with the DB! - addShipNotification()");
         }
@@ -538,7 +519,7 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addSystemNotification(SystemNotification notification) {
-        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?")){
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?)")){
             preparedStatement.setString(1, "SYSTEM");
             preparedStatement.setString(2, notification.getTitle());
             preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(notification.getExpireTime()));
@@ -549,7 +530,6 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.execute();
 
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addSystemNotification()");
             throw new RepositoryException("There went something wrong with the DB! - addSystemNotification()");
         }
@@ -576,9 +556,8 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
-            System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - addItem()");
-            throw new RepositoryException("There went something wrong with the DB! - addUser()");
+            throw new RepositoryException("There went something wrong with the DB! - addItem()");
         }
     }
 
@@ -591,7 +570,7 @@ public class MarsH2Repository implements MarsRepositories{
             return convertorSQL.sqlToItem(resultSet);
 
         } catch (SQLException e){
-            LOGGER.log(Level.SEVERE, "DB error - getUsers()");
+            LOGGER.log(Level.SEVERE, "DB error - getItem()");
             throw new RepositoryException("There went something wrong with the DB! - getItem()");
         }
     }
