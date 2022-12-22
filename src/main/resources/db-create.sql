@@ -1,4 +1,4 @@
-CREATE TABLE Users(
+CREATE TABLE MarsUsers(
                       uid varchar(256) primary key not null,
                       firstname varchar(256) not null ,
                       lastname varchar(256) not null ,
