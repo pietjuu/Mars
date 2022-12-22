@@ -33,8 +33,6 @@
 import InfoBox from "@/components/Info/InfoBox.vue";
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
-import RadioList from "@/components/Form/RadioList.vue";
-import {containsQuery} from "@/assets/js/helper";
 import RadioListWithSearch from "@/components/Form/RadioListWithSearch.vue";
 
 export default {
@@ -44,7 +42,6 @@ export default {
   },
   components: {
     RadioListWithSearch,
-    RadioList,
     InfoBox,
     TextIconButton
   },
@@ -52,7 +49,6 @@ export default {
     return {
       transporterId: undefined,
       transporterName: undefined,
-      search: ''
     };
   },
   computed: {
