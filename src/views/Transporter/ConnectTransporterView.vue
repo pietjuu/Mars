@@ -47,8 +47,10 @@ export default {
   },
   data() {
     return {
-      transporterId: undefined,
-      transporterName: undefined,
+      transporter: {
+        id: undefined,
+        name: undefined
+      }
     };
   },
   computed: {
@@ -57,11 +59,11 @@ export default {
   methods: {
     ...mapActions(['fetchTransporters', 'createNotification']),
     link(e) {
-      if(!this.transporterId) {
+      if(!this.transporter.id) {
         this.createNotification({content: "Please select a transporter", type: `warning`});
         return;
       }
-      this.$emit('link', this.transporterId);
+      this.$emit('link', this.transporter);
     },
     transporterRadioListItems() {
       return this.transporters.map(transporter => {
@@ -69,8 +71,8 @@ export default {
       });
     },
     onSelectTransporter(picked) {
-      this.transporterId = picked.value;
-      this.transporterName = picked.label;
+      this.transporter.id = picked.value;
+      this.transporter.name = picked.label;
     }
   },
   created() {

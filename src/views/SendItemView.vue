@@ -3,7 +3,7 @@
   <main class="main-content flex-gap-col">
     <ProgressBar :steps="this.stepsToSendItem"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(transporterId) => { this.initSend(transporterId); }"/>
+      <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(trans) => { this.initSend(trans); }"/>
       <EnterItemDetailsView v-if="this.stepsToSendItem[1].inProgress"/>
       <EnterDestinationDetailsView v-if="this.stepsToSendItem[2].inProgress"/>
     </div>

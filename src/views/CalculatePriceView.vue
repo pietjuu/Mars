@@ -5,7 +5,7 @@
     <div class="step-views">
       <ConnectTransporterView v-if="this.stepsToCalculatePrice[0].inProgress"
                               :info="this.stepsToCalculatePrice[0].info"
-                              @link="(transporterId) => { this.calculatePrice(transporterId); }"/>
+                              @link="(trans) => { this.calculatePrice(trans.id); }"/>
       <ShowPriceView v-if="this.stepsToCalculatePrice[1].inProgress"/>
     </div>
   </main>
