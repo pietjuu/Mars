@@ -6,6 +6,7 @@ import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
+import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -15,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -39,6 +41,10 @@ public class ConvertorSQL {
 
     protected Link sqlToLink(ResultSet rs, Transporter senderT, Transporter receiverT, User senderU, User receiverU, Item item) throws SQLException{
         return new Link(rs.getString("uuid"), senderU, receiverU, senderT, receiverT, LinkStatus.valueOf(rs.getString("linkStatus")), item);
+    }
+
+    protected ShipNotification sqlToShipNotification(ResultSet rs, User receiver) throws SQLException {
+        return new ShipNotification(rs.getString("title"), rs.getTimestamp("expireTime").toLocalDateTime(), rs.getString("message"), rs.getTimestamp("createDate").toLocalDateTime(), receiver);
     }
 
     private MoleculesSummary getMoleculesSummary(ResultSet rs) throws SQLException{
