@@ -13,8 +13,12 @@
       <div class="box">
         <h2>Connect  Your Transporter</h2>
         <RadioListWithSearch
-            :placeholderSearchBox="`Search name of transporter`" :name="`transporter-names`"
-            :items="this.transporterRadioListItems()" :radioListMaxHeight="`15rem`" @select="onSelectTransporter"/>
+            :label="`Select Transporter`"
+            :placeholderSearchBox="`Search name of transporter`"
+            :name="`transporter-names`"
+            :items="this.transporterRadioListItems()"
+            :radioListMaxHeight="`15rem`"
+            @select="onSelectTransporter"/>
       </div>
     </div>
 
