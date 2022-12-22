@@ -4,7 +4,7 @@
       <TextTile class="price-tile" :title="`Cost to Send Item`" :icon="`payments`" :text="`MC ${this.calculatedPrice}`"/>
       <form class="item-name-tile box" action="#">
         <label for="item-name">Name your item</label>
-        <input v-model="itemName" type="text" id="item-name" name="item-name" required autocomplete="off" placeholder="Name your item here"/>
+        <input v-model="name" type="text" id="item-name" name="item-name" required autocomplete="off" placeholder="Name your item here"/>
       </form>
     </div>
     <div class="bottom-buttons">
@@ -24,11 +24,11 @@ export default {
   name: "EnterItemDetailsView",
   data() {
     return {
-      itemName: undefined
+      name: undefined
     };
   },
   computed: {
-    ...mapGetters(['user', 'calculatedPrice'])
+    ...mapGetters(['user', 'calculatedPrice', 'itemName'])
   },
   components: {
     TextIconButton,
@@ -36,21 +36,26 @@ export default {
     Icon
   },
   created() {
-    this.itemName = `${this.user.firstname}'s Item`;
+    if(this.itemName) {
+      this.name = this.itemName;
+    }
+    else {
+      this.name = `${this.user.firstname}'s Item`;
+    }
   },
   methods: {
     ...mapActions(['continueToSendItemStep', 'createNotification', 'saveItemName']),
     onNextStep(e) {
-      this.itemName = this.itemName.trim();
-      if(this.itemName === undefined || this.itemName.length < 1 ) {
+      this.name = this.name.trim();
+      if(this.name === undefined || this.name.length < 1 ) {
         this.createNotification({content: "Please enter a valid item name!", type: `warning`});
         return;
       }
-      else if(this.itemName.length > 20) {
+      else if(this.name.length > 20) {
         this.createNotification({content: "Item name cannot exceed more than 20 characters!", type: `warning`});
         return;
       }
-      this.saveItemName(this.itemName);
+      this.saveItemName(this.name);
     },
     onPreviousStep(e) {
       this.continueToSendItemStep(1);
