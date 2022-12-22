@@ -1,6 +1,8 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.link.Link;
+import be.howest.ti.mars.logic.domain.link.LinkStatus;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
@@ -33,6 +35,10 @@ public class ConvertorSQL {
 
     protected Transporter sqlToTransporter(ResultSet rs, Building building) throws SQLException{
         return new Transporter(rs.getString("uid"), rs.getString("name"), new Size(rs.getDouble("height"), rs.getDouble("length"), rs.getDouble("width")), building, rs.getString("ip"));
+    }
+
+    protected Link sqlToLink(ResultSet rs, Transporter senderT, Transporter receiverT, User senderU, User receiverU, Item item) throws SQLException{
+        return new Link(rs.getString("uuid"), senderU, receiverU, senderT, receiverT, LinkStatus.valueOf(rs.getString("linkStatus")), item);
     }
 
     private MoleculesSummary getMoleculesSummary(ResultSet rs) throws SQLException{
