@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -402,6 +403,7 @@ public class MarsH2Repository implements MarsRepositories{
     @Override
     public Link getLink(String linkID) {
         try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Links WHERE uid = ?")){
+            preparedStatement.setString(1, linkID);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
@@ -454,7 +456,22 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public List<ShipNotification> getShipNotifications() {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Notifications WHERE type = ?")){
+            List<ShipNotification> shipNotifications = new ArrayList<>();
+            preparedStatement.setString(1, "SHIP");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            while (resultSet.next()){
+                 shipNotifications.add(convertorSQL.sqlToShipNotification(resultSet, this.getUser(resultSet.getString("receiver"))));
+            }
+
+            return shipNotifications;
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getShipNotifications()");
+            throw new RepositoryException("There went something wrong with the DB! - getShipNotifications()");
+        }
     }
 
     @Override
