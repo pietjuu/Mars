@@ -21,6 +21,7 @@ public class Response {
 
     public static final String APPLICATION_JSON = "application/json";
     public static final String DATE_CONSTANT = "yyy-MM-dd H:m";
+    public static final String ACTION = "action";
 
     private Response() { }
 
@@ -86,10 +87,24 @@ public class Response {
                 .setStatusCode(201)
                 .end(Json.encodePrettily(jsonObject));
     }
-    public static void sendItemsHistory(RoutingContext ctx, List<Link> object){
+    public static void sendItemsHistory(RoutingContext ctx, String userID , List<Link> object){
         JsonArray result = new JsonArray();
         for (Link link : object){
-            result.add(getItemInJsonObject(link));
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.put("id", link.getItem().getId());
+            jsonObject.put("name", link.getItem().getName());
+            if (link.getSenderUser().getId().equals(userID)){
+                jsonObject.put(ACTION, "SENT");
+            } else {
+                jsonObject.put(ACTION, "RECEIVED");
+            }
+            jsonObject.put("timeSent", link.getItem().getSendTime());
+            jsonObject.put("timeReceived", link.getItem().getSendTime());
+            jsonObject.put("receiver", link.getReceiverUser().getId());
+            jsonObject.put("origin", link.getReceiver().getId());
+            jsonObject.put("sender", link.getSender().getId());
+
+            result.add(jsonObject);
         }
 
         ctx.response()
@@ -131,7 +146,7 @@ public class Response {
         JsonObject jsonObject = new JsonObject();
         jsonObject.put("id", object.getItem().getId());
         jsonObject.put("name", object.getItem().getName());
-        jsonObject.put("action", object.getItem().getStatus());
+        jsonObject.put(ACTION, object.getItem().getStatus());
         jsonObject.put("timeSent", object.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
         jsonObject.put("timeReceived", object.getItem().getReceivedTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
         jsonObject.put("receiver", object.getReceiverUser().getId());
