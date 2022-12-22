@@ -22,3 +22,13 @@ CREATE TABLE Transporters(
                              ip varchar(256) not null ,
                              FOREIGN KEY (buildingID) REFERENCES Buildings(uid)
 );
+
+CREATE TABLE Notifications(
+                              type varchar(256) not null ,
+                              title varchar(256) not null ,
+                              expireTime datetime not null ,
+                              message varchar(256) not null ,
+                              createDate datetime not null ,
+                              receiver varchar(256),
+                              FOREIGN KEY (receiver) REFERENCES Users(uid)
+);
