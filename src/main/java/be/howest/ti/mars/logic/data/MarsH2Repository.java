@@ -240,12 +240,24 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public boolean isUserBlackListExist(String userID) {
-        return false;
+        return true;
     }
 
     @Override
     public Set<Transporter> getTransporters() {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Transporters")){
+            Set<Transporter> transporters = new HashSet<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+            }
+
+            return transporters;
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
+            throw new RepositoryException("There went something wrong with the DB! - getTransporters()");
+        }
     }
 
     @Override
@@ -280,7 +292,17 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Building getBuilding(String buildingID) {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Buildings WHERE uid = ?")){
+            preparedStatement.setString(1, buildingID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return new Building(resultSet.getString("uid"), resultSet.getString("typeOfLocation"), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
+            throw new RepositoryException("There went something wrong with the DB! - getTransporters()");
+        }
     }
 
     @Override
