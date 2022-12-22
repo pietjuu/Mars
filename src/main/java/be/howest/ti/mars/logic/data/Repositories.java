@@ -3,6 +3,11 @@ package be.howest.ti.mars.logic.data;
 import be.howest.ti.mars.logic.exceptions.RepositoryException;
 import io.vertx.core.json.JsonObject;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Repositories {
     private static MarsH2Repository h2Repo = null;
     private static InMemoryRepository memoryRepository = null;
@@ -17,9 +22,20 @@ public class Repositories {
         return memoryRepository;
     }
 
-    public static MarsH2Repository getH2Repo() {
-        if (h2Repo == null)
-            throw new RepositoryException("MarsH2Repository not configured.");
+    public static MarsH2Repository getH2Repo(){
+        if (h2Repo == null){
+            try {
+                Path config = Paths.get("././././././././conf/config.json");
+                String jsonStr = Files.readString(config.toAbsolutePath());
+                JsonObject jsonObject = new JsonObject(jsonStr);
+
+                configure(jsonObject.getJsonObject("db"));
+            } catch (IOException e){
+                throw new RepositoryException("Can't load config for DB");
+            }
+
+        }
+
 
         return h2Repo;
     }
