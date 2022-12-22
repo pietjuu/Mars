@@ -421,7 +421,20 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addLink(Link link) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Links (uid, senderTransporter, receiverTransporter, senderUser, receiverUser , linkStatus, item) VALUES (?,?,?,?,?,?,?")){
+            preparedStatement.setString(1, link.getId());
+            preparedStatement.setString(2, link.getSender().getId());
+            preparedStatement.setString(3, link.getSender().getId());
+            preparedStatement.setString(4, link.getSenderUser().getId());
+            preparedStatement.setString(5, link.getReceiverUser().getId());
+            preparedStatement.setString(6, link.getLinkStatus().toString());
+            preparedStatement.setString(7, link.getItem().getId());
 
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getLink()");
+            throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
+        }
     }
 
     @Override
