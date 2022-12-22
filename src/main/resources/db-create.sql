@@ -50,3 +50,19 @@ CREATE TABLE Blacklist(
                           FOREIGN KEY (itemID) REFERENCES Items(uid),
                           FOREIGN KEY (userID) REFERENCES Users(uid)
 );
+
+
+CREATE TABLE Links(
+                      uid varchar(256) primary key not null ,
+                      senderTransporter varchar(256) not null ,
+                      receiverTransporter varchar(256) not null ,
+                      senderUser varchar(256) not null ,
+                      receiverUser varchar(256) not null ,
+                      linkStatus varchar(256) not null,
+                      item varchar(256) not null,
+                      FOREIGN KEY (senderTransporter) REFERENCES Transporters(uid),
+                      FOREIGN KEY (receiverTransporter) REFERENCES Transporters(uid),
+                      FOREIGN KEY (senderUser) REFERENCES Users(uid),
+                      FOREIGN KEY (receiverUser) REFERENCES Users(uid),
+                      FOREIGN KEY (item) REFERENCES Items(uid)
+);
