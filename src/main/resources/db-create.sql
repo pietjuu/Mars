@@ -43,3 +43,10 @@ CREATE TABLE Items(
                       width double not null ,
                       sendTime timestamp not null
 );
+
+CREATE TABLE Blacklist(
+                          itemID varchar(256) not null ,
+                          userID varchar(256) not null ,
+                          FOREIGN KEY (itemID) REFERENCES Items(uid),
+                          FOREIGN KEY (userID) REFERENCES Users(uid)
+);
