@@ -11,6 +11,8 @@ import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.RepositoryException;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 import org.h2.tools.Server;
 
 import java.io.IOException;
@@ -275,5 +277,24 @@ public class MarsH2Repository implements MarsRepositories{
     @Override
     public void addSystemNotification(SystemNotification notification) {
 
+    }
+
+    private void addItem(Item item){
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Items (uid, name, mapSummary, molecules, height, length, width, sendTime) VALUES (?,?,?,?,?,?,?,?)")){
+
+            preparedStatement.setString(1, item.getId());
+            preparedStatement.setString(2, item.getName());
+            preparedStatement.setString(3, Json.encodePrettily(item.getMolecules()));
+            preparedStatement.setString(4, Json.encodePrettily(item.getMolecules().getMolecules()));
+            preparedStatement.setDouble(5, item.getSize().getHeight());
+            preparedStatement.setDouble(6, item.getSize().getLength());
+            preparedStatement.setDouble(7, item.getSize().getWidth());
+            preparedStatement.setTimestamp(8,  java.sql.Timestamp.valueOf(item.getSendTime()));
+
+            preparedStatement.execute();
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - addUser()");
+            throw new RepositoryException("There went something wrong with the DB! - addUser()");
+        }
     }
 }
