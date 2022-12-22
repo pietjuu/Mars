@@ -298,7 +298,8 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void updateTransporter(Transporter transporter) {
-
+        deleteTransporter(transporter);
+        addTransporter(transporter);
     }
 
     @Override
