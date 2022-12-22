@@ -494,7 +494,21 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addShipNotification(ShipNotification notification) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?")){
+            preparedStatement.setString(1, "SHIP");
+            preparedStatement.setString(2, notification.getTitle());
+            preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(notification.getExpireTime()));
+            preparedStatement.setString(4, notification.getMessage());
+            preparedStatement.setTimestamp(5, java.sql.Timestamp.valueOf(notification.getTime()));
+            preparedStatement.setString(6, notification.getReceiver().getId());
 
+            preparedStatement.execute();
+
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addShipNotification()");
+            throw new RepositoryException("There went something wrong with the DB! - addShipNotification()");
+        }
     }
 
     @Override
