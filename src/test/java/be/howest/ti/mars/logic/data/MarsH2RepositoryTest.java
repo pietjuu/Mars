@@ -1,5 +1,7 @@
 package be.howest.ti.mars.logic.data;
 
+import be.howest.ti.mars.logic.domain.users.PricePlan;
+import be.howest.ti.mars.logic.domain.users.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,15 +9,45 @@ import static org.junit.jupiter.api.Assertions.*;
 class MarsH2RepositoryTest {
 
     @Test
-    void addUser() {
+    void getUsers() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        assertNotNull(marsH2Repository.getUsers());
     }
 
     @Test
-    void getUsers() {
+    void addAndDeleteUser() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        int oldValue = marsH2Repository.getUsers().size();
+        User user = new User("Henk", "De Steen", PricePlan.PREMIUM);
+
+        marsH2Repository.addUser(user);
+
+        assertEquals(oldValue+1, marsH2Repository.getUsers().size());
+
+        marsH2Repository.deleteUser(user.getId());
+
+        assertEquals(oldValue, marsH2Repository.getUsers().size());
     }
 
     @Test
     void getUser() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        int oldValue = marsH2Repository.getUsers().size();
+        User user = new User("Henk", "De Steen", PricePlan.PREMIUM);
+
+        marsH2Repository.addUser(user);
+
+        assertEquals(oldValue+1, marsH2Repository.getUsers().size());
+
+        assertEquals("Henk", marsH2Repository.getUser(user.getId()).getFirstname());
+        assertEquals(PricePlan.PREMIUM, marsH2Repository.getUser(user.getId()).getPricePlan());
+
+        marsH2Repository.deleteUser(user.getId());
+
+        assertEquals(oldValue, marsH2Repository.getUsers().size());
     }
 
     @Test
