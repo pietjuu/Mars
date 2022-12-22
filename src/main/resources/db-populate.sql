@@ -14,6 +14,7 @@ INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('9dc5d03e-62
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('b2bd5851-b29e-40f9-9d53-31eca7211cca', 'LunaExel', 'NV', 'BUSINESS');
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('eed9c42b-7b2e-4195-b5da-719e1fba5e2d', 'Zenni', 'BV', 'BUSINESS');
 INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('9fa53a93-61fb-4bbc-923d-fe9c5858c56c', 'GIAA', 'INC', 'BUSINESS');
+INSERT INTO MarsUsers (uid, firstname, lastname, pricePlan) VALUES ('-1', 'SHIPPERT', 'INC', 'BUSINESS');
 INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('a194216d-9b76-4442-a3b9-413b02a883e0', 'PICKUP', 3.165367, 51.295283);
 INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('e0a90ef7-c481-4e15-9b61-a51fbddb07f1', 'RESIDENCE', 4.113754, 50.938392);
 INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES ('f3e4fc8b-5230-47b7-8f68-907826817d6e', 'RESIDENCE', 3.772950, 50.624066);
@@ -52,6 +53,8 @@ INSERT INTO Items (uid, name, mapSummary, molecules, height, length, width, send
 INSERT INTO Items (uid, name, mapSummary, molecules, height, length, width, sendTime) VALUES ('d81bc67d-fa6d-442e-acb4-566e8b493efb', 'Salt', '{"summary":{"O2":1500,"H20":7500},"molecules":[{"id":1,"type":"H20","xPosition":118,"yPosition":119},{"id":2,"type":"O2","xPosition":18,"yPosition":11}],"size":{"height":2.0,"length":2.0,"width":2.0},"cost":1.5898532143437499E-4}', '[{"id":1,"type":"H20","xPosition":118,"yPosition":119},{"id":2,"type":"O2","xPosition":18,"yPosition":11},{"id":3,"type":"H20","xPosition":100,"yPosition":100},{"id":4,"type":"O2","xPosition":50,"yPosition":50}]', 60, 40, 50, '2022-12-11 22:03:19.125919');
 INSERT INTO BlackList (itemID, userID) VALUES ('d81bc67d-fa6d-442e-acb4-566e8b493efc', '7fbd8cf3-488a-49b4-a746-de7e92bc876d');
 INSERT INTO BlackList (itemID, userID) VALUES ('d81bc67d-fa6d-442e-acb4-566e8b493efb', 'a146d991-ae9d-42ce-8be8-c87de2018a61');
+INSERT INTO BlackList (itemID, userID) values ('d81bc67d-fa6d-442e-acb4-566e8b493efe', '-1');
+INSERT INTO BlackList (itemID, userID) values ('d81bc67d-fa6d-442e-acb4-566e8b493efd', '-1');
 INSERT INTO Links(uid, senderTransporter, receiverTransporter, senderUser, receiverUser, linkStatus, item) VALUES ('ccb930c8-3940-48e6-ae73-2631eacbcb20', '8fb972bb-9279-44a2-9c3b-a567e039cba3', '593ce2a1-00fe-4a13-997e-dea277790aff', 'a146d991-ae9d-42ce-8be8-c87de2018a61', '7fbd8cf3-488a-49b4-a746-de7e92bc876d', 'SENT', 'd81bc67d-fa6d-442e-acb4-566e8b493f08');
 INSERT INTO Links(uid, senderTransporter, receiverTransporter, senderUser, receiverUser, linkStatus, item) VALUES ('f55c82b6-0bd4-4c16-a48f-165e4f2d13ec', '8fb972bb-9279-44a2-9c3b-a567e039cba3', '593ce2a1-00fe-4a13-997e-dea277790aff', 'a146d991-ae9d-42ce-8be8-c87de2018a61', '7fbd8cf3-488a-49b4-a746-de7e92bc876d', 'SENT', 'c91bc67d-fa6d-442e-acb4-566e8b493f08');
 INSERT INTO Links(uid, senderTransporter, receiverTransporter, senderUser, receiverUser, linkStatus, item) VALUES ('d0d272e7-2483-44da-9b6c-b903728402ed', '8fb972bb-9279-44a2-9c3b-a567e039cba3', '593ce2a1-00fe-4a13-997e-dea277790aff', 'a146d991-ae9d-42ce-8be8-c87de2018a61', '7fbd8cf3-488a-49b4-a746-de7e92bc876d', 'SENT', 'b81bc67d-fa6d-442e-acb4-566e8b493f08');
