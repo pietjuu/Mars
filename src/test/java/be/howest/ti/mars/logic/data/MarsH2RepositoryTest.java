@@ -1,16 +1,17 @@
 package be.howest.ti.mars.logic.data;
 
 import be.howest.ti.mars.logic.domain.items.Item;
-import be.howest.ti.mars.logic.domain.molecule.Molecule;
+import be.howest.ti.mars.logic.domain.location.Building;
+import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.transporter.Size;
+import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.utils.MockInformation;
-import io.vertx.core.json.Json;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,15 +107,19 @@ class MarsH2RepositoryTest {
     }
 
     @Test
-    void isUserBlackListExist() {
+    void addTransporter() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        Transporter transporter = new Transporter("TT-1", new Size(10f, 10f, 10f), building, "https://transporter1.thibo.cloud/");
+        marsH2Repository.addBuilding(building);
+        marsH2Repository.addTransporter(transporter);
+
+        assertEquals("TT-1", marsH2Repository.getTransporter(transporter.getId()).getName());
     }
 
     @Test
     void getTransporters() {
-    }
-
-    @Test
-    void addTransporter() {
     }
 
     @Test
