@@ -52,20 +52,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['transporters', 'calculatedPrice'])
+    ...mapGetters(['transporters'])
   },
   methods: {
-    ...mapActions(['fetchTransporters', 'createNotification', 'calculatePrice', 'continueToCalculatedPriceStep']),
+    ...mapActions(['fetchTransporters', 'createNotification', 'initSend']),
     link(e) {
       if(!this.transporterId) {
         this.createNotification({content: "Please select a transporter", type: `warning`});
         return;
       }
-      this.calculatePrice(this.transporterId).then(() => {
-        if(this.calculatedPrice) {
-          this.continueToCalculatedPriceStep(2);
-        }
-      });
+      this.initSend(this.transporterId);
     },
     transporterRadioListItems() {
       return this.transporters.map(transporter => {

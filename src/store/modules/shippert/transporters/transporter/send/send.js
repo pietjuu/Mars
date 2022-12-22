@@ -1,4 +1,7 @@
+import { post } from "@/assets/js/data-connector/api-communication-abstractor";
+
 const state = {
+    linkId: undefined,
     stepsToSendItem: [
         {
             number: 1,
@@ -37,16 +40,27 @@ const state = {
 };
 
 const getters = {
-    stepsToSendItem: (state) => state.stepsToSendItem
+    stepsToSendItem: (state) => state.stepsToSendItem,
+    linkId: (state) => state.linkId
 };
 
 const actions = {
+    async initSend({ commit }, transporterId) {
+        commit('setCalculatedPrice', undefined);
+        commit('setLinkId', undefined);
+        await post(`transporters/${transporterId}/init`, {}, json => {
+            commit('setCalculatedPrice', json.price);
+            commit('setLinkId', json.linkID);
+            commit('setContinueToSendItemStep', 2);
+        });
+    },
     continueToSendItemStep({ commit }, number) {
         commit('setContinueToSendItemStep', number);
     }
 };
 
 const mutations = {
+    setLinkId: (state, linkId) => (state.linkId = linkId),
     setContinueToSendItemStep: (state, number) => {
         state.stepsToSendItem.forEach(step => {
            step.inProgress = step.number === number;
