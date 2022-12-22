@@ -30,7 +30,7 @@ CREATE TABLE Notifications(
                               message varchar(256) not null ,
                               createDate datetime not null ,
                               receiver varchar(256),
-                              FOREIGN KEY (receiver) REFERENCES Users(uid)
+                              FOREIGN KEY (receiver) REFERENCES MarsUsers(uid)
 );
 
 CREATE TABLE Items(
@@ -48,7 +48,7 @@ CREATE TABLE Blacklist(
                           itemID varchar(256) not null ,
                           userID varchar(256) not null ,
                           FOREIGN KEY (itemID) REFERENCES Items(uid),
-                          FOREIGN KEY (userID) REFERENCES Users(uid)
+                          FOREIGN KEY (userID) REFERENCES MarsUsers(uid)
 );
 
 
@@ -62,7 +62,7 @@ CREATE TABLE Links(
                       item varchar(256) not null,
                       FOREIGN KEY (senderTransporter) REFERENCES Transporters(uid),
                       FOREIGN KEY (receiverTransporter) REFERENCES Transporters(uid),
-                      FOREIGN KEY (senderUser) REFERENCES Users(uid),
-                      FOREIGN KEY (receiverUser) REFERENCES Users(uid),
+                      FOREIGN KEY (senderUser) REFERENCES MarsUsers(uid),
+                      FOREIGN KEY (receiverUser) REFERENCES MarsUsers(uid),
                       FOREIGN KEY (item) REFERENCES Items(uid)
 );
