@@ -45,8 +45,8 @@ function constructOptions(httpVerb, requestBody){
 }
 
 
-function logJson(response) {
-    response.json().then(console.log);
+function logJson(json) {
+    console.log(json);
 }
 
 function errorNotification(response) {
@@ -58,10 +58,13 @@ function errorNotification(response) {
 function call(request, successHandler, errorHandler) {
     return fetch(request)
         .then(response => {
+            const type =response.headers.get('content-type');
             if (!response.ok) {
                 throw response;
             }
-            return response.json();
+            if(type?.includes('application/json')) {
+                return response.json();
+            }
         })
         .then(successHandler)
         .catch(errorHandler);
