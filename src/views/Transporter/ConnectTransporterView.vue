@@ -11,14 +11,10 @@
       </div>
 
       <div class="box">
-        <form action="#" id="connect-transporter">
-          <fieldset>
-            <legend>Connect  Your Transporter</legend>
-            <RadioListWithSearch
-                :placeholderSearchBox="`Search name of transporter`" :name="`transporter-names`"
-                :items="this.transporterRadioListItems()" :radioListMaxHeight="`15rem`" @select="onSelectTransporter"/>
-          </fieldset>
-        </form>
+        <h2>Connect  Your Transporter</h2>
+        <RadioListWithSearch
+            :placeholderSearchBox="`Search name of transporter`" :name="`transporter-names`"
+            :items="this.transporterRadioListItems()" :radioListMaxHeight="`15rem`" @select="onSelectTransporter"/>
       </div>
     </div>
 
