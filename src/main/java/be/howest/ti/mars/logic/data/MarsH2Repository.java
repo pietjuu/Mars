@@ -137,12 +137,29 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public User getUser(String userID) {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM MarsUsers WHERE uid=?")){
+            preparedStatement.setString(1, userID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return convertorSQL.sqlToUser(resultSet);
+
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - getUsers()");
+            throw new RepositoryException("There went something wrong with the DB! - getUsers()");
+        }
     }
 
     @Override
     public void deleteUser(String userID) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM MarsUsers WHERE uid = ?")){
+            preparedStatement.setString(1, userID);
 
+            preparedStatement.execute();
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - deleteUsers()");
+            throw new RepositoryException("There went something wrong with the DB! - deleteUsers()");
+        }
     }
 
     @Override
