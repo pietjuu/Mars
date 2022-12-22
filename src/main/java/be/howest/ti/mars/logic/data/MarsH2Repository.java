@@ -333,7 +333,15 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void removeBuilding(Building building) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Building WHERE uid = ?")){
+            preparedStatement.setString(1, building.getId());
+            preparedStatement.execute();
 
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - removeBuilding()");
+            throw new RepositoryException("There went something wrong with the DB! - deleteTransporter()");
+        }
     }
 
     @Override
