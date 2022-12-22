@@ -195,14 +195,8 @@ class MarsH2RepositoryTest {
 
     @Test
     void getAllLinks() {
-    }
-
-    @Test
-    void getLink() {
-    }
-
-    @Test
-    void addLink() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        marsH2Repository.getAllLinks();
     }
 
     @Test
