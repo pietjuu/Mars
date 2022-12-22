@@ -12,7 +12,7 @@
 <script>
 import HeaderContent from "@/components/Header/HeaderContent.vue";
 import ProgressBar from "@/components/Progress/ProgressBar.vue";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ConnectTransporterView from "@/views/Transporter/ConnectTransporterView.vue";
 import ShowPriceView from "@/views/Transporter/CalculatePrice/ShowPriceView.vue";
 
@@ -21,6 +21,12 @@ export default {
   components: {ShowPriceView, ConnectTransporterView, ProgressBar, HeaderContent},
   computed: {
     ...mapGetters(['stepsToCalculatePrice'])
+  },
+  methods: {
+    ...mapActions(['continueToCalculatedPriceStep'])
+  },
+  created() {
+    this.continueToCalculatedPriceStep(1);
   }
 };
 </script>
