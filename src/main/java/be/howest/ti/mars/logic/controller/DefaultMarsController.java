@@ -36,7 +36,7 @@ public class DefaultMarsController implements MarsController {
 
     public static final String USERID_BLACKLIST_DOESNT_EXIST = "User ID doesn't exist in user blacklists!";
     public static final String AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED = "An empty argument is not allowed!";
-    MarsRepositories repository = Repositories.getInMemoryRepository();
+    MarsRepositories repository = Repositories.getH2Repo();
 
     @Override
     public User createUser(String firstname, String lastname, String subscription) {
