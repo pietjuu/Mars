@@ -441,7 +441,15 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void deleteLink(Link link) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Links WHERE uid = ?")){
+            preparedStatement.setString(1, link.getId());
+            preparedStatement.execute();
 
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - deleteLink()");
+            throw new RepositoryException("There went something wrong with the DB! - deleteLink()");
+        }
     }
 
     @Override
