@@ -99,7 +99,7 @@ export default {
   height: calc(100vh - 5rem - 4rem);
   background-color: var(--color-background-mute);
   padding: 2.5rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 </style>

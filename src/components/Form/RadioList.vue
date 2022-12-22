@@ -30,7 +30,7 @@ export default {
 <style scoped lang="scss">
 
 .radio-list {
-  overflow: scroll;
+  overflow-y: auto;
   padding: 0 1rem;
 }
 
