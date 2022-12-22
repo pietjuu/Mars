@@ -377,7 +377,26 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Set<Link> getAllLinks() {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Links")){
+            Set<Link> links = new HashSet<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                links.add(convertorSQL.sqlToLink(resultSet,
+                                this.getTransporter(resultSet.getString("senderTransporter")),
+                                this.getTransporter(resultSet.getString("receiverTransporter")),
+                                this.getUser(resultSet.getString("senderUser")),
+                                this.getUser(resultSet.getString("receiverUser")),
+                                this.getItem(resultSet.getString("item"))
+                                ));
+            }
+
+            return links;
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - getAllLinks()");
+            throw new RepositoryException("There went something wrong with the DB! - getAllLinks()");
+        }
     }
 
     @Override
