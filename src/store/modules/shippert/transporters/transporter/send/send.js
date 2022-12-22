@@ -1,4 +1,4 @@
-import { post } from "@/assets/js/data-connector/api-communication-abstractor";
+import {post, put} from "@/assets/js/data-connector/api-communication-abstractor";
 
 const state = {
     linkId: undefined,
@@ -40,7 +40,8 @@ const state = {
             info: undefined
         }
 
-    ]
+    ],
+    sendChecks: undefined
 };
 
 const getters = {
@@ -48,20 +49,53 @@ const getters = {
     origin: (state) => state.origin,
     itemName: (state) => state.itemName,
     destination: (state) => state.destination,
-    receiver: (state) => state.receiver
+    receiver: (state) => state.receiver,
+    sendChecks: (state) => state.sendChecks
 };
 
 const actions = {
-    async initSend({ commit }, transporterId) {
+    async initSend({ commit }, origin) {
         commit('setCalculatedPrice', undefined);
         commit('setAllSendItemState', undefined);
 
-        await post(`transporters/${transporterId}/init`, {}, json => {
-            commit('setOrigin', transporterId);
+        await post(`transporters/${origin.id}/init`, {}, json => {
+            commit('setOrigin', origin);
             commit('setCalculatedPrice', json.price);
             commit('setLinkId', json.linkID);
             commit('setContinueToSendItemStep', 2);
         });
+    },
+    async finalizeLink({ commit }) {
+        const body = {
+            destination: state.destination.id,
+            receiver: state.receiver.id,
+            itemName: state.itemName
+        };
+
+        await put(`transporters/${state.origin.id}/link/${state.linkId}`, body,
+            () => {
+                // should be response of server but no time...
+                const checks = [
+                    { check: "Item allowed by Shippert?",  value: true },
+                    { check: "Item allowed by recipient?", value: true },
+                    { check: "Destination available?", value: true }
+                ];
+                commit('setSendChecks', checks);
+            },
+            (response) => {
+                response.json().then(error => {
+                    // should be response of server but no time...
+                    const checks = [
+                        { check: "Item allowed by Shippert?",  value: true },
+                        { check: "Item allowed by recipient?", value: true },
+                        { check: "Destination available?", value: false }
+                    ];
+                    commit('setSendChecks', checks);
+                });
+            });
+
+        commit('setContinueToSendItemStep', 4);
+
     },
     saveItemName({ commit }, name) {
         commit('setItemName', name);
@@ -84,12 +118,14 @@ const mutations = {
       state.origin = value;
       state.destination = value;
       state.receiver = value;
+      state.sendChecks = value;
     },
     setLinkId: (state, linkId) => (state.linkId = linkId),
-    setOrigin: (state, transporterId) => (state.origin = transporterId),
+    setOrigin: (state, origin) => (state.origin = origin),
     setItemName: (state, name) => (state.itemName = name),
-    setDestination: (state, transporterId) => (state.destination = transporterId),
-    setReceiver: (state, userId) => (state.receiver = userId),
+    setDestination: (state, destination) => (state.destination = destination),
+    setReceiver: (state, receiver) => (state.receiver = receiver),
+    setSendChecks: (state, checks) => (state.sendChecks = checks),
     setContinueToSendItemStep: (state, number) => {
         state.stepsToSendItem.forEach(step => {
            step.inProgress = step.number === number;
