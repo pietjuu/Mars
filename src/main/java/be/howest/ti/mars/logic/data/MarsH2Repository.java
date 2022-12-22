@@ -166,7 +166,19 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Blacklist getShippertBlacklist() {
-        return null;
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Blacklist where userID='-1'")){
+            Blacklist blacklist = new Blacklist();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                blacklist.addItem(this.getItem(resultSet.getString("itemID")));
+            }
+
+            return blacklist;
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - getShippertBlacklist()");
+            throw new RepositoryException("There went something wrong with the DB! - getShippertBlacklist()");
+        }
     }
 
     @Override
