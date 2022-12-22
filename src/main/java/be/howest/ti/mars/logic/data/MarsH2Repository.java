@@ -513,7 +513,21 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addSystemNotification(SystemNotification notification) {
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Notifications (type, title, expireTime, message, createDate, receiver) VALUES (?,?,?,?,?,?")){
+            preparedStatement.setString(1, "SYSTEM");
+            preparedStatement.setString(2, notification.getTitle());
+            preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(notification.getExpireTime()));
+            preparedStatement.setString(4, notification.getMessage());
+            preparedStatement.setTimestamp(5, java.sql.Timestamp.valueOf(notification.getTime()));
+            preparedStatement.setString(6, null);
 
+            preparedStatement.execute();
+
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addSystemNotification()");
+            throw new RepositoryException("There went something wrong with the DB! - addSystemNotification()");
+        }
     }
 
     protected void addItem(Item item){
