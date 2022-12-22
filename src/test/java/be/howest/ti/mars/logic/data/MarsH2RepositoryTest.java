@@ -165,18 +165,32 @@ class MarsH2RepositoryTest {
 
     @Test
     void addBuilding() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        marsH2Repository.addBuilding(building);
     }
 
     @Test
     void removeBuilding() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        marsH2Repository.removeBuilding(building);
     }
 
     @Test
     void getBuilding() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        marsH2Repository.addBuilding(building);
+        assertEquals(TypeOfLocation.RESIDENCE, marsH2Repository.getBuilding(building.getId()).getTypeOfLocation());
     }
 
     @Test
     void getBuildingFromCoordinates() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        marsH2Repository.addBuilding(building);
+        assertEquals(TypeOfLocation.RESIDENCE, marsH2Repository.getBuildingFromCoordinates(new Coordinates(1f, 1f)).getTypeOfLocation());
     }
 
     @Test
