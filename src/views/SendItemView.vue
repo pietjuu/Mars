@@ -3,7 +3,7 @@
   <main class="main-content flex-gap-col">
     <ProgressBar :steps="stepsToSendItem"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="stepsToSendItem[0].inProgress" :info="stepsToSendItem[0].info"/>
+      <ConnectTransporterView v-if="stepsToSendItem[0].inProgress" :info="stepsToSendItem[0].info" @link="(transporterId) => { this.initSend(transporterId); }"/>
     </div>
   </main>
 </template>
@@ -12,8 +12,8 @@
 import HeaderContent from "@/components/Header/HeaderContent";
 import ProgressBar from "@/components/Progress/ProgressBar";
 
-import ConnectTransporterView from "@/views/SendItem/ConnectTransporterView.vue";
-import EnterItemDetailsView from "@/views/SendItem/EnterItemDetailsView";
+import ConnectTransporterView from "@/views/Transporter/ConnectTransporterView.vue";
+import EnterItemDetailsView from "@/views/Transporter/SendItem/EnterItemDetailsView";
 
 import {mapActions, mapGetters} from "vuex";
 
@@ -30,7 +30,7 @@ export default {
     ...mapGetters([`stepsToSendItem`])
   },
   methods: {
-    ...mapActions(['continueToSendItemStep'])
+    ...mapActions(['continueToSendItemStep', 'initSend'])
   },
   created() {
     this.continueToSendItemStep(1);

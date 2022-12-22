@@ -3,7 +3,7 @@
   <main class="main-content flex-gap-col">
     <ProgressBar :steps="stepsToCalculatePrice"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="stepsToCalculatePrice[0].inProgress" :info="stepsToCalculatePrice[0].info"/>
+      <ConnectTransporterView v-if="stepsToCalculatePrice[0].inProgress" :info="stepsToCalculatePrice[0].info" @link="(transporterId) => { this.calculatePrice(transporterId); }"/>
       <ShowPriceView v-if="stepsToCalculatePrice[1].inProgress"/>
     </div>
   </main>
@@ -12,9 +12,12 @@
 <script>
 import HeaderContent from "@/components/Header/HeaderContent.vue";
 import ProgressBar from "@/components/Progress/ProgressBar.vue";
+
+import ConnectTransporterView from "@/views/Transporter/ConnectTransporterView.vue";
+import ShowPriceView from "@/views/Transporter/CalculatePrice/ShowPriceView.vue";
+
 import {mapActions, mapGetters} from "vuex";
-import ConnectTransporterView from "@/views/CalculatePrice/ConnectTransporterView.vue";
-import ShowPriceView from "@/views/CalculatePrice/ShowPriceView.vue";
+
 
 export default {
   name: "CalculatePriceView",
@@ -23,7 +26,7 @@ export default {
     ...mapGetters(['stepsToCalculatePrice'])
   },
   methods: {
-    ...mapActions(['continueToCalculatedPriceStep'])
+    ...mapActions(['continueToCalculatedPriceStep', 'calculatePrice'])
   },
   created() {
     this.continueToCalculatedPriceStep(1);

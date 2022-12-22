@@ -55,13 +55,13 @@ export default {
     ...mapGetters(['transporters'])
   },
   methods: {
-    ...mapActions(['fetchTransporters', 'createNotification', 'initSend']),
+    ...mapActions(['fetchTransporters', 'createNotification']),
     link(e) {
       if(!this.transporterId) {
         this.createNotification({content: "Please select a transporter", type: `warning`});
         return;
       }
-      this.initSend(this.transporterId);
+      this.$emit('link', this.transporterId);
     },
     transporterRadioListItems() {
       return this.transporters.map(transporter => {
