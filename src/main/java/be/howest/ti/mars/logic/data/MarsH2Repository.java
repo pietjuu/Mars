@@ -6,6 +6,7 @@ import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.link.Link;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
+import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
 import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
 import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
@@ -250,6 +251,7 @@ public class MarsH2Repository implements MarsRepositories{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
+                transporters.add(convertorSQL.sqlToTransporter(resultSet, getBuilding(resultSet.getString("buildingID"))));
             }
 
             return transporters;
@@ -297,7 +299,7 @@ public class MarsH2Repository implements MarsRepositories{
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
-            return new Building(resultSet.getString("uid"), resultSet.getString("typeOfLocation"), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
+            return new Building(resultSet.getString("uid"), TypeOfLocation.valueOf(resultSet.getString("typeOfLocation")), new Coordinates(resultSet.getFloat("longitude"), resultSet.getFloat("latitude")));
         } catch (SQLException e){
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getTransporters()");
