@@ -98,8 +98,8 @@ public class Response {
             } else {
                 jsonObject.put(ACTION, "RECEIVED");
             }
-            jsonObject.put("timeSent", link.getItem().getSendTime());
-            jsonObject.put("timeReceived", link.getItem().getSendTime());
+            jsonObject.put("timeSent", link.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
+            jsonObject.put("timeReceived", link.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
             jsonObject.put("receiver", link.getReceiverUser().getId());
             jsonObject.put("origin", link.getReceiver().getId());
             jsonObject.put("sender", link.getSender().getId());
