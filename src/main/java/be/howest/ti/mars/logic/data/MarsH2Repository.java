@@ -13,7 +13,6 @@ import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.RepositoryException;
 import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonObject;
 import org.h2.tools.Server;
 
 import java.io.IOException;
@@ -317,6 +316,18 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void addBuilding(Building building) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Buildings (uid, typeOfLocation, longitude, latitude) VALUES (?,?,?,?)")){
+            preparedStatement.setString(1, building.getId());
+            preparedStatement.setString(2, building.getTypeOfLocation().toString());
+            preparedStatement.setFloat(3, building.getCoordinates().getLongitude());
+            preparedStatement.setFloat(4, building.getCoordinates().getLatitude());
+
+            preparedStatement.execute();
+        } catch (SQLException e){
+            System.out.println(e);
+            LOGGER.log(Level.SEVERE, "DB error - addBuilding()");
+            throw new RepositoryException("There went something wrong with the DB! - addBuilding()");
+        }
 
     }
 
