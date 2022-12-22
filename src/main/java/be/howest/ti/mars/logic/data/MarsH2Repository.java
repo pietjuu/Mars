@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -38,9 +39,11 @@ public class MarsH2Repository implements MarsRepositories{
     private final String username;
     private final String password;
     private final String url;
+    private final ConvertorSQL convertorSQL;
 
     public MarsH2Repository(String url, String username, String password, int console) {
         try {
+            this.convertorSQL = new ConvertorSQL();
             this.username = username;
             this.password = password;
             this.url = url;
@@ -81,7 +84,7 @@ public class MarsH2Repository implements MarsRepositories{
         String createDbSql = readFile(fileName);
         try (
                 Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(createDbSql);
+                PreparedStatement stmt = conn.prepareStatement(createDbSql)
         ) {
             stmt.executeUpdate();
         }
@@ -106,7 +109,20 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Set<User> getUsers() {
-        return null;
+        try{
+            Set<User> users = new HashSet<>();
+            PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Users");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                users.add(convertorSQL.sqlToUser(resultSet));
+            }
+
+            return users;
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error");
+            throw new RepositoryException("There went something wrong with the DB!");
+        }
     }
 
     @Override
