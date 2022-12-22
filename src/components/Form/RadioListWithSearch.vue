@@ -1,6 +1,6 @@
 <template>
   <form action="#">
-    <label :for="idSearchBox">Select Transporter <span>*</span></label>
+    <label :for="idSearchBox">{{ label }} <span>*</span></label>
     <div class="flex-gap-col">
       <input v-model="search" type="text" :id="idSearchBox" :name="idSearchBox" autocomplete="off" :placeholder="placeholderSearchBox"/>
       <RadioList :name="name" :items="this.filterItems()" :maxHeight="radioListMaxHeight" @input="onSelect"/>
@@ -30,6 +30,10 @@ export default {
       required: true
     },
     placeholderSearchBox: {
+      type: String,
+      required: true
+    },
+    label: {
       type: String,
       required: true
     }
