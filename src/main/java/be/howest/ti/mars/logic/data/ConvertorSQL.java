@@ -7,6 +7,7 @@ import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.molecule.Molecule;
 import be.howest.ti.mars.logic.domain.molecule.MoleculesSummary;
 import be.howest.ti.mars.logic.domain.notifications.ShipNotification;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -45,6 +46,10 @@ public class ConvertorSQL {
 
     protected ShipNotification sqlToShipNotification(ResultSet rs, User receiver) throws SQLException {
         return new ShipNotification(rs.getString("title"), rs.getTimestamp("expireTime").toLocalDateTime(), rs.getString("message"), rs.getTimestamp("createDate").toLocalDateTime(), receiver);
+    }
+
+    protected SystemNotification sqlToSystemNotification(ResultSet rs) throws SQLException{
+        return new SystemNotification(rs.getString("title"), rs.getTimestamp("expireTime").toLocalDateTime(), rs.getString("message"), rs.getTimestamp("createDate").toLocalDateTime());
     }
 
     private MoleculesSummary getMoleculesSummary(ResultSet rs) throws SQLException{
