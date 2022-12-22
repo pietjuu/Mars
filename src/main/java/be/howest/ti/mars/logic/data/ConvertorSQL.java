@@ -40,7 +40,7 @@ public class ConvertorSQL {
     }
 
     protected Link sqlToLink(ResultSet rs, Transporter senderT, Transporter receiverT, User senderU, User receiverU, Item item) throws SQLException{
-        return new Link(rs.getString("uuid"), senderU, receiverU, senderT, receiverT, LinkStatus.valueOf(rs.getString("linkStatus")), item);
+        return new Link(rs.getString("uid"), senderU, receiverU, senderT, receiverT, LinkStatus.valueOf(rs.getString("linkStatus")), item);
     }
 
     protected ShipNotification sqlToShipNotification(ResultSet rs, User receiver) throws SQLException {
