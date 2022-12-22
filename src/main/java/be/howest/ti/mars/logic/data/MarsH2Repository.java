@@ -279,13 +279,13 @@ public class MarsH2Repository implements MarsRepositories{
 
     }
 
-    private void addItem(Item item){
+    protected void addItem(Item item){
         try (PreparedStatement preparedStatement = getConnection().prepareStatement("INSERT INTO Items (uid, name, mapSummary, molecules, height, length, width, sendTime) VALUES (?,?,?,?,?,?,?,?)")){
 
             preparedStatement.setString(1, item.getId());
             preparedStatement.setString(2, item.getName());
-            preparedStatement.setString(3, Json.encodePrettily(item.getMolecules()));
-            preparedStatement.setString(4, Json.encodePrettily(item.getMolecules().getMolecules()));
+            preparedStatement.setString(3, Json.encode(item.getMolecules()));
+            preparedStatement.setString(4, Json.encode(item.getMolecules().getMolecules()));
             preparedStatement.setDouble(5, item.getSize().getHeight());
             preparedStatement.setDouble(6, item.getSize().getLength());
             preparedStatement.setDouble(7, item.getSize().getWidth());
@@ -295,6 +295,20 @@ public class MarsH2Repository implements MarsRepositories{
         } catch (SQLException e){
             LOGGER.log(Level.SEVERE, "DB error - addUser()");
             throw new RepositoryException("There went something wrong with the DB! - addUser()");
+        }
+    }
+
+    protected Item getItem(String itemID){
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Items WHERE uid=?")){
+            preparedStatement.setString(1, itemID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return convertorSQL.sqlToItem(resultSet);
+
+        } catch (SQLException e){
+            LOGGER.log(Level.SEVERE, "DB error - getUsers()");
+            throw new RepositoryException("There went something wrong with the DB! - getItem()");
         }
     }
 }
