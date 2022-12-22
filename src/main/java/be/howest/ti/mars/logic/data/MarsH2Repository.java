@@ -430,6 +430,8 @@ public class MarsH2Repository implements MarsRepositories{
             preparedStatement.setString(6, link.getLinkStatus().toString());
             preparedStatement.setString(7, link.getItem().getId());
 
+            preparedStatement.execute();
+
         } catch (SQLException e){
             System.out.println(e);
             LOGGER.log(Level.SEVERE, "DB error - getLink()");
