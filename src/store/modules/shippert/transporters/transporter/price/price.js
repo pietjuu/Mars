@@ -31,6 +31,7 @@ const actions = {
         commit('setCalculatedPrice', undefined);
         await get(`transporters/${transporterId}/price`, calculatedPrice => {
             commit('setCalculatedPrice', calculatedPrice.price);
+            commit('setContinueToCalculatedPriceStep', 2);
         });
     },
     continueToCalculatedPriceStep({ commit }, number) {

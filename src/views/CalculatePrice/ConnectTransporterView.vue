@@ -61,11 +61,7 @@ export default {
         this.createNotification({content: "Please select a transporter", type: `warning`});
         return;
       }
-      this.calculatePrice(this.transporterId).then(() => {
-        if(this.calculatedPrice) {
-          this.continueToCalculatedPriceStep(2);
-        }
-      });
+      this.calculatePrice(this.transporterId);
     },
     transporterRadioListItems() {
       return this.transporters.map(transporter => {
