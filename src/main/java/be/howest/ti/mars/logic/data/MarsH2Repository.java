@@ -109,9 +109,8 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public Set<User> getUsers() {
-        try{
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM MarsUsers")){
             Set<User> users = new HashSet<>();
-            PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM Users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
@@ -121,7 +120,7 @@ public class MarsH2Repository implements MarsRepositories{
             return users;
         } catch (SQLException e){
             LOGGER.log(Level.SEVERE, "DB error");
-            throw new RepositoryException("There went something wrong with the DB!");
+            throw new RepositoryException("There went something wrong with the DB! - getUsers()");
         }
     }
 
