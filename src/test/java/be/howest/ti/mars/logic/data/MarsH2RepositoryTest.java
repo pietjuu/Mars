@@ -126,6 +126,21 @@ class MarsH2RepositoryTest {
 
     @Test
     void updateTransporter() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+
+        Building building = new Building(TypeOfLocation.RESIDENCE, new Coordinates(1f, 1f));
+        Transporter transporter = new Transporter("TT-1", new Size(10f, 10f, 10f), building, "https://transporter1.thibo.cloud/");
+        marsH2Repository.addBuilding(building);
+        marsH2Repository.addTransporter(transporter);
+
+        assertEquals("TT-1", marsH2Repository.getTransporter(transporter.getId()).getName());
+
+        transporter.setIp("192.168.0.1");
+
+        marsH2Repository.updateTransporter(transporter);
+
+        assertEquals("192.168.0.1", marsH2Repository.getTransporter(transporter.getId()).getIp());
+
     }
 
     @Test
