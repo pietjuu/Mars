@@ -61,6 +61,7 @@ const actions = {
     },
     saveItemName({ commit }, name) {
       commit('setItemName', name);
+      commit('setContinueToSendItemStep', 3);
     },
     continueToSendItemStep({ commit }, number) {
         commit('setContinueToSendItemStep', number);
