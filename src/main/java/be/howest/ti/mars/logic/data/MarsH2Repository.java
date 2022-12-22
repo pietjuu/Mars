@@ -334,7 +334,7 @@ public class MarsH2Repository implements MarsRepositories{
 
     @Override
     public void removeBuilding(Building building) {
-        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Building WHERE uid = ?")){
+        try( PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM Buildings WHERE uid = ?")){
             preparedStatement.setString(1, building.getId());
             preparedStatement.execute();
 
