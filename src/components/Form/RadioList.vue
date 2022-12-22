@@ -3,7 +3,7 @@
 
     <div v-for="item in items" class="flex-space-between-row flex-center-vertical radio-container">
       <label :for="valueToId(item.value)">{{ item.label }}</label>
-      <input type="radio" :id="valueToId(item.value)" :name="name" :value="item.value" :data-label="item.label">
+      <input :checked="item.value === selected" type="radio" :id="valueToId(item.value)" :name="name" :value="item.value" :data-label="item.label">
     </div>
 
   </div>
@@ -15,9 +15,22 @@ import { convertSpacesToUnderscores } from "@/assets/js/helper";
 export default {
   name: "RadioList",
   props: {
-    name: String,
-    items: Array,
-    maxHeight: String
+    name: {
+      type: String,
+      required: true
+    },
+    items: {
+      type: Array,
+      required: true
+    },
+    maxHeight: {
+      type: String,
+      required: false
+    },
+    selected: {
+      type: String,
+      required: false
+    }
   },
   methods: {
     valueToId(value) {

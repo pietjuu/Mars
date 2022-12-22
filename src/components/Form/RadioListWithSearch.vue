@@ -3,7 +3,7 @@
     <label :for="idSearchBox">{{ label }} <span>*</span></label>
     <div class="flex-gap-col">
       <input v-model="search" type="text" :id="idSearchBox" :name="idSearchBox" autocomplete="off" :placeholder="placeholderSearchBox"/>
-      <RadioList :name="name" :items="this.filterItems()" :maxHeight="radioListMaxHeight" @input="onSelect"/>
+      <RadioList :selected="selected" :name="name" :items="this.filterItems()" :maxHeight="radioListMaxHeight" @input="onSelect"/>
       <p v-if="picked.label" class="selected-value box">Selected: <span>{{ picked.label }}</span></p>
     </div>
   </form>
@@ -36,6 +36,10 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    selected: {
+      type: String,
+      required: false
     }
   },
   data() {
