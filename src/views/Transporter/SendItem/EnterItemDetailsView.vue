@@ -1,5 +1,6 @@
 <template>
-  <div class="item-details-wrapper flex-gap-col">
+  <Load v-if="loading"/>
+  <div class="item-details-wrapper flex-gap-col" v-if="!loading">
     <div class="flex-gap-row">
       <TextTile class="price-tile" :title="`Cost to Send Item`" :icon="`payments`" :text="`MC ${this.calculatedPrice}`"/>
       <form class="item-name-tile box" action="#">
@@ -19,9 +20,17 @@ import {mapActions, mapGetters} from "vuex";
 import Icon from "@/components/Icon/Icon.vue";
 import TextTile from "@/components/Tile/TextTile.vue";
 import TextIconButton from "@/components/Button/TextIconButton.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "EnterItemDetailsView",
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   data() {
     return {
       name: undefined
@@ -31,6 +40,7 @@ export default {
     ...mapGetters(['user', 'calculatedPrice', 'itemName'])
   },
   components: {
+    Load,
     TextIconButton,
     TextTile,
     Icon

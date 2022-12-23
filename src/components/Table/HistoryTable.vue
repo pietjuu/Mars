@@ -54,15 +54,11 @@ export default {
     ...mapGetters(['transporters', 'users'])
   },
   methods: {
-    ...mapActions(['fetchTransporters', 'fetchUsers']),
     getTableData(items) {
       return itemsToUserReadable(items, this.transporters, this.users);
     }
   },
   async created() {
-
-    await this.fetchTransporters();
-    await this.fetchUsers();
 
     if(this.transporters && this.users) {
       this.tableData = this.getTableData(this.items);

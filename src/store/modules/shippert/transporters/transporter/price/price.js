@@ -18,21 +18,26 @@ const state = {
             inProgress: false,
             info: undefined
         }
-    ]
+    ],
+    priceRequestState: {
+        inProgress: false
+    }
 };
 
 const getters = {
     calculatedPrice: (state) => state.calculatedPrice,
-    stepsToCalculatePrice: (state) => state.stepsToCalculatePrice
+    stepsToCalculatePrice: (state) => state.stepsToCalculatePrice,
+    priceRequestState: (state) => state.priceRequestState
 };
 
 const actions = {
     async calculatePrice({ commit }, transporterId) {
         commit('setCalculatedPrice', undefined);
+        commit('setPriceRequestState', { inProgress: true });
         await get(`transporters/${transporterId}/price`, calculatedPrice => {
             commit('setCalculatedPrice', calculatedPrice.price);
             commit('setContinueToCalculatedPriceStep', 2);
-        });
+        }).then(() => commit('setPriceRequestState', { inProgress: false }));
     },
     continueToCalculatedPriceStep({ commit }, number) {
         commit('setContinueToCalculatedPriceStep', number);
@@ -48,7 +53,8 @@ const mutations = {
         state.stepsToCalculatePrice.forEach(step => {
            step.inProgress = step.number === number;
         });
-    }
+    },
+    setPriceRequestState: (state, priceRequestState) => (state.priceRequestState = priceRequestState)
 };
 
 export default {

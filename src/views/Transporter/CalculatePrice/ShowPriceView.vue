@@ -1,5 +1,6 @@
 <template>
-  <div class="show-calculated-price-wrapper flex-gap-col">
+  <Load v-if="loading"/>
+  <div class="show-calculated-price-wrapper flex-gap-col" v-if="!loading">
     <TextTile :title="`Cost to Send Item`" :icon="`payments`" :text="`MC ${this.calculatedPrice}`"/>
     <div class="bottom-buttons">
       <TextIconButton :content="`Go back`" :icon="`refresh`" :width="`8.5rem`" :height="`2.3rem`" @click="onGoBack"/>
@@ -11,10 +12,18 @@
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import TextTile from "@/components/Tile/TextTile.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "ShowPriceView",
-  components: {TextTile, TextIconButton},
+  components: {Load, TextTile, TextIconButton},
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   computed: {
     ...mapGetters(['calculatedPrice'])
   },

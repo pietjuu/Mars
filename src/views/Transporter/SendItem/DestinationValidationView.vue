@@ -1,5 +1,6 @@
 <template>
-  <div class="destination-validation flex-gap-col" v-if="this.sendChecks">
+  <Load v-if="loading"/>
+  <div class="destination-validation flex-gap-col" v-if="!loading">
     <div class="box checks-display">
       <ul class="checks">
         <li v-for="check in this.sendChecks">
@@ -30,10 +31,18 @@
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import Icon from "@/components/Icon/Icon.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "DestinationValidationView",
-  components: {Icon, TextIconButton},
+  components: {Load, Icon, TextIconButton},
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   data() {
     return {
       valid: undefined

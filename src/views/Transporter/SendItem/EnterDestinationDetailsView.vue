@@ -1,5 +1,6 @@
 <template>
-  <div class="destination-details-wrapper flex-gap-col">
+  <Load v-if="loading"/>
+  <div class="destination-details-wrapper flex-gap-col" v-if="!loading">
     <div class="flex-gap-row">
        <div class="box receivers-container">
         <RadioListWithSearch
@@ -35,10 +36,18 @@
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import RadioListWithSearch from "@/components/Form/RadioListWithSearch.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "EnterDestinationDetailsView",
-  components: {RadioListWithSearch, TextIconButton},
+  components: {Load, RadioListWithSearch, TextIconButton},
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   data() {
     return {
       selectedDestination: {
@@ -56,7 +65,7 @@ export default {
     ...mapGetters(['users', 'transporters', 'origin', 'user', 'destination', 'receiver'])
   },
   methods: {
-    ...mapActions(['continueToSendItemStep', 'fetchUsers', 'fetchTransporters', 'createNotification', 'saveReceiver', 'saveDestination', 'finalizeLink']),
+    ...mapActions(['continueToSendItemStep', 'createNotification', 'saveReceiver', 'saveDestination', 'finalizeLink']),
     connect(e) {
       if(!this.destination && !this.receiver) {
         this.createNotification({content: "Please select a receiver and destination", type: `warning`});
@@ -103,8 +112,6 @@ export default {
     }
   },
   async created() {
-    await this.fetchUsers();
-    await this.fetchTransporters();
 
     if(this.destination) {
       this.selectedDestination = this.destination;

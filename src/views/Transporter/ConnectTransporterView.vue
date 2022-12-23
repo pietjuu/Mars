@@ -1,32 +1,33 @@
 <template>
-<div class="connect-transporter-wrapper flex-gap-col">
+  <load v-if="loading"/>
+  <div class="connect-transporter-wrapper flex-gap-col" v-if="!loading">
 
-    <InfoBox :text="info"/>
+      <InfoBox :text="info"/>
 
-    <div class="form-and-message-wrapper flex-gap-row">
+      <div class="form-and-message-wrapper flex-gap-row">
 
-      <div class="important box flex-center-col">
-        <img src="@/assets/media/transporter.png" alt="">
-        <p>Place item in the Transporter and close the door!</p>
+        <div class="important box flex-center-col">
+          <img src="@/assets/media/transporter.png" alt="">
+          <p>Place item in the Transporter and close the door!</p>
+        </div>
+
+        <div class="box">
+          <h2>Connect  Your Transporter</h2>
+          <RadioListWithSearch
+              :label="`Select Transporter`"
+              :placeholderSearchBox="`Search name of transporter`"
+              :name="`transporter-names`"
+              :items="this.transporterRadioListItems()"
+              :radioListMaxHeight="`15rem`"
+              @select="onSelectTransporter"/>
+        </div>
       </div>
 
-      <div class="box">
-        <h2>Connect  Your Transporter</h2>
-        <RadioListWithSearch
-            :label="`Select Transporter`"
-            :placeholderSearchBox="`Search name of transporter`"
-            :name="`transporter-names`"
-            :items="this.transporterRadioListItems()"
-            :radioListMaxHeight="`15rem`"
-            @select="onSelectTransporter"/>
+      <div class="bottom-buttons">
+        <TextIconButton :content="`Link`" :icon="`link`" :width="`6.5rem`" :height="`2.3rem`" @click="link"/>
       </div>
-    </div>
 
-    <div class="bottom-buttons">
-      <TextIconButton :content="`Link`" :icon="`link`" :width="`6.5rem`" :height="`2.3rem`" @click="link"/>
-    </div>
-
-</div>
+  </div>
 </template>
 
 <script>
@@ -34,13 +35,23 @@ import InfoBox from "@/components/Info/InfoBox.vue";
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import RadioListWithSearch from "@/components/Form/RadioListWithSearch.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "ConnectTransporterView",
   props: {
-    info: String
+    info: {
+      type: String,
+      required: false
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   components: {
+    Load,
     RadioListWithSearch,
     InfoBox,
     TextIconButton
@@ -57,7 +68,7 @@ export default {
     ...mapGetters(['transporters'])
   },
   methods: {
-    ...mapActions(['fetchTransporters', 'createNotification']),
+    ...mapActions(['createNotification']),
     link(e) {
       if(!this.transporter.id) {
         this.createNotification({content: "Please select a transporter", type: `warning`});
@@ -74,9 +85,6 @@ export default {
       this.transporter.id = picked.value;
       this.transporter.name = picked.label;
     }
-  },
-  created() {
-    this.fetchTransporters();
   }
 };
 </script>

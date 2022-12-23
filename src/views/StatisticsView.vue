@@ -33,7 +33,6 @@ export default {
     ...mapGetters(['user', 'userItems'])
   },
   methods: {
-    ...mapActions(['fetchUserItems', 'fetchTransporters', 'fetchUsers']),
     resizeCharts() {
       for (const id in ChartJS.instances) {
         if(ChartJS.instances.hasOwnProperty(id)) {
@@ -45,11 +44,6 @@ export default {
   },
   unmounted() {
     clearTimeout(this.timeout);
-  },
-  created() {
-    this.fetchUserItems();
-    this.fetchUsers();
-    this.fetchTransporters();
   },
   mounted() {
     this.resizeCharts();

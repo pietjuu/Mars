@@ -3,11 +3,15 @@
   <main class="main-content flex-gap-col">
     <ProgressBar :steps="this.stepsToSendItem"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(trans) => { this.initSend(trans); }"/>
-      <EnterItemDetailsView v-if="this.stepsToSendItem[1].inProgress"/>
-      <EnterDestinationDetailsView v-if="this.stepsToSendItem[2].inProgress"/>
-      <DestinationValidationView v-if="this.stepsToSendItem[3].inProgress"/>
-      <ConfirmSendItemView v-if="this.stepsToSendItem[4].inProgress"/>
+      <ConnectTransporterView
+          v-if="this.stepsToSendItem[0].inProgress"
+          :loading="this.sendRequestState.inProgress"
+          :info="this.stepsToSendItem[0].info"
+          @link="(trans) => { this.initSend(trans); }"/>
+      <EnterItemDetailsView :loading="this.sendRequestState.inProgress" v-if="this.stepsToSendItem[1].inProgress"/>
+      <EnterDestinationDetailsView :loading="this.sendRequestState.inProgress" v-if="this.stepsToSendItem[2].inProgress"/>
+      <DestinationValidationView :loading="this.sendRequestState.inProgress" v-if="this.stepsToSendItem[3].inProgress"/>
+      <ConfirmSendItemView :loading="this.sendRequestState.inProgress" v-if="this.stepsToSendItem[4].inProgress"/>
     </div>
   </main>
 </template>
@@ -37,7 +41,7 @@ export default {
     EnterItemDetailsView
   },
   computed: {
-    ...mapGetters([`stepsToSendItem`])
+    ...mapGetters([`stepsToSendItem`, 'sendRequestState'])
   },
   methods: {
     ...mapActions(['continueToSendItemStep', 'initSend'])
