@@ -78,7 +78,8 @@ const actions = {
                 const checks = [
                     { check: "Item allowed by Shippert?",  value: true },
                     { check: "Item allowed by recipient?", value: true },
-                    { check: "Destination available?", value: true }
+                    { check: "Destination available?", value: true },
+                    { check: "Does item fit destination?", value: true }
                 ];
                 commit('setSendChecks', checks);
             },
@@ -88,7 +89,8 @@ const actions = {
                     const checks = [
                         { check: "Item allowed by Shippert?",  value: true },
                         { check: "Item allowed by recipient?", value: true },
-                        { check: "Destination available?", value: false }
+                        { check: "Destination available?", value: true },
+                        { check: "Does item fit destination?", value: false }
                     ];
                     commit('setSendChecks', checks);
                 });
