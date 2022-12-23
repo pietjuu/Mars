@@ -1,3 +1,16 @@
+- [Mars web project group-05](#mars-web-project-group-05)
+  * [Important public urls](#important-public-urls)
+  * [Please complete the following instructions before committing the final version on the project](#please-complete-the-following-instructions-before-committing-the-final-version-on-the-project)
+  * [Instructions for testing locally](#instructions-for-testing-locally)
+  * [Instruction for testing the web client locally with a deployed mars-server](#instruction-for-testing-the-web-client-locally-with-a-deployed-mars-server)
+  * [Instructions for local quality checks](#instructions-for-local-quality-checks)
+  * [Default files](#default-files)
+    + [CSS](#css)
+    + [JavaScript](#javascript)
+  * [Need to know](#need-to-know)
+  * [deploy](#deploy)
+  * [bugs](#bugs)
+
 # Mars web project group-05
 This is the client-side start project for the Analysis and Development project.
 
@@ -7,7 +20,7 @@ Create your client-side project in this repo.
 * Web project: https://project-ii.ti.howest.be/mars-05/
 * Sonar reports: https://sonar.ti.howest.be/dashboard?id=2022.project-ii%3Amars-client-05
 
-## Please complete the following instructions before committing the **final version** on the project
+## Please complete the following instructions before committing the final version on the project
 Please **add** any **instructions** required to: 
 * make your application work if applicable 
 * be able to test the application (credentials, populated db, ...)
@@ -72,3 +85,14 @@ The `reset.css` has already been supplied, but it's up to you and your team to a
 A demonstration for connecting with the API has already been set up. 
 
 We urge you to divide your JS files into many small JS files. 
+
+
+# Need to know
+typ here what somebody should know before they start with our project
+
+# deploy
+type here how you should deploy the client
+
+# bugs
+type here the known bugs
+
