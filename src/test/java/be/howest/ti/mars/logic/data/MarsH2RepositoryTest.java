@@ -62,7 +62,7 @@ class MarsH2RepositoryTest {
     void getShippertBlacklist() {
         MarsH2Repository marsH2Repository = Repositories.getH2Repo();
 
-        assertTrue(1 >= marsH2Repository.getShippertBlacklist().getItems().size());
+        assertTrue(1 <= marsH2Repository.getShippertBlacklist().getItems().size());
     }
 
     @Test
@@ -200,23 +200,15 @@ class MarsH2RepositoryTest {
     }
 
     @Test
-    void deleteLink() {
-    }
-
-    @Test
     void getShipNotifications() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        marsH2Repository.getShipNotifications();
     }
 
     @Test
     void getSystemNotifications() {
-    }
-
-    @Test
-    void addShipNotification() {
-    }
-
-    @Test
-    void addSystemNotification() {
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        marsH2Repository.getSystemNotifications();
     }
 
     @Test
