@@ -57,8 +57,8 @@ export default {
     },
     createItem(event) {
       const input = event.target.closest('.add-blacklist-item').querySelector('#new-blacklist-item');
-      const newItem = input.value;
-      if(!this.isValidUrlParameter(newItem)) {
+      const newItem = input.value.trim();
+      if(!this.isValidBlacklistItemName(newItem)) {
         this.createNotification({content: "Name of blacklist item isn't allowed", type: `warning`});
         return;
       }
@@ -69,7 +69,7 @@ export default {
       this.createUserBlacklistItem(newItem);
       input.value = "";
     },
-    isValidUrlParameter(value) {
+    isValidBlacklistItemName(value) {
       if (value === undefined || value === null) {
         return false;
       }
@@ -79,7 +79,7 @@ export default {
       if (value.trim() === '') {
         return false;
       }
-      return !(/[^a-zA-Z0-9_\.~!\*'\(\);:@&=\+\$,\/\?%\[\]#-]/.test(value));
+      return (/^[a-zA-Z0-9\s]+$/.test(value));
     }
   },
   computed: {
