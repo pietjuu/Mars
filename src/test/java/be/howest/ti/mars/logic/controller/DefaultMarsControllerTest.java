@@ -312,13 +312,6 @@ class DefaultMarsControllerTest {
     }
 
     @Test
-    void testAddBuildingAlreadyExist(){
-        MarsController controller = new DefaultMarsController();
-
-        assertThrows(IllegalArgumentException.class, () -> controller.addBuilding("RESIDENCE", new Coordinates(99999.69f, 99999.69f)));
-    }
-
-    @Test
     void testAddBuildingWithNonExistingType(){
         MarsController controller = new DefaultMarsController();
 

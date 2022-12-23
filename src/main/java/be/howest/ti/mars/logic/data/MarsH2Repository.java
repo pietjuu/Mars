@@ -45,7 +45,6 @@ public class MarsH2Repository implements MarsRepositories{
 
     public MarsH2Repository(String url, String username, String password, int console) {
         try {
-            this.cleanUp();
             this.convertorSQL = new ConvertorSQL();
             this.username = username;
             this.password = password;
