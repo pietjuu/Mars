@@ -2,7 +2,8 @@
   <HeaderContent :title="`Statistics`"/>
   <main class="main-content flex-gap-col">
     <div class="flex-space-between-row flex-gap-row">
-      <TextTile class="tile-item" :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
+      <TextTile class="tile-item" :title="`My Daily Limit`" :icon="`security`"
+                :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
       <TextTile class="tile-item" :title="`Number of Sent Items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
       <TextTile class="tile-item" :title="`Number of Received Items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
       <TextTile class="tile-item" :title="`Total Number of Items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
@@ -20,7 +21,7 @@
 
 <script>
 import HeaderContent from "@/components/Header/HeaderContent.vue";
-import {mapActions, mapGetters} from "vuex";
+import { mapGetters} from "vuex";
 import TextTile from "@/components/Tile/TextTile.vue";
 import ItemsPerDayLineChart from "@/components/Graph/ItemsPerDayLineChart.vue";
 import DestinationsPieChart from "@/components/Graph/DestinationsPieChart.vue";

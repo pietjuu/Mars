@@ -49,7 +49,9 @@ export default {
   methods: {
     ...mapActions(['fetchUserBlacklist', 'fetchShippertBlacklist', 'deleteUserBlacklistItem', 'createUserBlacklistItem', 'createNotification']),
     setCurrentTab(event) {
-      if(!event.target.closest('button')) { return; }
+      if(!event.target.closest('button')) {
+        return;
+      }
       this.currentTab = event.target.dataset.tab;
     },
     deleteItem(event) {

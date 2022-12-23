@@ -1,6 +1,6 @@
 <template>
   <LoadApp v-if="!loaded && !error.state"/>
-  <Error v-if="error.state" :messages="error.messages"/>
+  <ErrorWriter v-if="error.state" :messages="error.messages"/>
   <div id="logged-in-layout" v-if="loaded">
     <div class="sidebar-wrapper">
       <Sidebar/>
@@ -22,13 +22,13 @@ import LoadApp from "@/components/Load/LoadApp";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import HeaderBar from "@/components/Header/HeaderBar";
 import NotificationBar from "@/components/Notification/NotificationBar";
-import Error from "@/components/Error/Error";
+import ErrorWriter from "@/components/Error/ErrorWriter.vue";
 
 
 export default {
   name: "LoggedInLayout",
   components: {
-    Error,
+    ErrorWriter,
     LoadApp,
     Sidebar,
     HeaderBar,
@@ -40,29 +40,27 @@ export default {
       error: {
         state: false,
         messages: []
-      }
+      },
+      reloadTimer: undefined
     };
   },
   computed: {
     ...mapGetters(['notificationShow', 'user', 'userRequest'])
   },
-  created() {
-    // load screen by default 2sec
-    setTimeout(async () => {
+  async mounted() {
 
-      await this.fetchUser();
-
-      if (this.userRequest.error) {
-        this.error.state = true;
-        this.error.messages.push(this.userRequest.message);
-        this.error.messages.push("Contact shippert support...");
-      }
-      else {
-        this.loaded = true;
-        this.reload();
-        this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
-      }
-    }, 1000);
+      await this.fetchUser().then(() => {
+        if (this.userRequest.error) {
+          this.error.state = true;
+          this.error.messages.push(this.userRequest.message);
+          this.error.messages.push("Contact shippert support...");
+        }
+        else {
+          this.loaded = true;
+          this.reload();
+          this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
+        }
+      });
 
   },
   methods: {
@@ -72,8 +70,11 @@ export default {
       this.fetchTransporters();
       this.fetchUsers();
       this.fetchUserItems();
-      setTimeout(this.reload, 1000);
+      this.reloadTimer = setTimeout(this.reload, 2000);
     }
+  },
+  destroyed() {
+    clearTimeout(this.reloadTimer);
   }
 };
 </script>

@@ -30,11 +30,12 @@ function remove(uri, successHandler = logJson, failureHandler = errorNotificatio
 }
 
 function constructOptions(httpVerb, requestBody){
-    const options= {};
-    options.method = httpVerb;
-
-    options.headers = {};
-    options.headers["Content-Type"] = "application/json";
+    const options= {
+        method: httpVerb,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
 
     if(TOKEN !== null) {
         options.headers["Authorization"] = "Bearer " + TOKEN;
@@ -50,9 +51,14 @@ function logJson(json) {
 }
 
 function errorNotification(response) {
-    response.json().then(error => {
+   try {
+       response.json().then(error => {
         store.dispatch('createNotification', {content: error.cause, type: `error`});
     });
+   }
+   catch (e) {
+
+   }
 }
 
 function call(request, successHandler, errorHandler) {
@@ -65,6 +71,7 @@ function call(request, successHandler, errorHandler) {
             if(type?.includes('application/json')) {
                 return response.json();
             }
+            return null;
         })
         .then(successHandler)
         .catch(errorHandler);

@@ -79,7 +79,7 @@ import HeaderContent from "@/components/Header/HeaderContent";
 import DestinationMap from "@/components/Map/DestinationMap";
 import IconAndText from "@/components/Item/IconAndText";
 import Icon from "@/components/Icon/Icon";
-import {mapActions, mapGetters} from "vuex";
+import { mapGetters} from "vuex";
 
 export default {
   name: "DestinationsView",

@@ -10,7 +10,7 @@ import TypeWriter from "@/components/Util/TypeWriter";
 import TextButton from "@/components/Button/TextButton";
 
 export default {
-  name: "Error",
+  name: "ErrorWriter",
   components: {
     TypeWriter,
     TextButton
