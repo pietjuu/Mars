@@ -3,9 +3,9 @@
   <main class="main-content flex-gap-col">
     <div class="flex-space-between-row flex-gap-row">
       <TextTile class="tile-item" :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
-      <TextTile class="tile-item" :title="`Total number of sent items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
-      <TextTile class="tile-item" :title="`Total number of received items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
-      <TextTile class="tile-item" :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
+      <TextTile class="tile-item" :title="`Number of Sent Items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
+      <TextTile class="tile-item" :title="`Number of Received Items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
+      <TextTile class="tile-item" :title="`Total Number of Items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
     </div>
     <div class="flex-gap-row charts">
       <div class="box chart-1" v-if="this.userItems !== undefined">
@@ -33,7 +33,6 @@ export default {
     ...mapGetters(['user', 'userItems'])
   },
   methods: {
-    ...mapActions(['fetchUserItems']),
     resizeCharts() {
       for (const id in ChartJS.instances) {
         if(ChartJS.instances.hasOwnProperty(id)) {
@@ -43,12 +42,11 @@ export default {
       this.timeout = setTimeout(this.resizeCharts, 500);
     }
   },
-  mounted() {
-    this.fetchUserItems();
-    this.resizeCharts();
-  },
   unmounted() {
     clearTimeout(this.timeout);
+  },
+  mounted() {
+    this.resizeCharts();
   }
 };
 </script>
@@ -67,7 +65,7 @@ export default {
   flex: 1 1 30%;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1024px) {
   .charts {
     flex-direction: column;
   }

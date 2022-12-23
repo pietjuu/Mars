@@ -1,9 +1,9 @@
 <template>
-  <div class="table-wrapper">
+  <Load v-if="!loaded"/>
+  <div class="table-wrapper" v-if="loaded">
     <table>
       <thead>
       <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Action</th>
         <th>Sent On</th>
@@ -15,8 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in this.items">
-        <td>{{ item.id }}</td>
+      <tr v-for="item in this.tableData">
         <td>{{ item.name }}</td>
         <td :class="[item.action === 'SENT' ? sentClass : receivedClass ]">{{ item.action }}</td>
         <td >{{ item.timeSent }}</td>
@@ -32,16 +31,45 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+import {get} from "@/assets/js/data-connector/api-communication-abstractor";
+import Load from "@/components/Load/Load.vue";
+import {itemsToUserReadable} from "@/assets/js/helper";
+
 export default {
   name: "HistoryTable",
+  components: {Load},
   props: {
     items: Array
   },
   data() {
     return {
       sentClass: 'sent',
-      receivedClass: 'received'
+      receivedClass: 'received',
+      tableData: undefined,
+      loaded: false
     };
+  },
+  computed: {
+    ...mapGetters(['transporters', 'users'])
+  },
+  methods: {
+    getTableData(items) {
+      return itemsToUserReadable(items, this.transporters, this.users);
+    }
+  },
+  async created() {
+
+    if(this.transporters && this.users) {
+      this.tableData = this.getTableData(this.items);
+      this.loaded = true;
+    }
+
+  },
+  watch: {
+    items(nw, old) {
+      this.tableData = this.getTableData(nw);
+    }
   }
 };
 </script>

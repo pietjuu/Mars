@@ -1,5 +1,6 @@
 <template>
-  <div class="confirm-send-item flex-gap-col">
+  <Load v-if="loading"/>
+  <div class="confirm-send-item flex-gap-col" v-if="!loading">
     <div class="tiles flex-gap-row">
       <TextTile :title="`Price to Send Item`" :text="`MC ${calculatedPrice}`" :icon="`payments`" :text-size="`var(--large-text-size)`"/>
       <TextTile :title="`Item Name`" :text="`${itemName}`" :icon="`badge`" :text-size="`var(--large-text-size)`"/>
@@ -18,10 +19,18 @@ import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
 import router from "@/router";
 import TextTile from "@/components/Tile/TextTile.vue";
+import Load from "@/components/Load/Load.vue";
 
 export default {
   name: "ConfirmSendItemView",
-  components: {TextTile, TextIconButton},
+  components: {Load, TextTile, TextIconButton},
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   computed: {
    ...mapGetters(['calculatedPrice', 'itemName', 'receiver', 'destination'])
   },

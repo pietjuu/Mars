@@ -47,7 +47,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['fetchUserBlacklist', 'fetchShippertBlacklist', 'deleteUserBlacklistItem', 'createUserBlacklistItem']),
+    ...mapActions(['fetchUserBlacklist', 'fetchShippertBlacklist', 'deleteUserBlacklistItem', 'createUserBlacklistItem', 'createNotification']),
     setCurrentTab(event) {
       if(!event.target.closest('button')) { return; }
       this.currentTab = event.target.dataset.tab;
@@ -57,9 +57,29 @@ export default {
     },
     createItem(event) {
       const input = event.target.closest('.add-blacklist-item').querySelector('#new-blacklist-item');
-      const newItem = input.value;
+      const newItem = input.value.trim();
+      if(!this.isValidBlacklistItemName(newItem)) {
+        this.createNotification({content: "Name of blacklist item isn't allowed", type: `warning`});
+        return;
+      }
+      if(newItem.length > 20) {
+        this.createNotification({content: "Item name cannot exceed more than 20 characters!", type: `warning`});
+        return;
+      }
       this.createUserBlacklistItem(newItem);
       input.value = "";
+    },
+    isValidBlacklistItemName(value) {
+      if (value === undefined || value === null) {
+        return false;
+      }
+      if (typeof value !== 'string') {
+        return false;
+      }
+      if (value.trim() === '') {
+        return false;
+      }
+      return (/^[a-zA-Z0-9\s]+$/.test(value));
     }
   },
   computed: {

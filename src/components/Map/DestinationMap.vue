@@ -22,7 +22,7 @@ const purpleMarker = require(`@/assets/media/purple_marker.png`);
 export default {
   name: "DestinationMap",
   methods: {
-    ...mapActions(["fetchTransporters", "setClickedLocation"]),
+    ...mapActions(["setClickedLocation"]),
     createMarkerLayer(vectors) {
       return new layerVector({
         source: vectors
@@ -64,7 +64,6 @@ export default {
   },
   async mounted() {
     const map = this.createMap("destination-map");
-    await this.fetchTransporters();
 
     const blueMarkerStyle = new Style({
       image: new Icon({

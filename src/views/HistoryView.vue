@@ -35,7 +35,6 @@ export default {
     ...mapGetters(['userItems'])
   },
   methods: {
-    ...mapActions(['fetchUserItems']),
     setCurrentTab(event) {
       if(!event.target.closest('button')) {
         return;
@@ -94,9 +93,6 @@ export default {
       }
       this.selectedSortType = event.target.value;
     }
-  },
-  created() {
-    this.fetchUserItems();
   }
 };
 </script>

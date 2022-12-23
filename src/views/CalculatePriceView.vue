@@ -3,10 +3,12 @@
   <main class="main-content flex-gap-col">
     <ProgressBar :steps="this.stepsToCalculatePrice"/>
     <div class="step-views">
-      <ConnectTransporterView v-if="this.stepsToCalculatePrice[0].inProgress"
-                              :info="this.stepsToCalculatePrice[0].info"
-                              @link="(trans) => { this.calculatePrice(trans.id); }"/>
-      <ShowPriceView v-if="this.stepsToCalculatePrice[1].inProgress"/>
+      <ConnectTransporterView
+          v-if="this.stepsToCalculatePrice[0].inProgress"
+          :loading="this.priceRequestState.inProgress"
+          :info="this.stepsToCalculatePrice[0].info"
+          @link="(trans) => { this.calculatePrice(trans.id); }"/>
+      <ShowPriceView :loading="this.priceRequestState.inProgress" v-if="this.stepsToCalculatePrice[1].inProgress"/>
     </div>
   </main>
 </template>
@@ -25,7 +27,7 @@ export default {
   name: "CalculatePriceView",
   components: {ShowPriceView, ConnectTransporterView, ProgressBar, HeaderContent},
   computed: {
-    ...mapGetters(['stepsToCalculatePrice'])
+    ...mapGetters(['stepsToCalculatePrice', 'priceRequestState'])
   },
   methods: {
     ...mapActions(['continueToCalculatedPriceStep', 'calculatePrice'])

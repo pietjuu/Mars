@@ -42,7 +42,10 @@ const state = {
         }
 
     ],
-    sendChecks: undefined
+    sendChecks: undefined,
+    sendRequestState: {
+        inProgress: false
+    }
 };
 
 const getters = {
@@ -51,20 +54,22 @@ const getters = {
     itemName: (state) => state.itemName,
     destination: (state) => state.destination,
     receiver: (state) => state.receiver,
-    sendChecks: (state) => state.sendChecks
+    sendChecks: (state) => state.sendChecks,
+    sendRequestState: (state) => state.sendRequestState
 };
 
 const actions = {
     async initSend({ commit }, origin) {
         commit('setCalculatedPrice', undefined);
         commit('setAllSendItemState', undefined);
+        commit('setSendRequestState', { inProgress: true });
 
         await post(`transporters/${origin.id}/init`, {}, json => {
             commit('setOrigin', origin);
             commit('setCalculatedPrice', json.price);
             commit('setLinkId', json.linkID);
             commit('setContinueToSendItemStep', 2);
-        });
+        }).then(() => commit('setSendRequestState', { inProgress: false }));
     },
     async finalizeLink({ commit }) {
         const body = {
@@ -72,6 +77,8 @@ const actions = {
             receiver: state.receiver.id,
             itemName: state.itemName
         };
+
+        commit('setSendRequestState', { inProgress: true });
 
         await put(`transporters/${state.origin.id}/link/${state.linkId}`, body,
             () => {
@@ -97,15 +104,19 @@ const actions = {
                     commit('setSendChecks', checks);
                     commit('setContinueToSendItemStep', 4);
                 });
-            });
+            }
+            ).then(() => commit('setSendRequestState', { inProgress: false }));
 
     },
     async sendItem({ commit }) {
+
+        commit('setSendRequestState', { inProgress: true });
+
         await post(`transporters/${state.origin.id}/link/${state.linkId}/send`, {}, json => {
             store.dispatch('createNotification', {content: 'Item has been sent', type: `success`});
             commit('setCalculatedPrice', undefined);
             commit('setAllSendItemState', undefined);
-        });
+        }).then(() => commit('setSendRequestState', { inProgress: false }));
     },
     saveItemName({ commit }, name) {
         commit('setItemName', name);
@@ -140,7 +151,8 @@ const mutations = {
         state.stepsToSendItem.forEach(step => {
            step.inProgress = step.number === number;
         });
-    }
+    },
+    setSendRequestState: (state, sendRequestState) => (state.sendRequestState = sendRequestState)
 };
 
 export default {

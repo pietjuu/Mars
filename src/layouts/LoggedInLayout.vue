@@ -59,12 +59,21 @@ export default {
       }
       else {
         this.loaded = true;
+        this.reload();
         this.createNotification({content: `Welcome, ${this.user.firstname} ${this.user.lastname}!`});
       }
     }, 1000);
+
   },
   methods: {
-    ...mapActions(["fetchUser", "createNotification"])
+    ...mapActions(["fetchUser", "createNotification", 'fetchTransporters', 'fetchUsers', 'fetchUserItems']),
+    reload() {
+      this.fetchUser();
+      this.fetchTransporters();
+      this.fetchUsers();
+      this.fetchUserItems();
+      setTimeout(this.reload, 1000);
+    }
   }
 };
 </script>

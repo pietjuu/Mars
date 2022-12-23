@@ -1,3 +1,5 @@
+import { itemsToUserReadable } from "@/assets/js/helper";
+import store from '@/store/index.js';
 
 class ItemsProcessor {
 
@@ -15,7 +17,8 @@ class ItemsProcessor {
 
 
     constructor(items) {
-        this.items = this.convertDates(items);
+        this.items = itemsToUserReadable(items, store.getters.transporters, store.getters.users);
+        this.items = this.convertDates(this.items);
 
         // eslint-disable-next-line no-restricted-syntax
         Array.prototype.rreduce = function rreduce(fct, initial) {

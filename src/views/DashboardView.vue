@@ -2,9 +2,9 @@
   <HeaderContent :title="`Dashboard`"/>
   <main class="main-content">
     <TextTile :title="`My Daily Limit`" :icon="`security`" :text="`${this.user.limit.reached} / ${this.user.limit.max !== -1 ? this.user.limit.max : 'Unlimited'}`"/>
-    <TextTile :title="`Total number of sent items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
-    <TextTile :title="`Total number of received items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
-    <TextTile :title="`Total number of sent/received items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
+    <TextTile :title="`Number of Sent Items`" :icon="`unarchive`" :text="`${this.user.totalSent}`"/>
+    <TextTile :title="`Number of Received Items`" :icon="`archive`" :text="`${this.user.totalReceived}`"/>
+    <TextTile :title="`Total Number of Items`" :icon="`all_inbox`" :text="`${this.user.totalSent +  this.user.totalReceived}`"/>
 
     <ShortcutTile :title="`Send Item`" :icon="`send`" @click="navToSendItem"/>
     <ShortcutTile :title="`Calculate Price`" :icon="`payments`" @click="navToCalculatePrice"/>
@@ -53,7 +53,7 @@ export default {
 .main-content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 10rem);
+  grid-template-rows: repeat(3, 9rem);
   grid-gap: 2.5rem;
   grid-template-areas:
     ". . . ."
@@ -64,6 +64,7 @@ export default {
 
 .recent-notifications {
   grid-area: notif;
+  overflow-y: auto;
 
   main {
     display: flex;
