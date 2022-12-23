@@ -1,9 +1,9 @@
 <template>
-  <div class="table-wrapper">
+  <Load v-if="!loaded"/>
+  <div class="table-wrapper" v-if="loaded">
     <table>
       <thead>
       <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Action</th>
         <th>Sent On</th>
@@ -15,8 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in this.items">
-        <td>{{ item.id }}</td>
+      <tr v-for="item in this.tableData">
         <td>{{ item.name }}</td>
         <td :class="[item.action === 'SENT' ? sentClass : receivedClass ]">{{ item.action }}</td>
         <td >{{ item.timeSent }}</td>
@@ -32,16 +31,69 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+import {get} from "@/assets/js/data-connector/api-communication-abstractor";
+import Load from "@/components/Load/Load.vue";
+
 export default {
   name: "HistoryTable",
+  components: {Load},
   props: {
     items: Array
   },
   data() {
     return {
       sentClass: 'sent',
-      receivedClass: 'received'
+      receivedClass: 'received',
+      tableData: undefined,
+      loaded: false
     };
+  },
+  computed: {
+    ...mapGetters(['transporters', 'users'])
+  },
+  methods: {
+    ...mapActions(['fetchTransporters', 'fetchUsers']),
+    getTableData(items) {
+      return items.map((item) => {
+        const result = {...item};
+        this.users.forEach(usr => {
+          const name = `${usr.firstname} ${usr.lastname}`;
+          if(item.receiver === usr.id) {
+            result.receiver = name;
+          }
+          else if(item.sender === usr.id) {
+            result.sender = name;
+          }
+        });
+        this.transporters.forEach(trans => {
+          const name = trans.name;
+          if(item.origin === trans.id) {
+            result.origin = name;
+          }
+          else if(item.destination === trans.id) {
+            result.destination = name;
+          }
+        });
+        return result;
+      });
+    }
+  },
+  async created() {
+
+    await this.fetchTransporters();
+    await this.fetchUsers();
+
+    if(this.transporters && this.users) {
+      this.tableData = this.getTableData(this.items);
+      this.loaded = true;
+    }
+
+  },
+  watch: {
+    items(nw, old) {
+      this.tableData = this.getTableData(nw);
+    }
   }
 };
 </script>
