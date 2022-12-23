@@ -5,9 +5,20 @@ With this API the Shippert API can control the device or request data from it.
 ## Deploy on RPI
 > Note: python3 and pip must already be installed on the RPI  
 
-Create the following directory on the RPI: 
+Create and navigate to the following directory on the RPI: 
 ```bash
-mkdir /home/pi/shippert/transporter/
+mkdir /home/pi/shippert/
+```
+```bash
+cd /home/pi/shippert/
+```
+
+Clone the repository and navigate to it
+```bash
+git clone git@git.ti.howest.be:TI/2022-2023/s3/analysis-and-development-project/projects/group-05/client.git
+```
+```bash
+cd ./transporter/
 ```
 
 To install the all the necessary python packages run the following cmd inside the created directory:
