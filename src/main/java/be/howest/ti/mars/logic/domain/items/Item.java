@@ -59,12 +59,11 @@ public class Item {
         this.sendTime = sendTime;
     }
 
-    public Item(String id, String name, LocalDateTime sendTime){
+    public Item(String id, String name){
         this.id = id;
         this.status = ItemStatus.UNDEFINED;
         this.size = new Size(0,0,0);
         this.name = name;
-        this.sendTime = sendTime;
     }
 
     public void setStatus(ItemStatus status) {
