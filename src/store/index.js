@@ -12,9 +12,9 @@ import userBlacklist from "@/store/modules/shippert/users/user/blacklist/blackli
 import transporters from "@/store/modules/shippert/transporters/transporters";
 import transporter from "@/store/modules/shippert/transporters/transporter/transporter";
 import price from "@/store/modules/shippert/transporters/transporter/price/price";
+import send from "@/store/modules/shippert/transporters/transporter/send/send";
 
 import notification from "@/store/modules/notification";
-import sendItem from "@/store/modules/send-item";
 import map from "@/store/modules/map";
 
 
@@ -26,10 +26,10 @@ const store = createStore({
         userItem,
         userBlacklist,
         notification,
-        sendItem,
         transporters,
         transporter,
         price,
+        send,
         map,
         shippertBlacklist
     }

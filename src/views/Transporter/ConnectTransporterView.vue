@@ -11,19 +11,14 @@
       </div>
 
       <div class="box">
-        <form action="#" id="connect-transporter">
-          <fieldset>
-            <legend>Connect  Your Transporter</legend>
-            <div>
-              <label for="search-transporter-name">Select Transporter <span>*</span></label>
-              <div class="flex-gap-col">
-                <input v-model="search" type="text" id="search-transporter-name" name="search-transporter-name" autocomplete="off" placeholder="Search name of transporter"/>
-                <RadioList :name="`transporter-names`" :items="this.getTransporterRadioListItems()" :maxHeight="`15rem`" @input="onSelectTransporter"/>
-                <p v-if="transporterName" class="selected-value box">Selected: <span>{{ transporterName }}</span></p>
-              </div>
-            </div>
-          </fieldset>
-        </form>
+        <h2>Connect  Your Transporter</h2>
+        <RadioListWithSearch
+            :label="`Select Transporter`"
+            :placeholderSearchBox="`Search name of transporter`"
+            :name="`transporter-names`"
+            :items="this.transporterRadioListItems()"
+            :radioListMaxHeight="`15rem`"
+            @select="onSelectTransporter"/>
       </div>
     </div>
 
@@ -38,8 +33,7 @@
 import InfoBox from "@/components/Info/InfoBox.vue";
 import TextIconButton from "@/components/Button/TextIconButton.vue";
 import {mapActions, mapGetters} from "vuex";
-import RadioList from "@/components/Form/RadioList.vue";
-import {containsQuery} from "@/assets/js/helper";
+import RadioListWithSearch from "@/components/Form/RadioListWithSearch.vue";
 
 export default {
   name: "ConnectTransporterView",
@@ -47,44 +41,38 @@ export default {
     info: String
   },
   components: {
-    RadioList,
+    RadioListWithSearch,
     InfoBox,
     TextIconButton
   },
   data() {
     return {
-      transporterId: undefined,
-      transporterName: undefined,
-      search: ''
+      transporter: {
+        id: undefined,
+        name: undefined
+      }
     };
   },
   computed: {
-    ...mapGetters(['transporters', 'calculatedPrice'])
+    ...mapGetters(['transporters'])
   },
   methods: {
-    ...mapActions(['fetchTransporters', 'createNotification', 'calculatePrice', 'continueToCalculatedPriceStep']),
+    ...mapActions(['fetchTransporters', 'createNotification']),
     link(e) {
-      if(!this.transporterId) {
+      if(!this.transporter.id) {
         this.createNotification({content: "Please select a transporter", type: `warning`});
         return;
       }
-      this.calculatePrice(this.transporterId).then(() => {
-        if(this.calculatedPrice) {
-          this.continueToCalculatedPriceStep(2);
-        }
-      });
+      this.$emit('link', this.transporter);
     },
-    getTransporterRadioListItems() {
-      const filtered = this.transporters.filter(transporter => {
-        return containsQuery(transporter.name.toLowerCase(), this.search.toLowerCase());
-      });
-      return filtered.map(transporter => {
+    transporterRadioListItems() {
+      return this.transporters.map(transporter => {
         return { value: transporter.id, label: transporter.name };
       });
     },
-    onSelectTransporter(e) {
-      this.transporterId = e.target.value;
-      this.transporterName = e.target.dataset.label;
+    onSelectTransporter(picked) {
+      this.transporter.id = picked.value;
+      this.transporter.name = picked.label;
     }
   },
   created() {
@@ -111,28 +99,6 @@ export default {
     padding-bottom: 2rem;
     text-align: center;
   }
-}
-
-form {
-
-  input {
-    border-color: var(--color-primary-soft);
-    min-height: 1.25rem;
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
-    }
-  }
-
-  .selected-value {
-    line-height: 0.5rem;
-    background-color: var(--color-secondary-soft);
-    color: var(--color-white);
-    border: none;
-    border-radius: 0.5rem;
-  }
-
 }
 
 @media (max-width: 1600px) {

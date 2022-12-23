@@ -163,7 +163,7 @@ class ItemsProcessor {
 
     getSentItemsPerDay() {
         const matchParameters = {
-            action: ["sent"]
+            action: ["SENT"]
         };
 
         const sentItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateSent, this.countItems);
@@ -172,7 +172,7 @@ class ItemsProcessor {
 
     getReceivedItemsPerDay() {
         const matchParameters = {
-            action: ["received"]
+            action: ["RECEIVED"]
         };
 
         const receivedItemsPerDay = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.dateReceived, this.countItems);
@@ -181,7 +181,7 @@ class ItemsProcessor {
 
     getMostUsedDestinations() {
         const matchParameters = {
-            action: ["sent"]
+            action: ["SENT"]
         };
 
         let usagesPerDestination = this.items.advancedFilter(matchParameters).splitBy(this.COLUMN_NAMES.destination, this.countItems);

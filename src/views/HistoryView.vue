@@ -79,10 +79,10 @@ export default {
     },
     getItems() {
       if(this.currentTab === 'Sent') {
-        return this.sortItems().filter(item => item.action === 'sent');
+        return this.sortItems().filter(item => item.action === 'SENT');
       }
       else if (this.currentTab === 'Received') {
-        return this.sortItems().filter(item => item.action === 'received');
+        return this.sortItems().filter(item => item.action === 'RECEIVED');
       }
       else {
         return this.sortItems();

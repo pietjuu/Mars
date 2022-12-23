@@ -18,15 +18,15 @@ import Icon from "@/components/Icon/Icon";
 
 export default {
   name: "NotificationBar",
-  created() {
-    setTimeout(this.close, 8000);
-  },
   components: {
     IconButton,
     Icon
   },
+  created() {
+    setTimeout(this.close, 8000);
+  },
   computed: {
-    ...mapGetters(['notificationContent', 'notificationType'])
+    ...mapGetters(['notificationContent', 'notificationType', 'notificationShow'])
   },
   methods: {
     ...mapActions(['removeNotification']),
@@ -43,6 +43,13 @@ export default {
           return `warning`;
         default:
           return `info`;
+      }
+    }
+  },
+  watch: {
+    notificationShow(n, o) {
+      if(n === true) {
+        setTimeout(this.close, 8000);
       }
     }
   }

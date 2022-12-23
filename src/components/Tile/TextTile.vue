@@ -5,7 +5,7 @@
       <Icon :icon="icon"/>
     </header>
     <main class="flex-center-vertical">
-      <p class="important">{{ text }}</p>
+      <p class="important" :style="{'font-size': textSize}">{{ text }}</p>
     </main>
   </article>
 </template>
@@ -17,9 +17,22 @@ export default {
   name: "TextTile",
   components: {Icon},
   props: {
-    title: String,
-    icon: String,
-    text: String
+    title: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String,
+      required: true
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    textSize: {
+      type: String,
+      required: false
+    }
   }
 };
 </script>

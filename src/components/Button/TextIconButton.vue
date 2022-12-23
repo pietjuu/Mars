@@ -1,5 +1,5 @@
 <template>
-  <button class="flex-center-row" type="button" :style="{width: width, height: height}">
+  <button class="flex-center-row" type="button" :style="{width: width, height: height, flexDirection:flexDirection}">
     <Icon :icon="icon"/>
     <span class="button-content">{{ content }}</span>
   </button>
@@ -13,10 +13,27 @@ export default {
     Icon
   },
   props: {
-    content: String,
-    icon: String,
-    width: String,
-    height: String
+    content: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String,
+      required: true
+    },
+    width: {
+      type: String,
+      required: true
+    },
+    height: {
+      type: String,
+      required: true
+    },
+    flexDirection: {
+      type: String,
+      default: 'row',
+      required: false
+    }
   }
 };
 </script>
