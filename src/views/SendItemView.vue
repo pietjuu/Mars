@@ -7,6 +7,7 @@
       <EnterItemDetailsView v-if="this.stepsToSendItem[1].inProgress"/>
       <EnterDestinationDetailsView v-if="this.stepsToSendItem[2].inProgress"/>
       <DestinationValidationView v-if="this.stepsToSendItem[3].inProgress"/>
+      <ConfirmSendItemView v-if="this.stepsToSendItem[4].inProgress"/>
     </div>
   </main>
 </template>
@@ -21,11 +22,13 @@ import EnterItemDetailsView from "@/views/Transporter/SendItem/EnterItemDetailsV
 import {mapActions, mapGetters} from "vuex";
 import EnterDestinationDetailsView from "@/views/Transporter/SendItem/EnterDestinationDetailsView.vue";
 import DestinationValidationView from "@/views/Transporter/SendItem/DestinationValidationView.vue";
+import ConfirmSendItemView from "@/views/Transporter/SendItem/ConfirmSendItemView.vue";
 
 
 export default {
   name: "SendItemView",
   components: {
+    ConfirmSendItemView,
     DestinationValidationView,
     EnterDestinationDetailsView,
     HeaderContent,

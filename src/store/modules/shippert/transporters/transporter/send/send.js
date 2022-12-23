@@ -1,4 +1,5 @@
 import {post, put} from "@/assets/js/data-connector/api-communication-abstractor";
+import store from "@/store";
 
 const state = {
     linkId: undefined,
@@ -98,6 +99,13 @@ const actions = {
                 });
             });
 
+    },
+    async sendItem({ commit }) {
+        await post(`transporters/${state.origin.id}/link/${state.linkId}/send`, {}, json => {
+            store.dispatch('createNotification', {content: 'Item has been sent', type: `success`});
+            commit('setCalculatedPrice', undefined);
+            commit('setAllSendItemState', undefined);
+        });
     },
     saveItemName({ commit }, name) {
         commit('setItemName', name);
