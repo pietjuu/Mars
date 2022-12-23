@@ -305,8 +305,10 @@ public class DefaultMarsController implements MarsController {
         }
 
         link.sendLink();
-        ShipNotification notification = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem());
+        ShipNotification notification = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem(), link.getReceiverUser());
+        ShipNotification notification2 = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem(), link.getSenderUser());
         repository.addShipNotification(notification);
+        repository.addShipNotification(notification2);
         repository.addLink(link);
         this.reloadUserWebsocket(link.getSenderUser().getId());
         this.reloadUserWebsocket(link.getReceiverUser().getId());
