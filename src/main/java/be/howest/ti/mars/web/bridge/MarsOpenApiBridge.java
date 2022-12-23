@@ -193,7 +193,7 @@ public class MarsOpenApiBridge {
     private void getItems(RoutingContext routingContext){
         String uid = Request.from(routingContext).getUserID();
 
-        Response.sendItemsHistory(routingContext, controller.getItems(uid));
+        Response.sendItemsHistory(routingContext, uid ,controller.getItems(uid));
     }
 
     private void getItem(RoutingContext routingContext){

@@ -10,11 +10,11 @@ public class ShipNotification extends Notification{
 
     private final User receiver;
 
-    public ShipNotification(User sender, User receiver, Transporter receiverTransporter, Item item) {
+    public ShipNotification(User sender, User receiver, Transporter receiverTransporter, Item item, User notificationReceiver) {
         super("", 1, "");
         super.setMessage(generateMessage(sender, receiver, receiverTransporter));
         super.setTitle(generateTitle(sender, receiver, item));
-        this.receiver = receiver;
+        this.receiver = notificationReceiver;
     }
 
     public ShipNotification(String title, LocalDateTime expireTime, String message, LocalDateTime created, User receiver){

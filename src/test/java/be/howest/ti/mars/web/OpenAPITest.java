@@ -35,7 +35,6 @@ class OpenAPITest {
 
     @BeforeAll
     void deploy(final VertxTestContext testContext) {
-        Repositories.shutdown();
         vertx = Vertx.vertx();
 
         WebServer webServer = new WebServer(new MarsOpenApiBridge(new MockMarsController()));
@@ -50,7 +49,6 @@ class OpenAPITest {
     void close(final VertxTestContext testContext) {
         vertx.close(testContext.succeedingThenComplete());
         webClient.close();
-        Repositories.shutdown();
     }
 
     @Test

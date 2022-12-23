@@ -2,6 +2,7 @@ package be.howest.ti.mars.logic.domain.link;
 
 import be.howest.ti.mars.logic.controller.TransporterController;
 import be.howest.ti.mars.logic.domain.items.Item;
+import be.howest.ti.mars.logic.domain.items.ItemStatus;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.User;
 import be.howest.ti.mars.logic.exceptions.TransporterException;
@@ -101,6 +102,7 @@ public class Link {
                 this.setSendTime(LocalDateTime.now());
 
                 this.linkStatus = LinkStatus.SENT;
+                this.getItem().setStatus(ItemStatus.COMPLETED);
             } else {
                 throw new TransporterException("Destination unavailable!");
             }

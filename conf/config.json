@@ -4,7 +4,7 @@
   },
   "db" : {
     "url": "jdbc:h2:./db-05",
-    "username": "",
+    "username": "group-05",
     "password": "",
     "webconsole.port": 9000
   },

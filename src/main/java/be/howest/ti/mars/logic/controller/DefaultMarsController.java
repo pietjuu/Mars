@@ -36,7 +36,8 @@ public class DefaultMarsController implements MarsController {
 
     public static final String USERID_BLACKLIST_DOESNT_EXIST = "User ID doesn't exist in user blacklists!";
     public static final String AN_EMPTY_ARGUMENT_IS_NOT_ALLOWED = "An empty argument is not allowed!";
-    MarsRepositories repository = Repositories.getInMemoryRepository();
+    MarsRepositories repository = Repositories.getH2Repo();
+    private final Map<String, Link> linkHashMap = new HashMap<>();
 
     @Override
     public User createUser(String firstname, String lastname, String subscription) {
@@ -98,7 +99,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public List<String> getUserBlacklist(String userID) {
-       if (repository.isUserBlackListExist(userID)){
+       if (!repository.isUserBlackListExist(userID)){
            throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
        }
 
@@ -112,7 +113,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
-        if (repository.isUserBlackListExist(userID)){
+        if (!repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
@@ -127,7 +128,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void deleteItemToUserBlacklist(String itemName, String userID) {
-        if (repository.isUserBlackListExist(userID)){
+        if (!repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }
 
@@ -249,7 +250,7 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public Link getLink(String linkID){
-        Link link = repository.getLink(linkID);
+        Link link = linkHashMap.get(linkID);
 
         if (link == null){
             throw new NoSuchElementException("LinkID doesn't exists!");
@@ -262,7 +263,7 @@ public class DefaultMarsController implements MarsController {
     public Map<String, String> initConnection(String transporterID) {
         Link link = new Link(this.getTransporter(transporterID));
 
-        repository.addLink(link);
+        linkHashMap.put(link.getId(), link);
 
         Map<String, String> result = new HashMap<>();
         result.put("linkID", link.getId());
@@ -291,7 +292,7 @@ public class DefaultMarsController implements MarsController {
             throw new NoSuchElementException("Can't find a link on that transporter!");
         }
 
-        repository.deleteLink(link);
+        linkHashMap.remove(linkID);
     }
 
     @Override
@@ -304,8 +305,11 @@ public class DefaultMarsController implements MarsController {
         }
 
         link.sendLink();
-        ShipNotification notification = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem());
+        ShipNotification notification = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem(), link.getReceiverUser());
+        ShipNotification notification2 = new ShipNotification(link.getSenderUser(), link.getReceiverUser(), link.getReceiver(), link.getItem(), link.getSenderUser());
         repository.addShipNotification(notification);
+        repository.addShipNotification(notification2);
+        repository.addLink(link);
         this.reloadUserWebsocket(link.getSenderUser().getId());
         this.reloadUserWebsocket(link.getReceiverUser().getId());
     }

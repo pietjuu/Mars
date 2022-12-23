@@ -44,7 +44,6 @@ public class WebServer extends AbstractVerticle {
                                 LOGGER.log(Level.INFO, "API specification loaded: {0}",
                                         routerBuilder.getOpenAPI().getOpenAPI().getJsonObject("info").getString("version"));
 
-                                Repositories.configure(configuration.getJsonObject("db"));
 
                                 Router mainRouter = Router.router(vertx);
                                 mainRouter.route().handler(createCorsHandler());

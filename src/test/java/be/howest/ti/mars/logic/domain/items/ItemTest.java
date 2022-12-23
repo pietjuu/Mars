@@ -20,7 +20,7 @@ class ItemTest {
 
     @Test
     void testConstructorWithID(){
-        Item i = new Item("Test", "Apple", MockInformation.getMoleculesSummary());
+        Item i = new Item("Test", "Apple", MockInformation.getMoleculesSummary(), null);
 
         assertEquals("Test", i.getId());
     }
@@ -69,7 +69,7 @@ class ItemTest {
 
     @Test
     void testToString(){
-        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary(), null);
         i.setReceivedTime(LocalDateTime.of(2053, 12, 31, 11, 15));
         i.setSendTime(LocalDateTime.of(2053, 12, 31, 11, 15));
 
@@ -89,8 +89,8 @@ class ItemTest {
 
     @Test
     void testEquals(){
-        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
-        Item i2 = new Item("1", "Apple", MockInformation.getMoleculesSummary());
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary(), null);
+        Item i2 = new Item("1", "Apple", MockInformation.getMoleculesSummary(), null);
         Set<Item> items = new HashSet<>();
         items.add(i);
         items.add(i2);
@@ -100,8 +100,8 @@ class ItemTest {
 
     @Test
     void testNotEqual(){
-        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary());
-        Item i2 = new Item("2", "Banana", MockInformation.getMoleculesSummary());
+        Item i = new Item("1", "Apple", MockInformation.getMoleculesSummary(), null);
+        Item i2 = new Item("2", "Banana", MockInformation.getMoleculesSummary(), null);
         Set<Item> items = new HashSet<>();
         items.add(i);
         items.add(i2);

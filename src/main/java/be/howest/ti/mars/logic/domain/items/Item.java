@@ -50,12 +50,20 @@ public class Item {
      * @param name name of item
      * @param molecules {@link MoleculesSummary}
      */
-    public Item(String id, String name, MoleculesSummary molecules){
+    public Item(String id, String name, MoleculesSummary molecules, LocalDateTime sendTime){
         this.id = id;
         this.status = ItemStatus.UNDEFINED;
         this.name = name;
         this.size = molecules.getSize();
         this.molecules = molecules;
+        this.sendTime = sendTime;
+    }
+
+    public Item(String id, String name){
+        this.id = id;
+        this.status = ItemStatus.UNDEFINED;
+        this.size = new Size(0,0,0);
+        this.name = name;
     }
 
     public void setStatus(ItemStatus status) {
