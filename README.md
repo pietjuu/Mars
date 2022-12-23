@@ -1,12 +1,14 @@
 - [Shippert Client](#shippert-client)
-  * [Important public urls](#important-public-urls)
-  * [Please complete the following instructions before committing the final version on the project](#please-complete-the-following-instructions-before-committing-the-final-version-on-the-project)
-  * [Instructions for testing locally](#instructions-for-testing-locally)
-  * [Instruction for testing the web client locally with a deployed mars-server](#instruction-for-testing-the-web-client-locally-with-a-deployed-mars-server)
-  * [Instructions for local quality checks](#instructions-for-local-quality-checks)
-  * [Default files](#default-files)
-    + [CSS](#css)
-    + [JavaScript](#javascript)
+  * [Public urls](#public-urls)
+  * [Getting Started](#getting-started)
+  * [Building and Deploying](#building-and-deploying)
+  * [Project Structure](#project-structure)
+  * [Known Bugs](#known-bugs)
+  * [Unfinished Requirements](#unfinished-requirements)
+  + [Additional Resources](#additional-resources)
+  + [Instructions for testing locally](#instructions-for-testing-locally)
+  + [Instruction for testing the web client locally with a deployed mars-server](#instruction-for-testing-the-web-client-locally-with-a-deployed-mars-server)
+  + [Instructions for local quality checks](#instructions-for-local-quality-checks)
 
 
 # Shippert Client
