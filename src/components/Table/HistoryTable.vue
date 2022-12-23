@@ -18,7 +18,7 @@
       <tr v-for="item in this.items">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
-        <td :class="[item.action === 'sent' ? sentClass : receivedClass ]">{{ item.action }}</td>
+        <td :class="[item.action === 'SENT' ? sentClass : receivedClass ]">{{ item.action }}</td>
         <td >{{ item.timeSent }}</td>
         <td>{{ item.timeReceived }}</td>
         <td>{{ item.receiver }}</td>
