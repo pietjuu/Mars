@@ -1,21 +1,3 @@
-
-- [Analysis and Development Project - Mars 2052 - server project](#analysis-and-development-project---mars-2052---server-project)
-  * [Before you start:](#before-you-start)
-  * [Local testing and quality checks](#local-testing-and-quality-checks)
-  * [Configuring properties](#configuring-properties)
-  * [What is included](#what-is-included)
-  * [How to run the start project locally](#how-to-run-the-start-project-locally)
-  * [Location OpenApi Specification](#location-openapi-specification)
-  * [Local endpoints](#local-endpoints)
-  * [Production endpoints](#production-endpoints)
-  * [Keep the database up to date](#keep-the-database-up-to-date)
-  * [Adding or updating an openapi endpoint.](#adding-or-updating-an-openapi-endpoint)
-  * [Need to know](#need-to-know)
-  * [Transporter API](#transporter-api)
-  * [Deploy](#deploy)
-  * [Bugs](#bugs)
-  * [Exceptions](#exceptions)
-
 # Shippert API
 
 Welcome to our Shippert API!
