@@ -11,11 +11,11 @@ import java.util.Map;
  * <p>z = the position of the first digit (2)</p>
  * <p>p = the value of first digit (2)</p>
  *
- * <p></p><sup>x</sup>(&radic (y * p)<sup>z</sup>) / 10<sup>9</sup></p>
+ * <p></p><sup>x</sup>(&radic (y * p)<sup>z</sup>) / 10<sup>9</sup> x 50000</p>
  *
  * In this case it would be:
  *
- * <p></p><sup>3</sup>(&radic (8 * 2)<sup>2</sup>) / 10<sup>9</sup></p>
+ * <p></p><sup>3</sup>(&radic (8 * 2)<sup>2</sup>) / 10<sup>9</sup> x 50000</p>
  * <p><i>I feel like a mathematician although i'm very bad in it . Greetz Glenn.</i></p>
  */
 public class CostCalculator {
@@ -48,7 +48,7 @@ public class CostCalculator {
         int z = positionFirstDigit(molecule);
         int p = getFirstDigit(molecule);
 
-        return Math.pow(Math.pow((y*p), z), 1f/x) / Math.pow(10, 9);
+        return Math.pow(Math.pow((y*p), z), 1f/x) / Math.pow(10, 9) * 50000;
     }
 
     private static Character getFirstLetter(String molecule){
