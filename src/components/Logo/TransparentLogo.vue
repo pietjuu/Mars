@@ -9,9 +9,5 @@ export default {
     titleTxt: String,
     width: String
   }
-}
+};
 </script>
-
-<style scoped>
-
-</style>

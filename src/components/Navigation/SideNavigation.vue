@@ -20,9 +20,5 @@ export default {
   components: {
     NavigationItem
   }
-}
+};
 </script>
-
-<style scoped lang="scss">
-
-</style>

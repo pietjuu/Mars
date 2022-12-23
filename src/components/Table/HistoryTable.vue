@@ -31,8 +31,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import {get} from "@/assets/js/data-connector/api-communication-abstractor";
+import { mapGetters} from "vuex";
 import Load from "@/components/Load/Load.vue";
 import {itemsToUserReadable} from "@/assets/js/helper";
 

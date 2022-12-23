@@ -11,7 +11,7 @@ export default {
     text: String,
     inProgress: Boolean
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

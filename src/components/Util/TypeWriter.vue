@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       content: ""
-    }
+    };
   },
   props: {
     values: Array
@@ -41,7 +41,7 @@ export default {
   created() {
     this.startTextAnimation(0);
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

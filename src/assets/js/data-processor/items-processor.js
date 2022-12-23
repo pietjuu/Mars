@@ -53,7 +53,9 @@ class ItemsProcessor {
                 let result = () => true;
                 // eslint-disable-next-line guard-for-in
                 for (const key in object) {
-                    result = combineMatch(result, simpleMatch(key, object[key]));
+                    if (object.hasOwnProperty(key)) {
+                        result = combineMatch(result, simpleMatch(key, object[key]));
+                    }
                 }
                 return result;
             }

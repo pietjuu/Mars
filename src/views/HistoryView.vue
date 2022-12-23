@@ -13,7 +13,7 @@
 import HeaderContent from "@/components/Header/HeaderContent.vue";
 import TabBar from "@/components/Tab/TabBar.vue";
 import HistoryTable from "@/components/Table/HistoryTable.vue";
-import {mapActions, mapGetters} from "vuex";
+import { mapGetters} from "vuex";
 import Dropdown from "@/components/Form/Dropdown.vue";
 
 export default {
@@ -96,7 +96,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-
-</style>
