@@ -22,10 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -229,6 +226,9 @@ public class MarsH2Repository implements MarsRepositories{
 
             preparedStatement.execute();
         } catch (SQLException e){
+            if (e.getMessage().contains("Referential integrity constraint violation:")){
+                throw new NoSuchElementException("This item / user doesn't exist!");
+            }
             LOGGER.log(Level.SEVERE, "DB error - addItemToUserBlacklist()");
             throw new RepositoryException("There went something wrong with the DB! - addItemToUserBlacklist()");
         }
