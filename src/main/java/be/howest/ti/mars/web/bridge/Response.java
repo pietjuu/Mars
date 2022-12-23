@@ -101,8 +101,9 @@ public class Response {
             jsonObject.put("timeSent", link.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
             jsonObject.put("timeReceived", link.getItem().getSendTime().format(DateTimeFormatter.ofPattern(DATE_CONSTANT)));
             jsonObject.put("receiver", link.getReceiverUser().getId());
-            jsonObject.put("origin", link.getReceiver().getId());
-            jsonObject.put("sender", link.getSender().getId());
+            jsonObject.put("origin", link.getSender().getId());
+            jsonObject.put("sender", link.getSenderUser().getId());
+            jsonObject.put("destination", link.getReceiver().getId());
 
             result.add(jsonObject);
         }

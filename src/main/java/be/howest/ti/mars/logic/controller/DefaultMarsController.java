@@ -113,6 +113,10 @@ public class DefaultMarsController implements MarsController {
 
     @Override
     public void addItemToUserBlacklist(String itemName, String userID) {
+        if (itemName.isBlank() || itemName.isEmpty()){
+            throw new IllegalArgumentException("Item name is empty");
+        }
+
         if (!repository.isUserBlackListExist(userID)){
             throw new NoSuchElementException(USERID_BLACKLIST_DOESNT_EXIST);
         }

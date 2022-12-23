@@ -4,6 +4,7 @@ import be.howest.ti.mars.logic.domain.items.Item;
 import be.howest.ti.mars.logic.domain.location.Building;
 import be.howest.ti.mars.logic.domain.location.Coordinates;
 import be.howest.ti.mars.logic.domain.location.TypeOfLocation;
+import be.howest.ti.mars.logic.domain.notifications.SystemNotification;
 import be.howest.ti.mars.logic.domain.transporter.Size;
 import be.howest.ti.mars.logic.domain.transporter.Transporter;
 import be.howest.ti.mars.logic.domain.users.PricePlan;
@@ -209,6 +210,15 @@ class MarsH2RepositoryTest {
     void getSystemNotifications() {
         MarsH2Repository marsH2Repository = Repositories.getH2Repo();
         marsH2Repository.getSystemNotifications();
+    }
+
+    @Test
+    void addSystemNotifications(){
+        MarsH2Repository marsH2Repository = Repositories.getH2Repo();
+        marsH2Repository.addSystemNotification(new SystemNotification("test", 1, "test"));
+
+        assertTrue(0 < marsH2Repository.getSystemNotifications().size());
+        marsH2Repository.createUserBlacklist("test");
     }
 
     @Test

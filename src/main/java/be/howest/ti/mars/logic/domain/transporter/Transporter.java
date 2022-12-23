@@ -33,7 +33,7 @@ public class Transporter {
     }
 
     /**
-     * Constructor - should only used when importing
+     * Constructor - should only be used when importing
      * @param id uuid
      * @param name name of transporter
      * @param size {@link Size}
@@ -98,12 +98,12 @@ public class Transporter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transporter that = (Transporter) o;
-        return Objects.equals(id, that.id);
+        return id.equals(that.id) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name);
     }
 
     @Override

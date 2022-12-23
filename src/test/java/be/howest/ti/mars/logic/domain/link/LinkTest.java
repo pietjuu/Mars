@@ -155,10 +155,6 @@ class LinkTest {
         receiver.setSize(new Size(100f, 100f, 100f));
 
         Link link = new Link(sender);
-        link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems());
-
-        assertEquals(LinkStatus.LINKED, link.getLinkStatus());
-
-        assertThrows(TransporterException.class, link::sendLink);
+        assertThrows(TransporterException.class, () -> link.connectLink(senderUser, sender, senderUser, receiver, "Apple", senderUser.getPricePlan().getMaxItems()));
     }
 }

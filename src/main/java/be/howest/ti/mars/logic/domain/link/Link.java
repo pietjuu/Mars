@@ -17,6 +17,7 @@ import java.util.stream.Stream;
  */
 public class Link {
 
+    public static final String DESTINATION_UNAVAILABLE = "Destination unavailable!";
     private final String id;
     private User senderUser;
     private User receiverUser;
@@ -84,6 +85,10 @@ public class Link {
             throw new TransporterException("Item doesn't fit in transporter!!");
         }
 
+        if (!transporterController.getTransporterStatus(this.receiver)){
+            throw new TransporterException(DESTINATION_UNAVAILABLE);
+        }
+
         this.linkStatus = LinkStatus.LINKED;
     }
 
@@ -104,10 +109,10 @@ public class Link {
                 this.linkStatus = LinkStatus.SENT;
                 this.getItem().setStatus(ItemStatus.COMPLETED);
             } else {
-                throw new TransporterException("Destination unavailable!");
+                throw new TransporterException(DESTINATION_UNAVAILABLE);
             }
         } else {
-            throw new TransporterException("Destination unavailable!");
+            throw new TransporterException(DESTINATION_UNAVAILABLE);
         }
     }
 
