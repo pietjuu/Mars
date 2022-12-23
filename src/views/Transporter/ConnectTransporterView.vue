@@ -101,7 +101,7 @@ export default {
   }
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1024px) {
   .form-and-message-wrapper {
     flex-direction: column;
   }

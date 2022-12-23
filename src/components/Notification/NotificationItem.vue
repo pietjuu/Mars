@@ -14,19 +14,33 @@
 export default {
   name: "NotificationItem",
   props: {
-    notification: Object
+    notification: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 
-  header {
-    margin-bottom: 0.5rem;
+header {
+  margin-bottom: 0.5rem;
 
-    h2 {
-      margin: 0;
-    }
+  h2 {
+    font-size: var(--medium-text-size);
+    margin: 0;
   }
+  h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+main {
+  p {
+    font-size: 0.8rem;
+  }
+}
 
 </style>
