@@ -36,3 +36,28 @@ export function removeClassFromElements(selector, clss){
 export function containsQuery(array, query) {
     return array.indexOf(query) !== -1;
 }
+
+export function itemsToUserReadable(items, transporters, users) {
+    return items.map((item) => {
+        const result = {...item};
+        users.forEach(usr => {
+          const name = `${usr.firstname} ${usr.lastname}`;
+          if(item.receiver === usr.id) {
+            result.receiver = name;
+          }
+          else if(item.sender === usr.id) {
+            result.sender = name;
+          }
+        });
+        transporters.forEach(trans => {
+          const name = trans.name;
+          if(item.origin === trans.id) {
+            result.origin = name;
+          }
+          else if(item.destination === trans.id) {
+            result.destination = name;
+          }
+        });
+        return result;
+    });
+}

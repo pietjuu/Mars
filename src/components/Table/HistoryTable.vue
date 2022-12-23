@@ -34,6 +34,7 @@
 import {mapActions, mapGetters} from "vuex";
 import {get} from "@/assets/js/data-connector/api-communication-abstractor";
 import Load from "@/components/Load/Load.vue";
+import {itemsToUserReadable} from "@/assets/js/helper";
 
 export default {
   name: "HistoryTable",
@@ -55,28 +56,7 @@ export default {
   methods: {
     ...mapActions(['fetchTransporters', 'fetchUsers']),
     getTableData(items) {
-      return items.map((item) => {
-        const result = {...item};
-        this.users.forEach(usr => {
-          const name = `${usr.firstname} ${usr.lastname}`;
-          if(item.receiver === usr.id) {
-            result.receiver = name;
-          }
-          else if(item.sender === usr.id) {
-            result.sender = name;
-          }
-        });
-        this.transporters.forEach(trans => {
-          const name = trans.name;
-          if(item.origin === trans.id) {
-            result.origin = name;
-          }
-          else if(item.destination === trans.id) {
-            result.destination = name;
-          }
-        });
-        return result;
-      });
+      return itemsToUserReadable(items, this.transporters, this.users);
     }
   },
   async created() {
