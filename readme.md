@@ -16,15 +16,12 @@
   * [Bugs](#bugs)
   * [Exceptions](#exceptions)
 
-# Analysis and Development Project - Mars 2052 - server project
+# Shippert API
 
-This is the **server side start-project** for Project II.
+Welcome to our Shippert API!
 
-This start project provides the basic scaffolding for an openapi webserver and an example bridge class for websockets.
+This web server is built using Vert.X, a toolkit for building reactive applications on the JVM, and gradle, a build tool for Java projects.
 
-There is already a fully working minimal example api with all the necessary classes.
-
-Example classes (except WebServer.java) are allowed to be modified or deleted.
 
 ## Before you start
 - Choose Zulu jdk version 11 or opendjk 11 (Configure through this through intelij)
@@ -34,6 +31,49 @@ Example classes (except WebServer.java) are allowed to be modified or deleted.
             - client
             - documentation
             - server
+
+## Getting Started
+
+To get started with the web server, you will need to have Java and gradle installed on your machine. If you don't have these already, you can install them by following the instructions on the respective websites:
+- JDK: https://openjdk.java.net/install/
+- gradle: https://gradle.org/install/
+
+Once you have the prerequisites installed, clone this repository and navigate to the root directory of the project:
+```bash
+git clone git@git.ti.howest.be:TI/2022-2023/s3/analysis-and-development-project/projects/group-05/server.git
+cd server
+```
+
+To start the web server, run the following command:
+ ```bash
+ ./gradlew run
+ ```
+Or in In Intelij choose gradle task **run**.
+
+This will start the web server and bind it to the default host and port (localhost:8080). You can access the web server in your browser by visiting http://localhost:8080.
+
+## Building and Deploying
+To deploy the changes you made push them to the remote repo and merge them into the main branch.
+The changes will be deployed as soon as the pipelines succeed.
+
+
+## Project Structure
+The project is structured as follows:
+- `src/main/java`: This directory contains the source code for the web server. 
+- `src/main/resources`: This directory contains any resources that the web server uses, such as configuration files.
+- `build.gradle`: This file contains the gradle configuration for the project.
+
+## Known Bugs
+- Check Transporter availability when destination is passed in send item flow
+- Delete user blacklist item
+
+## Custom Exceptions
+- RepositoryException
+- TransporterException
+
+## Additional Resources
+- Vert.X documentation: https://vertx.io/docs/
+- gradle documentation: https://docs.gradle.org/
 
 ## Local testing and quality checks
 You can **run** the Sonar validator and code coverage **locally!**
@@ -73,8 +113,6 @@ Please, test the config file thoroughly on your local machine as mistakes will n
   - A starter class for the RTC topic (MarsRtcBridge.java)
   - Database generation scripts
 
-## How to run the start project locally
-In Intelij choose gradle task **run**.
 
 ## Location OpenApi Specification
 The location of the openapi specification is defined in the file **config**.
@@ -146,13 +184,7 @@ The **db-populate** script is responsible for populating the database with usefu
    6. Write unit tests
 
 
-## Need to know
-
 ## Transporter API
-=> verwijzen naar readme en wiki transporter
-
-## Deploy
-
-## Bugs
-
-## Exceptions
+The server requires data from IoT devices. We communicate with these devices through Transporter APIs
+Please visit the transporter repository to find out more.
+https://git.ti.howest.be/TI/2022-2023/s3/analysis-and-development-project/projects/group-05/transporter
