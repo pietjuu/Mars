@@ -45,6 +45,7 @@ public class MarsH2Repository implements MarsRepositories{
 
     public MarsH2Repository(String url, String username, String password, int console) {
         try {
+            this.cleanUp();
             this.convertorSQL = new ConvertorSQL();
             this.username = username;
             this.password = password;
@@ -52,8 +53,8 @@ public class MarsH2Repository implements MarsRepositories{
             this.dbWebConsole = Server.createWebServer(
                     "-ifNotExists",
                     "-webPort", String.valueOf(console)).start();
-            LOGGER.log(Level.INFO, "Database web console started on port: {0}", console);
             this.generateData();
+            LOGGER.log(Level.INFO, "Database web console started on port: {0}", console);
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "DB configuration failed", ex);
             throw new RepositoryException("Could not configure MarsH2repository");
