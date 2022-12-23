@@ -82,6 +82,7 @@ const actions = {
                     { check: "Does item fit destination?", value: true }
                 ];
                 commit('setSendChecks', checks);
+                commit('setContinueToSendItemStep', 4);
             },
             (response) => {
                 response.json().then(error => {
@@ -93,10 +94,9 @@ const actions = {
                         { check: "Does item fit destination?", value: false }
                     ];
                     commit('setSendChecks', checks);
+                    commit('setContinueToSendItemStep', 4);
                 });
             });
-
-        commit('setContinueToSendItemStep', 4);
 
     },
     saveItemName({ commit }, name) {

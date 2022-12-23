@@ -6,6 +6,7 @@
       <ConnectTransporterView v-if="this.stepsToSendItem[0].inProgress" :info="this.stepsToSendItem[0].info" @link="(trans) => { this.initSend(trans); }"/>
       <EnterItemDetailsView v-if="this.stepsToSendItem[1].inProgress"/>
       <EnterDestinationDetailsView v-if="this.stepsToSendItem[2].inProgress"/>
+      <DestinationValidationView v-if="this.stepsToSendItem[3].inProgress"/>
     </div>
   </main>
 </template>
@@ -19,11 +20,13 @@ import EnterItemDetailsView from "@/views/Transporter/SendItem/EnterItemDetailsV
 
 import {mapActions, mapGetters} from "vuex";
 import EnterDestinationDetailsView from "@/views/Transporter/SendItem/EnterDestinationDetailsView.vue";
+import DestinationValidationView from "@/views/Transporter/SendItem/DestinationValidationView.vue";
 
 
 export default {
   name: "SendItemView",
   components: {
+    DestinationValidationView,
     EnterDestinationDetailsView,
     HeaderContent,
     ProgressBar,
