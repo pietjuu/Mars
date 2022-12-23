@@ -1,4 +1,22 @@
-# Analysis & Development Project - Mars 2052 - server project
+
+- [Analysis and Development Project - Mars 2052 - server project](#analysis-and-development-project---mars-2052---server-project)
+  * [Before you start:](#before-you-start)
+  * [Local testing and quality checks](#local-testing-and-quality-checks)
+  * [Configuring properties](#configuring-properties)
+  * [What is included](#what-is-included)
+  * [How to run the start project locally](#how-to-run-the-start-project-locally)
+  * [Location OpenApi Specification](#location-openapi-specification)
+  * [Local endpoints](#local-endpoints)
+  * [Production endpoints](#production-endpoints)
+  * [Keep the database up to date](#keep-the-database-up-to-date)
+  * [Adding or updating an openapi endpoint.](#adding-or-updating-an-openapi-endpoint)
+  * [Need to know](#need-to-know)
+  * [Transporter API](#transporter-api)
+  * [Deploy](#deploy)
+  * [Bugs](#bugs)
+  * [Exceptions](#exceptions)
+
+# Analysis and Development Project - Mars 2052 - server project
 
 This is the **server side start-project** for Project II.
 
@@ -8,7 +26,7 @@ There is already a fully working minimal example api with all the necessary clas
 
 Example classes (except WebServer.java) are allowed to be modified or deleted.
 
-## Before you start:
+## Before you start
 - Choose Zulu jdk version 11 or opendjk 11 (Configure through this through intelij)
 - Make sure to clone **all** the repositories **client**, **server** & **documentation**
     - **Use the following folder structure**
@@ -46,7 +64,7 @@ However, to apply new properties or property modifications on the server please 
 
 Please, test the config file thoroughly on your local machine as mistakes will not be fixed every day.
 
-## What's included
+## What is included
   - A very basic openapi specification
     - localhost:8080/api/quotes
   - H2 database web console
@@ -116,7 +134,7 @@ The **db-create** script is responsible for the database structure (tables, prim
 
 The **db-populate** script is responsible for populating the database with useful data.
 
-## Adding/updating an openapi endpoint. 
+## Adding or updating an openapi endpoint. 
    1. Update the openapi specification in the documentation repo.
       2. Commit and push the results.
    2. Update the function **buildRouter** in the class **MarsOpenApiBridge**
@@ -126,3 +144,15 @@ The **db-populate** script is responsible for populating the database with usefu
    3. Add the wanted functionality to the controller layer and the layers below.
    4. Add a new response function in the **Response** class if needed.
    6. Write unit tests
+
+
+## Need to know
+
+## Transporter API
+=> verwijzen naar readme en wiki transporter
+
+## Deploy
+
+## Bugs
+
+## Exceptions
