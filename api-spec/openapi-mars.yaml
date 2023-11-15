@@ -1,0 +1,828 @@
+openapi: 3.0.3
+info:
+  title: 'Shippert - The new way of delivery!'
+  description: 'By splitting items into molecules, Shippert makes it possible to send your items in the blink of an eye!'
+  version: 0.0.1
+servers:
+  - url: https://project-ii.ti.howest.be/mars-05
+    description: 'Public API'
+  - url: http://localhost:8080/
+    description: 'Local API'
+paths:
+  /:
+   get:
+    tags: [General Info]
+    description: Get API information.
+    operationId: getInfo
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+                  description: The version of the API
+
+  /api/blacklist:
+    get:
+      description: Get all items on Shippert's blacklist.
+      operationId: getShippertBlacklist
+      tags: [ General Info ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blacklist'
+
+  /api/users:
+    get:
+     description: Get all users
+     operationId: getUsers
+     tags: [ Users ]
+     responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserComposed'
+    post:
+      description: Create new user
+      operationId: createUser
+      tags: [ Users ]
+      requestBody:
+        $ref: '#/components/requestBodies/createUser'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+        400:
+            $ref: '#/components/responses/400'          
+
+  /api/users/{userId}:
+    get:
+      description: Get detailed information about user.
+      operationId: getUser
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          description: The user you are looking for does not exist. Double check the ID.
+    delete:
+      description: Delete user.
+      operationId: deleteUser
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+      responses:
+        202:
+          description: OK
+        401:
+         $ref: '#/components/responses/401'
+        404:
+          description: The user you are looking for does not exist. Double check the ID.
+
+  /api/users/{userId}/blacklist:
+    get:
+      description: Get user blacklist.
+      operationId: getUserBlacklist
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blacklist'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          description: The user you are looking for does not exist. Double check the ID.
+    post:
+      description: Add item to user blacklist.
+      operationId: addItemToUserBlacklist
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      requestBody:
+        $ref: '#/components/requestBodies/blacklistItem'
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+      responses:
+        201:
+          description: OK
+        401:
+          $ref: '#/components/responses/401'
+        400:
+            $ref: '#/components/responses/400'  
+        404:
+          description: The user you are looking for does not exist. Double check the ID.
+
+  /api/users/{userId}/blacklist/{itemName}: 
+    delete:
+      description: Delete item from user blacklist.
+      operationId: deleteItemFromUserBlacklist
+      security:
+          - userAuth: [ ]
+      tags: [Users] 
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+        - $ref: '#/components/parameters/itemIdInName'
+      responses:
+        202:
+          description: OK
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          description: The user or item you are looking for does not exist. Double check the ID.          
+
+  /api/users/{userId}/items:
+    get:
+      description: Get all items user sent and received.
+      operationId: getItems
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          description: The user you are looking for does not exist. Double check the ID.
+
+  /api/users/{userId}/items/{itemId}:
+    get:
+      description: Get item user sent or received.
+      operationId: getItem
+      security:
+        - userAuth: [ ]
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/components/parameters/userIdInPath'
+        - $ref: '#/components/parameters/itemIdInPath'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+                  
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          description: The user or item you are looking for does not exist. Double check the ID's.
+
+  /api/transporters:
+      get:
+        tags: [Transporter]
+        description: Get all the transporters
+        operationId: getTransporters
+        responses:
+          '200':
+            description: OK
+            content: 
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Transporter'
+      post:
+        tags:
+            - Transporter
+        description: Create a transporter
+        operationId: createTransporter
+        requestBody:
+          $ref: '#/components/requestBodies/transporterWithoutID'
+        responses:
+          201:
+            description: Created
+            content:
+              application/json:
+                schema: 
+                  type: object
+                  properties:
+                    id:
+                      description: The id of the created transporter
+                      type: string
+          400:
+            $ref: '#/components/responses/400'
+
+  /api/transporters/{transporterId}:
+    get:
+      tags: [Transporter]
+      description: Get information of a specific transporter.
+      operationId: getTransporter
+      security:
+        - userAuth: []
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Transporter'
+              example:
+                id: 432355DF
+                name: Transporter of Glenn
+                size: 
+                  length: 50
+                  width: 60
+                  depth: 70
+                location:
+                  longitude: 4.242362690474167
+                  latitude: 51.21175585969615
+                building:
+                  typeOfBuilding: "Home"
+                ipAddress: "192.168.9.1"
+        404:
+          description: "The transporter you are looking for does not exist. Double check the ID's."
+        401:
+            $ref: '#/components/responses/401' 
+    put:
+      tags: [Transporter]
+      description: Change transporter
+      operationId: setTransporter
+      security:
+        - userAuth: []
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+      requestBody:
+        $ref: '#/components/requestBodies/transporterWithoutID'
+      responses:
+        201:
+          description: "Transporter changed."
+        401:
+          $ref: '#/components/responses/401' 
+        404:
+          description: "The transporter you are looking for does not exist. Double check the ID's."
+    delete:
+      tags: [Transporter]
+      description: "Delete a transporter"
+      operationId: deleteTransporter
+      security:
+        - userAuth: []
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+      responses:
+        202:
+          description: "Transporter deleted!"
+        401:
+          $ref: '#/components/responses/401' 
+        404:
+          description: "The transporter you are looking for does not exist. Double check the ID's."
+
+  /api/transporters/{transporterId}/price:
+      get:
+        tags: [Price]
+        description: Get the calculated price for an item in the transporter
+        operationId: getCalculatedPrice
+        security:
+          - userAuth: []
+        parameters:
+          - $ref: '#/components/parameters/transporterIdInPath'
+        responses:
+          200:
+            $ref: "#/components/responses/price"
+          401:
+            $ref: '#/components/responses/401' 
+          404:
+            description: "The transporter you are looking for does not exist. Double check the ID's."
+          406:
+            $ref: '#/components/responses/406' 
+          503:
+            description: "Transporter unavailable"
+
+  /api/transporters/{transporterId}/init: 
+      post: 
+        tags: [Send]
+        description: Make a connection with the transporter
+        operationId: initConnection
+        security:
+          - userAuth: []
+        parameters:
+          - $ref: '#/components/parameters/transporterIdInPath'
+        responses:
+          201:
+            description: OK
+            content:
+              application/json:
+                schema:  
+                  type: object
+                  properties:
+                    linkID:
+                      type: string
+                    price:
+                      type: integer
+                  example:
+                    linkID: "158448-23484585D"
+                    price: "23.2245"
+
+          401:
+            $ref: '#/components/responses/401' 
+          404:
+            description: "The transporter you are looking for does not exist. Double check the ID's."
+          406:
+            $ref: '#/components/responses/406' 
+          503:
+            description: "Transporter unavailable"
+
+  /api/transporters/{transporterId}/link/{linkId}:
+    put:
+      tags: [Send]
+      security:
+          - userAuth: []
+      description: Change the receiver.
+      operationId: setLink
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+        - $ref: '#/components/parameters/linkIdinPath'
+      requestBody:
+        $ref: '#/components/requestBodies/createLink'
+      responses:
+        202: 
+          description: OK
+        400:
+            $ref: '#/components/responses/400'  
+        401:
+            $ref: '#/components/responses/401' 
+        404:
+          description: "The transporter or link you are looking for does not exist. Double check the ID's."
+        406:
+          $ref: '#/components/responses/406' 
+        503:
+          description: "Transporter unavailable"
+    delete:
+      tags: [Send]
+      security:
+          - userAuth: []
+      description: Delete the link.
+      operationId: deleteLink
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+        - $ref: '#/components/parameters/linkIdinPath'
+      responses:
+        202: 
+          description: OK
+        401:
+            $ref: '#/components/responses/401' 
+        404:
+          description: "The transporter or link you are looking for does not exist. Double check the ID's."
+        406:
+          $ref: '#/components/responses/406' 
+        503:
+          description: "Transporter unavailable"
+
+  /api/transporters/{transporterId}/link/{linkId}/send:
+    post:
+      tags: [Send]
+      security:
+          - userAuth: []
+      description: Send the item
+      operationId: createSend
+      parameters:
+        - $ref: '#/components/parameters/transporterIdInPath'
+        - $ref: '#/components/parameters/linkIdinPath'
+      responses:
+        202: 
+            $ref: '#/components/responses/send'          
+        401:
+            $ref: '#/components/responses/401' 
+        404:
+          description: "The transporter or link you are looking for does not exist. Double check the ID's."
+        503:
+          description: "Transporter unavailable"
+
+components:
+  securitySchemes:
+      userAuth:
+          type: http
+          scheme: bearer
+  schemas:
+    Quote:
+      type: object
+      properties:
+        value:
+          type: string
+          x-faker: lorem.sentence
+          example: "Life is a disease: sexually transmitted, and invariably fatal."
+        id:
+          type: integer
+          minimum: 1
+          example: 8
+      required:
+        - value
+        - id
+      example:
+        value: See, the problem is that God gives men a brain and a penis, and only enough blood to run one at a time.
+        id: 89
+    Notification:
+      type: object
+      required:
+        - title
+        - time
+        - message
+      properties:
+        title:
+          type: string
+        time:
+          type: string
+        message:
+          type: string
+      example: {
+        "title": "Alarm Clock from Thibo Verbeerst Sent to Glenn Callens",
+        "time": "2052-11-14 13:30",
+        "message": "Status: DELIVERED \nSent to Farm Dome 230 for Glenn Callens\n Sent from Sleep Dome 8473 by Thibo Verbeerst"
+      }
+    Notifications:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    UserComposed:
+      type: object
+      required:
+        - id
+        - firstname
+        - lastname
+      description: Detailed information of user.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of user in Shippert's system.
+        firstname:
+          type: string
+        lastname:
+          type: string
+      example: {
+        "id": "123e4567e8",
+        "firstname": "Thibo",
+        "lastname": "Verbeerst"
+      }
+    User:
+      type: object
+      required:
+        - id
+        - firstname
+        - lastname
+        - totalSent
+        - totalReceived
+        - limit
+        - notifications
+      description: Detailed information of user.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of user in Shippert's system.
+        firstname:
+          type: string
+        lastname:
+          type: string
+        totalSent:
+          type: integer
+        totalReceived:
+          type: integer
+        limit:
+          type: object
+          properties:
+            reached:
+              type: integer
+            max:
+              type: integer
+        notifications:
+          $ref: '#/components/schemas/Notifications'
+      example: {
+        "id": "133",
+        "firstname": "Thibo",
+        "lastname": "Verbeerst",
+        "totalSent": 323,
+        "totalReceived": 145,
+        "limit": {
+          "reached": 6,
+          "max": 100
+        },
+        "notifications": [
+          {
+            "title": "Alarm Clock from Thibo Verbeerst Sent to Glenn Callens",
+            "time": "2052-11-14 13:30",
+            "message": "Status: UNDERWAY \nSent to Farm Dome 230 for Glenn Callens\n Sent from Sleep Dome 8473 by Thibo Verbeerst"
+          },
+          {
+            "title": "Alarm Clock from Thibo Verbeerst Sent to Glenn Callens",
+            "time": "2052-11-14 13:30",
+            "message": "Status: DELIVERED \nSent to Farm Dome 230 for Glenn Callens\n Sent from Sleep Dome 8473 by Thibo Verbeerst"
+          }
+        ]
+      }
+    Transporter:
+      type: object
+      required: 
+        - id
+        - name
+        - size
+        - location
+      description: Transporter object
+      properties:
+        id: 
+          type: string
+          description: Unique identifier of location in Shippert's system.
+        name:
+          type: string
+          description: The name the owner gave.
+        size:
+          type: object
+          description: object with height, length and width
+          properties:
+            length:
+              type: number
+            width:
+              type: number
+            depth:
+              type: number
+        location:
+          $ref: '#/components/schemas/Location'
+    Location:
+      type: object
+      required:
+        - coordinates
+        - building
+      description: Contains the location
+      properties:
+        coordinates:
+          type: object
+          properties:
+            longitude:
+              type: number
+            latitude:
+              type: number
+        building:
+          type: object
+          properties:
+            typeOfBuilding:
+              type: string
+              description: house or pick up point
+            id:
+              type: string
+              description: Unique identifier of building in Shippert's system.     
+    Blacklist:
+      type: object
+      required:
+        - items
+      description: A blacklist contains items that may be send / received.
+      properties:
+          items:
+            type: array
+            items:
+              type: string
+      example: {
+        "items": [
+          "gun", "drug", "human"
+        ]
+      }
+    Item:
+      type: object
+      description: Detailed information about send or received item.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        action:
+          type: string
+        timeSent:
+          type: string
+          description: Date and time of when item was send.
+        timeReceived:
+          type: string
+          description: Date and time of when item was received.
+        receiver:
+          type: string
+          description: ID of the person who received package.
+        origin:
+          type: string
+          description: ID of the transporter that sent package.
+        sender:
+          type: string
+          description: ID of the person who sent package.
+        destination:
+          type: string
+          description: ID of the transporter that received package.
+      example: {
+        "id": "1211",
+        "name": "Alarm Clock",
+        "action": "sent",
+        "timeSent": "2053-12-24 09:47",
+        "timeReceived": "2053-12-24 09:48",
+        "receiver": "133",
+        "origin": "232",
+        "sender": "34",
+        "destination": "332"
+      }
+  requestBodies:
+    createLink:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              destination:
+                type: string
+                description: The ID of the destination Transporter.
+              receiver:
+                type: string
+                description: The ID of the user for whom the item is for.
+              itemName:
+                type: string
+                description: Name of the item that will be send.
+            required:
+              - destination
+              - receiver
+              - itemName
+    createUser:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstname:
+                type: string
+              lastname:
+                type: string
+              subscription:
+                type: string
+            required:
+              - firstname
+              - lastname
+              - subscription
+    blacklistItem:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              itemName:
+                type: string
+                description: name or keyword of item
+            required:
+              - itemName
+    transporterWithoutID:
+          required: true
+          content:
+            application/json:
+              schema:
+                  type: object
+                  required: 
+                    - name
+                    - size
+                    - location
+                    - ipAddress
+                  description: Transporter object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the transporter
+                    size:
+                      type: object
+                      description: object with height, length and width
+                      properties:
+                        length:
+                          type: integer
+                        width:
+                          type: integer
+                        depth:
+                          type: integer
+                    location:
+                      $ref: '#/components/schemas/Location'
+                    ipAddress:
+                      type: string
+                      description: The IP address of the transporterer
+              example:
+                name: Transporter of Glenn
+                size: 
+                  length: 50
+                  width: 60
+                  depth: 70
+                location:
+                  coordinates:
+                    longitude: 4.242362690474167
+                    latitude: 51.21175585969615
+                  building:
+                    typeOfBuilding: "Home"
+                ipAddress: "192.168.9.1"   
+
+  parameters:
+    userIdInPath:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+    itemIdInPath:
+      name: itemId
+      in: path
+      required: true
+      schema:
+        type: string
+    itemIdInName:
+      name: itemName
+      in: path
+      required: true
+      schema:
+        type: string
+    transporterIdInPath:
+      name: transporterId
+      in: path
+      required: true
+      schema:
+          type: string
+    linkIdinPath:
+      in: path
+      name: linkId
+      required: true
+      schema:
+        type: string
+          
+  responses:
+    '401':
+      description:
+        This is a protected endpoint.
+        Make sure you passed your security-token along with the request.
+    '400':
+      description: 
+        Bad request! Check body.
+    '406':
+      description: "Can't calculate price due to a problem with the transporter."
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: Transporter door not closed.
+    'price':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+                price:
+                  type: string
+          example:
+              price: 305
+    'send':
+      description: OK
+      content:
+        application/json:
+          schema: 
+              type: object
+              properties:
+                  message: 
+                    type: string
+              example:
+                message: "Item is delivered."
